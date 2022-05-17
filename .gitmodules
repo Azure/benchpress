@@ -1,0 +1,3 @@
+[submodule "BenchPress/bicep"]
+	path = BenchPress/bicep
+	url = https://github.com/azure/bicep
