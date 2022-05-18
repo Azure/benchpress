@@ -1,10 +1,17 @@
-resource symbolicname 'Microsoft.Resources/resourceGroups@2021-04-01' = {
-  name: 'string'
-  location: 'string'
+targetScope = 'subscription'
+
+param name string
+param location string
+param environment string
+
+// https://docs.microsoft.com/en-us/azure/templates/microsoft.resources/resourcegroups?tabs=bicep
+resource resourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
+  name: name
+  location: location
   tags: {
-    tagName1: 'tagValue1'
-    tagName2: 'tagValue2'
+    'Env': environment
   }
-  managedBy: 'string'
-  properties: {}
 }
+
+output name string = resourceGroup.name
+output id string = resourceGroup.id
