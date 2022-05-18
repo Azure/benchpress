@@ -1,5 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using AzureTestGen;
+using AzureTestGen.LanguageProviders;
 
 var language = new PowershellLanguageProvider();
 var generator = new TestGenerator(language);
@@ -9,7 +10,7 @@ var rgMetadata = new TestMetadata(
     "Microsoft.Resources/resourceGroups",
     "MyResourceGroup",
     new Dictionary<string, object>() {
-        { "Location", "westus" }
+        { "location", "westus" }
     }
 );
 
@@ -17,7 +18,8 @@ var vmMetadata = new TestMetadata(
     "Microsoft.Compute/virtualMachines",
     "MyVM",
     new Dictionary<string, object>() {
-        { "Location", "westus" },
+        { "location", "westus" },
+        { "resourceGroup", "myResourceGroup"},
         { "Size", "Standard_D1_v2" },
         { "OSDiskSize", "30" },
         { "VMSize", "Standard_D1_v2" },
@@ -51,20 +53,17 @@ var vmMetadata = new TestMetadata(
 
 #endregion
 
-var rgExistsTest = new TestDefinition() {
-    Type = TestType.ResourceExists,
-    Metadata = rgMetadata
-};
+var rgExistsTest = new TestDefinition(
+    rgMetadata,
+    TestType.ResourceExists);
 
-var vmExistsTest = new TestDefinition() {
-    Type = TestType.ResourceExists,
-    Metadata = vmMetadata
-};
+var vmExistsTest = new TestDefinition(
+    vmMetadata,
+    TestType.ResourceExists);
 
-var vmCheckRegion = new TestDefinition() {
-    Type = TestType.Region,
-    Metadata = vmMetadata
-};
+var vmCheckRegion = new TestDefinition(
+    vmMetadata,
+    TestType.Region);
 
 var generatedTest = generator.Generate(
     new [] {rgExistsTest, vmExistsTest, vmCheckRegion}, 

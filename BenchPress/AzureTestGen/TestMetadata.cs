@@ -1,9 +1,12 @@
+using AzureTestGen.ResourceTypes;
+
 namespace AzureTestGen;
+
 public class TestMetadata
 {
     public TestMetadata(string resourceType, string resourceName, IDictionary<string, object> extraProperties)
     {
-        ResourceType = ResourceTypeParser.Parse(resourceType);
+        ResourceType = ResourceType.Create(resourceType);
         ResourceName = resourceName;
         ExtraProperties = extraProperties;
     }

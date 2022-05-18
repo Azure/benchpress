@@ -1,14 +1,13 @@
+using AzureTestGen.ResourceTypes;
+
 namespace AzureTestGen;
 
 public class SDKFunction
 {
-    public static SDKFunction Default(TestDefinition definition)
+    public SDKFunction(TestDefinition definition)
     {
-        return new SDKFunction
-        {
-            Kind = definition.Type,
-            ResourceType = definition.Metadata.ResourceType,
-        };
+        Kind = definition.Type;
+        ResourceType = definition.Metadata.ResourceType;
     }
 
     public TestType Kind { get; set; }

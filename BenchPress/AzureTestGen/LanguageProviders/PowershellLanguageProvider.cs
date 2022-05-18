@@ -1,4 +1,6 @@
-namespace AzureTestGen;
+using AzureTestGen.ResourceTypes;
+
+namespace AzureTestGen.LanguageProviders;
 
 public class PowershellLanguageProvider : ILanguageProvider
 {
@@ -22,7 +24,7 @@ public class PowershellLanguageProvider : ILanguageProvider
                 return b ? "$true" : "$false";
 
             default:
-                return value.ToString();
+                return value.ToString()!;
         }
     }
 
@@ -39,25 +41,17 @@ public class PowershellLanguageProvider : ILanguageProvider
     public string Library(ResourceType resourceType)
     {
         const string prefix = "$PSScriptRoot/BenchPress/Helpers/Azure/";
-        switch (resourceType)
-        {
-            case ResourceType.ResourceGroup:
-                return prefix + "ResourceGroups.ps1";
-            case ResourceType.VirtualMachine:
-                return prefix + "VirtualMachines.ps1";
-            default:
-                throw new Exception($"Unknown resource type: {resourceType}");
-        }
+        return prefix + resourceType.FunctionPrefix + ".ps1";
     }
 
-    public string SDKFunction(SDKFunction sdkFunction)
+    public string SDK(SDKFunction sdkFunction)
     {
         switch (sdkFunction.Kind)
         {
             case TestType.ResourceExists:
-                return $"Get-{sdkFunction.ResourceType.FunctionPrefix()}Exists";
+                return $"Get-{sdkFunction.ResourceType.FunctionPrefix}Exists";
             case TestType.Region:
-                return $"Check-{sdkFunction.ResourceType.FunctionPrefix()}Region";
+                return $"Check-{sdkFunction.ResourceType.FunctionPrefix}Region";
             default:
                 throw new Exception($"Unknown test type: {sdkFunction.Kind}");
         }

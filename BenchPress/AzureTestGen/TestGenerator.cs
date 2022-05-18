@@ -1,4 +1,5 @@
 using Stubble.Core.Builders;
+using AzureTestGen.LanguageProviders;
 
 namespace AzureTestGen;
 
@@ -56,7 +57,9 @@ public class TestGenerator
 
     private TestViewModel GenerateCheckRegionViewModel(TestDefinition definition, string template)
     {
+        /*
         var valueToCheckVariable = LanguageProvider.Variable($"{definition.Metadata.ResourceType.Prefix()}Region");
+
         return new TestViewModel
         {
             Name = LanguageProvider.Escape($"Check {definition.Metadata.ResourceType.FriendlyName()} region"),
@@ -65,36 +68,59 @@ public class TestGenerator
             GetValueFunctionParameterList = LanguageProvider.ParameterList(
                 LanguageProvider.Value(definition.Metadata.ResourceName), 
                 valueToCheckVariable),
-            ValueToCheck = LanguageProvider.Value(definition.Metadata.ExtraProperties["Location"]),
+            ValueToCheck = LanguageProvider.Value(definition.Metadata.ExtraProperties["location"]),
             ActualValueVariable = LanguageProvider.Variable($"check"),
             GetValueFunctionName = LanguageProvider.SDKFunction(SDKFunction.Default(definition)),
+            ExpectedValue = LanguageProvider.Value(true)
+        };
+*/
+        var getParameters = definition.Metadata.ResourceType
+            .GetResourceParameters(definition.Metadata)
+            .Select(p => new KeyValuePair<string, string>(
+                LanguageProvider.Variable(p.Key), 
+                LanguageProvider.Value(p.Value)))
+            .Append(new KeyValuePair<string, string>(
+                LanguageProvider.Variable($"{definition.Metadata.ResourceType.Prefix}Region"),
+                LanguageProvider.Value(definition.Metadata.ExtraProperties["location"])));
+
+        return new TestViewModel
+        {
+            Parameters = getParameters,
+            Name = LanguageProvider.Escape($"Check {definition.Metadata.ResourceType.FriendlyName} region"),
+            Description = LanguageProvider.Escape($"Check that {definition.Metadata.ResourceType.FriendlyName} is in the right region"),
+            GetValueFunctionParameterList = LanguageProvider.ParameterList(getParameters.Select(p => p.Key).ToArray()),
+            ActualValueVariable = LanguageProvider.Variable($"check"),
+            GetValueFunctionName = LanguageProvider.SDK(new SDKFunction(definition)),
             ExpectedValue = LanguageProvider.Value(true)
         };
     }
 
     private TestViewModel GenerateResourceExistsViewModel(TestDefinition definition, string template)
     {
-        var valueToCheckVariable = LanguageProvider.Variable($"{definition.Metadata.ResourceType.Prefix()}Name");
+        var getParameters = definition.Metadata.ResourceType
+            .GetResourceParameters(definition.Metadata)
+            .Select(p => new KeyValuePair<string, string>(
+                LanguageProvider.Variable(p.Key), 
+                LanguageProvider.Value(p.Value)));
+
         return new TestViewModel
         {
-            Name = LanguageProvider.Escape($"Verify that {definition.Metadata.ResourceType.FriendlyName()} exists"),
-            Description = LanguageProvider.Escape($"It should contain a {definition.Metadata.ResourceType.FriendlyName()} named {definition.Metadata.ResourceName}"),
-            ValueToCheckVariable = valueToCheckVariable,
-            GetValueFunctionParameterList = LanguageProvider.ParameterList(valueToCheckVariable),
-            ValueToCheck = LanguageProvider.Value(definition.Metadata.ResourceName),
+            Parameters = getParameters,
+            Name = LanguageProvider.Escape($"Verify that {definition.Metadata.ResourceType.FriendlyName} exists"),
+            Description = LanguageProvider.Escape($"It should contain a {definition.Metadata.ResourceType.FriendlyName} named {definition.Metadata.ResourceName}"),
+            GetValueFunctionParameterList = LanguageProvider.ParameterList(getParameters.Select(p => p.Key).ToArray()),
             ActualValueVariable = LanguageProvider.Variable($"exists"),
-            GetValueFunctionName = LanguageProvider.SDKFunction(SDKFunction.Default(definition)),
+            GetValueFunctionName = LanguageProvider.SDK(new SDKFunction(definition)),
             ExpectedValue = LanguageProvider.Value(true)
         };
     }
 
-    private class TestViewModel
+    private struct TestViewModel
     {
-        public string ValueToCheckVariable { get; set; }
+        public IEnumerable<KeyValuePair<string, string>> Parameters { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string GetValueFunctionParameterList { get; set; }
-        public string ValueToCheck { get; set; }
         public string ActualValueVariable { get; set; }
         public string GetValueFunctionName { get; set; }
         public string ExpectedValue { get; set; }

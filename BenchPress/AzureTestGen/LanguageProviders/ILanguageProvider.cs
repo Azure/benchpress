@@ -1,4 +1,6 @@
-namespace AzureTestGen;
+using AzureTestGen.ResourceTypes;
+
+namespace AzureTestGen.LanguageProviders;
 
 public interface ILanguageProvider
 {
@@ -7,6 +9,6 @@ public interface ILanguageProvider
     public string Variable(string name);
     public string Value(object value);
     public string Library(ResourceType resourceType);
-    public string SDKFunction(SDKFunction sdkFunction);
+    public string SDK(SDKFunction sdkFunction);
     public string ParameterList(params string[] parameters);
 }

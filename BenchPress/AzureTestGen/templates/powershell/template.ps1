@@ -8,7 +8,9 @@ BeforeAll{
 Describe '{{ Name }}' {
     it '{{ Description }}' {
         #arrange
-        {{ ValueToCheckVariable }} = {{{ ValueToCheck }}}
+        {{ #Parameters }}
+        {{ Key }} = {{{ Value }}}
+        {{ /Parameters}}
 
         #act
         {{ ActualValueVariable }} = {{GetValueFunctionName}} {{{GetValueFunctionParameterList}}}
