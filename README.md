@@ -1,14 +1,22 @@
-# Project
+# Bicep testing framework
 
-> This repo has been populated by an initial template to help get you started. Please
-> make sure to update the content to build a great experience for community-building.
+This framework is intended to work as a testing framework for Azure deployment features by using [Bicep](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/overview?tabs=bicep).
 
-As the maintainer of this project, please make a few updates:
+In order to see how you can work with this framework you can find one sample bicep file in the folder [samples](/examples/main.bicep)
+that will be deployed by using one PowerShell script.
 
-- Improving this README.MD file to provide a great experience
-- Updating SUPPORT.MD with content about this project's support experience
-- Understanding the security reporting process in SECURITY.MD
-- Remove this section from the README
+Process is the following:
+
+```mermaid
+flowchart LR
+
+A[Creation] -->|Bicep| B[Verification]
+B --> C[Remove]
+```
+
+**Creation**: New Features are gonna be deployed through Bicep files
+**Verification**: Test is going to confirm the resource exists and also assert if it matches the expected value
+**Remove**: Optionally resources can be removed after being tested
 
 ## Contributing
 
