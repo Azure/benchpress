@@ -1,7 +1,7 @@
 using Stubble.Core.Builders;
-using AzureTestGen.LanguageProviders;
+using Generators.LanguageProviders;
 
-namespace AzureTestGen;
+namespace Generators;
 
 public class TestGenerator
 {
@@ -12,7 +12,7 @@ public class TestGenerator
     }
 
     // Generate a test snippet from a test definition and razor template file.
-    public string Generate(TestDefinition[] definitions, string templateFile)
+    public string Generate(IEnumerable<TestDefinition> definitions, string templateFile)
     {
         var template = File.ReadAllText(templateFile);
 
@@ -25,8 +25,8 @@ public class TestGenerator
                 case TestType.ResourceExists:
                     viewModel = GenerateResourceExistsViewModel(definition, template);
                     break;
-                case TestType.Region:
-                    viewModel = GenerateCheckRegionViewModel(definition, template);
+                case TestType.Location:
+                    viewModel = GenerateCheckLocationViewModel(definition, template);
                     break;
                 default:
                     throw new Exception($"Unknown test type: {definition.Type}");
@@ -55,39 +55,22 @@ public class TestGenerator
         return output;
     }
 
-    private TestViewModel GenerateCheckRegionViewModel(TestDefinition definition, string template)
+    private TestViewModel GenerateCheckLocationViewModel(TestDefinition definition, string template)
     {
-        /*
-        var valueToCheckVariable = LanguageProvider.Variable($"{definition.Metadata.ResourceType.Prefix()}Region");
-
-        return new TestViewModel
-        {
-            Name = LanguageProvider.Escape($"Check {definition.Metadata.ResourceType.FriendlyName()} region"),
-            Description = LanguageProvider.Escape($"Check that {definition.Metadata.ResourceType.FriendlyName()} is in the right region"),
-            ValueToCheckVariable = valueToCheckVariable,
-            GetValueFunctionParameterList = LanguageProvider.ParameterList(
-                LanguageProvider.Value(definition.Metadata.ResourceName), 
-                valueToCheckVariable),
-            ValueToCheck = LanguageProvider.Value(definition.Metadata.ExtraProperties["location"]),
-            ActualValueVariable = LanguageProvider.Variable($"check"),
-            GetValueFunctionName = LanguageProvider.SDKFunction(SDKFunction.Default(definition)),
-            ExpectedValue = LanguageProvider.Value(true)
-        };
-*/
         var getParameters = definition.Metadata.ResourceType
             .GetResourceParameters(definition.Metadata)
             .Select(p => new KeyValuePair<string, string>(
                 LanguageProvider.Variable(p.Key), 
                 LanguageProvider.Value(p.Value)))
             .Append(new KeyValuePair<string, string>(
-                LanguageProvider.Variable($"{definition.Metadata.ResourceType.Prefix}Region"),
+                LanguageProvider.Variable($"{definition.Metadata.ResourceType.Prefix}Location"),
                 LanguageProvider.Value(definition.Metadata.ExtraProperties["location"])));
 
         return new TestViewModel
         {
             Parameters = getParameters,
-            Name = LanguageProvider.Escape($"Check {definition.Metadata.ResourceType.FriendlyName} region"),
-            Description = LanguageProvider.Escape($"Check that {definition.Metadata.ResourceType.FriendlyName} is in the right region"),
+            Name = LanguageProvider.Escape($"Check {definition.Metadata.ResourceType.FriendlyName} location"),
+            Description = LanguageProvider.Escape($"Check that {definition.Metadata.ResourceType.FriendlyName} is in the right location"),
             GetValueFunctionParameterList = LanguageProvider.ParameterList(getParameters.Select(p => p.Key).ToArray()),
             ActualValueVariable = LanguageProvider.Variable($"check"),
             GetValueFunctionName = LanguageProvider.SDK(new SDKFunction(definition)),

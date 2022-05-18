@@ -1,4 +1,4 @@
-namespace AzureTestGen.ResourceTypes;
+namespace Generators.ResourceTypes;
 
 public class ResourceGroup : ResourceType
 {

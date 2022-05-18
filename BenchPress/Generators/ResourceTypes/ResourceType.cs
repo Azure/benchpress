@@ -1,4 +1,4 @@
-namespace AzureTestGen.ResourceTypes;
+namespace Generators.ResourceTypes;
 
 public abstract class ResourceType
 {
@@ -14,7 +14,7 @@ public abstract class ResourceType
                 return new VirtualMachine();
 
             default:
-                throw new Exception($"Unknown resource type: {resourceType}");
+                throw new UnknownResourceTypeException(resourceType);
         }
     }
     public abstract string FullName { get; }
@@ -26,6 +26,13 @@ public abstract class ResourceType
     protected static KeyValuePair<string, object> Param(string name, object value)
     {
         return new KeyValuePair<string, object>(name, value);
+    }
+
+    public class UnknownResourceTypeException : Exception
+    {
+        public UnknownResourceTypeException(string resourceType) : base($"Unknown resource type: {resourceType}")
+        {
+        }
     }
 }
 

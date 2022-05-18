@@ -1,4 +1,4 @@
-namespace AzureTestGen;
+namespace Generators;
 
 public class TestDefinition
 {
@@ -15,5 +15,5 @@ public class TestDefinition
 public enum TestType
 {
     ResourceExists,
-    Region,
+    Location,
 }

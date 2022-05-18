@@ -1,6 +1,6 @@
-using AzureTestGen.ResourceTypes;
+using Generators.ResourceTypes;
 
-namespace AzureTestGen.LanguageProviders;
+namespace Generators.LanguageProviders;
 
 public class PowershellLanguageProvider : ILanguageProvider
 {
@@ -50,8 +50,8 @@ public class PowershellLanguageProvider : ILanguageProvider
         {
             case TestType.ResourceExists:
                 return $"Get-{sdkFunction.ResourceType.FunctionPrefix}Exists";
-            case TestType.Region:
-                return $"Check-{sdkFunction.ResourceType.FunctionPrefix}Region";
+            case TestType.Location:
+                return $"Check-{sdkFunction.ResourceType.FunctionPrefix}Location";
             default:
                 throw new Exception($"Unknown test type: {sdkFunction.Kind}");
         }

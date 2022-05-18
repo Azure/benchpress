@@ -1,6 +1,6 @@
-using AzureTestGen.ResourceTypes;
+using Generators.ResourceTypes;
 
-namespace AzureTestGen.LanguageProviders;
+namespace Generators.LanguageProviders;
 
 public interface ILanguageProvider
 {

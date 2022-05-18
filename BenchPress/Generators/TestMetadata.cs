@@ -1,6 +1,6 @@
-using AzureTestGen.ResourceTypes;
+using Generators.ResourceTypes;
 
-namespace AzureTestGen;
+namespace Generators;
 
 public class TestMetadata
 {
