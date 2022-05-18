@@ -1,0 +1,16 @@
+{
+    "features": [
+        {
+            "id": "azurebicep",
+            "name": "Azure Bicep",
+            "options": {
+                "version": {
+                    "type": "string",
+                    "default": "latest",
+                    "description": "Specify a version of the Azure Bicep CLI"
+                }
+            },
+            "entrypoint": "/usr/installbicep.sh"
+        }
+    ]
+}

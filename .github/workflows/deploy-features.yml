@@ -1,0 +1,28 @@
+name: 'Deploy Features'
+on:
+  push:
+    tags:
+    - 'v*'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Get tag name
+        id: get_tag_name  
+        run: echo "::set-output name=tag::$(echo "${{ github.ref }}" | grep -oP 'refs/tags/\K(.+)')"
+          
+      - name: Publish dev container features
+        uses: microsoft/publish-dev-container-features-action@main
+        with:
+          path-to-features: '.'
+          
+      - name: Get or Create Release at current tag
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true # Lets us upload our own artifact from previous step
+          artifactErrorsFailBuild: true
+          artifacts: './devcontainer-features.tgz'
+          token: ${{ secrets.GITHUB_TOKEN }}
