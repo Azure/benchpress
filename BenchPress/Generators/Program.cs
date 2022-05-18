@@ -1,68 +1,48 @@
-﻿using System.Text.Json;
-using System.Text.Json.Nodes;
+﻿// See https://aka.ms/new-console-template for more information
+using Generators;
+using Generators.LanguageProviders;
+using Generators.ResourceTypes;
 
-record TestMetadata(
-  string ResourceType,
-  string ResourceName,
-  List<KeyValuePair<string, object>> ExtraProperties
-);
+var language = new PowershellLanguageProvider();
+var generator = new TestGenerator(language);
 
-public class Program
+var metadataList = AzureDeploymentImporter.Import("sample.bicep");
+var testList = new List<TestDefinition>();
+
+// Resource exists tests
+foreach (var metadata in metadataList)
 {
-  public static void Main(string[] args)
-  {
-    var jsonFileContent = "";
+    testList.Add(new TestDefinition(
+        metadata,
+        TestType.ResourceExists));
 
-    var inputFileName = args[0];
+    testList.Add(new TestDefinition(
+        metadata,
+        TestType.Location));
+}
 
-    if (inputFileName.EndsWith(".bicep"))
+var testGroups = new List<IEnumerable<TestDefinition>>();
+
+testGroups.Add(testList.Where(t => t.Metadata.ResourceType.GetType() == typeof(VirtualMachine)));
+testGroups.Add(testList.Where(t => t.Metadata.ResourceType.GetType() == typeof(ResourceGroup)));
+
+var templateFile = "./templates/powershell/template.ps1";
+
+foreach (var group in testGroups)
+{
+    if (!group.Any()) continue;
+
+    var testsOutput = generator.Generate(group, templateFile);
+
+    var testFileName = group.First().Metadata.ResourceType.Prefix + "Tests.ps1";
+    var testFilePath = "output";
+
+    var testFileFullName = Path.Join(testFilePath, testFileName);
+
+    if (!Directory.Exists(testFilePath))
     {
-      var filename = Path.GetRandomFileName();
-
-      var bicepCliArgs = new string[]
-      {
-        "build",
-        inputFileName,
-        "--outfile",
-        $"/tmp/{filename}"
-      };
-
-      Bicep.Cli.Program.Main(bicepCliArgs).Wait();
-
-      jsonFileContent = File.ReadAllText("/tmp/" + filename);
+        Directory.CreateDirectory(testFilePath);
     }
-    else
-    {
-      jsonFileContent = File.ReadAllText(inputFileName);
-    }
-
-    var parsed = JsonNode.Parse(jsonFileContent).AsObject();
-
-    var list = new List<TestMetadata>();
-
-    foreach (var resource in (JsonArray)parsed["resources"])
-    {
-      var resourceType = resource["type"].ToString().Trim();
-      var resourceName = resource["name"].ToString().Trim();
-
-      if (resourceName.StartsWith("[") && resourceName.EndsWith("]"))
-      {
-        resourceName = resourceName
-                          .Replace("[", "")
-                          .Replace("]", "")
-                          .Replace("parameters", "")
-                          .Replace("(", "")
-                          .Replace(")", "")
-                          .Replace("'", "")
-                          .Trim();
-        resourceName = parsed["parameters"][resourceName]["defaultValue"].ToString();
-      }
-
-      var extraProperties = new List<KeyValuePair<string, object>>();
-
-      list.Add(new TestMetadata(resourceType, resourceName, extraProperties));
-    }
-
-    Console.WriteLine(JsonSerializer.Serialize(list));
-  }
+    
+    File.WriteAllText(testFileFullName, testsOutput);
 }
