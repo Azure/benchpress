@@ -1,6 +1,6 @@
 BeforeAll {
-  . $PSScriptRoot/BenchPress/Helpers/Azure/ResourceGroup.ps1
-  . $PSScriptRoot/BenchPress/Helpers/Azure/Bicep.ps1
+  . $PSScriptRoot/BenchPress/Helpers/Azure/ResourceGroup.psm1
+  . $PSScriptRoot/BenchPress/Helpers/Azure/Bicep.psm1
 }
 
 Describe 'Verify Resource Group Exists' {
