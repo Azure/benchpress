@@ -13,6 +13,9 @@
   "remoteUser": "vscode",
   "features": {
     "azure-cli": "latest",
-    "powershell": "7.2"
+    "powershell": "latest",
+    "kubectl-helm-minikube": "latest",
+    "git": "os-provided",
+    "github-cli": "latest"
   }
 }
