@@ -19,7 +19,7 @@ Describe 'Verify Resource Group Exists' {
 Describe 'Spin up , Tear down Resource Group' {
   it 'Should deploy a bicep file.' {
     #arrange
-    $bicepPath = "./examples/main.bicep"
+    $bicepPath = "./main.bicep"
     $params = @{
       name        = "rgtestocw11"
       location    = "westus"
