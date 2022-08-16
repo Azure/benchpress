@@ -1,4 +1,4 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 using System.Text.Json.Nodes;
 using static Generators.ResourceTypes.ResourceType;
 
@@ -6,6 +6,11 @@ namespace Generators;
 
 public class AzureDeploymentImporter
 {
+  public static IEnumerable<TestMetadata> Import(FileInfo inputFile)
+  {
+    return Import(inputFile.FullName);
+  }
+
   public static IEnumerable<TestMetadata> Import(string inputFileName)
   {
     var jsonFileContent = "";
