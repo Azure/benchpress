@@ -11,6 +11,8 @@ rootCommand.AddOption(fileOption);
 
 rootCommand.SetHandler((file) =>
   {
+    if (file is null) return;
+
     var language = new PowershellLanguageProvider();
     var generator = new TestGenerator(language);
 
