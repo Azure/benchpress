@@ -1,5 +1,4 @@
 param storageAccountName string = 'strgtest'
-param containerName string = 'logs'
 param location string = resourceGroup().location
 
 resource sa 'Microsoft.Storage/storageAccounts@2019-06-01' = {
