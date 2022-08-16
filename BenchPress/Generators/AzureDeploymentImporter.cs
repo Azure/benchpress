@@ -1,4 +1,4 @@
-using System.Text.Json;
+﻿using System.Text.Json;
 using System.Text.Json.Nodes;
 using static Generators.ResourceTypes.ResourceType;
 
@@ -21,10 +21,10 @@ public class AzureDeploymentImporter
 
       var bicepCliArgs = new string[]
       {
-              "build",
-              inputFileName,
-              "--outfile",
-              filename
+        "build",
+        inputFileName,
+        "--outfile",
+        filename
       };
 
       Bicep.Cli.Program.Main(bicepCliArgs).Wait();
