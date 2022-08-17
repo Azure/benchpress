@@ -32,9 +32,13 @@ public class AzureDeploymentImporter
       jsonFileContent = File.ReadAllText(filename);
       File.Delete(filename);
     }
-    else
+    else if (inputFileName.EndsWith(".json"))
     {
       jsonFileContent = File.ReadAllText(inputFileName);
+    }
+    else
+    {
+      throw new FileFormatException();
     }
 
     var parsed = JsonNode.Parse(jsonFileContent)?.AsObject();
