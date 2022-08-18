@@ -6,7 +6,7 @@ public class ServicePlan : ResourceType
   {
   }
 
-  public const string Id = "Microsoft.Web/serverfarms";
+  public override string Id => "Microsoft.Web/serverfarms";
 
   public override string FullName => Id;
 
