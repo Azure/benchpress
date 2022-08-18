@@ -52,7 +52,7 @@ rootCommand.SetHandler((fileInfo, languageProvider) =>
     {
       if (!group.Any()) continue;
 
-      var testsOutput = generator.Generate(group, "./templates/powershell/template.ps1");
+      var testsOutput = generator.Generate(group, provider.GetTemplateFileName());
 
       var testFileName = group.First().Metadata.ResourceType.Prefix + "Tests.ps1";
       var testFilePath = "output";
