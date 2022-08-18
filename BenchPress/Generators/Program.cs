@@ -56,7 +56,7 @@ rootCommand.SetHandler((fileInfo, outputFolder, languageProvider) =>
 
       var testsOutput = generator.Generate(group, provider.GetTemplateFileName());
 
-      var testFileName = group.First().Metadata.ResourceType.Prefix + "Tests.ps1";
+      var testFileName = group.First().Metadata.ResourceType.Prefix + ".Tests.ps1";
       var testFilePath = outputFolder?.FullName ?? Path.GetFullPath("output");
 
       var testFileFullName = Path.Join(testFilePath, testFileName);
