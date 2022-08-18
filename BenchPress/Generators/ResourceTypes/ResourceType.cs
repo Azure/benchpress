@@ -1,22 +1,18 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace Generators.ResourceTypes;
 
 public abstract class ResourceType
 {
-  internal const string ResourceGroupTypeId = "Microsoft.Resources/resourceGroups";
-
   public static ResourceType Create(string resourceType)
   {
-    switch (resourceType)
-    {
-      case ResourceGroup.Id:
-        return new ResourceGroup();
-      case VirtualMachine.Id:
-        return new VirtualMachine();
-
-      default:
-        throw new UnknownResourceTypeException(resourceType);
-    }
+    return AppDomain.CurrentDomain.GetAssemblies()
+      .SelectMany(domainAssembly => domainAssembly.GetTypes())
+      .Where(type => typeof(ResourceType).IsAssignableFrom(type) && !type.IsAbstract)
+      .Select(type => Activator.CreateInstance(type) as ResourceType)
+      .FirstOrDefault(instance => instance.Id == resourceType);
   }
+  public abstract string Id { get; }
   public abstract string FullName { get; }
   public abstract string FriendlyName { get; }
   public abstract string Prefix { get; }
