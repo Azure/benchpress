@@ -6,7 +6,7 @@ public class ResourceGroup : ResourceType
   {
   }
 
-  public const string Id = "Microsoft.Resources/resourceGroups";
+  public override string Id => "Microsoft.Resources/resourceGroups";
 
   public override string FullName => Id;
 
