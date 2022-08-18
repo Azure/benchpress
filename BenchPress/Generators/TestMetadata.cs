@@ -14,3 +14,10 @@ public class TestMetadata
   public string ResourceName { get; set; }
   public IDictionary<string, object> ExtraProperties { get; set; }
 }
+
+public class UnknownResourceTypeException : Exception
+{
+  public UnknownResourceTypeException(string resourceType) : base($"Unknown resource type: {resourceType}")
+  {
+  }
+}

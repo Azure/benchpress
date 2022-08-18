@@ -27,11 +27,4 @@ public abstract class ResourceType
   {
     return new KeyValuePair<string, object>(name, value);
   }
-
-  public class UnknownResourceTypeException : Exception
-  {
-    public UnknownResourceTypeException(string resourceType) : base($"Unknown resource type: {resourceType}")
-    {
-    }
-  }
 }
