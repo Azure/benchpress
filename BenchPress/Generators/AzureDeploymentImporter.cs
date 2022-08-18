@@ -81,7 +81,7 @@ public class AzureDeploymentImporter
                             .Replace("'", "")
                             .Trim();
 
-          if (!String.IsNullOrWhiteSpace(parsedValue))
+          if (!string.IsNullOrWhiteSpace(parsedValue))
           {
             var defaultValueNode = parsed[part]?[parsedValue];
             if (defaultValueNode is JsonObject)
@@ -93,7 +93,7 @@ public class AzureDeploymentImporter
               temp = parsed[part]?[parsedValue]?.ToString();
             }
           }
-          if (!String.IsNullOrWhiteSpace(temp))
+          if (!string.IsNullOrWhiteSpace(temp))
           {
             resourceName = temp;
             break;
@@ -118,7 +118,6 @@ public class AzureDeploymentImporter
 
       extraProperties.Add("location", location);
       extraProperties.Add("resourceGroup", "FAKE-RESOURCE-GROUP");
-
 
       try
       {
