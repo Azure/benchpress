@@ -11,4 +11,5 @@ public interface ILanguageProvider
   public string Library(ResourceType resourceType);
   public string SDK(SDKFunction sdkFunction);
   public string ParameterList(params string[] parameters);
+  public string GetTemplateFileName();
 }
