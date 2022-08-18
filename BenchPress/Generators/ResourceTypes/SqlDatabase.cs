@@ -6,7 +6,7 @@ public class SqlDatabase : ResourceType
   {
   }
 
-  public const string Id = "Microsoft.Sql/servers/databases";
+  public override string Id => "Microsoft.Sql/servers/databases";
 
   public override string FullName => Id;
 
