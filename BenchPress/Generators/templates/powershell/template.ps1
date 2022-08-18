@@ -1,4 +1,4 @@
-BeforeAll{
+BeforeAll {
     {{#ResourceTypes}}
     . {{ Library }}
     {{/ResourceTypes}}
@@ -17,6 +17,6 @@ Describe '{{ Name }}' {
 
         #assert
         {{ ActualValueVariable }} | Should -Be {{{ ExpectedValue }}}
-    } 
+    }
 }
 {{/TestCases}}
