@@ -61,4 +61,9 @@ public class PowershellLanguageProvider : ILanguageProvider
   {
     return string.Join(" ", parameters);
   }
+
+  public string GetTemplateFileName()
+  {
+    return "./templates/powershell/template.ps1";
+  }
 }
