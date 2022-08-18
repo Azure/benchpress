@@ -6,7 +6,7 @@ public class VirtualMachine : ResourceType
   {
   }
 
-  public const string Id = "Microsoft.Compute/virtualMachines";
+  public override string Id => "Microsoft.Compute/virtualMachines";
 
   public override string FullName => Id;
 
