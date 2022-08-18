@@ -1,19 +1,21 @@
-﻿using Generators;
+using Generators;
 using Generators.LanguageProviders;
 using Generators.ResourceTypes;
 using System.CommandLine;
 using System.Linq;
 
-var fileOption = new Option<FileInfo?>(name: "--import", description: "The bicep file to import and scaffold tests for");
+var importFileOption = new Option<FileInfo?>(name: "--import", description: "The bicep file to import and scaffold tests for");
+
+var outputFolderOption = new Option<DirectoryInfo?>(name: "--output", description: "Path that output will be saved");
 
 var languageProviderOption = new Option<LanguageProviderOptions>(name: "--provider", description: "Language provider that will be used to generate test files");
 
 var rootCommand = new RootCommand("Test Generator for Bicep and ARM Templates");
 
-rootCommand.AddOption(fileOption);
+rootCommand.AddOption(importFileOption);
 rootCommand.AddOption(languageProviderOption);
 
-rootCommand.SetHandler((fileInfo, languageProvider) =>
+rootCommand.SetHandler((fileInfo, outputFolder, languageProvider) =>
   {
     if (fileInfo is null) return;
     if (languageProvider == LanguageProviderOptions.Undefined) return;
@@ -55,7 +57,7 @@ rootCommand.SetHandler((fileInfo, languageProvider) =>
       var testsOutput = generator.Generate(group, provider.GetTemplateFileName());
 
       var testFileName = group.First().Metadata.ResourceType.Prefix + "Tests.ps1";
-      var testFilePath = "output";
+      var testFilePath = outputFolder?.FullName ?? Path.GetFullPath("output");
 
       var testFileFullName = Path.Join(testFilePath, testFileName);
 
@@ -67,7 +69,7 @@ rootCommand.SetHandler((fileInfo, languageProvider) =>
       File.WriteAllText(testFileFullName, testsOutput);
     }
   },
-  fileOption, languageProviderOption
+  importFileOption, outputFolderOption, languageProviderOption
 );
 
 await rootCommand.InvokeAsync(args);
