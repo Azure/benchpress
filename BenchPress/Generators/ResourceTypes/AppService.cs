@@ -6,7 +6,7 @@ public class AppService : ResourceType
   {
   }
 
-  public const string Id = "Microsoft.Web/sites";
+  public override string Id => "Microsoft.Web/sites";
 
   public override string FullName => Id;
 
