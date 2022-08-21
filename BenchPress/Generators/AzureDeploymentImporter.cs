@@ -6,12 +6,12 @@ namespace Generators;
 
 public class AzureDeploymentImporter
 {
-  public static IEnumerable<TestMetadata> Import(FileInfo inputFile)
+  public static IEnumerable<TestMetadata> Import(FileInfo inputFile, string outputFolderPath)
   {
     return Import(inputFile.FullName);
   }
 
-  public static IEnumerable<TestMetadata> Import(string inputFileName)
+  public static IEnumerable<TestMetadata> Import(string inputFileName, string outputFolderPath)
   {
     var jsonFileContent = "";
 
@@ -19,7 +19,7 @@ public class AzureDeploymentImporter
     {
       var filename = Path.GetTempFileName();
 
-      var bicepCliArgs = new string[]
+      var buildArgs = new string[]
       {
         "build",
         inputFileName,
@@ -27,9 +27,20 @@ public class AzureDeploymentImporter
         filename
       };
 
-      Bicep.Cli.Program.Main(bicepCliArgs).Wait();
+      Bicep.Cli.Program.Main(buildArgs).Wait();
 
       jsonFileContent = File.ReadAllText(filename);
+
+      var generateParamsArgs = new string[]
+      {
+        "generate-params",
+        inputFileName,
+        "--outdir",
+        outputFolderPath
+      };
+
+      Bicep.Cli.Program.Main(generateParamsArgs).Wait();
+
       File.Delete(filename);
     }
     else if (inputFileName.EndsWith(".json"))
