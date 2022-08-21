@@ -1,5 +1,8 @@
 BeforeAll {
   {{#ResourceTypes}}
+  $generated = (Get-Content -Path "./generated.parameters.json" | ConvertFrom-Json)
+  $parameters = $generated.parameters
+  $variables = $generated.variables
   . {{ Library }}
   {{/ResourceTypes}}
 }
@@ -19,4 +22,5 @@ Describe '{{ Name }}' {
     {{ ActualValueVariable }} | Should -Be {{{ ExpectedValue }}}
   }
 }
+
 {{/TestCases}}
