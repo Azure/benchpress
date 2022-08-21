@@ -1,6 +1,4 @@
-﻿using System.Text.Json;
-using System.Text.Json.Nodes;
-using static Generators.ResourceTypes.ResourceType;
+﻿using System.Text.Json.Nodes;
 
 namespace Generators;
 
@@ -8,44 +6,44 @@ public class AzureDeploymentImporter
 {
   public static IEnumerable<TestMetadata> Import(FileInfo inputFile, string outputFolderPath)
   {
-    return Import(inputFile.FullName);
+    return Import(inputFile.FullName, outputFolderPath);
   }
 
-  public static IEnumerable<TestMetadata> Import(string inputFileName, string outputFolderPath)
+  public static IEnumerable<TestMetadata> Import(string inputFileFullPath, string outputFolderPath)
   {
     var jsonFileContent = "";
 
-    if (inputFileName.EndsWith(".bicep"))
+    if (inputFileFullPath.EndsWith(".bicep"))
     {
-      var filename = Path.GetTempFileName();
+      var tempFileFullPath = Path.GetTempFileName();
 
       var buildArgs = new string[]
       {
         "build",
-        inputFileName,
+        inputFileFullPath,
         "--outfile",
-        filename
+        tempFileFullPath
       };
 
       Bicep.Cli.Program.Main(buildArgs).Wait();
 
-      jsonFileContent = File.ReadAllText(filename);
+      jsonFileContent = File.ReadAllText(tempFileFullPath);
 
       var generateParamsArgs = new string[]
       {
         "generate-params",
-        inputFileName,
-        "--outdir",
-        outputFolderPath
+        inputFileFullPath,
+        "--outfile",
+        outputFolderPath + "\\generated"
       };
 
       Bicep.Cli.Program.Main(generateParamsArgs).Wait();
 
-      File.Delete(filename);
+      File.Delete(tempFileFullPath);
     }
-    else if (inputFileName.EndsWith(".json"))
+    else if (inputFileFullPath.EndsWith(".json"))
     {
-      jsonFileContent = File.ReadAllText(inputFileName);
+      jsonFileContent = File.ReadAllText(inputFileFullPath);
     }
     else
     {
