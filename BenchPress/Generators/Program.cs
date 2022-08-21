@@ -20,6 +20,13 @@ rootCommand.SetHandler((fileInfo, outputFolder, languageProvider) =>
     if (fileInfo is null) return;
     if (languageProvider == LanguageProviderOptions.Undefined) return;
 
+    var testFilePath = outputFolder?.FullName ?? Path.GetFullPath("output");
+
+    if (!Directory.Exists(testFilePath))
+    {
+      Directory.CreateDirectory(testFilePath);
+    }
+
     ILanguageProvider provider = languageProvider switch
     {
       LanguageProviderOptions.Powershell => new PowershellLanguageProvider(),
@@ -28,7 +35,7 @@ rootCommand.SetHandler((fileInfo, outputFolder, languageProvider) =>
 
     var generator = new TestGenerator(provider);
 
-    var metadataList = AzureDeploymentImporter.Import(fileInfo);
+    var metadataList = AzureDeploymentImporter.Import(fileInfo, testFilePath);
 
     var testList = new List<TestDefinition>();
     var testGroups = new List<IEnumerable<TestDefinition>>();
@@ -57,14 +64,8 @@ rootCommand.SetHandler((fileInfo, outputFolder, languageProvider) =>
       var testsOutput = generator.Generate(group, provider.GetTemplateFileName());
 
       var testFileName = group.First().Metadata.ResourceType.Prefix + ".Tests.ps1";
-      var testFilePath = outputFolder?.FullName ?? Path.GetFullPath("output");
 
       var testFileFullName = Path.Join(testFilePath, testFileName);
-
-      if (!Directory.Exists(testFilePath))
-      {
-        Directory.CreateDirectory(testFilePath);
-      }
 
       File.WriteAllText(testFileFullName, testsOutput);
     }
