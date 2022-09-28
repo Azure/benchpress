@@ -3,7 +3,7 @@ function Deploy-BicepFeature([string]$path, $params, $resourceGroupName){
   $folder = Split-Path $path
   $armPath  = Join-Path -Path $folder -ChildPath "$fileName.json"
 
-  Write-Host "Tranpiling Bicep to Arm"
+  Write-Host "Transpiling Bicep to Arm"
   az bicep build --file $path
 
   $code = $?
