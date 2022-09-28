@@ -21,7 +21,7 @@ function Deploy-BicepFeature([string]$path, $params, $resourceGroupName){
     }
   }
 
-  Write-Host "Removing arm template json"
+  Write-Host "Removing Arm template json"
   rm "$armPath"
 }
 
