@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Generators": {
+      "commandName": "Project",
+      "commandLineArgs": "--provider powershell --import C:/Users/enpolat/source/repos/Azure/ocw-azure-testing-project/examples/sample.bicep"
+    }
+  }
+}
