@@ -1,0 +1,7 @@
+self-hosted-runner:
+  # Labels of self-hosted runner in array of string
+  labels:
+    # example labels
+    # - linux.2xlarge
+    # - windows-latest-xl
+    # - linux-multi-gpu
