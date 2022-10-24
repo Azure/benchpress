@@ -1,0 +1,34 @@
+name: pr_dotnet
+
+on:
+  push:
+    paths:
+      - "framework/dotnet/**"
+      - "samples/dotnet/**"
+  pull_request:
+    paths-ignore:
+      - "framework/dotnet/**"
+      - "samples/dotnet/**"
+    branches:
+      - main
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.PAT || secrets.GITHUB_TOKEN }}
+
+      - name: MegaLinter dotnet flavor
+        uses: oxsecurity/megalinter/flavors/dotnet@v6.12.0
+        env:
+          IGNORE_GITIGNORED_FILES: true
+          VALIDATE_ALL_CODEBASE: true
+          PRINT_ALL_FILES: true
+          DISABLE: SPELL,COPYPASTE,YAML
+          DISABLE_LINTERS: REPOSITORY_CHECKOV,REPOSITORY_TRIVY
+          FILTER_REGEX_EXCLUDE: '(BenchPress/|engine/|examples/|/docs|\.github/workflows|\.devcontainer|\.editorconfig|\.gitmodules|\.sln|\.md|LICENSE|/framework/python|samples/python)'
+          FILTER_REGEX_INCLUDE: '(framework/dotnet|samples/dotnet)'
+          REPORT_OUTPUT_FOLDER: ${GITHUB_WORKSPACE}/megalinter-reports

@@ -1,0 +1,35 @@
+{
+    "version": 0.1,
+    "language": "en",
+    "ignorePaths": [
+        "**/node_modules/**",
+        "**/vscode-extension/**",
+        "**/.git/**",
+        ".vscode",
+        "report"
+    ],
+    "patterns": [
+        {
+            "name": "comment-single-line",
+            "pattern": "/#.*/g"
+        },
+        {
+            "name": "comment-multi-line",
+            "pattern": "/(?:\\/\\*[\\s\\S]*?\\*\\/)/g"
+        },
+        // combine multiple named patterns into one single named pattern
+        {
+            "name": "comments",
+            "pattern": ["comment-single-line", "comment-multi-line"]
+        }
+    ],
+    "ignoreRegExpList": ["comments", "/^\\s*`[\\s\\S]*?^\\s*`/gm", "/^\\s*```[\\s\\S]*?^\\s*```/gm"],
+    "words": [
+        "onboardsupport",
+        "MSRC",
+        "msrc",
+        "Benchpress"
+    ]
+}
+
+
