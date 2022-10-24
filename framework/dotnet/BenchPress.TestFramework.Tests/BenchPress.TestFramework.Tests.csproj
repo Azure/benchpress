@@ -21,4 +21,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <GlobalAnalyzerConfigFiles Include="../../../.globalconfig" />
+  </ItemGroup>
+
 </Project>
