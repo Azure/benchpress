@@ -1,21 +1,82 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
 {
-  "name": "C# (.NET)",
-  "build": {
-    "dockerfile": "Dockerfile",
-    "args": {
-      "VARIANT": "6.0"
-    }
-  },
-  "settings": {},
-  "extensions": [
-    "ms-dotnettools.csharp"
-  ],
-  "remoteUser": "vscode",
-  "features": {
-    "azure-cli": "latest",
-    "powershell": "latest",
-    "kubectl-helm-minikube": "latest",
-    "git": "os-provided",
-    "github-cli": "latest"
-  }
+	"name": "Benchpress development tools including Azure CLI, C# (.NET), MegaLinter, Powershell, Python 3, etc",
+	"build": {
+		"dockerfile": "Dockerfile",
+		"args": {
+		  "VARIANT": "6.0"
+		}
+	},
+
+	// Configure tool-specific properties.
+	"customizations": {
+		// Configure properties specific to VS Code.
+		"vscode": {
+			// Set *default* container specific settings.json values on container create.
+			"settings": {
+				// Python
+				"python.defaultInterpreterPath": "/usr/local/python/current/bin/python",
+				"python.linting.enabled": true,
+				"python.linting.pylintEnabled": true,
+				"python.formatting.autopep8Path": "/usr/local/py-utils/bin/autopep8",
+				"python.formatting.blackPath": "/usr/local/py-utils/bin/black",
+				"python.formatting.yapfPath": "/usr/local/py-utils/bin/yapf",
+				"python.linting.banditPath": "/usr/local/py-utils/bin/bandit",
+				"python.linting.flake8Path": "/usr/local/py-utils/bin/flake8",
+				"python.linting.mypyPath": "/usr/local/py-utils/bin/mypy",
+				"python.linting.pycodestylePath": "/usr/local/py-utils/bin/pycodestyle",
+				"python.linting.pydocstylePath": "/usr/local/py-utils/bin/pydocstyle",
+				"python.linting.pylintPath": "/usr/local/py-utils/bin/pylint"
+			},
+			
+			// Add the IDs of extensions you want installed when the container is created.
+			"extensions": [
+				// ARM tools
+				"msazurermtools.azurerm-vscode-tools",
+
+				// Bicep
+				"ms-azuretools.vscode-bicep",
+
+				// C#
+				"ms-dotnettools.csharp",
+
+				// Python
+				"ms-python.python",
+				"ms-python.vscode-pylance"
+			]
+		}
+	},
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// This can be used to network with other containers or with the host.
+	// "forwardPorts": [5432],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// Installs:
+	//  	1. Mega Linter
+	//		2. Pester
+	"postCreateCommand": "npm install -g mega-linter-runner && pwsh -command Install-Module -Name Pester -Force -SkipPublisherCheck",
+
+	// Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+	"remoteUser": "vscode",
+	"features": {
+		"ghcr.io/devcontainers/features/azure-cli:1": {
+			"version": "latest"
+		},
+		"ghcr.io/devcontainers/features/powershell:1": {
+			"version": "latest"
+		},
+		"ghcr.io/devcontainers/features/git:1": {
+			"version": "latest"
+		},
+		"ghcr.io/devcontainers/features/github-cli:1": {
+			"version": "latest"
+		},
+		"ghcr.io/devcontainers/features/node:1": {
+			"version": "latest"
+		},
+		"ghcr.io/devcontainers/features/python:1": {
+			"version": "latest"
+		}
+	}
 }

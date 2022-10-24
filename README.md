@@ -18,6 +18,9 @@ B --> C[Remove]
 **Verification**: Test is going to confirm the resource exists and also assert if it matches the expected value
 **Remove**: Optionally resources can be removed after being tested
 
+## Getting started
+See [Getting Started](docs/getting_started.md) guide on how to start development on *Benchpress*.
+
 ## Contributing
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
