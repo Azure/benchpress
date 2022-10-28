@@ -95,6 +95,7 @@ enable=
 # --disable=W"
 
 disable=
+    bare-except,
     attribute-defined-outside-init,
     invalid-name,
     missing-docstring,

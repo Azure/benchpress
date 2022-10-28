@@ -1,3 +1,5 @@
 [flake8]
-max-line-length = 88
-extend-ignore = E203
+max-line-length = 120
+; Colons should not have any space before them
+; E722 do not use bare 'except'
+extend-ignore = E203,E722

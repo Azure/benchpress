@@ -8,10 +8,10 @@
 ###########################################
 extends: default
 rules:
-  new-lines:
-    level: warning
-    type: unix
-  line-length:
-    max: 500
-  comments:
-    min-spaces-from-content: 1 # Used to follow prettier standard: https://github.com/prettier/prettier/pull/10926
+    new-lines:
+        level: warning
+        type: unix
+    line-length:
+        max: 500
+    comments:
+        min-spaces-from-content: 1 # Used to follow prettier standard: https://github.com/prettier/prettier/pull/10926

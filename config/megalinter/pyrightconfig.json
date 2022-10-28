@@ -1,16 +1,12 @@
 {
-    "include": [
-        "src"
-    ],
+    "include": ["src"],
     "exclude": [
         "**/node_modules",
         "**/__pycache__",
         "src/experimental",
         "src/typestubs"
     ],
-    "ignore": [
-        "src/oldstuff"
-    ],
+    "ignore": ["src/oldstuff"],
     "defineConstant": {
         "DEBUG": true
     },
@@ -25,23 +21,16 @@
             "root": "src/web",
             "pythonVersion": "3.5",
             "pythonPlatform": "Windows",
-            "extraPaths": [
-                "src/service_libs"
-            ]
+            "extraPaths": ["src/service_libs"]
         },
         {
             "root": "src/sdk",
             "pythonVersion": "3.0",
-            "extraPaths": [
-                "src/backend"
-            ]
+            "extraPaths": ["src/backend"]
         },
         {
             "root": "src/tests",
-            "extraPaths": [
-                "src/tests/e2e",
-                "src/sdk"
-            ]
+            "extraPaths": ["src/tests/e2e", "src/sdk"]
         },
         {
             "root": "src"
