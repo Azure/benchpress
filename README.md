@@ -2,7 +2,7 @@
 
 This framework is intended to work as a testing framework for Azure deployment features by using [Bicep](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/overview?tabs=bicep).
 
-In order to see how you can work with this framework you can find one sample bicep file in the folder [samples](./examples/sample.bicep)
+In order to see how you can work with this framework you can find one sample bicep file in the folder [samples](./samples/dotnet/samples/pwsh/resourceGroup.bicep)
 that will be deployed by using one PowerShell script.
 
 Process is the following:

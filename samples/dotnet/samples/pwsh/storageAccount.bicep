@@ -1,8 +1,8 @@
-param storageAccountName string = 'strgtest'
-param location string = resourceGroup().location
+param name string
+param location string
 
 resource sa 'Microsoft.Storage/storageAccounts@2019-06-01' = {
-  name: storageAccountName
+  name: name
   location: location
   sku: {
     name: 'Standard_LRS'

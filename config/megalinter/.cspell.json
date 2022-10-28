@@ -28,7 +28,8 @@
     "onboardsupport",
     "MSRC",
     "msrc",
-    "Benchpress"
+    "Benchpress",
+    "pwsh"
   ],
   "version": "0.2",
   "patterns": [

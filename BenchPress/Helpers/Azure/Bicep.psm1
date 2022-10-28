@@ -1,28 +1,27 @@
-function Deploy-BicepFeature([string]$path, $params, $resourceGroupName){
+# Bicep Feature receives three parameters.
+# 1. Bicep file path. 2. parameters 3. resourceGroupName
+
+function Deploy-BicepFeature([string]$path, $params){
+  # armPath will be assigned for same bicep file name with json extension
   $fileName = [System.IO.Path]::GetFileNameWithoutExtension($path)
   $folder = Split-Path $path
   $armPath  = Join-Path -Path $folder -ChildPath "$fileName.json"
 
+  # az bicep build will create arm template from bicep file.
+  # Arm template will same as bicep name with json extension
   Write-Host "Transpiling Bicep to Arm"
   az bicep build --file $path
 
   $code = $?
   if ($code -eq "True") {
     $location = $params.location
-    $deploymentName = $params.deploymentName
-
-    Write-Host "Deploying ARM Template ($deploymentName) to $location"
-
-    if ([string]::IsNullOrEmpty($resourceGroupName)) {
-      New-AzSubscriptionDeployment -Name "$deploymentName" -Location "$location" -TemplateFile "$armPath" -TemplateParameterObject $params -SkipTemplateParameterPrompt
-    }
-    else{
-      New-AzResourceGroupDeployment -Name "$deploymentName" -ResourceGroupName "$resourceGroupName" -TemplateFile "$armPath" -TemplateParameterObject $params -SkipTemplateParameterPrompt
-    }
-  }
+    $deploymentName = $params.resourceGroupName
+    # TODO: Bicep code deploys using subscription deployment. Required to add other deployment types
+    # 1. TenantDeployment 2.ResourceGroupDeployment 3. ManagementGroupDeployment 4. SubscriptionDeployment
+    New-AzSubscriptionDeployment -Name "$deploymentName" -Location "$location" -TemplateFile "$armPath" -TemplateParameterObject $params -SkipTemplateParameterPrompt
 
   Write-Host "Removing Arm template json"
-  rm "$armPath"
+  Remove-Item "$armPath"
 }
 
 function Remove-BicepFeature($resourceGroupName){
