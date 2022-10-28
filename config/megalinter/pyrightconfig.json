@@ -16,7 +16,7 @@
     },
     "stubPath": "src/stubs",
     "venv": "env367",
-    "reportMissingImports": true,
+    "reportMissingImports": false,
     "reportMissingTypeStubs": false,
     "pythonVersion": "3.6",
     "pythonPlatform": "Linux",
