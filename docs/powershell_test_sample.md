@@ -4,6 +4,9 @@ Following instruction shows how to run StorageAccount.Tests.ps1 file
 
 File is located under following directory: `/samples/dotnet/samples/pwsh/Test`
 
+Login to Azure Subscription `Connect-AzAccount`
+if you are using docker container `Connect-AzAccount -UseDeviceAuthentication` and follow additional login instruction on the terminal
+
 Run the test `.\StorageAccount.Tests.ps1`
 
 Storage Account deployment uses two bicep files:
@@ -18,8 +21,8 @@ Storage Account deployment uses two bicep files:
 $ROOT_PATH = $PSScriptRoot | split-path -parent | split-path -parent | split-path -parent | split-path -parent | split-path -parent
 
 BeforeAll {
-    Import-Module -Name $ROOT_PATH/Benchpress/Helpers/Azure/StorageAcccount.psm1
-    Import-Module -Name $ROOT_PATH/Benchpress/Helpers/Azure/Bicep.psm1
+    Import-Module -Name $ROOT_PATH/BenchPress/Helpers/Azure/StorageAcccount.psm1
+    Import-Module -Name $ROOT_PATH/BenchPress/Helpers/Azure/Bicep.psm1
 }
 
 #global variables with required values for the tests. script keyword is used to avoid powershell megalinter complain for global keyword

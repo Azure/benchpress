@@ -1,8 +1,8 @@
 $ROOT_PATH = $PSScriptRoot | split-path -parent | split-path -parent | split-path -parent | split-path -parent | split-path -parent
 
 BeforeAll {
-  Import-Module -Name $ROOT_PATH/Benchpress/Helpers/Azure/ResourceGroup.psm1
-  Import-Module -Name $ROOT_PATH/Benchpress/Helpers/Azure/Bicep.psm1
+  Import-Module -Name $ROOT_PATH/BenchPress/Helpers/Azure/ResourceGroup.psm1
+  Import-Module -Name $ROOT_PATH/BenchPress/Helpers/Azure/Bicep.psm1
 }
 
 Describe 'Verify Resource Group Exists' {

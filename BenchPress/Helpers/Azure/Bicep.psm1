@@ -19,9 +19,11 @@ function Deploy-BicepFeature([string]$path, $params){
     # TODO: Bicep code deploys using subscription deployment. Required to add other deployment types
     # 1. TenantDeployment 2.ResourceGroupDeployment 3. ManagementGroupDeployment 4. SubscriptionDeployment
     New-AzSubscriptionDeployment -Name "$deploymentName" -Location "$location" -TemplateFile "$armPath" -TemplateParameterObject $params -SkipTemplateParameterPrompt
-
+  }
+  
   Write-Host "Removing Arm template json"
   Remove-Item "$armPath"
+
 }
 
 function Remove-BicepFeature($resourceGroupName){
