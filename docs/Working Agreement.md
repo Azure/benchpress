@@ -9,7 +9,7 @@ as needed. The agreement is signed off by everyone.
 ## Code of Conduct
 
 We pledge to follow the [Microsoft Open Source Code of Conduct: Commercial Software Engineering Technical
-Engagements](code_of_conduct.md) which strives to ensure that every member of our team and the world-class organizations
+Engagements](https://microsoft.github.io/codeofconduct/) which strives to ensure that every member of our team and the world-class organizations
 we engage with feels welcome and safe. In that spirit, we ask you to agree to and uphold our conduct standards as part
 of this technical engagement and to hold us to these same standards.
 
@@ -21,7 +21,7 @@ of this technical engagement and to hold us to these same standards.
 ## Work life balance
 
 - Our office hours, when we can expect to collaborate via Microsoft Teams, phone or face-to-face are Monday to Friday
-  10AM - 3PM (PST) when possible.
+  10AM - 6PM (EST) when possible.
 - Sometimes emails or IM messages happen when thoughts come to mind and may come outside of working hours. We are not
   expected to answer emails or IMs past 5PM, on weekends, or when we are on holidays or vacation.
 - We work in different time zones and respect this, especially when setting up recurring meetings.
@@ -31,7 +31,7 @@ of this technical engagement and to hold us to these same standards.
 
 - We agree on a Definition of Done for our user stories and sprints and live by it.
 - We follow engineering best practices like the [Code With Engineering
-  Playbook](https://github.com/microsoft/code-with-engineering-playbook)
+  Playbook](https://microsoft.github.io/code-with-engineering-playbook/)
 - We try to do demos every sprint when appropriate, we don't force a demo to fit just because it is the end of the
   sprint.
 - Appropriate time to prepare demos is given and an expectation of a demo on a moments notice will be avoided.
@@ -112,20 +112,17 @@ The process lead is responsible for leading any scrum or agile practices to enab
 
 ## Estimation
 
-- We will estimate Stories with [Fibonacci
-  Sequence](https://medium.com/ducalis-blog/story-points-how-fibonacci-sequence-works-for-agile-estimation-4c7e0081f4d8)
-  story points to estimate our work, and will make our estimates as a team during Sprint Planning. This will help us
+- We will estimate Stories using T-Shirt sizing (https://asana.com/resources/t-shirt-sizing)
+  to estimate our work, and will make our estimates as a team during Sprint Planning. This will help us
   gauge how much work we commit to within a sprint.
 
-| Story Points | Estimated Effort                                       |
+| T-Shirt Size | Estimated Effort                                       |
 |--------------|--------------------------------------------------------|
-| 1pts         | half a day of effort or less                           |
-| 2pts         | full day of effort                                     |
-| 3pts         | day and a half of effort                               |
-| 5pts         | 2 - 3 Days of effort                                   |
-| 8pts         | 4 Days of Effort (~1 week of a sprint)                 |
-| 13pts        | 6 Days of effort (~1.5 weeks of a sprint)              |
-| 21pts        | 10+ Days of effort (a Full end to end Sprint, or more) |
+| XS         | half a day of effort or less                           |
+| S         | full day of effort                                     |
+| M         | day and a half of effort                               |
+| L         | 2 - 3 Days of effort                                   |
+| XL         | 4 Days of Effort (~1 week of a sprint)                 |
 
 - Tasks and Bugs require hour estimates, as this will track our velocity. Task and bug owners are responsible for
   maintaining the Original Estimate, Remaining, and Completed fields in their Task record.
