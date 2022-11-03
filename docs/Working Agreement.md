@@ -44,11 +44,11 @@ which provides guidance on the purpose and structure of the ceremonies noted bel
 
 | Activity                       | When                  | Duration    | Who          | Accountable   | Goal                                                                                                                                |
 |--------------------------------|-----------------------|-------------|--------------|---------------|-------------------------------------------------------------------------------------------------------------------------------------|
-| Project Stand-up & Parking Lot | Mon-Fri 10:05 Pacific | 40 min      | Everyone     | Process Lead  | Stand-up: What has been accomplished, next steps, blockers (15 minutes) <br> Parking Lot: Optional extended discussion (25 minutes) |
-| Sprint Review                  | Tuesdays 9:30AM       | 120 minutes | Everyone     | Tech Lead     | Present work done and sign off on user story completion.                                                                            |
+| Project Stand-up & Parking Lot | Mon-Fri 10:05 Pacific | 30 min      | Everyone     | Process Lead  | Stand-up: What has been accomplished, next steps, blockers (15 minutes) <br> Parking Lot: Optional extended discussion (25 minutes) |
+| Sprint Review                  | Tuesdays 9:30AM       | 60 minutes | Everyone     | Tech Lead     | Present work done and sign off on user story completion.                                                                            |
 | Sprint Retrospective           | Tuesdays 10:15AM      | 90 minutes  | Everyone     | Process Lead  | Dev Teams shares learnings and what can be improved.                                                                                |
-| Sprint Planning                | Wednesdays 9:30AM     | 90 minutes  | Everyone     | Product Owner | Size and plan user stories for the sprint.                                                                                          |
-| Backlog refinement             | Mondays 9:30AM        | 90 minutes  | Dev Lead, PO | Product Owner | Prepare for next sprint and ensure that stories are ready for sprint planning.                                                      |
+| Sprint Planning                | Tuesdays 9:30AM     | 60 minutes  | Everyone     | Product Owner | Size and plan user stories for the sprint.                                                                                          |
+| Backlog refinement             | Mondays 9:30AM        | 60 minutes  | Dev Lead, PO | Product Owner | Prepare for next sprint and ensure that stories are ready for sprint planning.                                                      |
 
 ## Ceremony Lead
 
@@ -118,11 +118,11 @@ The process lead is responsible for leading any scrum or agile practices to enab
 
 | T-Shirt Size | Estimated Effort                                       |
 |--------------|--------------------------------------------------------|
-| XS         | half a day of effort or less                           |
-| S         | full day of effort                                     |
-| M         | day and a half of effort                               |
-| L         | 2 - 3 Days of effort                                   |
-| XL         | 4 Days of Effort (~1 week of a sprint)                 |
+| XS         | TBD by team                          |
+| S         | TBD by team                                      |
+| M         | TBD by team                               |
+| L         | TBD by team                                   |
+| XL         | TBD by team                 |
 
 - Tasks and Bugs require hour estimates, as this will track our velocity. Task and bug owners are responsible for
   maintaining the Original Estimate, Remaining, and Completed fields in their Task record.
