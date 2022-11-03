@@ -15,14 +15,14 @@ class ExampleTest(unittest.TestCase):
 
             # Act
             sa_status = storage_account.create(resource_group, storage_account_params)
-            
+
             # Assert
             self.assertTrue(benchpress.resource_group_exists(resource_group))
             self.assertTrue(sa_status.success)
             self.assertEqual(sa_status.a, storage_account_params["a"])
             self.assertEqual(sa_status.b, storage_account_params["b"])
             self.assertEqual(sa_status.c, storage_account_params["c"])
-        except:
+        except ValueError:
             # CRITIAL: We MUST include an "except" block or "finally" will not run
             # Consider adding a linting rule to enforce try: except: finally
             print("no-op") # linter try-except-pass rule

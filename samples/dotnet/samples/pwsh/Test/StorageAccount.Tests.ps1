@@ -1,9 +1,10 @@
 #repo root path
 $ROOT_PATH = $PSScriptRoot | split-path -parent | split-path -parent | split-path -parent | split-path -parent | split-path -parent
+Get-ChildItem $ROOT_PATH
 
 BeforeAll {
-    Import-Module -Name $ROOT_PATH/Benchpress/Helpers/Azure/StorageAcccount.psm1
-    Import-Module -Name $ROOT_PATH/Benchpress/Helpers/Azure/Bicep.psm1
+    Import-Module -Name $ROOT_PATH/BenchPress/Helpers/Azure/StorageAcccount.psm1
+    Import-Module -Name $ROOT_PATH/BenchPress/Helpers/Azure/Bicep.psm1
 }
 
 #global variables with required values for the tests. script keyword is used to avoid powershell megalinter complain for global keyword
