@@ -30,7 +30,10 @@
     "msrc",
     "Benchpress",
     "BenchPress",
-    "pwsh"
+    "pwsh",
+    "upskilling",
+    "mitigations",
+    "fmok"
   ],
   "version": "0.2",
   "patterns": [
