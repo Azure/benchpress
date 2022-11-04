@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package benchpress;
+
+option csharp_namespace = "BenchPress.TestEngine";
+
+// Currently only supports deployments with the target scope of resource group.
+// Other scopes: subscription, management group, and tenant.
+service Bicep {
+  rpc DeploymentGroupCreate (DeploymentGroupRequest) returns (DeploymentResult);
+  rpc DeleteGroup (DeleteGroupRequest) returns (DeploymentResult);
+}
+
+message DeploymentGroupRequest {
+  string bicep_file_path = 1;
+  string parameter_file_path = 2;
+  string resource_group_name = 3;
+  string subscription_name_or_id = 4;
+}
+
+message DeleteGroupRequest {
+  string resource_group_name = 1;
+  string subscription_name_or_id = 2;
+}
+
+message DeploymentResult {
+  bool success = 1;
+  string error_message = 2;
+}

@@ -5,6 +5,8 @@ on:
     paths:
       - "framework/dotnet/**"
       - "samples/dotnet/**"
+      - "engine/**"
+      - "protos/**"
       - ".github/workflows/pr_dotnet.yaml"
     branches:
       - main
@@ -34,8 +36,8 @@ jobs:
           PRINT_ALL_FILES: true
           DISABLE: SPELL,COPYPASTE,YAML
           DISABLE_LINTERS: REPOSITORY_CHECKOV,REPOSITORY_TRIVY
-          FILTER_REGEX_EXCLUDE: '(BenchPress/|engine/|examples/|/docs|\.devcontainer|\.editorconfig|\.gitmodules|\.sln|\.md|LICENSE|/framework/python|samples/python)'
-          FILTER_REGEX_INCLUDE: '(framework/dotnet|samples/dotnet)'
+          FILTER_REGEX_EXCLUDE: '(BenchPress/|examples/|/docs|\.devcontainer|\.editorconfig|\.gitmodules|\.sln|\.md|LICENSE|/framework/python|samples/python)'
+          FILTER_REGEX_INCLUDE: '(framework/dotnet|samples/dotnet|engine/)'
           REPORT_OUTPUT_FOLDER: ${GITHUB_WORKSPACE}/megalinter-reports
 
       - name: Setup dotnet

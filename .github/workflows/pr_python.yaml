@@ -5,6 +5,7 @@ on:
     paths:
       - "framework/python/**"
       - "samples/python/**"
+      - "protos/**"
       - ".github/workflows/pr_python.yaml"
     branches:
       - main

@@ -7,6 +7,7 @@
 		  "VARIANT": "6.0"
 		}
 	},
+
 	// Configure tool-specific properties.
 	"customizations": {
 		// Configure properties specific to VS Code.
@@ -27,7 +28,7 @@
 				"python.linting.pydocstylePath": "/usr/local/py-utils/bin/pydocstyle",
 				"python.linting.pylintPath": "/usr/local/py-utils/bin/pylint"
 			},
-
+			
 			// Add the IDs of extensions you want installed when the container is created.
 			"extensions": [
 				// ARM tools
@@ -38,6 +39,7 @@
 
 				// C#
 				"ms-dotnettools.csharp",
+
 				// Python
 				"ms-python.python",
 				"ms-python.vscode-pylance",
@@ -52,9 +54,10 @@
 
 	// Use 'postCreateCommand' to run commands after the container is created.
 	// Installs:
-	//   1. Mega Linter`
-	//   2. Configures benchpress Python module
-	"postCreateCommand": "npm install -g mega-linter-runner && pip install --editable ./framework/python/",
+	//   1. Mega Linter
+	//   2. Pester
+	//   3. Configures benchpress Python module
+	"postCreateCommand": "npm install -g mega-linter-runner && pwsh -command Install-Module -Name Pester -Force -SkipPublisherCheck && pip install --editable ./framework/python/",
 
 	// Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
 	"remoteUser": "vscode",
