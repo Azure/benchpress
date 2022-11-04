@@ -33,10 +33,6 @@ This is an example of running `.github/workflows/pr_dotnet.yml` file to lint dot
 name: pr_dotnet
 
 on:
-  push:
-    paths:
-      - "framework/dotnet/**"
-      - "samples/dotnet/**"
   pull_request:
     paths-ignore:
       - "framework/dotnet/**"
@@ -74,25 +70,15 @@ act pull_request --workflows .\.github\workflows\pr_docs.yaml
 
 #### Linting overview
 
-When new code gets pushed to dotnet directories, the linting gets triggered
-
-```yaml
-on:
-  push:
-    paths:
-      - "framework/dotnet/**"
-      - "samples/dotnet/**"
-```
-
 When pull_request is created, following directories gets skipped from linting to allow the merge
 
 ```yaml
 pull_request:
-    paths-ignore:
-      - "framework/dotnet/**"
-      - "samples/dotnet/**"
-    branches:
-      - main
+  paths-ignore:
+    - "framework/dotnet/**"
+    - "samples/dotnet/**"
+  branches:
+    - main
 ```
 
 In this pr_dotnet workflow, we are using Megalinter flavor for dotnet

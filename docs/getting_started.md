@@ -11,7 +11,7 @@ Visual Studio Code supports compilation and development on a container known as 
 
 If you’re using VS Code, please install see the installation guide to install Docker and VS Code extension: https://code.visualstudio.com/docs/remote/containers#_installation
 
-Then launch the environment by opening the command pallete <kbd>Shift</kbd>+<kbd>Command</kbd>+<kbd>P</kbd> (Mac) / <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> (Windows/Linux) and running `Dev Containers: Open Folder in Container`
+Then launch the environment by opening the command palette <kbd>Shift</kbd>+<kbd>Command</kbd>+<kbd>P</kbd> (Mac) / <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> (Windows/Linux) and running `Dev Containers: Open Folder in Container`
 
 The Dev Container configuration also contains VS Code extensions for linting/formatting/testing/compilation.
 
