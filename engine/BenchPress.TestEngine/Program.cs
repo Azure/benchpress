@@ -1,5 +1,7 @@
 using BenchPress.TestEngine.Services;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.Extensions.Azure;
+using Azure.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,12 @@ builder.WebHost.ConfigureKestrel(options =>
 
 // Add services to the container.
 builder.Services.AddGrpc();
+builder.Services.AddAzureClients(builder => {
+    builder.AddClient<ArmClient, ArmClientOptions>(options => {
+        return new ArmClient(new DefaultAzureCredential());
+    });
+});
+builder.Services.AddSingleton<IArmDeploymentService, ArmDeploymentService>();
 
 var app = builder.Build();
 
