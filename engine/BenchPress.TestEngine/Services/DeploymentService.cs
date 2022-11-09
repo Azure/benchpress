@@ -4,11 +4,13 @@ public class DeploymentService : Deployment.DeploymentBase
 {
 
     private readonly ILogger<DeploymentService> logger;
+    private readonly IBicepTranspileService bicepTranspileService;
     private readonly IArmDeploymentService armDeploymentService;
 
-    public DeploymentService(ILogger<DeploymentService> logger, IArmDeploymentService armDeploymentService)
+    public DeploymentService(ILogger<DeploymentService> logger, IBicepTranspileService bicepTranspileService, IArmDeploymentService armDeploymentService)
     {
         this.logger = logger;
+        this.bicepTranspileService = bicepTranspileService;
         this.armDeploymentService = armDeploymentService;
     }
 
@@ -27,8 +29,8 @@ public class DeploymentService : Deployment.DeploymentBase
 
         try
         {
-            // TODO: pass in transpiled arm template instead
-            var deployment = await armDeploymentService.DeployArmToResourceGroupAsync(request.SubscriptionNameOrId, request.ResourceGroupName, request.BicepFilePath, request.ParameterFilePath);
+            var armTemplatePath = await bicepTranspileService.BuildAsync(request.BicepFilePath);
+            var deployment = await armDeploymentService.DeployArmToResourceGroupAsync(request.SubscriptionNameOrId, request.ResourceGroupName, armTemplatePath, request.ParameterFilePath);
             var response = deployment.WaitForCompletionResponse();
 
             return new DeploymentResult
@@ -36,7 +38,6 @@ public class DeploymentService : Deployment.DeploymentBase
                 Success = !response.IsError,
                 ErrorMessage = response.ReasonPhrase
             };
-
         }
         catch (Exception ex)
         {

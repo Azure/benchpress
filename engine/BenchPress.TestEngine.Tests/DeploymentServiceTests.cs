@@ -7,21 +7,23 @@ public class DeploymentServiceTests
 {
     private readonly DeploymentService deploymentService;
     private readonly ServerCallContext context;
+    private readonly Mock<IBicepTranspileService> bicepTranspileServiceMock;
     private readonly Mock<IArmDeploymentService> armDeploymentMock;
+    private const string templatePath = "main.json";
 
     public DeploymentServiceTests()
     {
         var logger = Mock.Of<ILogger<DeploymentService>>();
+        bicepTranspileServiceMock = new Mock<IBicepTranspileService>(MockBehavior.Strict);
         armDeploymentMock = new Mock<IArmDeploymentService>(MockBehavior.Strict);
-        deploymentService = new DeploymentService(logger, armDeploymentMock.Object);
+        deploymentService = new DeploymentService(logger, bicepTranspileServiceMock.Object, armDeploymentMock.Object);
         context = new MockServerCallContext();
     }
 
     [Fact]
     public async Task DeploymentGroupCreate_DeploysResourceGroup_WithTranspiledFiles()
     {
-        // TODO: set up successful transpilation
-        var templatePath = validGroupRequest.BicepFilePath;
+        SetUpSuccessfulTranspilation(validGroupRequest.BicepFilePath, templatePath);
         SetUpSuccessfulGroupDeployment(validGroupRequest, templatePath);
         var result = await deploymentService.DeploymentGroupCreate(validGroupRequest, context);
         Assert.True(result.Success);
@@ -35,20 +37,19 @@ public class DeploymentServiceTests
     public async Task DeploymentGroupCreate_FailsOnMissingParameters(string bicepFilePath, string resourceGroupName, string subscriptionNameOrId)
     {
         var request = SetUpGroupRequest(bicepFilePath, resourceGroupName, subscriptionNameOrId);
-        // TODO: set up successful transpilation
-        var templatePath = request.BicepFilePath;
+        SetUpSuccessfulTranspilation(validGroupRequest.BicepFilePath, templatePath);
         SetUpSuccessfulGroupDeployment(request, templatePath);
         var result = await deploymentService.DeploymentGroupCreate(request, context);
         Assert.False(result.Success);
-        // TODO: verify transpile wasn't called
+        VerifyNoTranspilation();
         VerifyNoDeployments();
     }
 
-    [Fact(Skip = "Not Fully Implemented")]
+    [Fact]
     public async Task DeploymentGroupCreate_ReturnsFailureOnTranspileException()
     {
         var expectedMessage = "the bicep file was malformed";
-        // TODO: set up exception throwing transpilation
+        SetUpExceptionThrowingTranspilation(new Exception(expectedMessage));
         SetUpSuccessfulGroupDeployment(validGroupRequest, "template.json");
         var result = await deploymentService.DeploymentGroupCreate(validGroupRequest, context);
         Assert.False(result.Success);
@@ -58,7 +59,7 @@ public class DeploymentServiceTests
     [Fact]
     public async Task DeploymentGroupCreate_ReturnsFailureOnFailedDeployment()
     {
-        // TODO: set up successful transpilation
+        SetUpSuccessfulTranspilation(validGroupRequest.BicepFilePath, templatePath);
         var expectedReason = "Failure occured during deployment";
         SetUpFailedGroupDeployment(expectedReason);
         var result = await deploymentService.DeploymentGroupCreate(validGroupRequest, context);
@@ -69,7 +70,7 @@ public class DeploymentServiceTests
     [Fact]
     public async Task DeploymentGroupCreate_ReturnsFailureOnDeploymentException()
     {
-        // TODO: set up successful transpilation
+        SetUpSuccessfulTranspilation(validGroupRequest.BicepFilePath, templatePath);
         var expectedMessage = "the template was malformed";
         SetUpExceptionThrowingGroupDeployment(new Exception(expectedMessage));
         var result = await deploymentService.DeploymentGroupCreate(validGroupRequest, context);
@@ -96,7 +97,8 @@ public class DeploymentServiceTests
         SubscriptionNameOrId = Guid.NewGuid().ToString()
     };
 
-    private DeploymentGroupRequest SetUpGroupRequest(string bicepFilePath, string resourceGroupName, string subscriptionNameOrId) {
+    private DeploymentGroupRequest SetUpGroupRequest(string bicepFilePath, string resourceGroupName, string subscriptionNameOrId)
+    {
         return new DeploymentGroupRequest
         {
             BicepFilePath = bicepFilePath,
@@ -105,7 +107,28 @@ public class DeploymentServiceTests
         };
     }
 
-    private ArmOperation<ArmDeploymentResource> SetupDeploymentOperation(bool success, string reason) {
+    private void SetUpSuccessfulTranspilation(string bicepFilePath, string armTemplatePath)
+    {
+        bicepTranspileServiceMock.Setup(x => x.BuildAsync(bicepFilePath)).ReturnsAsync(armTemplatePath);
+    }
+
+    private void SetUpExceptionThrowingTranspilation(Exception ex)
+    {
+        bicepTranspileServiceMock.Setup(x => x.BuildAsync(It.IsAny<string>())).ThrowsAsync(ex);
+    }
+
+    private void VerifyTranspilation(string bicepFilePath)
+    {
+        bicepTranspileServiceMock.Verify(x => x.BuildAsync(bicepFilePath), Times.Once);
+    }
+
+    private void VerifyNoTranspilation()
+    {
+        bicepTranspileServiceMock.Verify(x => x.BuildAsync(It.IsAny<string>()), Times.Never);
+    }
+
+    private ArmOperation<ArmDeploymentResource> SetupDeploymentOperation(bool success, string reason)
+    {
         var responseMock = new Mock<Azure.Response>();
         responseMock.Setup(x => x.IsError).Returns(!success);
         responseMock.Setup(x => x.ReasonPhrase).Returns(reason);
@@ -114,7 +137,8 @@ public class DeploymentServiceTests
         return operationMock.Object;
     }
 
-    private void SetUpSuccessfulGroupDeployment(DeploymentGroupRequest request, string templatePath) {
+    private void SetUpSuccessfulGroupDeployment(DeploymentGroupRequest request, string templatePath)
+    {
         var operation = SetupDeploymentOperation(true, "OK");
         armDeploymentMock.Setup(x => x.DeployArmToResourceGroupAsync(
                 request.SubscriptionNameOrId,
@@ -125,7 +149,8 @@ public class DeploymentServiceTests
             .ReturnsAsync(operation);
     }
 
-    private void SetUpFailedGroupDeployment(string reason) {
+    private void SetUpFailedGroupDeployment(string reason) 
+    {
         var operation = SetupDeploymentOperation(false, reason);
         armDeploymentMock.Setup(x => x.DeployArmToResourceGroupAsync(
                 It.IsAny<string>(),
@@ -136,17 +161,19 @@ public class DeploymentServiceTests
             .ReturnsAsync(operation);
     }
 
-    private void SetUpExceptionThrowingGroupDeployment(Exception ex) {
+    private void SetUpExceptionThrowingGroupDeployment(Exception ex)
+    {
         armDeploymentMock.Setup(x => x.DeployArmToResourceGroupAsync(
                 It.IsAny<string>(),
                 It.IsAny<string>(),
                 It.IsAny<string>(),
                 It.IsAny<string>(),
                 It.IsAny<Azure.WaitUntil>()))
-            .ThrowsAsync(ex);
+            .ThrowsAsync(ex);  
     }
 
-    private void VerifyGroupDeployment(DeploymentGroupRequest request, string templatePath) {
+    private void VerifyGroupDeployment(DeploymentGroupRequest request, string templatePath)
+    {
         armDeploymentMock.Verify(x => x.DeployArmToResourceGroupAsync(
                 request.SubscriptionNameOrId,
                 request.ResourceGroupName,
@@ -156,7 +183,8 @@ public class DeploymentServiceTests
             Times.Once);
     }
 
-    private void VerifyNoDeployments() {
+    private void VerifyNoDeployments()
+    {
         armDeploymentMock.Verify(x => x.DeployArmToResourceGroupAsync(
                 It.IsAny<string>(),
                 It.IsAny<string>(),
