@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Include="../../../protos/bicep.proto" GrpcServices="Client" />
+    <Protobuf Include="../../../protos/deployment.proto" GrpcServices="Client" />
     <Protobuf Include="../../../protos/resource_group.proto" GrpcServices="Client" />
   </ItemGroup>
 

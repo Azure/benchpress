@@ -1,11 +1,12 @@
 namespace BenchPress.TestEngine.Services;
 
-public class BicepService : Bicep.BicepBase
+public class DeploymentService : Deployment.DeploymentBase
 {
-    private readonly ILogger<BicepService> logger;
+
+    private readonly ILogger<DeploymentService> logger;
     private readonly IArmDeploymentService armDeploymentService;
 
-    public BicepService(ILogger<BicepService> logger, IArmDeploymentService armDeploymentService)
+    public DeploymentService(ILogger<DeploymentService> logger, IArmDeploymentService armDeploymentService)
     {
         this.logger = logger;
         this.armDeploymentService = armDeploymentService;
@@ -15,26 +16,32 @@ public class BicepService : Bicep.BicepBase
     {
         if (string.IsNullOrWhiteSpace(request.BicepFilePath)
             || string.IsNullOrWhiteSpace(request.ResourceGroupName)
-            || string.IsNullOrWhiteSpace(request.SubscriptionNameOrId)) 
+            || string.IsNullOrWhiteSpace(request.SubscriptionNameOrId))
         {
-            return new DeploymentResult {
+            return new DeploymentResult
+            {
                 Success = false,
                 ErrorMessage = $"One or more of the following required parameters was missing: {nameof(request.BicepFilePath)}, {nameof(request.ResourceGroupName)}, and {nameof(request.SubscriptionNameOrId)}"
             };
         }
 
-        try {
+        try
+        {
             // TODO: pass in transpiled arm template instead
             var deployment = await armDeploymentService.DeployArmToResourceGroupAsync(request.SubscriptionNameOrId, request.ResourceGroupName, request.BicepFilePath, request.ParameterFilePath);
             var response = deployment.WaitForCompletionResponse();
-            
-            return new DeploymentResult {
+
+            return new DeploymentResult
+            {
                 Success = !response.IsError,
                 ErrorMessage = response.ReasonPhrase
             };
 
-        } catch (Exception ex) {
-            return new DeploymentResult {
+        }
+        catch (Exception ex)
+        {
+            return new DeploymentResult
+            {
                 Success = false,
                 ErrorMessage = ex.Message
             };

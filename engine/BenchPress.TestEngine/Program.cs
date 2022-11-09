@@ -22,11 +22,13 @@ builder.Services.AddAzureClients(builder => {
     });
 });
 builder.Services.AddSingleton<IArmDeploymentService, ArmDeploymentService>();
+builder.Services.AddSingleton<IBicepTranspileService, BicepTranspileService>();
+builder.Services.AddSingleton<IBicepExecute, BicepExecute>();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-app.MapGrpcService<BicepService>();
+app.MapGrpcService<DeploymentService>();
 app.MapGrpcService<ResourceGroupService>();
 app.MapGet("/", () => "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
 

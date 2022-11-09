@@ -23,10 +23,12 @@ jobs:
         os: [ ubuntu-latest ]
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository and submodules
         uses: actions/checkout@v3
         with:
           token: ${{ secrets.PAT || secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+          submodules: recursive
 
       - name: MegaLinter dotnet flavor
         uses: oxsecurity/megalinter/flavors/dotnet@v6.12.0
@@ -36,12 +38,12 @@ jobs:
           PRINT_ALL_FILES: true
           DISABLE: SPELL,COPYPASTE,YAML
           DISABLE_LINTERS: REPOSITORY_CHECKOV,REPOSITORY_TRIVY
-          FILTER_REGEX_EXCLUDE: '(BenchPress/|examples/|/docs|\.devcontainer|\.editorconfig|\.gitmodules|\.sln|\.md|LICENSE|/framework/python|samples/python)'
           FILTER_REGEX_INCLUDE: '(framework/dotnet|samples/dotnet|engine/)'
+          FILTER_REGEX_EXCLUDE: '(examples/|/docs|\.devcontainer|\.editorconfig|\.gitmodules|\.sln|\.md|LICENSE|/framework/python|samples/python)'
           REPORT_OUTPUT_FOLDER: ${GITHUB_WORKSPACE}/megalinter-reports
 
       - name: Setup dotnet
-        uses: actions/setup-dotnet@v1
+        uses: actions/setup-dotnet@v3
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 

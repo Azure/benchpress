@@ -6,7 +6,7 @@ option csharp_namespace = "BenchPress.TestEngine";
 
 // Currently only supports deployments with the target scope of resource group.
 // Other scopes: subscription, management group, and tenant.
-service Bicep {
+service Deployment {
   rpc DeploymentGroupCreate (DeploymentGroupRequest) returns (DeploymentResult);
   rpc DeleteGroup (DeleteGroupRequest) returns (DeploymentResult);
 }

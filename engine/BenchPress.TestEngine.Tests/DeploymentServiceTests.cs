@@ -3,17 +3,17 @@ using Azure.ResourceManager.Resources;
 
 namespace BenchPress.TestEngine.Tests;
 
-public class BicepServiceTests
+public class DeploymentServiceTests
 {
-    private readonly BicepService bicepService;
+    private readonly DeploymentService deploymentService;
     private readonly ServerCallContext context;
     private readonly Mock<IArmDeploymentService> armDeploymentMock;
 
-    public BicepServiceTests()
+    public DeploymentServiceTests()
     {
-        var logger = Mock.Of<ILogger<BicepService>>();
+        var logger = Mock.Of<ILogger<DeploymentService>>();
         armDeploymentMock = new Mock<IArmDeploymentService>(MockBehavior.Strict);
-        bicepService = new BicepService(logger, armDeploymentMock.Object);
+        deploymentService = new DeploymentService(logger, armDeploymentMock.Object);
         context = new MockServerCallContext();
     }
 
@@ -23,7 +23,7 @@ public class BicepServiceTests
         // TODO: set up successful transpilation
         var templatePath = validGroupRequest.BicepFilePath;
         SetUpSuccessfulGroupDeployment(validGroupRequest, templatePath);
-        var result = await bicepService.DeploymentGroupCreate(validGroupRequest, context);
+        var result = await deploymentService.DeploymentGroupCreate(validGroupRequest, context);
         Assert.True(result.Success);
         VerifyGroupDeployment(validGroupRequest, templatePath);
     }
@@ -38,7 +38,7 @@ public class BicepServiceTests
         // TODO: set up successful transpilation
         var templatePath = request.BicepFilePath;
         SetUpSuccessfulGroupDeployment(request, templatePath);
-        var result = await bicepService.DeploymentGroupCreate(request, context);
+        var result = await deploymentService.DeploymentGroupCreate(request, context);
         Assert.False(result.Success);
         // TODO: verify transpile wasn't called
         VerifyNoDeployments();
@@ -50,7 +50,7 @@ public class BicepServiceTests
         var expectedMessage = "the bicep file was malformed";
         // TODO: set up exception throwing transpilation
         SetUpSuccessfulGroupDeployment(validGroupRequest, "template.json");
-        var result = await bicepService.DeploymentGroupCreate(validGroupRequest, context);
+        var result = await deploymentService.DeploymentGroupCreate(validGroupRequest, context);
         Assert.False(result.Success);
         Assert.Equal(expectedMessage, result.ErrorMessage);
     }
@@ -61,7 +61,7 @@ public class BicepServiceTests
         // TODO: set up successful transpilation
         var expectedReason = "Failure occured during deployment";
         SetUpFailedGroupDeployment(expectedReason);
-        var result = await bicepService.DeploymentGroupCreate(validGroupRequest, context);
+        var result = await deploymentService.DeploymentGroupCreate(validGroupRequest, context);
         Assert.False(result.Success);
         Assert.Equal(expectedReason, result.ErrorMessage);
     }
@@ -72,7 +72,7 @@ public class BicepServiceTests
         // TODO: set up successful transpilation
         var expectedMessage = "the template was malformed";
         SetUpExceptionThrowingGroupDeployment(new Exception(expectedMessage));
-        var result = await bicepService.DeploymentGroupCreate(validGroupRequest, context);
+        var result = await deploymentService.DeploymentGroupCreate(validGroupRequest, context);
         Assert.False(result.Success);
         Assert.Equal(expectedMessage, result.ErrorMessage);
     }
@@ -85,7 +85,7 @@ public class BicepServiceTests
             ResourceGroupName = "test-rg",
             SubscriptionNameOrId = Guid.NewGuid().ToString()
         };
-        var result = await bicepService.DeleteGroup(request, context);
+        var result = await deploymentService.DeleteGroup(request, context);
         Assert.True(result.Success);
     }
 
@@ -143,7 +143,7 @@ public class BicepServiceTests
                 It.IsAny<string>(),
                 It.IsAny<string>(),
                 It.IsAny<Azure.WaitUntil>()))
-            .ThrowsAsync(ex);  
+            .ThrowsAsync(ex);
     }
 
     private void VerifyGroupDeployment(DeploymentGroupRequest request, string templatePath) {
