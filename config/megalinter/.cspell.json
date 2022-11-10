@@ -30,7 +30,9 @@
     "msrc",
     "Benchpress",
     "BenchPress",
-    "pwsh"
+    "pwsh",
+    "proto",
+    "protos"
   ],
   "version": "0.2",
   "patterns": [
