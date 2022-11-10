@@ -8,6 +8,7 @@ option csharp_namespace = "BenchPress.TestEngine";
 // Other scopes: subscription, management group, and tenant.
 service Deployment {
   rpc DeploymentGroupCreate (DeploymentGroupRequest) returns (DeploymentResult);
+  rpc DeploymentSubCreate (DeploymentSubRequest) returns (DeploymentResult);
   rpc DeleteGroup (DeleteGroupRequest) returns (DeploymentResult);
 }
 
@@ -15,6 +16,13 @@ message DeploymentGroupRequest {
   string bicep_file_path = 1;
   string parameter_file_path = 2;
   string resource_group_name = 3;
+  string subscription_name_or_id = 4;
+}
+
+message DeploymentSubRequest {
+  string bicep_file_path = 1;
+  string parameter_file_path = 2;
+  string location = 3;
   string subscription_name_or_id = 4;
 }
 

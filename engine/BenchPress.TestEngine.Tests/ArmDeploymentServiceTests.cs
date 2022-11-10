@@ -12,6 +12,7 @@ public class ArmDeploymentServiceTests {
     private readonly Mock<ArmDeploymentCollection> subscriptionDeploymentsMock;
     private const string validSubId = "a3a01f37-665c-4ee8-9bc3-3adf7ebcec0d";
     private const string validRgName = "test-rg";
+    private const string validLocation = "eastus";
     private const string smapleFiles = "../../../SampleFiles";
     private const string standaloneTemplate = $"{smapleFiles}/storage-account.json";
     private const string templateWithParams = $"{smapleFiles}/storage-account-needs-params.json";
@@ -92,19 +93,20 @@ public class ArmDeploymentServiceTests {
     {
         var subMock = SetUpSubscriptionMock(validSubId);
         SetUpDeploymentsMock(subscriptionDeploymentsMock);
-        await armDeploymentService.DeployArmToSubscriptionAsync(validSubId, templateWithParams, parameters);
+        await armDeploymentService.DeployArmToSubscriptionAsync(validSubId, validLocation, templateWithParams, parameters);
         VerifyDeploymentsMock(subscriptionDeploymentsMock);
     }
 
     [Theory]
-    [InlineData("", "a3a01f37-665c-4ee8-9bc3-3adf7ebcec0d")]
-    [InlineData("main.bicep", "")]
-    public async Task DeployArmToSubscriptionAsync_MissingParameter_ThrowsException(string templatePath, string subId)
+    [InlineData("main.bicep", "", "a3a01f37-665c-4ee8-9bc3-3adf7ebcec0d")]
+    [InlineData("", "eastus", "a3a01f37-665c-4ee8-9bc3-3adf7ebcec0d")]
+    [InlineData("main.bicep", "eastus", "")]
+    public async Task DeployArmToSubscriptionAsync_MissingParameter_ThrowsException(string templatePath, string location, string subId)
     {
         var subMock = SetUpSubscriptionMock(subId);
         SetUpDeploymentsMock(subscriptionDeploymentsMock);
         var ex = await Assert.ThrowsAsync<ArgumentException>(
-            async () => await armDeploymentService.DeployArmToSubscriptionAsync(subId, templatePath)
+            async () => await armDeploymentService.DeployArmToSubscriptionAsync(subId, location, templatePath)
         );
         Assert.Equal("One or more parameters were missing or empty", ex.Message);
     }
@@ -116,7 +118,7 @@ public class ArmDeploymentServiceTests {
         var excepectedMessage = "Deployment template validation failed";
         SetUpDeploymentExceptionMock(subscriptionDeploymentsMock, new RequestFailedException(excepectedMessage));
         var ex = await Assert.ThrowsAsync<RequestFailedException>(
-            async () => await armDeploymentService.DeployArmToSubscriptionAsync(validSubId, templateWithParams)
+            async () => await armDeploymentService.DeployArmToSubscriptionAsync(validSubId, validLocation, templateWithParams)
         );
         Assert.Equal(excepectedMessage, ex.Message);
     }
@@ -127,13 +129,22 @@ public class ArmDeploymentServiceTests {
         var subMock = SetUpSubscriptionMock(validSubId);
         SetUpDeploymentsMock(subscriptionDeploymentsMock);
         var ex = await Assert.ThrowsAsync<RequestFailedException>(
-            async () => await armDeploymentService.DeployArmToSubscriptionAsync("The Wrong Subscription", standaloneTemplate)
+            async () => await armDeploymentService.DeployArmToSubscriptionAsync("The Wrong Subscription", validLocation, standaloneTemplate)
         );
         Assert.Equal("Subscription Not Found", ex.Message);
     }
 
     [Fact]
     public async Task CreateDeploymentContent_WithoutParameters()
+    {
+        var subMock = SetUpSubscriptionMock(validSubId);
+        SetUpDeploymentsMock(subscriptionDeploymentsMock);
+        await armDeploymentService.DeployArmToSubscriptionAsync(validSubId, validLocation, standaloneTemplate);
+        VerifyDeploymentsMock(subscriptionDeploymentsMock);
+    }
+
+    [Fact]
+    public async Task CreateDeploymentContent_WithoutLocation()
     {
         var subMock = SetUpSubscriptionMock(validSubId);
         var rgMock = SetUpResourceGroupMock(subMock, validRgName);

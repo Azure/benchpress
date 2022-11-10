@@ -20,11 +20,11 @@ public class ArmDeploymentService : IArmDeploymentService {
         return await CreateGroupDeployment(rg, waitUntil, NewDeploymentName, deploymentContent);
     }
 
-    public async Task<ArmOperation<ArmDeploymentResource>> DeployArmToSubscriptionAsync(string subscriptionNameOrId, string armTemplatePath, string? parametersPath = null, WaitUntil waitUtil = WaitUntil.Completed)
+    public async Task<ArmOperation<ArmDeploymentResource>> DeployArmToSubscriptionAsync(string subscriptionNameOrId, string location, string armTemplatePath, string? parametersPath = null, WaitUntil waitUtil = WaitUntil.Completed)
     {
-        ValidateParameters(subscriptionNameOrId, armTemplatePath);
+        ValidateParameters(subscriptionNameOrId, location, armTemplatePath);
         SubscriptionResource sub = await client.GetSubscriptions().GetAsync(subscriptionNameOrId);
-        var deploymentContent = await CreateDeploymentContent(armTemplatePath, parametersPath);
+        var deploymentContent = await CreateDeploymentContent(armTemplatePath, parametersPath, location);
         return await CreateSubscriptionDeployment(sub, waitUtil, NewDeploymentName, deploymentContent);
     }
 
@@ -34,18 +34,26 @@ public class ArmDeploymentService : IArmDeploymentService {
         }
     }
 
-    private async Task<ArmDeploymentContent> CreateDeploymentContent(string armTemplatePath, string? parametersPath) {
+    private async Task<ArmDeploymentContent> CreateDeploymentContent(string armTemplatePath, string? parametersPath, string? location = null) {
         var templateContent = (await File.ReadAllTextAsync(armTemplatePath)).TrimEnd();
-        var properties = new ArmDeploymentProperties(ArmDeploymentMode.Incremental) {
+        var properties = new ArmDeploymentProperties(ArmDeploymentMode.Incremental)
+        {
             Template = BinaryData.FromString(templateContent)
         };
-
-        if (!string.IsNullOrWhiteSpace(parametersPath)) {
+        
+        if (!string.IsNullOrWhiteSpace(parametersPath))
+        {
             var paramteresContent = (await File.ReadAllTextAsync(parametersPath)).TrimEnd();
             properties.Parameters = BinaryData.FromString(parametersPath);
         }
 
-        return new ArmDeploymentContent(properties);
+        var content = new ArmDeploymentContent(properties);
+        if (!string.IsNullOrWhiteSpace(location))
+        {
+            content.Location = location;
+        }
+
+        return content;
     }
 
     // These extension methods are wrapped to allow mocking in our tests
