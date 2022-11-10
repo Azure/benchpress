@@ -3,12 +3,16 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace BenchPress.TestEngine.Services;
 
-public class ArmDeploymentService : IArmDeploymentService {
+public class ArmDeploymentService : IArmDeploymentService
+{
     private readonly ArmClient client;
+    private readonly IFileService fileService;
     private string NewDeploymentName { get { return $"benchpress-{Guid.NewGuid().ToString()}"; } }
 
-    public ArmDeploymentService(ArmClient client) {
+    public ArmDeploymentService(ArmClient client, IFileService fileService)
+    {
         this.client = client;
+        this.fileService = fileService;
     }
 
     public async Task<ArmOperation<ArmDeploymentResource>> DeployArmToResourceGroupAsync(string subscriptionNameOrId, string resourceGroupName, string armTemplatePath, string? parametersPath = null, WaitUntil waitUntil = WaitUntil.Completed)
@@ -28,23 +32,25 @@ public class ArmDeploymentService : IArmDeploymentService {
         return await CreateSubscriptionDeployment(sub, waitUtil, NewDeploymentName, deploymentContent);
     }
 
-    private void ValidateParameters(params string[] parameters) {
-        if(parameters.Any(s => string.IsNullOrWhiteSpace(s))) {
+    private void ValidateParameters(params string[] parameters)
+    {
+        if (parameters.Any(s => string.IsNullOrWhiteSpace(s)))
+        {
             throw new ArgumentException("One or more parameters were missing or empty");
         }
     }
 
     private async Task<ArmDeploymentContent> CreateDeploymentContent(string armTemplatePath, string? parametersPath, string? location = null) {
-        var templateContent = (await File.ReadAllTextAsync(armTemplatePath)).TrimEnd();
+        var templateContent = (await fileService.ReadAllTextAsync(armTemplatePath)).TrimEnd();
         var properties = new ArmDeploymentProperties(ArmDeploymentMode.Incremental)
         {
             Template = BinaryData.FromString(templateContent)
         };
-        
+
         if (!string.IsNullOrWhiteSpace(parametersPath))
         {
-            var paramteresContent = (await File.ReadAllTextAsync(parametersPath)).TrimEnd();
-            properties.Parameters = BinaryData.FromString(parametersPath);
+            var parametersContent = (await fileService.ReadAllTextAsync(parametersPath)).TrimEnd();
+            properties.Parameters = BinaryData.FromString(parametersContent);
         }
 
         var content = new ArmDeploymentContent(properties);
@@ -57,11 +63,13 @@ public class ArmDeploymentService : IArmDeploymentService {
     }
 
     // These extension methods are wrapped to allow mocking in our tests
-    protected virtual async Task<ArmOperation<ArmDeploymentResource>> CreateGroupDeployment(ResourceGroupResource rg, Azure.WaitUntil waitUntil, string deploymentName, ArmDeploymentContent deploymentContent) {
+    protected virtual async Task<ArmOperation<ArmDeploymentResource>> CreateGroupDeployment(ResourceGroupResource rg, Azure.WaitUntil waitUntil, string deploymentName, ArmDeploymentContent deploymentContent)
+    {
         return await rg.GetArmDeployments().CreateOrUpdateAsync(waitUntil, deploymentName, deploymentContent);
     }
 
-    protected virtual async Task<ArmOperation<ArmDeploymentResource>> CreateSubscriptionDeployment(SubscriptionResource sub, Azure.WaitUntil waitUntil, string deploymentName, ArmDeploymentContent deploymentContent) {
+    protected virtual async Task<ArmOperation<ArmDeploymentResource>> CreateSubscriptionDeployment(SubscriptionResource sub, Azure.WaitUntil waitUntil, string deploymentName, ArmDeploymentContent deploymentContent)
+    {
         return await sub.GetArmDeployments().CreateOrUpdateAsync(waitUntil, deploymentName, deploymentContent);
     }
 }

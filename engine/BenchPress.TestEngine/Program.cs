@@ -23,6 +23,7 @@ builder.Services.AddAzureClients(builder => {
 });
 builder.Services.AddSingleton<IArmDeploymentService, ArmDeploymentService>();
 builder.Services.AddSingleton<IBicepTranspileService, BicepTranspileService>();
+builder.Services.AddSingleton<IFileService, FileService>();
 builder.Services.AddSingleton<IBicepExecute, BicepExecute>();
 
 var app = builder.Build();

@@ -8,22 +8,25 @@ namespace BenchPress.TestEngine.Tests;
 public class ArmDeploymentServiceTests {
     private readonly ArmDeploymentService armDeploymentService;
     private readonly Mock<ArmClient> armClientMock;
+    private readonly Mock<IFileService> fileServiceMock;
     private readonly Mock<ArmDeploymentCollection> groupDeploymentsMock;
     private readonly Mock<ArmDeploymentCollection> subscriptionDeploymentsMock;
     private const string validSubId = "a3a01f37-665c-4ee8-9bc3-3adf7ebcec0d";
     private const string validRgName = "test-rg";
     private const string validLocation = "eastus";
-    private const string smapleFiles = "../../../SampleFiles";
-    private const string standaloneTemplate = $"{smapleFiles}/storage-account.json";
-    private const string templateWithParams = $"{smapleFiles}/storage-account-needs-params.json";
-    private const string parameters = $"{smapleFiles}/params.json";
+    private const string standaloneTemplate = "storage-account.json";
+    private const string templateWithParams = "storage-account-needs-params.json";
+    private const string parameters = "params.json";
 
     public ArmDeploymentServiceTests()
     {
         armClientMock = new Mock<ArmClient>(MockBehavior.Strict);
+        fileServiceMock = new Mock<IFileService>(MockBehavior.Strict);
         groupDeploymentsMock = new Mock<ArmDeploymentCollection>();
         subscriptionDeploymentsMock = new Mock<ArmDeploymentCollection>();
-        armDeploymentService = new TestArmDeploymentService(groupDeploymentsMock.Object, subscriptionDeploymentsMock.Object, armClientMock.Object);
+        armDeploymentService = new TestArmDeploymentService(groupDeploymentsMock.Object, subscriptionDeploymentsMock.Object, armClientMock.Object, fileServiceMock.Object);
+        fileServiceMock.Setup(fs => fs.ReadAllTextAsync(It.IsAny<string>())).ThrowsAsync(new FileNotFoundException());
+        fileServiceMock.Setup(fs => fs.ReadAllTextAsync(It.IsIn(new [] {standaloneTemplate, templateWithParams, parameters}))).ReturnsAsync("");
     }
 
     [Fact]
@@ -56,12 +59,12 @@ public class ArmDeploymentServiceTests {
     {
         var subMock = SetUpSubscriptionMock(validSubId);
         var rgMock = SetUpResourceGroupMock(subMock, validRgName);
-        var excepectedMessage = "Deployment template validation failed";
-        SetUpDeploymentExceptionMock(groupDeploymentsMock, new RequestFailedException(excepectedMessage));
+        var expectedMessage = "Deployment template validation failed";
+        SetUpDeploymentExceptionMock(groupDeploymentsMock, new RequestFailedException(expectedMessage));
         var ex = await Assert.ThrowsAsync<RequestFailedException>(
             async () => await armDeploymentService.DeployArmToResourceGroupAsync(validSubId, validRgName, templateWithParams)
         );
-        Assert.Equal(excepectedMessage, ex.Message);
+        Assert.Equal(expectedMessage, ex.Message);
     }
 
     [Fact]
@@ -232,7 +235,7 @@ public class ArmDeploymentServiceTests {
         private readonly ArmDeploymentCollection rgDeploymentCollection;
         private readonly ArmDeploymentCollection subDeploymentCollection;
 
-        public TestArmDeploymentService(ArmDeploymentCollection rgDeploymentCollection, ArmDeploymentCollection subDeploymentCollection, ArmClient client) : base(client)
+        public TestArmDeploymentService(ArmDeploymentCollection rgDeploymentCollection, ArmDeploymentCollection subDeploymentCollection, ArmClient client, IFileService fileService) : base(client, fileService)
         {
             this.rgDeploymentCollection = rgDeploymentCollection;
             this.subDeploymentCollection = subDeploymentCollection;

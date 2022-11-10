@@ -5,12 +5,14 @@ namespace BenchPress.TestEngine.Services;
 public class BicepTranspileService : IBicepTranspileService
 {
     private IBicepExecute bicepExecute;
+    private IFileService fileService;
     private readonly ILogger<BicepTranspileService> logger;
 
-    public BicepTranspileService(IBicepExecute bicepExecute, ILogger<BicepTranspileService> logger)
+    public BicepTranspileService(IBicepExecute bicepExecute, ILogger<BicepTranspileService> logger, IFileService fileService)
     {
         this.bicepExecute = bicepExecute;
         this.logger = logger;
+        this.fileService = fileService;
     }
 
     public async Task<string> BuildAsync(string inputPath)
@@ -20,13 +22,20 @@ public class BicepTranspileService : IBicepTranspileService
             throw new ArgumentNullException(nameof(inputPath));
         }
 
-        if (Path.GetExtension(inputPath) != ".bicep")
+        if(!fileService.FileExists(inputPath))
+        {
+            throw new FileNotFoundException(nameof(inputPath));
+        }
+
+        var extension = fileService.GetFileExtension(inputPath);
+
+        if (extension != ".bicep")
         {
             throw new ArgumentException("Passed file is not a bicep file. File path: " + inputPath);
         }
 
-        inputPath = Path.GetFullPath(inputPath);
-        string outputPath = Path.ChangeExtension(inputPath, ".json");
+        inputPath = fileService.GetFileFullPath(inputPath);
+        string outputPath = fileService.ChangeFileExtension(inputPath, ".json");
 
         logger.LogInformation("Invoking Bicep Submodule");
         try
