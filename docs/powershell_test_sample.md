@@ -1,18 +1,37 @@
-# How to test PowerShell Test Sample Code
+# PowerShell How To Test Example
 
-Following instruction shows how to run StorageAccount.Tests.ps1 file
+Following instructions shows how to run StorageAccount.Tests.ps1 test.
 
-File is located under following directory: `/samples/dotnet/samples/pwsh/Test`
+`StorageAccount.Test.ps1`:
 
-Login to Azure Subscription `Connect-AzAccount`
-if you are using docker container `Connect-AzAccount -UseDeviceAuthentication` and follow additional login instruction on the terminal
+- Deploys Azure resources to the Azure Cloud
+- tests deployed resource properties
+- Finally deletes deployed resources.
 
-Run the test `.\StorageAccount.Tests.ps1`
+## Prerequisites
+
+- Azure Subscription
+- Azure CLI
+- Pester [Pester Install Guide](https://pester.dev/docs/introduction/installation)
+- Optional: Docker
+
+Test files are located under the following directory: `/samples/dotnet/samples/pwsh/Test`
+
+## Step by Step Guide
+
+### Auth to Azure
+
+Login to Azure Subscription `Connect-AzAccount` from Azure CLI
+if you are using docker container `Connect-AzAccount -UseDeviceAuthentication` and follow additional login instructions prompted by terminal
+
+### Running the Test
 
 Storage Account deployment uses two bicep files:
 
 - `storageAccountDeploy.bicep` - to deploy resource group and storage account module. This is an actual deployment file
 - `storageAccount.bicep` - storage account bicep file which is called by `storageAccountDeploy.bicep` as a module file
+
+To run the test simply navigate to the `StorageAccount.Tests.ps1` in CLI and execute the PowerShell test file `.\StorageAccount.Tests.ps1`
 
 `StorageAccount.Tests.ps1` - Content.
 
@@ -79,5 +98,4 @@ Describe 'Spin up , Tear down Storage Account' {
       Remove-BicepFeature $resourceGroupName
     }
 }
-#EOF
 ```

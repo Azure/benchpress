@@ -224,7 +224,7 @@ public class DeploymentServiceTests
             .ReturnsAsync(operation);
     }
 
-    private void SetUpFailedGroupDeployment(string reason) 
+    private void SetUpFailedGroupDeployment(string reason)
     {
         var operation = SetupDeploymentOperation(false, reason);
         armDeploymentMock.Setup(x => x.DeployArmToResourceGroupAsync(
@@ -244,11 +244,10 @@ public class DeploymentServiceTests
                 It.IsAny<string>(),
                 It.IsAny<string>(),
                 It.IsAny<Azure.WaitUntil>()))
-            .ThrowsAsync(ex);  
+            .ThrowsAsync(ex);
     }
 
-    private void VerifyGroupDeployment(DeploymentGroupRequest request, string templatePath)
-    {
+    private void VerifyGroupDeployment(DeploymentGroupRequest request, string templatePath) {
         armDeploymentMock.Verify(x => x.DeployArmToResourceGroupAsync(
                 request.SubscriptionNameOrId,
                 request.ResourceGroupName,
@@ -270,7 +269,7 @@ public class DeploymentServiceTests
             .ReturnsAsync(operation);
     }
 
-    private void SetUpFailedSubDeployment(string reason) 
+    private void SetUpFailedSubDeployment(string reason)
     {
         var operation = SetupDeploymentOperation(false, reason);
         armDeploymentMock.Setup(x => x.DeployArmToSubscriptionAsync(
@@ -290,7 +289,7 @@ public class DeploymentServiceTests
                 It.IsAny<string>(),
                 It.IsAny<string>(),
                 It.IsAny<Azure.WaitUntil>()))
-            .ThrowsAsync(ex);  
+            .ThrowsAsync(ex);
     }
 
     private void VerifySubDeployment(DeploymentSubRequest request, string templatePath)
