@@ -1,0 +1,36 @@
+name: pr_docs
+
+on:
+  push:
+    paths:
+      - "docs/**.md"
+      - "**.md"
+  pull_request:
+    paths-ignore:
+      - "docs/**.md"
+      - "**.md"
+    branches:
+      - main
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.PAT || secrets.GITHUB_TOKEN }}
+          
+      - name: MegaLinter documentation flavor
+        uses: oxsecurity/megalinter/flavors/documentation@v6.12.0
+        env:
+          IGNORE_GITIGNORED_FILES: true
+          VALIDATE_ALL_CODEBASE: true
+          PRINT_ALL_FILES: true
+          DISABLE: COPYPASTE,YAML
+          SPELL_CSPELL_CONFIG_FILE: /config/megalinter/.cspell.json
+          MARKDOWN_MARKDOWN_LINK_CHECK_CONFIG_FILE: /config/megalinter/.markdown-link-check.json
+          DISABLE_LINTERS: REPOSITORY_CHECKOV,REPOSITORY_TRIVY
+          FILTER_REGEX_EXCLUDE: '(BenchPress/|engine/|examples/|\.github/workflows|\.devcontainer|\.editorconfig|\.gitmodules|/framework/|samples/|\.sln|LICENSE)'
+          FILTER_REGEX_INCLUDE: '(docs/|\**.md)'
+          REPORT_OUTPUT_FOLDER: ${GITHUB_WORKSPACE}/megalinter-reports

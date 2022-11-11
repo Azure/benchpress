@@ -1,0 +1,61 @@
+{
+  "ignorePaths": [
+    "**/node_modules/**",
+    "**/vscode-extension/**",
+    "**/.git/**",
+    "**/.pnpm-lock.json",
+    ".vscode",
+    "megalinter",
+    "package-lock.json",
+    "report"
+  ],
+  "language": "en",
+  "noConfigSearch": true,
+  "words": [
+    "megalinter",
+    "oxsecurity",
+    "hadolint",
+    "jsonlint",
+    "isort",
+    "mypy",
+    "pylint",
+    "pyright",
+    "devskim",
+    "dustilock",
+    "gitleaks",
+    "syft",
+    "trivy",
+    "onboardsupport",
+    "MSRC",
+    "msrc",
+    "Benchpress",
+    "BenchPress",
+    "pwsh",
+    "upskilling",
+    "mitigations",
+    "fmok"
+  ],
+  "version": "0.2",
+  "patterns": [
+    {
+      "name": "comment-single-line",
+      "pattern": "/#.*/g"
+    },
+    {
+      "name": "comment-multi-line",
+      "pattern": "/(?:\\/\\*[\\s\\S]*?\\*\\/)/g"
+    },
+    {
+      "name": "comments",
+      "pattern": [
+        "comment-single-line",
+        "comment-multi-line"
+      ]
+    }
+  ],
+  "ignoreRegExpList": [
+    "comments",
+    "/^\\s*`[\\s\\S]*?^\\s*`/gm",
+    "/^\\s*```[\\s\\S]*?^\\s*```/gm"
+  ]
+}

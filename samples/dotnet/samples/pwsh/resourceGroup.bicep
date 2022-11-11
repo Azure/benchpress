@@ -1,12 +1,12 @@
 targetScope = 'subscription'
 
-param name string
+param resourceGroupName string
 param location string
 param environment string
 
 // https://docs.microsoft.com/en-us/azure/templates/microsoft.resources/resourcegroups?tabs=bicep
 resource resourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
-  name: name
+  name: resourceGroupName
   location: location
   tags: {
     EnvironmentName: environment

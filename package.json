@@ -1,0 +1,8 @@
+{
+  "devDependencies": {
+    "mega-linter-runner": "^6.12.0"
+  },
+  "dependencies": {
+    "package.json": "^2.0.1"
+  }
+}
