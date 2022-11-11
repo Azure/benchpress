@@ -23,6 +23,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dotnet", "dotnet", "{4596A4
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BenchPress.Sample", "samples\dotnet\BenchPress.Sample\BenchPress.Sample.csproj", "{89C81EDE-90E0-47CD-93DB-2E5024244D88}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bicep.Cli", "BenchPress\bicep\src\Bicep.Cli\Bicep.Cli.csproj", "{4C58A322-C05A-4E83-A702-2BED16E121B6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -52,6 +54,10 @@ Global
 		{89C81EDE-90E0-47CD-93DB-2E5024244D88}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89C81EDE-90E0-47CD-93DB-2E5024244D88}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89C81EDE-90E0-47CD-93DB-2E5024244D88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C58A322-C05A-4E83-A702-2BED16E121B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C58A322-C05A-4E83-A702-2BED16E121B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C58A322-C05A-4E83-A702-2BED16E121B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C58A322-C05A-4E83-A702-2BED16E121B6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{19C5E14A-FCA3-4335-A25C-D6DA88BE3099} = {29011A2E-34D3-468C-AA6F-C5AD5597970D}

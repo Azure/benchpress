@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package benchpress;
+
+option csharp_namespace = "BenchPress.TestEngine";
+
+service ResourceGroup {
+  rpc GetResourceGroup (ResourceGroupRequest) returns (ResourceGroupResponse);
+}
+
+message ResourceGroupRequest {
+  string resource_group_name = 1;
+  string subscription_name_or_id = 2;
+}
+
+message ResourceGroupResponse {
+  bool existed = 1;
+  string resource_json = 2;
+}

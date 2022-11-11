@@ -5,7 +5,7 @@ APPLY_FIXES: all # all, none, or list of linter keys
 # DISABLE:
 # - COPYPASTE # Uncomment to disable checks of excessive copy-pastes
 # - SPELL # Uncomment to disable checks of spelling mistakes
-DISABLE_LINTERS: 
+DISABLE_LINTERS:
   - PYTHON_PYRIGHT
   - PYTHON_MYPY
 SHOW_ELAPSED_TIME: true

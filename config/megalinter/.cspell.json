@@ -33,7 +33,9 @@
     "pwsh",
     "upskilling",
     "mitigations",
-    "fmok"
+    "fmok",
+    "proto",
+    "protos"
   ],
   "version": "0.2",
   "patterns": [

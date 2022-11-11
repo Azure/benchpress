@@ -11,4 +11,18 @@
     <GlobalAnalyzerConfigFiles Include="../../../.globalconfig" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Protobuf Include="../../../protos/deployment.proto" GrpcServices="Client" />
+    <Protobuf Include="../../../protos/resource_group.proto" GrpcServices="Client" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Google.Protobuf" Version="3.21.6" />
+    <PackageReference Include="Grpc.Net.Client" Version="2.49.0" />
+    <PackageReference Include="Grpc.Tools" Version="2.49.1">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
 </Project>

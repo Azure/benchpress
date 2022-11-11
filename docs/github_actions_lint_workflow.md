@@ -1,6 +1,6 @@
 # Github Actions Lint Workflow
 
-Current repo has three linting workflows in the `.github/workflows`. Each workflow uses specific Megalinter flavor to lint specific folders when new code gets pushed. All configuration files are located under `config/megalinter` directory
+Current repo has three linting workflows in the `.github/workflows` directory. Each workflow uses specific Megalinter flavor to lint specific folders when new code gets pushed. All configuration files are located under `config/megalinter` directory
 
 - pr_dotnet - uses `oxsecurity/megalinter/flavors/dotnet@v6.12.0` to lint dotnet code in the `framework/` and `samples/` directories
 - pr_python - uses `oxsecurity/megalinter/flavors/python@v6.12.0` to lint python code in the `framework/` and `samples/` directories
@@ -29,29 +29,44 @@ Rather than having to commit/push every time you want to test out the changes yo
 
 This is an example of running `.github/workflows/pr_dotnet.yml` file to lint dotnet specific folders locally using `act` command
 
+Run the workflow locally using `act` command
+
+```sh
+act pull_request --workflows .\.github\workflows\pr_docs.yaml
+```
+
 ```yaml
 name: pr_dotnet
 
 on:
-  push:
+  pull_request:
     paths:
       - "framework/dotnet/**"
       - "samples/dotnet/**"
-  pull_request:
-    paths-ignore:
-      - "framework/dotnet/**"
-      - "samples/dotnet/**"
+      - "engine/**"
+      - "protos/**"
+      - ".github/workflows/pr_dotnet.yaml"
     branches:
       - main
+
+env:
+  DOTNET_VERSION: '6.0.x'
+
 jobs:
   lint:
-    runs-on: ubuntu-latest
+    name: lint-${{matrix.os}}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository and submodules
         uses: actions/checkout@v3
         with:
           token: ${{ secrets.PAT || secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+          submodules: recursive
 
       - name: MegaLinter dotnet flavor
         uses: oxsecurity/megalinter/flavors/dotnet@v6.12.0
@@ -61,52 +76,18 @@ jobs:
           PRINT_ALL_FILES: true
           DISABLE: SPELL,COPYPASTE,YAML
           DISABLE_LINTERS: REPOSITORY_CHECKOV,REPOSITORY_TRIVY
-          FILTER_REGEX_EXCLUDE: '(BenchPress/|engine/|examples/|/docs|\.github/workflows|\.devcontainer|\.editorconfig|\.gitmodules|\.sln|\.md|LICENSE|/framework/python|samples/python)'
-          FILTER_REGEX_INCLUDE: "(framework/dotnet|samples/dotnet)"
+          FILTER_REGEX_INCLUDE: '(framework/dotnet|samples/dotnet|engine/)'
+          FILTER_REGEX_EXCLUDE: '(examples/|/docs|\.devcontainer|\.editorconfig|\.gitmodules|\.sln|\.md|LICENSE|/framework/python|samples/python)'
           REPORT_OUTPUT_FOLDER: ${GITHUB_WORKSPACE}/megalinter-reports
-```
 
-Run workflow using `act` command
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
 
-```sh
-act pull_request --workflows .\.github\workflows\pr_docs.yaml
-```
+      - name: Install dependencies
+        run: dotnet restore
 
-#### Linting overview
-
-When new code gets pushed to dotnet directories, the linting gets triggered
-
-```yaml
-on:
-  push:
-    paths:
-      - "framework/dotnet/**"
-      - "samples/dotnet/**"
-```
-
-When pull_request is created, following directories gets skipped from linting to allow the merge
-
-```yaml
-pull_request:
-    paths-ignore:
-      - "framework/dotnet/**"
-      - "samples/dotnet/**"
-    branches:
-      - main
-```
-
-In this pr_dotnet workflow, we are using Megalinter flavor for dotnet
-
-```yaml
-- name: MegaLinter dotnet flavor
-  uses: oxsecurity/megalinter/flavors/dotnet@v6.12.0
-```
-
-Finally, using Megalinter env variables to exclude and include directories for linting, and disable linters for this pr_dotnet
-
-```yaml
-env:
-  DISABLE_LINTERS: REPOSITORY_CHECKOV,REPOSITORY_TRIVY
-  FILTER_REGEX_EXCLUDE: '(BenchPress/|engine/|examples/|/docs|\.github/workflows|\.devcontainer|\.editorconfig|\.gitmodules|\.sln|\.md|LICENSE|/framework/python|samples/python)'
-  FILTER_REGEX_INCLUDE: "(framework/dotnet|samples/dotnet)"
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
 ```
