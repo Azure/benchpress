@@ -4,4 +4,3 @@ FROM mcr.microsoft.com/vscode/devcontainers/dotnet:${VARIANT}
 
 COPY ./scripts/post-create.sh /benchpress/
 RUN chmod +x /benchpress/post-create.sh
-
