@@ -1,11 +1,22 @@
-function Get-ResourceGroup([string]$resourceGroupName) {
+function Get-ResourceGroup {
+  [CmdletBinding()]
+  param (
+    [Parameter(Mandatory=$true)]
+    [string]$resourceGroupName
+  )
+
   $resource = Get-AzResourceGroup $resourceGroupName
   return $resource
 }
 
-function Get-ResourceGroupExists([string]$resourceGroupName) {
-  $resource = Get-ResourceGroup $resourceGroupName
+function Get-ResourceGroupExists {
+  [CmdletBinding()]
+  param (
+    [Parameter(Mandatory=$true)]
+    [string]$resourceGroupName
+  )
 
+  $resource = Get-ResourceGroup $resourceGroupName
   return ($null -ne $resource)
 }
 
