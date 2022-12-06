@@ -1,6 +1,6 @@
 BeforeAll {
-  . $PSScriptRoot/BenchPress/Helpers/Azure/ResourceGroup.psm1
-  . $PSScriptRoot/BenchPress/Helpers/Azure/Bicep.psm1
+  Import-Module "../BenchPress/Helpers/Azure/ResourceGroup.psm1"
+  Import-Module "../BenchPress/Helpers/Azure/Bicep.psm1"
 }
 
 Describe 'Verify Resource Group Exists' {
@@ -19,7 +19,7 @@ Describe 'Verify Resource Group Exists' {
 Describe 'Spin up , Tear down Resource Group' {
   it 'Should deploy a bicep file.' {
     #arrange
-    $bicepPath = "./main.bicep"
+    $bicepPath = "./resourceGroup.bicep"
     $params = @{
       name        = "rgtestocw11"
       location    = "westus"
