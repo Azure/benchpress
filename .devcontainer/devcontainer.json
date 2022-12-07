@@ -3,6 +3,7 @@
   "settings": {},
   "extensions": [
     "editorconfig.editorconfig",
+    "GitHub.copilot",
     "ms-dotnettools.csharp",
     "ms-vscode.powershell",
     "ms-azuretools.vscode-docker"
