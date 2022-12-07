@@ -4,12 +4,18 @@
   "features": {
     "ghcr.io/devcontainers/features/azure-cli:1": {},
     "ghcr.io/devcontainers/features/common-utils:1": {},
-  	"ghcr.io/devcontainers/features/docker-from-docker:1": {},
+    "ghcr.io/devcontainers/features/docker-from-docker:1": {},
     "ghcr.io/devcontainers/features/dotnet:1": {},
     "ghcr.io/devcontainers/features/github-cli:1": {},
     "ghcr.io/devcontainers/features/powershell:1": {},
     "ghcr.io/eitsupi/devcontainer-features/jq-likes:0": {},
-  	"ghcr.io/rchaganti/vsc-devcontainer-features/azurebicep:1": {}
+    "ghcr.io/rchaganti/vsc-devcontainer-features/azurebicep:1": {},
+    "ghcr.io/natescherer/devcontainers-custom-features/powershell-resources:1": {
+      "resources": [
+        "Azure",
+        "Pester"
+      ]
+    }
   },
   "settings": {},
   "extensions": [
