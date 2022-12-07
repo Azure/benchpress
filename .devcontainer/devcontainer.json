@@ -12,7 +12,7 @@
     "ghcr.io/rchaganti/vsc-devcontainer-features/azurebicep:1": {},
     "ghcr.io/natescherer/devcontainers-custom-features/powershell-resources:1": {
       "resources": [
-        "Azure",
+        "Az",
         "Pester"
       ]
     }
