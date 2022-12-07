@@ -9,7 +9,6 @@
   ],
   "remoteUser": "vscode",
   "features": {
-    "github-cli": "latest",
     "ghcr.io/devcontainers/features/azure-cli:1": {},
     "ghcr.io/devcontainers/features/docker-from-docker:1": {},
     "ghcr.io/devcontainers/features/dotnet:1": {},
