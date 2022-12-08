@@ -11,6 +11,10 @@ function Deploy-BicepFeature([string]$path, $params, $resourceGroupName){
     $location = $params.location
     $deploymentName = $params.deploymentName
 
+    if ([string]::IsNullOrEmpty($deploymentName)) {
+      $deploymentName = "BenchPress Deployment"
+    }
+
     Write-Host "Deploying ARM Template ($deploymentName) to $location"
 
     if ([string]::IsNullOrEmpty($resourceGroupName)) {
