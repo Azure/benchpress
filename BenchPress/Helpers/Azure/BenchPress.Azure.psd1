@@ -51,5 +51,5 @@
     }
   }
   HelpInfoURI = ""
-  DefaultCommandPrefix = "BenchPress"
+  DefaultCommandPrefix = ""
 }
