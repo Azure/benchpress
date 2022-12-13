@@ -13,7 +13,8 @@
     "ghcr.io/natescherer/devcontainers-custom-features/powershell-resources:1": {
       "resources": [
         "Az",
-        "Pester"
+        "Pester",
+        "platyps"
       ]
     }
   },
