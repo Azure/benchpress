@@ -1,0 +1,22 @@
+name: "Publish Docs"
+on:
+  workflow_dispatch:
+
+jobs:
+  publish-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Platyps
+        shell: pwsh
+        run: |
+          Install-Module -Name platyPS -Scope CurrentUser -Force
+
+      - name: Generate Docs
+        shell: pwsh
+        run: |
+          Import-Module platyPS
+          cd ./BenchPress/Helpers/Azure/
+          Import-Module ./BenchPress.Azure.psd1
+          New-MarkdownHelp -Module BenchPress.Azure -OutputFolder ..\..\..\docs
