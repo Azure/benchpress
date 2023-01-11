@@ -1,6 +1,6 @@
 {
   "name": "Benchpress Dev Environment",
-  "image": "mcr.microsoft.com/devcontainers/base:bullseye",
+  "image": "mcr.microsoft.com/dotnet/aspnet:6.0-bullseye-slim",
   "features": {
     "ghcr.io/devcontainers/features/azure-cli:1": {},
     "ghcr.io/devcontainers/features/common-utils:1": {},
