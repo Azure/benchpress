@@ -1,9 +1,9 @@
 <#
   .SYNOPSIS
-    Confirm-Valid will confirm that the bicep files provided passes the checks executed by `bicep build`.
+    Confirm-BicepFile will confirm that the bicep files provided passes the checks executed by `bicep build`.
 
   .DESCRIPTION
-    Comfirm-Valid executes `bicep build` and returns an object that has an array field BicepErrors. Each element of
+    Confirm-BicepFile executes `bicep build` and returns an object that has an array field BicepErrors. Each element of
     this array is an object that contains the bicep file path that had errors and a collection of
     System.Object.ErrorRecord that correspond to the file at that path:
 
@@ -16,33 +16,33 @@
   .PARAMETER BicepPath
     This is the path to the bicep file that will be confirmed.
     BicepPath is a mandatory parameter.
-    The property name is optional if the path is provided as the first argument to Confirm-Valid.
+    The property name is optional if the path is provided as the first argument to Confirm-BicepFile.
 
   .EXAMPLE
-    ---------- Example 1: Pipe path into Confirm-Valid ----------
+    ---------- Example 1: Pipe path into Confirm-BicepFile ----------
 
-    "./examples/actionGroupErrors.bicep" | Confirm-Valid
+    "./examples/actionGroupErrors.bicep" | Confirm-BicepFile
 
-    Confirm-Valid: ../../../examples/actionGroupErrors.bicep:
-    Confirm-Valid: /workspaces/benchpress/examples/actionGroupErrors.bicep(6,7) : Warning no-unused-params: Parameter "location" is declared but never used. [https://aka.ms/bicep/linter/no-unused-params]
-    Confirm-Valid: /workspaces/benchpress/examples/actionGroupErrors.bicep(12,13) : Warning no-hardcoded-location: A resource location should not use a hard-coded string or variable value. Please use a parameter value, an expression, or the string 'global'. Found: 'westus' [https://aka.ms/bicep/linter/no-hardcoded-location]
+    Confirm-BicepFile: ../../../examples/actionGroupErrors.bicep:
+    Confirm-BicepFile: /workspaces/benchpress/examples/actionGroupErrors.bicep(6,7) : Warning no-unused-params: Parameter "location" is declared but never used. [https://aka.ms/bicep/linter/no-unused-params]
+    Confirm-BicepFile: /workspaces/benchpress/examples/actionGroupErrors.bicep(12,13) : Warning no-hardcoded-location: A resource location should not use a hard-coded string or variable value. Please use a parameter value, an expression, or the string 'global'. Found: 'westus' [https://aka.ms/bicep/linter/no-hardcoded-location]
     0
 
     BicepErrors
     -----------
     {@{Path=../../../examples/actionGroupErrors.bicep; ErrorResults=System.Collections.ObjectModel.Collection`1[System.Management.Automation.PSObject]…
 
-    ---------- Example 2: Pipe multiple paths into Confirm-Valid ----------
+    ---------- Example 2: Pipe multiple paths into Confirm-BicepFile ----------
 
-    "./examples/actionGroupErrors.bicep", "./examples/actionGroupErrors.bicep" | Confirm-Valid
+    "./examples/actionGroupErrors.bicep", "./examples/actionGroupErrors.bicep" | Confirm-BicepFile
 
-    Confirm-Valid: ../../../examples/actionGroupErrors.bicep:
-    Confirm-Valid: /workspaces/benchpress/examples/actionGroupErrors.bicep(6,7) : Warning no-unused-params: Parameter "location" is declared but never used. [https://aka.ms/bicep/linter/no-unused-params]
-    Confirm-Valid: /workspaces/benchpress/examples/actionGroupErrors.bicep(12,13) : Warning no-hardcoded-location: A resource location should not use a hard-coded string or variable value. Please use a parameter value, an expression, or the string 'global'. Found: 'westus' [https://aka.ms/bicep/linter/no-hardcoded-location]
+    Confirm-BicepFile: ../../../examples/actionGroupErrors.bicep:
+    Confirm-BicepFile: /workspaces/benchpress/examples/actionGroupErrors.bicep(6,7) : Warning no-unused-params: Parameter "location" is declared but never used. [https://aka.ms/bicep/linter/no-unused-params]
+    Confirm-BicepFile: /workspaces/benchpress/examples/actionGroupErrors.bicep(12,13) : Warning no-hardcoded-location: A resource location should not use a hard-coded string or variable value. Please use a parameter value, an expression, or the string 'global'. Found: 'westus' [https://aka.ms/bicep/linter/no-hardcoded-location]
     0
-    Confirm-Valid: ../../../examples/actionGroupErrors.bicep:
-    Confirm-Valid: /workspaces/benchpress/examples/actionGroupErrors.bicep(6,7) : Warning no-unused-params: Parameter "location" is declared but never used. [https://aka.ms/bicep/linter/no-unused-params]
-    Confirm-Valid: /workspaces/benchpress/examples/actionGroupErrors.bicep(12,13) : Warning no-hardcoded-location: A resource location should not use a hard-coded string or variable value. Please use a parameter value, an expression, or the string 'global'. Found: 'westus' [https://aka.ms/bicep/linter/no-hardcoded-location]
+    Confirm-BicepFile: ../../../examples/actionGroupErrors.bicep:
+    Confirm-BicepFile: /workspaces/benchpress/examples/actionGroupErrors.bicep(6,7) : Warning no-unused-params: Parameter "location" is declared but never used. [https://aka.ms/bicep/linter/no-unused-params]
+    Confirm-BicepFile: /workspaces/benchpress/examples/actionGroupErrors.bicep(12,13) : Warning no-hardcoded-location: A resource location should not use a hard-coded string or variable value. Please use a parameter value, an expression, or the string 'global'. Found: 'westus' [https://aka.ms/bicep/linter/no-hardcoded-location]
     1
 
     BicepErrors
@@ -51,11 +51,11 @@
 
     ---------- Example 3: Provide -BicepPath Parameter ----------
 
-    Confirm-Valid -BicepPath ./examples/actionGroupErrors.bicep
+    Confirm-BicepFile -BicepPath ./examples/actionGroupErrors.bicep
 
-    Confirm-Valid: ../../../examples/actionGroupErrors.bicep:
-    Confirm-Valid: /workspaces/benchpress/examples/actionGroupErrors.bicep(6,7) : Warning no-unused-params: Parameter "location" is declared but never used. [https://aka.ms/bicep/linter/no-unused-params]
-    Confirm-Valid: /workspaces/benchpress/examples/actionGroupErrors.bicep(12,13) : Warning no-hardcoded-location: A resource location should not use a hard-coded string or variable value. Please use a parameter value, an expression, or the string 'global'. Found: 'westus' [https://aka.ms/bicep/linter/no-hardcoded-location]
+    Confirm-BicepFile: ../../../examples/actionGroupErrors.bicep:
+    Confirm-BicepFile: /workspaces/benchpress/examples/actionGroupErrors.bicep(6,7) : Warning no-unused-params: Parameter "location" is declared but never used. [https://aka.ms/bicep/linter/no-unused-params]
+    Confirm-BicepFile: /workspaces/benchpress/examples/actionGroupErrors.bicep(12,13) : Warning no-hardcoded-location: A resource location should not use a hard-coded string or variable value. Please use a parameter value, an expression, or the string 'global'. Found: 'westus' [https://aka.ms/bicep/linter/no-hardcoded-location]
     0
 
     BicepErrors
@@ -64,11 +64,11 @@
 
     ---------- Example 4: Path without -BicepPath Parameter ----------
 
-    Confirm-Valid ./examples/actionGroupErrors.bicep
+    Confirm-BicepFile ./examples/actionGroupErrors.bicep
 
-    Confirm-Valid: ../../../examples/actionGroupErrors.bicep:
-    Confirm-Valid: /workspaces/benchpress/examples/actionGroupErrors.bicep(6,7) : Warning no-unused-params: Parameter "location" is declared but never used. [https://aka.ms/bicep/linter/no-unused-params]
-    Confirm-Valid: /workspaces/benchpress/examples/actionGroupErrors.bicep(12,13) : Warning no-hardcoded-location: A resource location should not use a hard-coded string or variable value. Please use a parameter value, an expression, or the string 'global'. Found: 'westus' [https://aka.ms/bicep/linter/no-hardcoded-location]
+    Confirm-BicepFile: ../../../examples/actionGroupErrors.bicep:
+    Confirm-BicepFile: /workspaces/benchpress/examples/actionGroupErrors.bicep(6,7) : Warning no-unused-params: Parameter "location" is declared but never used. [https://aka.ms/bicep/linter/no-unused-params]
+    Confirm-BicepFile: /workspaces/benchpress/examples/actionGroupErrors.bicep(12,13) : Warning no-hardcoded-location: A resource location should not use a hard-coded string or variable value. Please use a parameter value, an expression, or the string 'global'. Found: 'westus' [https://aka.ms/bicep/linter/no-hardcoded-location]
     0
 
     BicepErrors
