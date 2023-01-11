@@ -23,7 +23,7 @@
   )
   FunctionsToExport = @(
     "Invoke-AzCli",
-    "Confirm-Valid",
+    "Confirm-BicepFile",
     "Deploy-BicepFeature",
     "Remove-BicepFeature",
     "Get-AKSCluster",
