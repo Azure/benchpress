@@ -2,7 +2,7 @@
 
 BenchPress project is a collection of tools and helpers to help you build and run tests for your Azure Deployment code, such as Bicep modules and ARM Templates.
 
-BenchPress project follows [Semantic Versioning](https://semver.org/) rules.
+BenchPress follows [Semantic Versioning](https://semver.org/) rules.
 
 > BenchPress is currently in preview. Breaking changes may occur in minor versions. We will try to minimize them, but we can't guarantee that they won't happen.
 
