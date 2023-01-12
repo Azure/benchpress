@@ -6,7 +6,7 @@ This feature list is a peek into our roadmap. It identifies some of the signific
 | --- |
 | BenchPress is Available on the PowerShell Gallery |
 | Test Generation is available on  Nuget  |
-| Support sovereign clouds, such as, German Government, China, etc. |
+| Support sovereign clouds, such as Azure Government Cloud, Azure German Government, etc. |
 
 ## List of features that are planned for the next release:
 
