@@ -1,6 +1,6 @@
 <#
   .SYNOPSIS
-    Confirm-BicepFile will confirm that the bicep files provided passes the checks executed by `bicep build`.
+    Confirm-BicepFile will confirm that the bicep files provided pass the checks executed by `bicep build`.
 
   .DESCRIPTION
     Confirm-BicepFile executes `bicep build` and returns an object that has an array field BicepErrors. Each element of
