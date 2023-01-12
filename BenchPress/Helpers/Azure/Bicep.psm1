@@ -85,7 +85,7 @@ function Confirm-BicepFile {
   [cmdletbinding()]
   [OutputType([System.Object[]])]
   param(
-    [Parameter(Mandatory, Position=0, ValueFromPipeline)] [string[]]$BicepPath
+    [Parameter(Mandatory, Position=0, ValueFromPipeline)] [string[]]$BicepFilePath
   )
   Begin{
     $out = [PSCustomObject]@{
@@ -93,7 +93,7 @@ function Confirm-BicepFile {
     }
   }
   Process {
-    foreach ($path in $BicepPath) {
+    foreach ($path in $BicepFilePath) {
       # The --stdout parameter will send the built ARM template to stdout instead of creating a file
       # 2>&1 will send errors to stdout so that they can be captured by PowerShell
       # Both the ARM template and any output from linting will be in the array $results, with individual errors in the
