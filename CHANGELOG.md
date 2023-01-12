@@ -1,6 +1,6 @@
 # BenchPress Changelog
 
-BenchPress project is a collection of tools and helpers to help you build and run tests for your Azure Deployment code, such as Bicep modules and ARM Templates.
+BenchPress is a collection of tools and PowerShell helpers to help you build and run tests for your Azure Deployment code, such as Bicep modules and ARM Templates.
 
 BenchPress follows [Semantic Versioning](https://semver.org/) rules.
 
