@@ -4,7 +4,7 @@ This feature list is a peek into our roadmap. It identifies some of the signific
 
 | Feature |
 | --- |
-| Available BenchPress on Powershell Gallery |
+| BenchPress is Available on the PowerShell Gallery |
 | Feature complete test-generator and make it available on nuget as a tool |
 | Support sovereign clouds, such as, German Government, China, etc. |
 
