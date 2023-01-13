@@ -66,4 +66,4 @@ jobs:
       - name: Lint MD Files
         run: |
           npm install -g markdownlint-cli
-          markdownlint . --config .\.github\config\linter\.markdownlint.json
+          markdownlint . --config ./.github/config/linter/.markdownlint.json
