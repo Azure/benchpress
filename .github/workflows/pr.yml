@@ -53,7 +53,7 @@ jobs:
       - name: Lint YAML Files
         run: |
           pip install yamllint
-          yamllint . ./.github/config/linter/.yamllint.yml
+          yamllint . -c ./.github/config/linter/.yamllint.yml
 
   lint-markdown:
     name: Lint MD Files
