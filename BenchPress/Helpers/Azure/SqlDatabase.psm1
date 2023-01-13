@@ -11,7 +11,7 @@ function Get-SqlDatabase {
     [string]$resourceGroupName
   )
 
-  if ([string]::IsNullOrEmpty($databaseNameJ)) {
+  if ([string]::IsNullOrEmpty($databaseName)) {
     $resource = Get-AzSqlDatabase -ResourceGroupName $resourceGroupName -ServerName $serverName
   } else {
     $resource = Get-AzSqlDatabase -ResourceGroupName $resourceGroupName -ServerName $serverName -DatabaseName $databaseName
