@@ -1,4 +1,4 @@
-<#
+﻿<#
   .SYNOPSIS
     Confirm-BicepFile will confirm that the bicep files provided pass the checks executed by `bicep build`.
 
