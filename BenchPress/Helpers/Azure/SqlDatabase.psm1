@@ -1,7 +1,7 @@
 function Get-SqlDatabase {
   [CmdletBinding()]
   param (
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory=$false)]
     [string]$databaseName,
 
     [Parameter(Mandatory=$true)]
@@ -11,14 +11,19 @@ function Get-SqlDatabase {
     [string]$resourceGroupName
   )
 
-  $resource = Get-AzSqlDatabase -ResourceGroupName $resourceGroupName -ServerName $serverName -DatabaseName $databaseName
+  if ([string]::IsNullOrEmpty($databaseName)) {
+    $resource = Get-AzSqlDatabase -ResourceGroupName $resourceGroupName -ServerName $serverName
+  } else {
+    $resource = Get-AzSqlDatabase -ResourceGroupName $resourceGroupName -ServerName $serverName -DatabaseName $databaseName
+  }
+
   return $resource
 }
 
 function Get-SqlDatabaseExists {
   [CmdletBinding()]
   param (
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory=$false)]
     [string]$databaseName,
 
     [Parameter(Mandatory=$true)]

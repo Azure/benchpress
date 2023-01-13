@@ -1,9 +1,9 @@
-Import-Module "../BenchPress/Helpers/Azure/ResourceGroup.psm1"
-Import-Module "../BenchPress/Helpers/Azure/ServicePlan.psm1"
-Import-Module "../BenchPress/Helpers/Azure/SqlServer.psm1"
-Import-Module "../BenchPress/Helpers/Azure/SqlDatabase.psm1"
-Import-Module "../BenchPress/Helpers/Azure/VirtualMachine.psm1"
-Import-Module "../BenchPress/Helpers/Azure/WebApp.psm1"
+Import-Module $PSScriptRoot/ResourceGroup.psm1
+Import-Module $PSScriptRoot/ServicePlan.psm1
+Import-Module $PSScriptRoot/SqlServer.psm1
+Import-Module $PSScriptRoot/SqlDatabase.psm1
+Import-Module $PSScriptRoot/VirtualMachine.psm1
+Import-Module $PSScriptRoot/WebApp.psm1
 
 enum ResourceType {
   ResourceGroup
@@ -29,12 +29,12 @@ function Get-ResourceByType {
 
   switch ($ResourceType)
   {
-    ResourceGroup { return Get-ResourceGroup($ResourceName) }
-    ServicePlan { return Get-ServicePlan($ResourceName, $ResourceGroupName) }
-    SqlDatabase { return Get-SqlDatabase($ResourceName, $ResourceGroupName) }
-    SqlServer { return Get-SqlServer($ResourceName, $ResourceGroupName) }
-    VirtualMachine { return Get-VirtualMachine($ResourceName, $ResourceGroupName) }
-    WebApp { return Get-WebApp($ResourceName, $ResourceGroupName) }
+    ResourceGroup { return Get-ResourceGroup -resourceGroupName $ResourceName }
+    ServicePlan { return Get-AppServicePlan -appServicePlanName $ResourceName -resourceGroupName $ResourceGroupName }
+    SqlDatabase { return Get-SqlDatabase -serverName $ResourceName -resourceGroupName $ResourceGroupName }
+    SqlServer { return Get-SqlServer -serverName $ResourceName -resourceGroupName $ResourceGroupName }
+    VirtualMachine { return Get-VirtualMachine -virtualMachineName $ResourceName -resourceGroupName $ResourceGroupName }
+    WebApp { return Get-WebApp -webAppName $ResourceName -resourceGroupName $ResourceGroupName }
     default { Write-Host "Not implemented yet" return $null }
   }
 }
