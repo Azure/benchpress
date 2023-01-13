@@ -14,6 +14,7 @@
     "AzureCli.psm1",
     "Bicep.psm1",
     "Common.psm1",
+    "KeyVault.psm1",
     "ResourceGroup.psm1",
     "ServicePlan.psm1",
     "SqlDatabase.psm1",
@@ -28,6 +29,14 @@
     "Remove-BicepFeature",
     "Get-AKSCluster",
     "Get-AKSClusterExists",
+    "Get-KeyVault",
+    "Get-KeyVaultExists",
+    "Get-KeyVaultSecret",
+    "Get-KeyVaultSecretExists",
+    "Get-KeyVaultKey",
+    "Get-KeyVaultKeyExists",
+    "Get-KeyVaultCertificate",
+    "Get-KeyVaultCertificateExists",
     "Get-ResourceByType",
     "Get-Resource",
     "Get-ResourceGroup",
@@ -45,7 +54,7 @@
   )
   PrivateData = @{
     PSData = @{
-      Tags = @("Azure", "BenchPress", "Bicep", "ARM", "Test", "ResourceGroup", "ServicePlan", "SqlDatabase", "SqlServer", "VirtualMachine", "WebApp")
+      Tags = @("Azure", "BenchPress", "Bicep", "ARM", "Test", "ResourceGroup","ServicePlan", "SqlDatabase", "SqlServer", "VirtualMachine", "WebApp")
       LicenseUri = ""
       ProjectUri = ""
       IconUri = ""
