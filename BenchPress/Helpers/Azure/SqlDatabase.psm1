@@ -27,7 +27,7 @@ function Get-SqlDatabaseExists {
     [Parameter(Mandatory=$true)]
     [string]$resourceGroupName
   )
-  $resource = Get-SqlDatabase $databaseName $serverName $resourceGroupName
+  $resource = Get-SqlDatabase -databaseName $databaseName -serverName $serverName -resourceGroupName $resourceGroupName
   return ($null -ne $resource)
 }
 

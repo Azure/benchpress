@@ -12,7 +12,7 @@ jobs:
       - name: Checkout repository and submodules
         uses: actions/checkout@v3
 
-      - name: Lint PowerShell Files
+      - name: Lint Bicep Files
         shell: pwsh
         run: |
           Get-ChildItem -Path './' -Filter '*.bicep' -Recurse | ForEach-Object { az bicep build -f $_ }
@@ -30,7 +30,7 @@ jobs:
       - name: Lint PowerShell Files
         shell: pwsh
         run: |
-          Invoke-ScriptAnalyzer -Path . -Recurse
+          Invoke-ScriptAnalyzer -Path . -Recurse -Settings ./.github/config/linter/PSScriptAnalyzerSettings.psd1
 
   lint-csharp:
     name: Lint CSharp Files
@@ -39,7 +39,7 @@ jobs:
       - name: Checkout repository and submodules
         uses: actions/checkout@v3
 
-      - name: Lint PowerShell Files
+      - name: Lint CSharp Files
         working-directory: BenchPress
         run: dotnet format
 
