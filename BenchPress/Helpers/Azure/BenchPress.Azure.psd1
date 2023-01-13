@@ -10,10 +10,12 @@
   Description = "Benchpress Test Framework for Azure Deployment Scenarios"
   RequiredModules = @()
   NestedModules = @(
+    "ActionGroup.psm1",
     "AKSCluster.psm1",
     "AzureCli.psm1",
     "Bicep.psm1",
     "Common.psm1",
+    "ContainerRegistry.psm1",
     "KeyVault.psm1",
     "ResourceGroup.psm1",
     "ServicePlan.psm1",
@@ -27,8 +29,12 @@
     "Confirm-BicepFile",
     "Deploy-BicepFeature",
     "Remove-BicepFeature",
+    "Get-ActionGroup",
+    "Get-ActionGroupExist",
     "Get-AKSCluster",
     "Get-AKSClusterExist",
+    "Get-ContainerRegistry",
+    "Get-ContainerRegistryExist",
     "Get-KeyVault",
     "Get-KeyVaultExist",
     "Get-KeyVaultSecret",
