@@ -30,7 +30,7 @@ jobs:
       - name: Lint PowerShell Files
         shell: pwsh
         run: |
-          Invoke-ScriptAnalyzer -Path . -Recurse -Settings ./.github/config/linter/PSScriptAnalyzerSettings.psd1
+          Invoke-ScriptAnalyzer -Path . -Recurse -EnableExit -Settings ./.github/config/linter/PSScriptAnalyzerSettings.psd1
 
   lint-csharp:
     name: Lint CSharp Files
@@ -45,7 +45,7 @@ jobs:
         run: dotnet restore
       - name: Lint CSharp Files
         working-directory: BenchPress
-        run: dotnet format --verify-no-changes
+        run: dotnet format --exclude ./bicep/ --verify-no-changes
 
   lint-yaml:
     name: Lint YAML Files
