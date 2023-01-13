@@ -1,0 +1,68 @@
+---
+name: pr
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-bicep:
+    name: Lint Bicep Files
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository and submodules
+        uses: actions/checkout@v3
+
+      - name: Lint PowerShell Files
+        shell: pwsh
+        run: |
+          Get-ChildItem -Path '.\' -Filter '*.bicep' -Recurse | ForEach-Object { az bicep build -f $_ }
+
+  lint-powershell:
+    name: Lint PowerShell Files
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install PSScriptAnalyzer module
+        shell: pwsh
+        run: |
+          Set-PSRepository PSGallery -InstallationPolicy Trusted
+          Install-Module PSScriptAnalyzer -ErrorAction Stop
+      - name: Lint PowerShell Files
+        shell: pwsh
+        run: |
+          Invoke-ScriptAnalyzer -Path . -Recurse
+
+  lint-csharp:
+    name: Lint CSharp Files
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository and submodules
+        uses: actions/checkout@v3
+
+      - name: Lint PowerShell Files
+        run: dotnet format
+
+  lint-yaml:
+    name: Lint YAML Files
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository and submodules
+        uses: actions/checkout@v3
+
+      - name: Lint YAML Files
+        run: |
+          pip install yamllint
+          yamllint .
+
+  lint-markdown:
+    name: Lint MD Files
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository and submodules
+        uses: actions/checkout@v3
+
+      - name: Lint MD Files
+        run: |
+          npm install markdownlint
+          markdownlint .
