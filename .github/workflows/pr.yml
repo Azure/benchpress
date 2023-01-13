@@ -41,6 +41,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Lint PowerShell Files
+        working-directory: BenchPress
         run: dotnet format
 
   lint-yaml:
@@ -64,5 +65,5 @@ jobs:
 
       - name: Lint MD Files
         run: |
-          npm install markdownlint
-          markdownlint .
+          npm install -g markdownlint-cli
+          markdownlint . --config .\.github\config\linter\.markdownlint.json
