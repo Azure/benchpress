@@ -26,4 +26,5 @@ jobs:
       - name: Lint PowerShell Files
         shell: pwsh
         run: |
-          Invoke-ScriptAnalyzer -Path . -Recurse -EnableExit -Settings $env:LINTER_CONFIG_DIR/PSScriptAnalyzerSettings.psd1
+          Invoke-ScriptAnalyzer -Path . -Recurse -EnableExit `
+            -Settings $env:LINTER_CONFIG_DIR/PSScriptAnalyzerSettings.psd1
