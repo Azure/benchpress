@@ -12,7 +12,7 @@ function Get-SqlServer {
   return $resource
 }
 
-function Get-SqlServer{
+function Get-SqlServerExist {
   [CmdletBinding()]
   param (
     [Parameter(Mandatory=$true)]
@@ -26,4 +26,4 @@ function Get-SqlServer{
   return ($null -ne $resource)
 }
 
-Export-ModuleMember -Function Get-SqlServer, Get-SqlServerExists
+Export-ModuleMember -Function Get-SqlServer, Get-SqlServerExist

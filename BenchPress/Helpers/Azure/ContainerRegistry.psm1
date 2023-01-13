@@ -44,7 +44,7 @@ function Get-ContainerRegistry {
 .EXAMPLE
   Get-ContainerRegistry-Name "benchpresstest" -ResourceGroupName "rgbenchpresstest"
 #>
-function Get-ContainerRegistry{
+function Get-ContainerRegistryExist {
   [CmdletBinding()]
   param (
     [Parameter(Mandatory=$true)]
@@ -57,4 +57,4 @@ function Get-ContainerRegistry{
   return ($null -ne $resource)
 }
 
-Export-ModuleMember -Function Get-ContainerRegistry, Get-ContainerRegistryExists
+Export-ModuleMember -Function Get-ContainerRegistry, Get-ContainerRegistryExist

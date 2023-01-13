@@ -82,7 +82,7 @@
     System.Management.Automation.PSCustomObject[]
 #>
 function Confirm-BicepFile {
-  [cmdletbinding()]
+  [CmdletBinding()]
   [OutputType([System.Object[]])]
   param(
     [Parameter(Mandatory, Position=0, ValueFromPipeline)] [string[]]$BicepFilePath

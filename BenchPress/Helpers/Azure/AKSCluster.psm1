@@ -12,7 +12,7 @@
   The name of the resource group
 
 .EXAMPLE
-  Get-AKSCluster -ActionGroupName "benchpresstest" -ResourceGroupName "rgbenchpresstest"
+  Get-AKSCluster -AKSName "benchpresstest" -ResourceGroupName "rgbenchpresstest"
 #>
 function Get-AKSCluster {
   [CmdletBinding()]
@@ -29,7 +29,23 @@ function Get-AKSCluster {
   return $resource
 }
 
-function Get-AKSCluster{
+<#
+.SYNOPSIS
+  Helper function for AKS Cluster
+
+.DESCRIPTION
+  Helper function for AKS Cluster
+
+.PARAMETER AKSName
+  The name of the AKS Cluster
+
+.PARAMETER ResourceGroupName
+  The name of the resource group
+
+.EXAMPLE
+  Get-AKSClusterExist -AKSName "benchpresstest" -ResourceGroupName "rgbenchpresstest"
+#>
+function Get-AKSClusterExist {
   [CmdletBinding()]
   param (
     [Parameter(Mandatory=$true)]
@@ -43,4 +59,4 @@ function Get-AKSCluster{
   return ($null -ne $resource)
 }
 
-Export-ModuleMember -Function Get-AKSCluster, Get-AKSClusterExists
+Export-ModuleMember -Function Get-AKSCluster, Get-AKSClusterExist

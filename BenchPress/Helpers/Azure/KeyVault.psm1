@@ -42,9 +42,9 @@ Helper function for KeyVault
   The name of the resource group
 
 .EXAMPLE
-  Get-KeyVault-Name "kvbenchpresstest" -ResourceGroupName "rgbenchpresstest"
+  Get-KeyVaultExist -Name "kvbenchpresstest" -ResourceGroupName "rgbenchpresstest"
 #>
-function Get-KeyVault{
+function Get-KeyVaultExist {
   [CmdletBinding()]
   param (
     [Parameter(Mandatory = $true)]
@@ -102,9 +102,9 @@ function Get-KeyVaultSecret {
   The name of the KeyVault
 
 .EXAMPLE
-  Get-KeyVaultSecret-Name "samplesecret" -KeyVaultName "kvbenchpresstest"
+  Get-KeyVaultSecretExist -Name "samplesecret" -KeyVaultName "kvbenchpresstest"
 #>
-function Get-KeyVaultSecret{
+function Get-KeyVaultSecretExist {
   [CmdletBinding()]
   param (
     [Parameter(Mandatory = $true)]
@@ -162,9 +162,9 @@ function Get-KeyVaultKey {
   The name of the KeyVault
 
 .EXAMPLE
-  Get-KeyVaultKey-Name "samplekey" -KeyVaultName "kvbenchpresstest"
+  Get-KeyVaultKeyExist -Name "samplekey" -KeyVaultName "kvbenchpresstest"
 #>
-function Get-KeyVaultKey{
+function Get-KeyVaultKeyExist {
   [CmdletBinding()]
   param (
     [Parameter(Mandatory = $true)]
@@ -222,9 +222,9 @@ function Get-KeyVaultCertificate {
   The name of the KeyVault
 
 .EXAMPLE
-  Get-KeyVaultCertificate-Name "samplecertificate" -KeyVaultName "kvbenchpresstest"
+  Get-KeyVaultCertificateExist -Name "samplecertificate" -KeyVaultName "kvbenchpresstest"
 #>
-function Get-KeyVaultCertificate{
+function Get-KeyVaultCertificateExist {
   [CmdletBinding()]
   param (
     [Parameter(Mandatory = $true)]
@@ -238,4 +238,4 @@ function Get-KeyVaultCertificate{
   return ($null -ne $resource)
 }
 
-Export-ModuleMember -Function Get-KeyVault, Get-KeyVaultExists, Get-KeyVaultSecret, Get-KeyVaultSecretExists, Get-KeyVaultKey, Get-KeyVaultKeyExists, Get-KeyVaultCertificate, Get-KeyVaultCertificateExists
+Export-ModuleMember -Function Get-KeyVault, Get-KeyVaultExist, Get-KeyVaultSecret, Get-KeyVaultSecretExist, Get-KeyVaultKey, Get-KeyVaultKeyExist, Get-KeyVaultCertificate, Get-KeyVaultCertificateExist

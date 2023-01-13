@@ -42,9 +42,9 @@ function Get-AppServicePlan {
   The name of the resource group
 
 .EXAMPLE
-  Get-AppServicePlan-AppServicePlanName "appsvcbenchpresstest" -ResourceGroupName "rgbenchpresstest"
+  Get-AppServicePlanExist -AppServicePlanName "appsvcbenchpresstest" -ResourceGroupName "rgbenchpresstest"
 #>
-function Get-AppServicePlan{
+function Get-AppServicePlanExist {
   [CmdletBinding()]
   param (
     [Parameter(Mandatory=$true)]
@@ -58,4 +58,4 @@ function Get-AppServicePlan{
   return ($null -ne $resource)
 }
 
-Export-ModuleMember -Function Get-AppServicePlan, Get-AppServicePlanExists
+Export-ModuleMember -Function Get-AppServicePlan, Get-AppServicePlanExist

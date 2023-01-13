@@ -12,7 +12,7 @@ function Get-VirtualMachine {
   return $resource
 }
 
-function Get-VirtualMachine{
+function Get-VirtualMachineExist {
   [CmdletBinding()]
   param (
     [Parameter(Mandatory=$true)]
@@ -26,4 +26,4 @@ function Get-VirtualMachine{
   return ($null -ne $resource)
 }
 
-Export-ModuleMember -Function Get-VirtualMachine, Get-VirtualMachineExists
+Export-ModuleMember -Function Get-VirtualMachine, Get-VirtualMachineExist

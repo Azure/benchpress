@@ -12,7 +12,7 @@ function Get-WebApp {
   return $resource
 }
 
-function Get-WebApp{
+function Get-WebAppExist {
   [CmdletBinding()]
   param (
     [Parameter(Mandatory=$true)]
@@ -26,4 +26,4 @@ function Get-WebApp{
   return ($null -ne $resource)
 }
 
-Export-ModuleMember -Function Get-WebApp, Get-WebAppExists
+Export-ModuleMember -Function Get-WebApp, Get-WebAppExist

@@ -15,7 +15,7 @@ function Get-SqlDatabase {
   return $resource
 }
 
-function Get-SqlDatabase{
+function Get-SqlDatabaseExist {
   [CmdletBinding()]
   param (
     [Parameter(Mandatory=$true)]
@@ -32,4 +32,4 @@ function Get-SqlDatabase{
   return ($null -ne $resource)
 }
 
-Export-ModuleMember -Function Get-SqlDatabase, Get-SqlDatabaseExists
+Export-ModuleMember -Function Get-SqlDatabase, Get-SqlDatabaseExist

@@ -42,9 +42,9 @@ function Get-ActionGroup {
   The name of the resource group
 
 .EXAMPLE
-  Get-ActionGroup-ActionGroupName "benchpresstest" -ResourceGroupName "rgbenchpresstest"
+  Get-ActionGroupExist -ActionGroupName "benchpresstest" -ResourceGroupName "rgbenchpresstest"
 #>
-function Get-ActionGroup{
+function Get-ActionGroupExist {
   [CmdletBinding()]
   param (
     [Parameter(Mandatory=$true)]
@@ -58,4 +58,4 @@ function Get-ActionGroup{
   return ($null -ne $resource)
 }
 
-Export-ModuleMember -Function Get-ActionGroup, Get-ActionGroupExists
+Export-ModuleMember -Function Get-ActionGroup, Get-ActionGroupExist

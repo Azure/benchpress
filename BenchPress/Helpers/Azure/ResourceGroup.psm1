@@ -33,9 +33,9 @@ function Get-ResourceGroup {
   The name of the resource group
 
 .EXAMPLE
-  Get-ResourceGroup-ResourceGroupName "rgbenchpresstest"
+  Get-ResourceGroupExist -ResourceGroupName "rgbenchpresstest"
 #>
-function Get-ResourceGroup{
+function Get-ResourceGroupExist {
   [CmdletBinding()]
   param (
     [Parameter(Mandatory=$true)]
@@ -46,4 +46,4 @@ function Get-ResourceGroup{
   return ($null -ne $resource)
 }
 
-Export-ModuleMember -Function Get-ResourceGroup, Get-ResourceGroupExists
+Export-ModuleMember -Function Get-ResourceGroup, Get-ResourceGroupExist
