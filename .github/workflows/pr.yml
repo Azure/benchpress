@@ -45,7 +45,7 @@ jobs:
         run: dotnet restore
       - name: Lint CSharp Files
         working-directory: BenchPress
-        run: dotnet format
+        run: dotnet format --verify-no-changes
 
   lint-yaml:
     name: Lint YAML Files
