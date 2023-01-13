@@ -24,7 +24,7 @@ Describe 'Verify Container Registry Exists' {
     $acrName = "acrbenchpresstest1"
 
     #act
-    $exists = Get-ContainerRegistryExists -ResourceGroupName $rgName -Name $acrName
+    $exists = Get-ContainerRegistryExist -ResourceGroupName $rgName -Name $acrName
 
     #assert
     $exists | Should -Be $true
