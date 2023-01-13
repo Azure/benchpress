@@ -38,7 +38,11 @@ jobs:
     steps:
       - name: Checkout repository and submodules
         uses: actions/checkout@v3
-
+      - name: Initialize Bicep Submodule
+        run: git submodule update --init --recursive
+      - name: Restore Benchpress Solution
+        working-directory: BenchPress
+        run: dotnet restore
       - name: Lint CSharp Files
         working-directory: BenchPress
         run: dotnet format
