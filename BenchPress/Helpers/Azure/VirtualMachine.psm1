@@ -2,29 +2,28 @@ function Get-VirtualMachine {
   [CmdletBinding()]
   param (
     [Parameter(Mandatory=$true)]
-    [string]$virtualMachineName,
+    [string]$VirtualMachineName,
 
     [Parameter(Mandatory=$true)]
-    [string]$resourceGroupName
+    [string]$ResourceGroupName
   )
 
-  $resource = Get-AzVM -ResourceGroupName $resourceGroupName -Name $virtualMachineName
+  $resource = Get-AzVM -ResourceGroupName $ResourceGroupName -Name $VirtualMachineName
   return $resource
 }
 
-function Get-VirtualMachineExists {
+function Get-VirtualMachine{
   [CmdletBinding()]
   param (
     [Parameter(Mandatory=$true)]
-    [string]$virtualMachineName,
+    [string]$VirtualMachineName,
 
     [Parameter(Mandatory=$true)]
-    [string]$resourceGroupName
+    [string]$ResourceGroupName
   )
 
-  $resource = Get-VirtualMachine $virtualMachineName $resourceGroupName
+  $resource = Get-VirtualMachine -VirtualMachineName $VirtualMachineName -ResourceGroupName $ResourceGroupName
   return ($null -ne $resource)
 }
 
-Export-ModuleMember -Function `
-  Get-VirtualMachine, Get-VirtualMachineExists
+Export-ModuleMember -Function Get-VirtualMachine, Get-VirtualMachineExists

@@ -1,29 +1,61 @@
+<#
+.SYNOPSIS
+  Helper function for App Service Plan
+
+.DESCRIPTION
+  Helper function for App Service Plan
+
+.PARAMETER AppServicePlanName
+  The name of the App Service Plan
+
+.PARAMETER ResourceGroupName
+  The name of the resource group
+
+.EXAMPLE
+  Get-AppServicePlan -AppServicePlanName "appsvcbenchpresstest" -ResourceGroupName "rgbenchpresstest"
+#>
 function Get-AppServicePlan {
   [CmdletBinding()]
   param (
     [Parameter(Mandatory=$true)]
-    [string]$appServicePlanName,
+    [string]$AppServicePlanName,
 
     [Parameter(Mandatory=$true)]
-    [string]$resourceGroupName
+    [string]$ResourceGroupName
   )
 
-  $resource = Get-AzAppServicePlan -ResourceGroupName $resourceGroupName -Name $appServicePlanName
+  $resource = Get-AzAppServicePlan -ResourceGroupName $ResourceGroupName -Name $AppServicePlanName
   return $resource
 }
 
-function Get-AppServicePlanExists {
+<#
+.SYNOPSIS
+  Helper function for App Service Plan
+
+.DESCRIPTION
+  Helper function for App Service Plan
+
+.PARAMETER AppServicePlanName
+  The name of the App Service Plan
+
+.PARAMETER ResourceGroupName
+  The name of the resource group
+
+.EXAMPLE
+  Get-AppServicePlan-AppServicePlanName "appsvcbenchpresstest" -ResourceGroupName "rgbenchpresstest"
+#>
+function Get-AppServicePlan{
   [CmdletBinding()]
   param (
     [Parameter(Mandatory=$true)]
-    [string]$appServicePlanName,
+    [string]$AppServicePlanName,
 
     [Parameter(Mandatory=$true)]
-    [string]$resourceGroupName
+    [string]$ResourceGroupName
   )
-  $resource = Get-AppServicePlan $appServicePlanName $resourceGroupName
+
+  $resource = Get-AppServicePlan -AppServicePlanName $AppServicePlanName -ResourceGroupName $ResourceGroupName
   return ($null -ne $resource)
 }
 
-Export-ModuleMember -Function `
-  Get-AppServicePlan, Get-AppServicePlanExists
+Export-ModuleMember -Function Get-AppServicePlan, Get-AppServicePlanExists

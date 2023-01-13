@@ -1,3 +1,7 @@
+Import-Module "../BenchPress/Helpers/Azure/ActionGroup.psm1"
+Import-Module "../BenchPress/Helpers/Azure/AKSCluster.psm1"
+Import-Module "../BenchPress/Helpers/Azure/ContainerRegistry.psm1"
+Import-Module "../BenchPress/Helpers/Azure/KeyVault.psm1"
 Import-Module "../BenchPress/Helpers/Azure/ResourceGroup.psm1"
 Import-Module "../BenchPress/Helpers/Azure/ServicePlan.psm1"
 Import-Module "../BenchPress/Helpers/Azure/SqlServer.psm1"
@@ -6,6 +10,10 @@ Import-Module "../BenchPress/Helpers/Azure/VirtualMachine.psm1"
 Import-Module "../BenchPress/Helpers/Azure/WebApp.psm1"
 
 enum ResourceType {
+  ActionGroup
+  AKSCluster
+  ContainerRegistry
+  KeyVault
   ResourceGroup
   ServicePlan
   SqlDatabase
@@ -29,6 +37,10 @@ function Get-ResourceByType {
 
   switch ($ResourceType)
   {
+    ActionGroup { return Get-ActionGroup($ResourceName, $ResourceGroupName) }
+    AKSCluster { return Get-AKSCluster($ResourceName, $ResourceGroupName) }
+    ContainerRegistry { return Get-ContainerRegistry($ResourceName, $ResourceGroupName) }
+    KeyVault { return Get-KeyVault($ResourceName, $ResourceGroupName) }
     ResourceGroup { return Get-ResourceGroup($ResourceName) }
     ServicePlan { return Get-ServicePlan($ResourceName, $ResourceGroupName) }
     SqlDatabase { return Get-SqlDatabase($ResourceName, $ResourceGroupName) }
@@ -52,5 +64,4 @@ function Get-Resource {
   return Get-AzResource -Name "${ResourceName}" -ResourceGroupName "${ResourceGroupName}"
 }
 
-Export-ModuleMember -Function `
-  Get-Resource, Get-ResourceByType
+Export-ModuleMember -Function Get-Resource, Get-ResourceByType

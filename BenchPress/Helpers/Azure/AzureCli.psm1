@@ -35,13 +35,22 @@
   .OUTPUTS
   System.Object
 #>
-function Invoke-AzCli($Command) {
+function Invoke-AzCli {
+  [CmdletBinding()]
+  param (
+    [Parameter(Mandatory=$true)]
+    [string]$Command
+  )
+
   $toExecute = "az $Command"
+
   $result = Invoke-Expression "$toExecute"
+
   if ($LastExitCode -gt 0) {
     Write-Error $result
     Exit 1
   }
+
   $result | ConvertFrom-Json
 }
 

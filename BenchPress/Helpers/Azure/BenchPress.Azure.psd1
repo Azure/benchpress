@@ -54,15 +54,15 @@
   )
   PrivateData = @{
     PSData = @{
-      Tags = @("Azure", "BenchPress", "Bicep", "ARM", "Test", "ResourceGroup","ServicePlan", "SqlDatabase", "SqlServer", "VirtualMachine", "WebApp")
+      Tags = @("Azure", "BenchPress", "Bicep", "ARM", "Test", "ActionGroup", "AKS", "AKSCluster", "ContainerRegistry", "KeyVault", "ResourceGroup", "ServicePlan", "SqlDatabase", "SqlServer", "VirtualMachine", "WebApp")
       LicenseUri = ""
-      ProjectUri = ""
+      ProjectUri = "https://github.com/Azure/benchpress/"
       IconUri = ""
       ReleaseNotes = ""
       Prerelease = ""
       RequireLicenseAcceptance = $false
     }
   }
-  HelpInfoURI = ""
-  DefaultCommandPrefix = ""
+  HelpInfoURI = "https://github.com/Azure/benchpress/"
+  DefaultCommandPrefix = "AzBP"
 }
