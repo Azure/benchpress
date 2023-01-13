@@ -1,14 +1,13 @@
 ---
 name: pr
-
-on:
+on:  # yamllint disable-line rule:truthy
   pull_request:
     branches: [main]
 
 jobs:
   lint-bicep:
     name: Lint Bicep Files
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository and submodules
         uses: actions/checkout@v3
@@ -16,11 +15,11 @@ jobs:
       - name: Lint PowerShell Files
         shell: pwsh
         run: |
-          Get-ChildItem -Path '.\' -Filter '*.bicep' -Recurse | ForEach-Object { az bicep build -f $_ }
+          Get-ChildItem -Path './' -Filter '*.bicep' -Recurse | ForEach-Object { az bicep build -f $_ }
 
   lint-powershell:
     name: Lint PowerShell Files
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Install PSScriptAnalyzer module
@@ -54,7 +53,7 @@ jobs:
       - name: Lint YAML Files
         run: |
           pip install yamllint
-          yamllint .
+          yamllint . ./.github/config/linter/.yamllint.yml
 
   lint-markdown:
     name: Lint MD Files
