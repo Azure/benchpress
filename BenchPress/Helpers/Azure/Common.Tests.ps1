@@ -29,9 +29,9 @@ Describe "Get-ResourceByType" {
       @{ ResourceType = [ResourceType]::VirtualMachine; Expected = "Get-VirtualMachine"}
       @{ ResourceType = [ResourceType]::WebApp; Expected = "Get-WebApp"}
     ) {
-      Get-ResourceByType -ResourceName resource -ResourceGroupName group -ResourceType $ResourceType | Should -Invoke -ModuleName Common -CommandName $Expected -Times 1
+      Get-ResourceByType -ResourceName resource -ResourceGroupName group -ResourceType $ResourceType `
+        | Should -Invoke -ModuleName Common -CommandName $Expected -Times 1
     }
-
   }
 }
 
