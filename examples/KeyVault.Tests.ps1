@@ -38,7 +38,7 @@ Describe 'Verify samplekey Key in KeyVault Exists' {
     $kvKeyName = "samplekey"
 
     #act
-    $exists = Get-KeyVaultKeyExists -KeyVaultName $kvName -Name $kvKeyName
+    $exists = Get-KeyVaultKeyExist -KeyVaultName $kvName -Name $kvKeyName
 
     #assert
     $exists | Should -Be $true
@@ -66,7 +66,7 @@ Describe 'Verify samplesecret Secret in KeyVault Exists' {
     $kvSecretName = "samplesecret"
 
     #act
-    $exists = Get-KeyVaultSecretExists -KeyVaultName $kvName -Name $kvSecretName
+    $exists = Get-KeyVaultSecretExist -KeyVaultName $kvName -Name $kvSecretName
 
     #assert
     $exists | Should -Be $true
@@ -80,7 +80,7 @@ Describe 'Verify KeyVault Exists' {
     $kvName = "kvbenchpresstest"
 
     #act
-    $exists = Get-KeyVaultExists -ResourceGroupName $rgName -Name $kvName
+    $exists = Get-KeyVaultExist -ResourceGroupName $rgName -Name $kvName
 
     #assert
     $exists | Should -Be $true
@@ -108,9 +108,9 @@ Describe 'Spin up , Tear down KeyVault' {
     $userId=(Get-AzAdUser -UserPrincipalName $currentUser | Select-Object Id -ExpandProperty Id)
     Set-AzKeyVaultAccessPolicy -VaultName $kvName -ObjectId $userId -PermissionsToSecrets "All" -PermissionsToKeys "All" -PermissionsToCertificates "All"
 
-    $kvExists = Get-KeyVaultExists -ResourceGroupName $rgName -Name $kvName
-    $kvKeyExists = Get-KeyVaultKeyExists -KeyVaultName $kvName -Name $kvKeyName
-    $kvSecretExists = Get-KeyVaultSecretExists -KeyVaultName $kvName -Name $kvSecretName
+    $kvExists = Get-KeyVaultExist -ResourceGroupName $rgName -Name $kvName
+    $kvKeyExists = Get-KeyVaultKeyExist -KeyVaultName $kvName -Name $kvKeyName
+    $kvSecretExists = Get-KeyVaultSecretExist -KeyVaultName $kvName -Name $kvSecretName
 
     #assert
     $deployment.ProvisioningState | Should -Be "Succeeded"

@@ -5,26 +5,26 @@
 .DESCRIPTION
   Helper function for KeyVault
 
-.PARAMETER name
+.PARAMETER Name
   The name of the KeyVault
 
-.PARAMETER resourceGroupName
+.PARAMETER ResourceGroupName
   The name of the resource group
 
 .EXAMPLE
-  Get-KeyVault -name "kvbenchpresstest" -resourceGroupName "rgbenchpresstest"
+  Get-KeyVault -Name "kvbenchpresstest" -ResourceGroupName "rgbenchpresstest"
 #>
 function Get-KeyVault {
   [CmdletBinding()]
   param (
     [Parameter(Mandatory = $true)]
-    [string]$name,
+    [string]$Name,
 
     [Parameter(Mandatory = $true)]
-    [string]$resourceGroupName
+    [string]$ResourceGroupName
   )
 
-  $resource = Get-AzKeyVault -ResourceGroupName $resourceGroupName -VaultName $name
+  $resource = Get-AzKeyVault -ResourceGroupName $ResourceGroupName -VaultName $Name
   return $resource
 }
 
@@ -35,25 +35,26 @@ Helper function for KeyVault
 .DESCRIPTION
   Helper function for KeyVault
 
-.PARAMETER name
+.PARAMETER Name
   The name of the KeyVault
 
-.PARAMETER resourceGroupName
+.PARAMETER ResourceGroupName
   The name of the resource group
 
 .EXAMPLE
-  Get-KeyVaultExists -name "kvbenchpresstest" -resourceGroupName "rgbenchpresstest"
+  Get-KeyVaultExist -Name "kvbenchpresstest" -ResourceGroupName "rgbenchpresstest"
 #>
-function Get-KeyVaultExists {
+function Get-KeyVaultExist {
   [CmdletBinding()]
   param (
     [Parameter(Mandatory = $true)]
-    [string]$name,
+    [string]$Name,
 
     [Parameter(Mandatory = $true)]
-    [string]$resourceGroupName
+    [string]$ResourceGroupName
   )
-  $resource = Get-KeyVault $name $resourceGroupName
+
+  $resource = Get-KeyVault -Name $Name -ResourceGroupName $ResourceGroupName
   return ($null -ne $resource)
 }
 
@@ -64,25 +65,26 @@ function Get-KeyVaultExists {
 .DESCRIPTION
   Helper function for KeyVault Secrets
 
-.PARAMETER name
+.PARAMETER Name
   The name of the KeyVault Secret
 
-.PARAMETER keyVaultName
+.PARAMETER KeyVaultName
   The name of the KeyVault
 
 .EXAMPLE
-  Get-KeyVaultSecret -name "samplesecret" -keyVaultName "kvbenchpresstest"
+  Get-KeyVaultSecret -Name "samplesecret" -KeyVaultName "kvbenchpresstest"
 #>
 function Get-KeyVaultSecret {
   [CmdletBinding()]
   param (
     [Parameter(Mandatory = $true)]
-    [string]$name,
+    [string]$Name,
 
     [Parameter(Mandatory = $true)]
-    [string]$keyVaultName
+    [string]$KeyVaultName
   )
-  $resource = Get-AzKeyVaultSecret -Name $name -VaultName $keyVaultName
+
+  $resource = Get-AzKeyVaultSecret -Name $Name -VaultName $KeyVaultName
   return $resource
 }
 
@@ -93,25 +95,26 @@ function Get-KeyVaultSecret {
 .DESCRIPTION
   Helper function for KeyVault Secrets
 
-.PARAMETER name
+.PARAMETER Name
   The name of the KeyVault Secret
 
-.PARAMETER keyVaultName
+.PARAMETER KeyVaultName
   The name of the KeyVault
 
 .EXAMPLE
-  Get-KeyVaultSecretExists -name "samplesecret" -keyVaultName "kvbenchpresstest"
+  Get-KeyVaultSecretExist -Name "samplesecret" -KeyVaultName "kvbenchpresstest"
 #>
-function Get-KeyVaultSecretExists {
+function Get-KeyVaultSecretExist {
   [CmdletBinding()]
   param (
     [Parameter(Mandatory = $true)]
-    [string]$name,
+    [string]$Name,
 
     [Parameter(Mandatory = $true)]
-    [string]$keyVaultName
+    [string]$KeyVaultName
   )
-  $resource = Get-KeyVaultSecret $name $keyVaultName
+
+  $resource = Get-KeyVaultSecret -Name $Name -KeyVaultName $KeyVaultName
   return ($null -ne $resource)
 }
 
@@ -122,25 +125,26 @@ function Get-KeyVaultSecretExists {
 .DESCRIPTION
   Helper function for KeyVault Keys
 
-.PARAMETER name
+.PARAMETER Name
   The name of the KeyVault Key
 
-.PARAMETER keyVaultName
+.PARAMETER KeyVaultName
   The name of the KeyVault
 
 .EXAMPLE
-  Get-KeyVaultKey -name "samplekey" -keyVaultName "kvbenchpresstest"
+  Get-KeyVaultKey -Name "samplekey" -KeyVaultName "kvbenchpresstest"
 #>
 function Get-KeyVaultKey {
   [CmdletBinding()]
   param (
     [Parameter(Mandatory = $true)]
-    [string]$name,
+    [string]$Name,
 
     [Parameter(Mandatory = $true)]
-    [string]$keyVaultName
+    [string]$KeyVaultName
   )
-  $resource = Get-AzKeyVaultKey -Name $name -VaultName $keyVaultName
+
+  $resource = Get-AzKeyVaultKey -Name $Name -VaultName $KeyVaultName
   return $resource
 }
 
@@ -151,25 +155,26 @@ function Get-KeyVaultKey {
 .DESCRIPTION
   Helper function for KeyVault Keys
 
-.PARAMETER name
+.PARAMETER Name
   The name of the KeyVault Key
 
-.PARAMETER keyVaultName
+.PARAMETER KeyVaultName
   The name of the KeyVault
 
 .EXAMPLE
-  Get-KeyVaultKeyExists -name "samplekey" -keyVaultName "kvbenchpresstest"
+  Get-KeyVaultKeyExist -Name "samplekey" -KeyVaultName "kvbenchpresstest"
 #>
-function Get-KeyVaultKeyExists {
+function Get-KeyVaultKeyExist {
   [CmdletBinding()]
   param (
     [Parameter(Mandatory = $true)]
-    [string]$name,
+    [string]$Name,
 
     [Parameter(Mandatory = $true)]
-    [string]$keyVaultName
+    [string]$KeyVaultName
   )
-  $resource = Get-KeyVaultKey $name $keyVaultName
+
+  $resource = Get-KeyVaultKey -Name $Name -KeyVaultName $KeyVaultName
   return ($null -ne $resource)
 }
 
@@ -180,25 +185,26 @@ function Get-KeyVaultKeyExists {
 .DESCRIPTION
   Helper function for KeyVault Certificates
 
-.PARAMETER name
+.PARAMETER Name
   The name of the KeyVault Certificate
 
-.PARAMETER keyVaultName
+.PARAMETER KeyVaultName
   The name of the KeyVault
 
 .EXAMPLE
-  Get-KeyVaultCertificate -name "samplecertificate" -keyVaultName "kvbenchpresstest"
+  Get-KeyVaultCertificate -Name "samplecertificate" -KeyVaultName "kvbenchpresstest"
 #>
 function Get-KeyVaultCertificate {
   [CmdletBinding()]
   param (
     [Parameter(Mandatory = $true)]
-    [string]$name,
+    [string]$Name,
 
     [Parameter(Mandatory = $true)]
-    [string]$keyVaultName
+    [string]$KeyVaultName
   )
-  $resource = Get-AzKeyVaultCertificate -Name $name -VaultName $keyVaultName
+
+  $resource = Get-AzKeyVaultCertificate -Name $Name -VaultName $KeyVaultName
   return $resource
 }
 
@@ -209,26 +215,27 @@ function Get-KeyVaultCertificate {
 .DESCRIPTION
   Helper function for KeyVault Certificates
 
-.PARAMETER name
+.PARAMETER Name
   The name of the KeyVault Certificate
 
-.PARAMETER keyVaultName
+.PARAMETER KeyVaultName
   The name of the KeyVault
 
 .EXAMPLE
-  Get-KeyVaultCertificateExists -name "samplecertificate" -keyVaultName "kvbenchpresstest"
+  Get-KeyVaultCertificateExist -Name "samplecertificate" -KeyVaultName "kvbenchpresstest"
 #>
-function Get-KeyVaultCertificateExists {
+function Get-KeyVaultCertificateExist {
   [CmdletBinding()]
   param (
     [Parameter(Mandatory = $true)]
-    [string]$name,
+    [string]$Name,
 
     [Parameter(Mandatory = $true)]
-    [string]$keyVaultName
+    [string]$KeyVaultName
   )
-  $resource = Get-KeyVaultCertificate $name $keyVaultName
+
+  $resource = Get-KeyVaultCertificate -Name $Name -KeyVaultName $KeyVaultName
   return ($null -ne $resource)
 }
 
-Export-ModuleMember -Function Get-KeyVault, Get-KeyVaultExists, Get-KeyVaultSecret, Get-KeyVaultSecretExists, Get-KeyVaultKey, Get-KeyVaultKeyExists, Get-KeyVaultCertificate, Get-KeyVaultCertificateExists
+Export-ModuleMember -Function Get-KeyVault, Get-KeyVaultExist, Get-KeyVaultSecret, Get-KeyVaultSecretExist, Get-KeyVaultKey, Get-KeyVaultKeyExist, Get-KeyVaultCertificate, Get-KeyVaultCertificateExist

@@ -10,7 +10,7 @@ Describe 'Verify AKS Cluster Exists' {
     $rgName = "rgbenchpresstest"
 
     #act
-    $exists = Get-AKSClusterExists -resourceGroupName $rgName -aksName $aksName
+    $exists = Get-AKSClusterExist -resourceGroupName $rgName -aksName $aksName
 
     #assert
     $exists | Should -Be $true

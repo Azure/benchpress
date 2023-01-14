@@ -10,7 +10,7 @@ Describe 'Verify Action Group Exists' {
     $actionGroupName = "sampleaction"
 
     #act
-    $exists = Get-ActionGroupExists -resourceGroupName $rgName -actionGroupName $actionGroupName
+    $exists = Get-ActionGroupExist -resourceGroupName $rgName -actionGroupName $actionGroupName
 
     #assert
     $exists | Should -Be $true
