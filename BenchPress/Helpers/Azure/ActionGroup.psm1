@@ -1,30 +1,61 @@
+<#
+.SYNOPSIS
+  Helper function for Azure Action Group
+
+.DESCRIPTION
+  Helper function for Azure Action Group
+
+.PARAMETER ActionGroupName
+  The name of the Azure Action Group
+
+.PARAMETER ResourceGroupName
+  The name of the resource group
+
+.EXAMPLE
+  Get-ActionGroup -ActionGroupName "benchpresstest" -ResourceGroupName "rgbenchpresstest"
+#>
 function Get-ActionGroup {
   [CmdletBinding()]
   param (
     [Parameter(Mandatory=$true)]
-    [string]$actionGroupName,
+    [string]$ActionGroupName,
 
     [Parameter(Mandatory=$true)]
-    [string]$resourceGroupName
+    [string]$ResourceGroupName
   )
 
-  $resource = Get-AzActionGroup -ResourceGroupName $resourceGroupName -Name $actionGroupName
+  $resource = Get-AzActionGroup -ResourceGroupName $ResourceGroupName -Name $ActionGroupName
   return $resource
 }
 
-function Get-ActionGroupExists {
+<#
+.SYNOPSIS
+  Helper function for Azure Action Group
+
+.DESCRIPTION
+  Helper function for Azure Action Group
+
+.PARAMETER ActionGroupName
+  The name of the Azure Action Group
+
+.PARAMETER ResourceGroupName
+  The name of the resource group
+
+.EXAMPLE
+  Get-ActionGroupExist -ActionGroupName "benchpresstest" -ResourceGroupName "rgbenchpresstest"
+#>
+function Get-ActionGroupExist {
   [CmdletBinding()]
   param (
     [Parameter(Mandatory=$true)]
-    [string]$actionGroupName,
+    [string]$ActionGroupName,
 
     [Parameter(Mandatory=$true)]
-    [string]$resourceGroupName
+    [string]$ResourceGroupName
   )
 
-  $resource = Get-ActionGroup $actionGroupName $resourceGroupName
+  $resource = Get-ActionGroup -ActionGroupName $actionGroupName -ResourceGroupName $ResourceGroupName
   return ($null -ne $resource)
 }
 
-Export-ModuleMember -Function `
-  Get-ActionGroup, Get-ActionGroupExists
+Export-ModuleMember -Function Get-ActionGroup, Get-ActionGroupExist

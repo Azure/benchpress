@@ -2,34 +2,34 @@ function Get-SqlDatabase {
   [CmdletBinding()]
   param (
     [Parameter(Mandatory=$true)]
-    [string]$databaseName,
+    [string]$DatabaseName,
 
     [Parameter(Mandatory=$true)]
-    [string]$serverName,
+    [string]$ServerName,
 
     [Parameter(Mandatory=$true)]
-    [string]$resourceGroupName
+    [string]$ResourceGroupName
   )
 
-  $resource = Get-AzSqlDatabase -ResourceGroupName $resourceGroupName -ServerName $serverName -DatabaseName $databaseName
+  $resource = Get-AzSqlDatabase -ResourceGroupName $ResourceGroupName -ServerName $ServerName -DatabaseName $DatabaseName
   return $resource
 }
 
-function Get-SqlDatabaseExists {
+function Get-SqlDatabaseExist {
   [CmdletBinding()]
   param (
     [Parameter(Mandatory=$true)]
-    [string]$databaseName,
+    [string]$DatabaseName,
 
     [Parameter(Mandatory=$true)]
-    [string]$serverName,
+    [string]$ServerName,
 
     [Parameter(Mandatory=$true)]
-    [string]$resourceGroupName
+    [string]$ResourceGroupName
   )
-  $resource = Get-SqlDatabase -databaseName $databaseName -serverName $serverName -resourceGroupName $resourceGroupName
+
+  $resource = Get-SqlDatabase -DatabaseName $DatabaseName -ServerName $ServerName -ResourceGroupName $ResourceGroupName
   return ($null -ne $resource)
 }
 
-Export-ModuleMember -Function `
-  Get-SqlDatabase, Get-SqlDatabaseExists
+Export-ModuleMember -Function Get-SqlDatabase, Get-SqlDatabaseExist

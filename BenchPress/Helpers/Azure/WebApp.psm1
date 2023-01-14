@@ -2,29 +2,28 @@ function Get-WebApp {
   [CmdletBinding()]
   param (
     [Parameter(Mandatory=$true)]
-    [string]$webAppName,
+    [string]$WebAppName,
 
     [Parameter(Mandatory=$true)]
-    [string]$resourceGroupName
+    [string]$ResourceGroupName
   )
 
-  $resource = Get-AzWebApp -ResourceGroupName $resourceGroupName -Name $webAppName
+  $resource = Get-AzWebApp -ResourceGroupName $ResourceGroupName -Name $WebAppName
   return $resource
 }
 
-function Get-WebAppExists {
+function Get-WebAppExist {
   [CmdletBinding()]
   param (
     [Parameter(Mandatory=$true)]
-    [string]$webAppName,
+    [string]$WebAppName,
 
     [Parameter(Mandatory=$true)]
-    [string]$resourceGroupName
+    [string]$ResourceGroupName
   )
 
-  $resource = Get-WebApp $webAppName $resourceGroupName
+  $resource = Get-WebApp -WebAppName $WebAppName -ResourceGroupName $ResourceGroupName
   return ($null -ne $resource)
 }
 
-Export-ModuleMember -Function `
-  Get-WebApp, Get-WebAppExists
+Export-ModuleMember -Function Get-WebApp, Get-WebAppExist

@@ -2,29 +2,28 @@ function Get-SqlServer {
   [CmdletBinding()]
   param (
     [Parameter(Mandatory=$true)]
-    [string]$serverName,
+    [string]$ServerName,
 
     [Parameter(Mandatory=$true)]
-    [string]$resourceGroupName
+    [string]$ResourceGroupName
   )
 
-  $resource = Get-AzSqlServer -ResourceGroupName $resourceGroupName -ServerName $serverName
+  $resource = Get-AzSqlServer -ResourceGroupName $ResourceGroupName -ServerName $ServerName
   return $resource
 }
 
-function Get-SqlServerExists {
+function Get-SqlServerExist {
   [CmdletBinding()]
   param (
     [Parameter(Mandatory=$true)]
-    [string]$serverName,
+    [string]$ServerName,
 
     [Parameter(Mandatory=$true)]
-    [string]$resourceGroupName
+    [string]$ResourceGroupName
   )
 
-  $resource = Get-SqlServer $serverName $resourceGroupName
+  $resource = Get-SqlServer -ServerName $ServerName -ResourceGroupName $ResourceGroupName
   return ($null -ne $resource)
 }
 
-Export-ModuleMember -Function `
-  Get-SqlServer, Get-SqlServerExists
+Export-ModuleMember -Function Get-SqlServer, Get-SqlServerExist
