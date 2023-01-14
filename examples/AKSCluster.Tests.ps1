@@ -1,16 +1,15 @@
 BeforeAll {
-  Import-Module "../BenchPress/Helpers/Azure/AKSCluster.psm1"
-  Import-Module "../BenchPress/Helpers/Azure/Bicep.psm1"
+  Import-Module "../BenchPress/Helpers/Azure/BenchPress.Azure.psd1"
 }
 
 Describe 'Verify AKS Cluster Exists' {
   it 'Should contain a resource group named rgbenchpresstest' {
     #arrange
+    $resourceGroupName = "rg-test"
     $aksName = "aksbenchpresstest"
-    $rgName = "rgbenchpresstest"
 
     #act
-    $exists = Get-AKSClusterExist -resourceGroupName $rgName -aksName $aksName
+    $exists = Get-AzBPAKSClusterExist -ResourceGroupName $resourceGroupName -AKSName $aksName
 
     #assert
     $exists | Should -Be $true
@@ -20,17 +19,20 @@ Describe 'Verify AKS Cluster Exists' {
 Describe 'Spin up , Tear down AKS Cluster' {
   it 'Should deploy a bicep file.' {
     #arrange
+    $resourceGroupName = "rg-test"
     $bicepPath = "./aksCluster.bicep"
     $params = @{
       name        = "aksbenchpresstest"
       location    = "westus"
     }
+
     #act
-    $deployment = Deploy-BicepFeature $bicepPath $params "rgbenchpresstest"
+    $deployment = Deploy-AzBPBicepFeature $bicepPath $params $resourceGroupName
+
     #assert
     $deployment.ProvisioningState | Should -Be "Succeeded"
 
     #clean up
-    Remove-BicepFeature "rgbenchpresstest"
+    Remove-AzBPBicepFeature $resourceGroupName
   }
 }

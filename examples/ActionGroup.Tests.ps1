@@ -1,16 +1,15 @@
 BeforeAll {
-  Import-Module "../BenchPress/Helpers/Azure/ActionGroup.psm1"
-  Import-Module "../BenchPress/Helpers/Azure/Bicep.psm1"
+  Import-Module "../BenchPress/Helpers/Azure/BenchPress.Azure.psd1"
 }
 
 Describe 'Verify Action Group Exists' {
   it 'Should contain a action group named sampleActionGroup' {
     #arrange
-    $rgName = "test-rg"
+    $resourceGroupName = "test-rg"
     $actionGroupName = "sampleaction"
 
     #act
-    $exists = Get-ActionGroupExist -resourceGroupName $rgName -actionGroupName $actionGroupName
+    $exists = Get-AzBPActionGroupExist -ResourceGroupName $resourceGroupName -ActionGroupName $actionGroupName
 
     #assert
     $exists | Should -Be $true
@@ -20,17 +19,20 @@ Describe 'Verify Action Group Exists' {
 Describe 'Spin up , Tear down Action Group' {
   it 'Should deploy a bicep file.' {
     #arrange
+    $resourceGroupName = "test-rg"
     $bicepPath = "./actionGroup.bicep"
     $params = @{
       actionGroupName = "sampleaction"
       location    = "swedencentral"
     }
+
     #act
-    $deployment = Deploy-BicepFeature $bicepPath $params "test-rg"
+    $deployment = Deploy-AzBPBicepFeature $bicepPath $params $resourceGroupName
+
     #assert
     $deployment.ProvisioningState | Should -Be "Succeeded"
 
     #clean up
-    Remove-BicepFeature $params
+    Remove-AzBPBicepFeature $resourceGroupName
   }
 }

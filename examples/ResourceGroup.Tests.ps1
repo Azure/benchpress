@@ -1,6 +1,5 @@
 BeforeAll {
-  Import-Module "../BenchPress/Helpers/Azure/ResourceGroup.psm1"
-  Import-Module "../BenchPress/Helpers/Azure/Bicep.psm1"
+  Import-Module "../BenchPress/Helpers/Azure/BenchPress.Azure.psd1"
 }
 
 Describe 'Verify Resource Group Exists' {
@@ -9,7 +8,7 @@ Describe 'Verify Resource Group Exists' {
     $rgName = "tflintrules"
 
     #act
-    $exists = Get-ResourceGroupExists($rgName)
+    $exists = Get-AzBPResourceGroupExists($rgName)
 
     #assert
     $exists | Should -Be $true
@@ -19,18 +18,19 @@ Describe 'Verify Resource Group Exists' {
 Describe 'Spin up , Tear down Resource Group' {
   it 'Should deploy a bicep file.' {
     #arrange
+    $resourceGroupName = "rg-test"
     $bicepPath = "./resourceGroup.bicep"
     $params = @{
-      name        = "rgtestocw11"
+      name        = $resourceGroupName
       location    = "westus"
       environment = "ocwtest"
     }
     #act
-    $deployment = Deploy-BicepFeature $bicepPath $params
+    $deployment = Deploy-AzBPBicepFeature $bicepPath $params
     #assert
     $deployment.ProvisioningState | Should -Be "Succeeded"
 
     #clean up
-    Remove-BicepFeature $params
+    Remove-AzBPBicepFeature $resourceGroupName
   }
 }
