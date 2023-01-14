@@ -25,7 +25,6 @@ function Get-AKSCluster {
   )
 
   $resource = Get-AzAksCluster -ResourceGroupName $ResourceGroupName -Name $AKSName
-  Write-Host $resource
   return $resource
 }
 

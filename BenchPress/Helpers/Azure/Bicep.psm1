@@ -1,4 +1,4 @@
-<#
+﻿<#
   .SYNOPSIS
     Confirm-BicepFile will confirm that the bicep files provided pass the checks executed by `bicep build`.
 
@@ -120,7 +120,7 @@ function Deploy-BicepFeature([string]$path, $params, $resourceGroupName){
   $folder = Split-Path $path
   $armPath  = Join-Path -Path $folder -ChildPath "$fileName.json"
 
-  Write-Host "Transpiling Bicep to Arm"
+  Write-Information "Transpiling Bicep to Arm"
   az bicep build --file $path
 
   $code = $?
@@ -132,7 +132,7 @@ function Deploy-BicepFeature([string]$path, $params, $resourceGroupName){
       $deploymentName = "BenchPressDeployment"
     }
 
-    Write-Host "Deploying ARM Template ($deploymentName) to $location"
+    Write-Information "Deploying ARM Template ($deploymentName) to $location"
 
     if ([string]::IsNullOrEmpty($resourceGroupName)) {
       New-AzSubscriptionDeployment -Name "$deploymentName" -Location "$location" -TemplateFile "$armPath" -TemplateParameterObject $params -SkipTemplateParameterPrompt
@@ -142,8 +142,8 @@ function Deploy-BicepFeature([string]$path, $params, $resourceGroupName){
     }
   }
 
-  Write-Host "Removing Arm template json"
-  rm "$armPath"
+  Write-Information "Removing Arm template json"
+  Remove-Item "$armPath"
 }
 
 function Remove-BicepFeature($resourceGroupName){

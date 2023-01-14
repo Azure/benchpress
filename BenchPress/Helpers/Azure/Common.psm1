@@ -47,7 +47,10 @@ function Get-ResourceByType {
     SqlServer { return Get-SqlServer($ResourceName, $ResourceGroupName) }
     VirtualMachine { return Get-VirtualMachine($ResourceName, $ResourceGroupName) }
     WebApp { return Get-WebApp($ResourceName, $ResourceGroupName) }
-    default { Write-Host "Not implemented yet" return $null }
+    default {
+      Write-Information "Not implemented yet"
+      return $null
+    }
   }
 }
 
