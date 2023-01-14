@@ -2,6 +2,8 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Generators.ResourceTypes;
 
+#pragma warning disable CS8603
+#pragma warning disable CS8602
 public abstract class ResourceType
 {
   public static ResourceType Create(string resourceType)
