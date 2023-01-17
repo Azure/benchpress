@@ -153,7 +153,7 @@ function Remove-BicepFeature(){
     [Parameter(Mandatory=$true)]
     [string]$ResourceGroupName
   )
-  Get-AzResourceGroup -Name $resourceGroupName | Remove-AzResourceGroup -Force
+  Get-AzResourceGroup -Name $ResourceGroupName | Remove-AzResourceGroup -Force
 }
 
 Export-ModuleMember -Function Confirm-BicepFile, Deploy-BicepFeature, Remove-BicepFeature
