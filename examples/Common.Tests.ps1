@@ -1,6 +1,5 @@
 BeforeAll {
-  Import-Module "../BenchPress/Helpers/Azure/Common.psm1"
-  Import-Module "../BenchPress/Helpers/Azure/Bicep.psm1"
+  Import-Module "../BenchPress/Helpers/Azure/BenchPress.Azure.psd1"
 }
 
 Describe 'Verify Resource Exists' {
@@ -9,7 +8,7 @@ Describe 'Verify Resource Exists' {
     $rgName = "AzurePortal"
 
     #act
-    $exists = Get-ResourceByType -ResourceType ResourceGroup -ResourceName "${rgName}"
+    $exists = Get-AzBPResourceByType -ResourceType ResourceGroup -ResourceName "${rgName}"
 
     #assert
     $exists | Should -Be $true
@@ -21,7 +20,7 @@ Describe 'Verify Resource Exists' {
     $rgName = "AzurePortal"
 
     #act
-    $exists = Get-ResourceByType -ResourceType VirtualMachine -ResourceName "${resourceName}" -ResourceGroupName "${rgName}"
+    $exists = Get-AzBPResourceByType -ResourceType VirtualMachine -ResourceName "${resourceName}" -ResourceGroupName "${rgName}"
 
     #assert
     $exists | Should -Be $true
@@ -32,7 +31,7 @@ Describe 'Verify Resource Exists' {
     $resourceName = "testVM"
 
     #act
-    $exists = Get-Resource -ResourceName "${resourceName}"
+    $exists = Get-AzBPResource -ResourceName "${resourceName}"
 
     #assert
     $exists | Should -Be $true
@@ -43,7 +42,7 @@ Describe 'Verify Resource Exists' {
     $resourceName = "testVM"
 
     #act
-    $exists = Get-Resource -ResourceName "${resourceName}"
+    $exists = Get-AzBPResource -ResourceName "${resourceName}"
 
     #assert
     $exists | Should -Be $true

@@ -10,12 +10,15 @@
   Description = "Benchpress Test Framework for Azure Deployment Scenarios"
   RequiredModules = @()
   NestedModules = @(
+    "ActionGroup.psm1",
     "AKSCluster.psm1",
+    "AppServicePlan.psm1",
     "AzureCli.psm1",
     "Bicep.psm1",
     "Common.psm1",
+    "ContainerRegistry.psm1",
+    "KeyVault.psm1",
     "ResourceGroup.psm1",
-    "ServicePlan.psm1",
     "SqlDatabase.psm1",
     "SqlServer.psm1",
     "VirtualMachine.psm1",
@@ -23,36 +26,49 @@
   )
   FunctionsToExport = @(
     "Invoke-AzCli",
+    "Confirm-BicepFile",
     "Deploy-BicepFeature",
     "Remove-BicepFeature",
+    "Get-ActionGroup",
+    "Get-ActionGroupExist",
     "Get-AKSCluster",
-    "Get-AKSClusterExists",
+    "Get-AKSClusterExist",
+    "Get-AppServicePlan",
+    "Get-AppServicePlanExist",
+    "Get-ContainerRegistry",
+    "Get-ContainerRegistryExist",
+    "Get-KeyVault",
+    "Get-KeyVaultExist",
+    "Get-KeyVaultSecret",
+    "Get-KeyVaultSecretExist",
+    "Get-KeyVaultKey",
+    "Get-KeyVaultKeyExist",
+    "Get-KeyVaultCertificate",
+    "Get-KeyVaultCertificateExist",
     "Get-ResourceByType",
     "Get-Resource",
     "Get-ResourceGroup",
-    "Get-ResourceGroupExists",
-    "Get-ServicePlan",
-    "Get-ServicePlanExists",
+    "Get-ResourceGroupExist",
     "Get-SqlDatabase",
-    "Get-SqlDatabaseExists",
+    "Get-SqlDatabaseExist",
     "Get-SqlServer",
-    "Get-SqlServerExists",
+    "Get-SqlServerExist",
     "Get-VirtualMachine",
-    "Get-VirtualMachineExists",
+    "Get-VirtualMachineExist",
     "Get-WebApp",
-    "Get-WebAppExists"
+    "Get-WebAppExist"
   )
   PrivateData = @{
     PSData = @{
-      Tags = @("Azure", "BenchPress", "Bicep", "ARM", "Test", "ResourceGroup", "ServicePlan", "SqlDatabase", "SqlServer", "VirtualMachine", "WebApp")
+      Tags = @("Azure", "BenchPress", "Bicep", "ARM", "Test", "ActionGroup", "AKS", "AKSCluster", "ContainerRegistry", "KeyVault", "ResourceGroup", "ServicePlan", "SqlDatabase", "SqlServer", "VirtualMachine", "WebApp")
       LicenseUri = ""
-      ProjectUri = ""
+      ProjectUri = "https://github.com/Azure/benchpress/"
       IconUri = ""
       ReleaseNotes = ""
       Prerelease = ""
       RequireLicenseAcceptance = $false
     }
   }
-  HelpInfoURI = ""
-  DefaultCommandPrefix = ""
+  HelpInfoURI = "https://github.com/Azure/benchpress/"
+  DefaultCommandPrefix = "AzBP"
 }

@@ -1,3 +1,6 @@
+[System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseDeclaredVarsMoreThanAssignments', '')]
+param()
+
 BeforeAll {
   {{#ResourceTypes}}
   $generated = (Get-Content -Path "./generated.parameters.json" | ConvertFrom-Json)

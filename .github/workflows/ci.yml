@@ -1,0 +1,43 @@
+---
+name: ci
+on:  # yamllint disable-line rule:truthy
+  push:
+    branches: [main]
+
+jobs:
+  build-benchpress:
+    name: Build .NET solution
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository and submodules
+        uses: actions/checkout@v3
+      - name: Initialize Bicep Submodule
+        run: git submodule update --init --recursive
+      - name: Build Benchpress Solution
+        working-directory: BenchPress
+        run: dotnet build
+
+  run-unit-tests:
+    name: Run PowerShell Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository and submodules
+        uses: actions/checkout@v3
+      - name: Install Pester module
+        shell: pwsh
+        run: |
+          Set-PSRepository PSGallery -InstallationPolicy Trusted
+          Install-Module Pester -ErrorAction Stop
+      - name: Run PowerShell Unit Tests
+        shell: pwsh
+        working-directory: BenchPress
+        run: |
+          Invoke-Pester -OutputFile ps-test-results.xml -OutputFormat NUnitXml
+      - name: Archive PowerShell Test Results
+        working-directory: BenchPress
+        if: ${{ success() }} || ${{ failure() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: PowerShell Test Results
+          path: |
+            ps-test-results.xml
