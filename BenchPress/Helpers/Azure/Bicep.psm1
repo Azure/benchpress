@@ -146,7 +146,13 @@ function Deploy-BicepFeature([string]$path, $params, $resourceGroupName){
   Remove-Item "$armPath"
 }
 
-function Remove-BicepFeature($resourceGroupName){
+function Remove-BicepFeature(){
+  [CmdletBinding()]
+  [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseShouldProcessForStateChangingFunctions", "")]
+  param (
+    [Parameter(Mandatory=$true)]
+    [string]$ResourceGroupName
+  )
   Get-AzResourceGroup -Name $resourceGroupName | Remove-AzResourceGroup -Force
 }
 
