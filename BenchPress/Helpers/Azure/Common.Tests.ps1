@@ -1,9 +1,9 @@
 ﻿using module ./Common.psm1
 
 BeforeAll {
+  Import-Module $PSScriptRoot/AppServicePlan.psm1
   Import-Module $PSScriptRoot/Common.psm1
   Import-Module $PSScriptRoot/ResourceGroup.psm1
-  Import-Module $PSScriptRoot/ServicePlan.psm1
   Import-Module $PSScriptRoot/SqlDatabase.psm1
   Import-Module $PSScriptRoot/SqlServer.psm1
   Import-Module $PSScriptRoot/VirtualMachine.psm1
@@ -23,7 +23,7 @@ Describe "Get-ResourceByType" {
 
     It "Calls <expected> when [ResourceType]::<resourceType> is used" -TestCases @(
       @{ ResourceType = [ResourceType]::ResourceGroup; Expected = "Get-ResourceGroup"}
-      @{ ResourceType = [ResourceType]::ServicePlan; Expected = "Get-AppServicePlan"}
+      @{ ResourceType = [ResourceType]::AppServicePlan; Expected = "Get-AppServicePlan"}
       @{ ResourceType = [ResourceType]::SqlDatabase; Expected = "Get-SqlDatabase"}
       @{ ResourceType = [ResourceType]::SqlServer; Expected = "Get-SqlServer"}
       @{ ResourceType = [ResourceType]::VirtualMachine; Expected = "Get-VirtualMachine"}
@@ -38,7 +38,7 @@ Describe "Get-ResourceByType" {
 AfterAll {
   Remove-Module Common
   Remove-Module ResourceGroup
-  Remove-Module ServicePlan
+  Remove-Module AppServicePlan
   Remove-Module SqlDatabase
   Remove-Module SqlServer
   Remove-Module VirtualMachine

@@ -1,21 +1,21 @@
-Import-Module "../BenchPress/Helpers/Azure/ActionGroup.psm1"
-Import-Module "../BenchPress/Helpers/Azure/AKSCluster.psm1"
-Import-Module "../BenchPress/Helpers/Azure/ContainerRegistry.psm1"
-Import-Module "../BenchPress/Helpers/Azure/KeyVault.psm1"
-Import-Module "../BenchPress/Helpers/Azure/ResourceGroup.psm1"
-Import-Module "../BenchPress/Helpers/Azure/ServicePlan.psm1"
-Import-Module "../BenchPress/Helpers/Azure/SqlServer.psm1"
-Import-Module "../BenchPress/Helpers/Azure/SqlDatabase.psm1"
-Import-Module "../BenchPress/Helpers/Azure/VirtualMachine.psm1"
-Import-Module "../BenchPress/Helpers/Azure/WebApp.psm1"
+Import-Module $PSScriptRoot/ActionGroup.psm1
+Import-Module $PSScriptRoot/AKSCluster.psm1
+Import-Module $PSScriptRoot/AppServicePlan.psm1
+Import-Module $PSScriptRoot/ContainerRegistry.psm1
+Import-Module $PSScriptRoot/KeyVault.psm1
+Import-Module $PSScriptRoot/ResourceGroup.psm1
+Import-Module $PSScriptRoot/SqlServer.psm1
+Import-Module $PSScriptRoot/SqlDatabase.psm1
+Import-Module $PSScriptRoot/VirtualMachine.psm1
+Import-Module $PSScriptRoot/WebApp.psm1
 
 enum ResourceType {
   ActionGroup
   AKSCluster
+  AppServicePlan
   ContainerRegistry
   KeyVault
   ResourceGroup
-  ServicePlan
   SqlDatabase
   SqlServer
   VirtualMachine
@@ -37,16 +37,16 @@ function Get-ResourceByType {
 
   switch ($ResourceType)
   {
-    ActionGroup { return Get-ActionGroup($ResourceName, $ResourceGroupName) }
-    AKSCluster { return Get-AKSCluster($ResourceName, $ResourceGroupName) }
-    ContainerRegistry { return Get-ContainerRegistry($ResourceName, $ResourceGroupName) }
-    KeyVault { return Get-KeyVault($ResourceName, $ResourceGroupName) }
-    ResourceGroup { return Get-ResourceGroup($ResourceName) }
-    ServicePlan { return Get-ServicePlan($ResourceName, $ResourceGroupName) }
-    SqlDatabase { return Get-SqlDatabase($ResourceName, $ResourceGroupName) }
-    SqlServer { return Get-SqlServer($ResourceName, $ResourceGroupName) }
-    VirtualMachine { return Get-VirtualMachine($ResourceName, $ResourceGroupName) }
-    WebApp { return Get-WebApp($ResourceName, $ResourceGroupName) }
+    ActionGroup { return Get-ActionGroup -ActionGroupName $ResourceName -ResourceGroupName $ResourceGroupName }
+    AKSCluster { return Get-AKSCluster -AKSName $ResourceName -ResourceGroupName $ResourceGroupName }
+    AppServicePlan { return Get-AppServicePlan -AppServicePlanName $ResourceName -ResourceGroupName $ResourceGroupName }
+    ContainerRegistry { return Get-ContainerRegistry -Name $ResourceName -ResourceGroupName $ResourceGroupName }
+    KeyVault { return Get-KeyVault -Name $ResourceName -ResourceGroupName $ResourceGroupName }
+    ResourceGroup { return Get-ResourceGroup -ResourceGroupName $ResourceName }
+    SqlDatabase { return Get-SqlDatabase -ServerName $ResourceName -ResourceGroupName $ResourceGroupName }
+    SqlServer { return Get-SqlServer -ServerName $ResourceName -ResourceGroupName $ResourceGroupName }
+    VirtualMachine { return Get-VirtualMachine -VirtualMachineName $ResourceName -ResourceGroupName $ResourceGroupName }
+    WebApp { return Get-WebApp -WebAppName $ResourceName -ResourceGroupName $ResourceGroupName }
     default {
       Write-Information "Not implemented yet"
       return $null
