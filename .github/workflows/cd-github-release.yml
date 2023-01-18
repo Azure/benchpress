@@ -1,4 +1,6 @@
-name: "GitHub Release"
+---
+name: cd-github-release
+
 on:
   push:
     tags:
