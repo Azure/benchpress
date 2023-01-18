@@ -9,10 +9,10 @@ Describe 'Service Plan Tests' {
     $svcPlanName = "plan-${env:ENVIRONMENT_SUFFIX}"
 
     #act
-    $exists = Get-AzBPAppServicePlan -ResourceGroupName $rgName -AppServicePlanName $svcPlanName
+    $servicePlan = Get-AzBPAppServicePlan -ResourceGroupName $rgName -AppServicePlanName $svcPlanName
 
     #assert
-    $exists | Should -Not -BeNullOrEmpty
+    $servicePlan | Should -Not -BeNullOrEmpty
   }
 }
 
