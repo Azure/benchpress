@@ -37,6 +37,7 @@
 #>
 function Invoke-AzCli {
   [CmdletBinding()]
+  [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSAvoidUsingInvokeExpression", "")]
   param (
     [Parameter(Mandatory=$true)]
     [string]$Command
