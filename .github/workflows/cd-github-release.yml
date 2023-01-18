@@ -1,7 +1,7 @@
 ---
 name: cd-github-release
 
-on:
+on: # yamllint disable-line rule:truthy
   push:
     tags:
       - "v[0-9]+.[0-9]+*"
