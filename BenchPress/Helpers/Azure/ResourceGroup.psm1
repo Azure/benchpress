@@ -1,15 +1,22 @@
 <#
 .SYNOPSIS
-  Helper function for Resource Group
+  Gets a Resource Group.
 
 .DESCRIPTION
-  Helper function for Resource Group
+  The Get-AzBPResourceGroup cmdlet gets a Resource Group using the specified Resource Group and
+  Resource Group name.
 
 .PARAMETER ResourceGroupName
-  The name of the resource group
+  The name of the Resource Group
 
 .EXAMPLE
-  Get-ResourceGroup -ResourceGroupName "rgbenchpresstest"
+  Get-AzBPResourceGroup -ResourceGroupName "rgbenchpresstest"
+
+.INPUTS
+  System.String
+
+.OUTPUTS
+  Microsoft.Azure.Commands.ResourceManager.Cmdlets.SdkModels.PSResourceGroup
 #>
 function Get-ResourceGroup {
   [CmdletBinding()]
@@ -24,16 +31,23 @@ function Get-ResourceGroup {
 
 <#
 .SYNOPSIS
-  Helper function for Resource Group
+  Gets if a Resource Group exists.
 
 .DESCRIPTION
-  Helper function for Resource Group
+  The Get-AzBPResourceGroupExist cmdlet checks if a Resource Group exists using the specified
+  Resource Group and Resource Group name.
 
 .PARAMETER ResourceGroupName
-  The name of the resource group
+  The name of the Resource Group
 
 .EXAMPLE
-  Get-ResourceGroupExist -ResourceGroupName "rgbenchpresstest"
+  Get-AzBPResourceGroupExist -ResourceGroupName "rgbenchpresstest"
+
+.INPUTS
+  System.String
+
+.OUTPUTS
+  System.Boolean
 #>
 function Get-ResourceGroupExist {
   [CmdletBinding()]

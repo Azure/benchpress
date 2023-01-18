@@ -22,13 +22,52 @@ enum ResourceType {
   WebApp
 }
 
-function Get-ResourceByType {
+<#
+.SYNOPSIS
+  Gets an Azure Resource.
+
+.DESCRIPTION
+  The Get-AzBPResourceByType cmdlet gets an Azure resource depending on the resource type (i.e. Action Group, Key Vault,
+  Container Registry, etc.).
+
+.PARAMETER ResourceName
+  The name of the Resource
+
+.PARAMETER ResourceGroupName
+  The name of the Resource Group
+
+.PARAMETER ResourceType
+  The type of the Resource (currently support the following:
+  ActionGroup
+  AKSCluster
+  AppServicePlan
+  ContainerRegistry
+  KeyVault
+  ResourceGroup
+  SqlDatabase
+  SqlServer
+  VirtualMachine
+  WebApp)
+
+.EXAMPLE
+  Get-AzBPResourceByType -ResourceType ActionGroup -ResourceName "bpactiongroup" -ResourceGroupName "rgbenchpresstest"
+
+.EXAMPLE
+  Get-AzBPResourceByType -ResourceType VirtualMachine -ResourceName "testvm" -ResourceGroupName "rgbenchpresstest"
+
+.INPUTS
+  System.String
+
+.OUTPUTS
+  Microsoft.Azure.Commands.ResourceManager.Cmdlets.SdkModels.PSResource
+#>
+function Get-AzBPResourceByType {
   [CmdletBinding()]
   param (
     [Parameter(Mandatory=$true)]
     [string]$ResourceName,
 
-    [Parameter(Mandatory=$false)]
+    [Parameter(Mandatory=$true)]
     [string]$ResourceGroupName,
 
     [Parameter(Mandatory=$true)]
@@ -54,6 +93,31 @@ function Get-ResourceByType {
   }
 }
 
+<#
+.SYNOPSIS
+  Gets one or more resources of a given name.
+
+.DESCRIPTION
+  The Get-AzBPResource cmdlet gets Azure resources of a given name.
+
+.PARAMETER ResourceName
+  The name of the Resources
+
+.PARAMETER ResourceGroupName
+  The name of the Resource Group
+
+.EXAMPLE
+  Get-AzBPResource -ResourceName "benchpresstest"
+
+.EXAMPLE
+  Get-AzBPResource -ResourceName "benchpresstest" -ResourceGroupName "rgbenchpresstest"
+
+.INPUTS
+  System.String
+
+.OUTPUTS
+  Microsoft.Azure.Commands.ResourceManager.Cmdlets.SdkModels.PSResource
+#>
 function Get-Resource {
   [CmdletBinding()]
   param (
@@ -64,7 +128,12 @@ function Get-Resource {
     [string]$ResourceGroupName
   )
 
-  return Get-AzResource -Name "${ResourceName}" -ResourceGroupName "${ResourceGroupName}"
+  if ([string]::IsNullOrEmpty($ResourceGroupName)) {
+    return Get-AzResource -Name "${ResourceName}"
+  }
+  else{
+    return Get-AzResource -Name "${ResourceName}" -ResourceGroupName "${ResourceGroupName}"
+  }
 }
 
 Export-ModuleMember -Function Get-Resource, Get-ResourceByType

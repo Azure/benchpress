@@ -1,18 +1,25 @@
 <#
 .SYNOPSIS
-  Helper function for App Service Plan
+  Gets an App Service Plan.
 
 .DESCRIPTION
-  Helper function for App Service Plan
+  The Get-AzBPAppServicePlan cmdlet gets an App Service Plan using the specified App Service Plan and
+  Resource Group name.
 
 .PARAMETER AppServicePlanName
   The name of the App Service Plan
 
 .PARAMETER ResourceGroupName
-  The name of the resource group
+  The name of the Resource Group
 
 .EXAMPLE
-  Get-AppServicePlan -AppServicePlanName "appsvcbenchpresstest" -ResourceGroupName "rgbenchpresstest"
+  Get-AzBPAppServicePlan -AppServicePlanName "benchpresstest" -ResourceGroupName "rgbenchpresstest"
+
+.INPUTS
+  System.String
+
+.OUTPUTS
+  Microsoft.Azure.Commands.WebApps.Models.WebApp.PSAppServicePlan
 #>
 function Get-AppServicePlan {
   [CmdletBinding()]
@@ -30,19 +37,26 @@ function Get-AppServicePlan {
 
 <#
 .SYNOPSIS
-  Helper function for App Service Plan
+  Gets if an App Service Plan exists.
 
 .DESCRIPTION
-  Helper function for App Service Plan
+  The Get-AzBPAppServicePlanExist cmdlet checks if an App Service Plan exists using the specified
+  App Service Plan and Resource Group name.
 
 .PARAMETER AppServicePlanName
   The name of the App Service Plan
 
 .PARAMETER ResourceGroupName
-  The name of the resource group
+  The name of the Resource Group
 
 .EXAMPLE
-  Get-AppServicePlanExist -AppServicePlanName "appsvcbenchpresstest" -ResourceGroupName "rgbenchpresstest"
+  Get-AzBPAppServicePlanExist -AppServicePlanName "benchpresstest" -ResourceGroupName "rgbenchpresstest"
+
+.INPUTS
+  System.String
+
+.OUTPUTS
+  System.Boolean
 #>
 function Get-AppServicePlanExist {
   [CmdletBinding()]

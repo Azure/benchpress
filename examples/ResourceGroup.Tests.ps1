@@ -26,11 +26,11 @@ Describe 'Spin up , Tear down Resource Group' {
       environment = "ocwtest"
     }
     #act
-    $deployment = Deploy-AzBPBicepFeature $bicepPath $params
+    $deployment = Deploy-AzBPBicepFeature -BicepPath $bicepPath -Params $params -ResourceGroupName $resourceGroupName
     #assert
     $deployment.ProvisioningState | Should -Be "Succeeded"
 
     #clean up
-    Remove-AzBPBicepFeature $resourceGroupName
+    Remove-AzBPBicepFeature -ResourceGroupName $resourceGroupName
   }
 }
