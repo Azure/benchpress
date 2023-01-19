@@ -61,13 +61,13 @@ enum ResourceType {
 .OUTPUTS
   Microsoft.Azure.Commands.ResourceManager.Cmdlets.SdkModels.PSResource
 #>
-function Get-AzBPResourceByType {
+function Get-ResourceByType {
   [CmdletBinding()]
   param (
     [Parameter(Mandatory=$true)]
     [string]$ResourceName,
 
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory=$false)]
     [string]$ResourceGroupName,
 
     [Parameter(Mandatory=$true)]
