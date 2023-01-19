@@ -1,18 +1,25 @@
 <#
 .SYNOPSIS
-  Helper function for Container Registry
+  Gets a Container Registry.
 
 .DESCRIPTION
-  Helper function for Container Registry
+  The Get-AzBPContainerRegistry cmdlet gets a Container Registry using the specified Container Registry and
+  Resource Group name.
 
 .PARAMETER Name
   The name of the Container Registry
 
 .PARAMETER ResourceGroupName
-  The name of the resource group
+  The name of the Resource Group
 
 .EXAMPLE
-  Get-ContainerRegistry -Name "benchpresstest" -ResourceGroupName "rgbenchpresstest"
+  Get-AzBPContainerRegistry -Name "benchpresstest" -ResourceGroupName "rgbenchpresstest"
+
+.INPUTS
+  System.String
+
+.OUTPUTS
+  Microsoft.Azure.Commands.ContainerRegistry.PSContainerRegistry
 #>
 function Get-ContainerRegistry {
   [CmdletBinding()]
@@ -30,19 +37,26 @@ function Get-ContainerRegistry {
 
 <#
 .SYNOPSIS
-  Helper function for Container Registry
+  Gets if a Container Registry exists.
 
 .DESCRIPTION
-  Helper function for Container Registry
+  The Get-AzBPContainerRegistryExist cmdlet checks if a Container Registry exists using the specified
+  Container Registry and Resource Group name.
 
 .PARAMETER Name
   The name of the Container Registry
 
 .PARAMETER ResourceGroupName
-  The name of the resource group
+  The name of the Resource Group
 
 .EXAMPLE
-  Get-ContainerRegistry-Name "benchpresstest" -ResourceGroupName "rgbenchpresstest"
+  Get-AzBPContainerRegistryExist -Name "benchpresstest" -ResourceGroupName "rgbenchpresstest"
+
+.INPUTS
+  System.String
+
+.OUTPUTS
+  System.Boolean
 #>
 function Get-ContainerRegistryExist {
   [CmdletBinding()]

@@ -1,18 +1,25 @@
 <#
 .SYNOPSIS
-  Helper function for KeyVault
+  Gets a Key Vault.
 
 .DESCRIPTION
-  Helper function for KeyVault
+  The Get-AzBPKeyVault cmdlet gets a Key Vault using the specified Key Vault and
+  Resource Group name.
 
 .PARAMETER Name
-  The name of the KeyVault
+  The name of the Key Vault
 
 .PARAMETER ResourceGroupName
-  The name of the resource group
+  The name of the Resource Group
 
 .EXAMPLE
-  Get-KeyVault -Name "kvbenchpresstest" -ResourceGroupName "rgbenchpresstest"
+  Get-AzBPKeyVault -Name "benchpresstest" -ResourceGroupName "rgbenchpresstest"
+
+.INPUTS
+  System.String
+
+.OUTPUTS
+  Microsoft.Azure.Commands.KeyVault.Models.PSKeyVault
 #>
 function Get-KeyVault {
   [CmdletBinding()]
@@ -30,19 +37,26 @@ function Get-KeyVault {
 
 <#
 .SYNOPSIS
-Helper function for KeyVault
+  Gets if a Key Vault exists.
 
 .DESCRIPTION
-  Helper function for KeyVault
+  The Get-AzBPKeyVaultExist cmdlet checks if a Key Vault exists using the specified
+  Key Vault and Resource Group name.
 
 .PARAMETER Name
-  The name of the KeyVault
+  The name of the Key Vault
 
 .PARAMETER ResourceGroupName
-  The name of the resource group
+  The name of the Resource Group
 
 .EXAMPLE
-  Get-KeyVaultExist -Name "kvbenchpresstest" -ResourceGroupName "rgbenchpresstest"
+  Get-AzBPKeyVaultExist -Name "benchpresstest" -ResourceGroupName "rgbenchpresstest"
+
+.INPUTS
+  System.String
+
+.OUTPUTS
+  System.Boolean
 #>
 function Get-KeyVaultExist {
   [CmdletBinding()]
@@ -60,19 +74,26 @@ function Get-KeyVaultExist {
 
 <#
 .SYNOPSIS
-  Helper function for KeyVault Secrets
+  Gets a Key Vault Secret.
 
 .DESCRIPTION
-  Helper function for KeyVault Secrets
+  The Get-AzBPKeyVaultSecret cmdlet gets a Key Vault Secret using the specified Key Vault and
+  Secret name.
 
 .PARAMETER Name
-  The name of the KeyVault Secret
+  The name of the Secret
 
 .PARAMETER KeyVaultName
-  The name of the KeyVault
+  The name of the Key Vault
 
 .EXAMPLE
-  Get-KeyVaultSecret -Name "samplesecret" -KeyVaultName "kvbenchpresstest"
+  Get-AzBPKeyVaultSecret -Name "benchpresstest" -KeyVaultName "kvbenchpresstest"
+
+.INPUTS
+  System.String
+
+.OUTPUTS
+  Microsoft.Azure.Commands.KeyVault.Models.PSKeyVaultSecret
 #>
 function Get-KeyVaultSecret {
   [CmdletBinding()]
@@ -90,19 +111,26 @@ function Get-KeyVaultSecret {
 
 <#
 .SYNOPSIS
-  Helper function for KeyVault Secrets
+  Gets if a Key Vault Secret exists.
 
 .DESCRIPTION
-  Helper function for KeyVault Secrets
+  The Get-AzBPKeyVaultSecretExist cmdlet checks if a Key Vault Secret exists using the specified
+  Key Vault and Secret name.
 
 .PARAMETER Name
-  The name of the KeyVault Secret
+  The name of the Secret
 
 .PARAMETER KeyVaultName
-  The name of the KeyVault
+  The name of the Key Vault
 
 .EXAMPLE
-  Get-KeyVaultSecretExist -Name "samplesecret" -KeyVaultName "kvbenchpresstest"
+  Get-AzBPKeyVaultSecretExist -Name "benchpresstest" -KeyVaultName "kvbenchpresstest"
+
+.INPUTS
+  System.String
+
+.OUTPUTS
+  System.Boolean
 #>
 function Get-KeyVaultSecretExist {
   [CmdletBinding()]
@@ -120,19 +148,26 @@ function Get-KeyVaultSecretExist {
 
 <#
 .SYNOPSIS
-  Helper function for KeyVault Keys
+  Gets a Key Vault Key.
 
 .DESCRIPTION
-  Helper function for KeyVault Keys
+  The Get-AzBPKeyVaultKey cmdlet gets a Key Vault Key using the specified Key Vault and
+  Key name.
 
 .PARAMETER Name
-  The name of the KeyVault Key
+  The name of the Key
 
 .PARAMETER KeyVaultName
-  The name of the KeyVault
+  The name of the Key Vault
 
 .EXAMPLE
-  Get-KeyVaultKey -Name "samplekey" -KeyVaultName "kvbenchpresstest"
+  Get-AzBPKeyVaultKey -Name "benchpresstest" -KeyVaultName "kvbenchpresstest"
+
+.INPUTS
+  System.String
+
+.OUTPUTS
+  Microsoft.Azure.Commands.KeyVault.Models.PSKeyVaultKey
 #>
 function Get-KeyVaultKey {
   [CmdletBinding()]
@@ -150,19 +185,26 @@ function Get-KeyVaultKey {
 
 <#
 .SYNOPSIS
-  Helper function for KeyVault Keys
+  Gets if a Key Vault Key exists.
 
 .DESCRIPTION
-  Helper function for KeyVault Keys
+  The Get-AzBPKeyVaultKeyExist cmdlet checks if a Key Vault Key exists using the specified
+  Key Vault and Key name.
 
 .PARAMETER Name
-  The name of the KeyVault Key
+  The name of the Key
 
 .PARAMETER KeyVaultName
-  The name of the KeyVault
+  The name of the Key Vault
 
 .EXAMPLE
-  Get-KeyVaultKeyExist -Name "samplekey" -KeyVaultName "kvbenchpresstest"
+  Get-AzBPKeyVaultKeyExist -Name "benchpresstest" -KeyVaultName "kvbenchpresstest"
+
+.INPUTS
+  System.String
+
+.OUTPUTS
+  System.Boolean
 #>
 function Get-KeyVaultKeyExist {
   [CmdletBinding()]
@@ -180,19 +222,26 @@ function Get-KeyVaultKeyExist {
 
 <#
 .SYNOPSIS
-  Helper function for KeyVault Certificates
+  Gets a Key Vault Certificate.
 
 .DESCRIPTION
-  Helper function for KeyVault Certificates
+  The Get-AzBPKeyVaultCertificate cmdlet gets a Key Vault Certificate using the specified Key Vault and
+  Certificate name.
 
 .PARAMETER Name
-  The name of the KeyVault Certificate
+  The name of the Certificate
 
 .PARAMETER KeyVaultName
-  The name of the KeyVault
+  The name of the Key Vault
 
 .EXAMPLE
-  Get-KeyVaultCertificate -Name "samplecertificate" -KeyVaultName "kvbenchpresstest"
+  Get-AzBPKeyVaultCertificate -Name "benchpresstest" -KeyVaultName "kvbenchpresstest"
+
+.INPUTS
+  System.String
+
+.OUTPUTS
+  Microsoft.Azure.Commands.KeyVault.Models.PSKeyVaultCertificate
 #>
 function Get-KeyVaultCertificate {
   [CmdletBinding()]
@@ -210,19 +259,26 @@ function Get-KeyVaultCertificate {
 
 <#
 .SYNOPSIS
-  Helper function for KeyVault Certificates
+  Gets if a Key Vault Certificate exists.
 
 .DESCRIPTION
-  Helper function for KeyVault Certificates
+  The Get-AzBPKeyVaultCertificateExist cmdlet checks if a Key Vault Certificate exists using the specified
+  Key Vault and Certificate name.
 
 .PARAMETER Name
-  The name of the KeyVault Certificate
+  The name of the Certificate
 
 .PARAMETER KeyVaultName
-  The name of the KeyVault
+  The name of the Key Vault
 
 .EXAMPLE
-  Get-KeyVaultCertificateExist -Name "samplecertificate" -KeyVaultName "kvbenchpresstest"
+  Get-AzBPKeyVaultCertificateExist -Name "benchpresstest" -KeyVaultName "kvbenchpresstest"
+
+.INPUTS
+  System.String
+
+.OUTPUTS
+  System.Boolean
 #>
 function Get-KeyVaultCertificateExist {
   [CmdletBinding()]

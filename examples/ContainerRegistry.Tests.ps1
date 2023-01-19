@@ -41,12 +41,12 @@ Describe 'Spin up , Tear down Container Registry' {
     }
 
     #act
-    $deployment = Deploy-BicepFeature $bicepPath $params $resourceGroupName
+    $deployment = Deploy-AzBPBicepFeature -BicepPath $bicepPath -Params $params -ResourceGroupName $resourceGroupName
 
     #assert
     $deployment.ProvisioningState | Should -Be "Succeeded"
 
     #clean up
-    Remove-BicepFeature $resourceGroupName
+    Remove-AzBPBicepFeature -ResourceGroupName $resourceGroupName
   }
 }

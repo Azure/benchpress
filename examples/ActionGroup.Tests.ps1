@@ -27,12 +27,12 @@ Describe 'Spin up , Tear down Action Group' {
     }
 
     #act
-    $deployment = Deploy-AzBPBicepFeature $bicepPath $params $resourceGroupName
+    $deployment = Deploy-AzBPBicepFeature -BicepPath $bicepPath -Params $params -ResourceGroupName $resourceGroupName
 
     #assert
     $deployment.ProvisioningState | Should -Be "Succeeded"
 
     #clean up
-    Remove-AzBPBicepFeature $resourceGroupName
+    Remove-AzBPBicepFeature -ResourceGroupName $resourceGroupName
   }
 }

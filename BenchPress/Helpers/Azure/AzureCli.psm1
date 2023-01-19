@@ -1,24 +1,24 @@
 <#
   .DESCRIPTION
-  Invoke any Azure CLI command and return the result as an object.
+  Invoke an Azure CLI command.
 
   .SYNOPSIS
-  Invoke any Azure CLI command and return the result as an object.
+  Invoke-AzBPAzCli cmdlet invokes an Azure CLI command and returns the result as an object.
 
   .EXAMPLE
-  PS C:\> Invoke-AzCli "account list"
+  PS C:\> Invoke-AzBPAzCli "account list"
 
   .EXAMPLE
-  PS C:\> Invoke-AzCli "account list --query [].name"
+  PS C:\> Invoke-AzBPAzCli "account list --query [].name"
 
   .EXAMPLE
-  PS C:\> Invoke-AzCli "webapp create --name ${WEBAPP_NAME} --resource-group ${RESOURCE_GROUP_NAME} --plan ${APP_SERVICE_PLAN_NAME}"
+  PS C:\> Invoke-AzBPAzCli "webapp create --name ${WEBAPP_NAME} --resource-group ${RESOURCE_GROUP_NAME} --plan ${APP_SERVICE_PLAN_NAME}"
 
   .PARAMETER Command
   The command to execute.
 
   .NOTES
-  Invoke-AzCli adds the az prefix to the command.
+  Invoke-AzBPAzCli adds the az prefix to the command.
 
   .LINK
   https://learn.microsoft.com/en-us/cli/azure/

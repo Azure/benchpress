@@ -1,9 +1,9 @@
 ﻿<#
   .SYNOPSIS
-    Confirm-BicepFile will confirm that the bicep files provided pass the checks executed by `bicep build`.
+    Confirm-AzBPBicepFile will confirm that the bicep files provided pass the checks executed by `bicep build`.
 
   .DESCRIPTION
-    Confirm-BicepFile executes `bicep build` and returns an object that has an array field BicepErrors. Each element of
+    Confirm-AzBPBicepFile executes `bicep build` and returns an object that has an array field BicepErrors. Each element of
     this array is an object that contains the bicep file path that had errors and a collection of
     System.Object.ErrorRecord that correspond to the file at that path:
 
@@ -16,59 +16,62 @@
   .PARAMETER BicepPath
     This is the path to the bicep file that will be confirmed.
     BicepPath is a mandatory parameter.
-    The property name is optional if the path is provided as the first argument to Confirm-BicepFile.
+    The property name is optional if the path is provided as the first argument to Confirm-AzBPBicepFile.
 
   .EXAMPLE
-    ---------- Example 1: Pipe path into Confirm-BicepFile ----------
+    Pipe path into Confirm-AzBPBicepFile
 
-    "./examples/actionGroupErrors.bicep" | Confirm-BicepFile
+    "./examples/actionGroupErrors.bicep" | Confirm-AzBPBicepFile
 
-    Confirm-BicepFile: ../../../examples/actionGroupErrors.bicep:
-    Confirm-BicepFile: /workspaces/benchpress/examples/actionGroupErrors.bicep(6,7) : Warning no-unused-params: Parameter "location" is declared but never used. [https://aka.ms/bicep/linter/no-unused-params]
-    Confirm-BicepFile: /workspaces/benchpress/examples/actionGroupErrors.bicep(12,13) : Warning no-hardcoded-location: A resource location should not use a hard-coded string or variable value. Please use a parameter value, an expression, or the string 'global'. Found: 'westus' [https://aka.ms/bicep/linter/no-hardcoded-location]
+    Confirm-AzBPBicepFile: ../../../examples/actionGroupErrors.bicep:
+    Confirm-AzBPBicepFile: /workspaces/benchpress/examples/actionGroupErrors.bicep(6,7) : Warning no-unused-params: Parameter "location" is declared but never used. [https://aka.ms/bicep/linter/no-unused-params]
+    Confirm-AzBPBicepFile: /workspaces/benchpress/examples/actionGroupErrors.bicep(12,13) : Warning no-hardcoded-location: A resource location should not use a hard-coded string or variable value. Please use a parameter value, an expression, or the string 'global'. Found: 'westus' [https://aka.ms/bicep/linter/no-hardcoded-location]
     0
 
     BicepErrors
     -----------
     {@{Path=../../../examples/actionGroupErrors.bicep; ErrorResults=System.Collections.ObjectModel.Collection`1[System.Management.Automation.PSObject]…
 
-    ---------- Example 2: Pipe multiple paths into Confirm-BicepFile ----------
+  .EXAMPLE
+    Pipe multiple paths into Confirm-AzBPBicepFile
 
-    "./examples/actionGroupErrors.bicep", "./examples/actionGroupErrors.bicep" | Confirm-BicepFile
+    "./examples/actionGroupErrors.bicep", "./examples/actionGroupErrors.bicep" | Confirm-AzBPBicepFile
 
-    Confirm-BicepFile: ../../../examples/actionGroupErrors.bicep:
-    Confirm-BicepFile: /workspaces/benchpress/examples/actionGroupErrors.bicep(6,7) : Warning no-unused-params: Parameter "location" is declared but never used. [https://aka.ms/bicep/linter/no-unused-params]
-    Confirm-BicepFile: /workspaces/benchpress/examples/actionGroupErrors.bicep(12,13) : Warning no-hardcoded-location: A resource location should not use a hard-coded string or variable value. Please use a parameter value, an expression, or the string 'global'. Found: 'westus' [https://aka.ms/bicep/linter/no-hardcoded-location]
+    Confirm-AzBPBicepFile: ../../../examples/actionGroupErrors.bicep:
+    Confirm-AzBPBicepFile: /workspaces/benchpress/examples/actionGroupErrors.bicep(6,7) : Warning no-unused-params: Parameter "location" is declared but never used. [https://aka.ms/bicep/linter/no-unused-params]
+    Confirm-AzBPBicepFile: /workspaces/benchpress/examples/actionGroupErrors.bicep(12,13) : Warning no-hardcoded-location: A resource location should not use a hard-coded string or variable value. Please use a parameter value, an expression, or the string 'global'. Found: 'westus' [https://aka.ms/bicep/linter/no-hardcoded-location]
     0
-    Confirm-BicepFile: ../../../examples/actionGroupErrors.bicep:
-    Confirm-BicepFile: /workspaces/benchpress/examples/actionGroupErrors.bicep(6,7) : Warning no-unused-params: Parameter "location" is declared but never used. [https://aka.ms/bicep/linter/no-unused-params]
-    Confirm-BicepFile: /workspaces/benchpress/examples/actionGroupErrors.bicep(12,13) : Warning no-hardcoded-location: A resource location should not use a hard-coded string or variable value. Please use a parameter value, an expression, or the string 'global'. Found: 'westus' [https://aka.ms/bicep/linter/no-hardcoded-location]
+    Confirm-AzBPBicepFile: ../../../examples/actionGroupErrors.bicep:
+    Confirm-AzBPBicepFile: /workspaces/benchpress/examples/actionGroupErrors.bicep(6,7) : Warning no-unused-params: Parameter "location" is declared but never used. [https://aka.ms/bicep/linter/no-unused-params]
+    Confirm-AzBPBicepFile: /workspaces/benchpress/examples/actionGroupErrors.bicep(12,13) : Warning no-hardcoded-location: A resource location should not use a hard-coded string or variable value. Please use a parameter value, an expression, or the string 'global'. Found: 'westus' [https://aka.ms/bicep/linter/no-hardcoded-location]
     1
 
     BicepErrors
     -----------
     {@{Path=../../../examples/actionGroupErrors.bicep; ErrorResults=System.Collections.ObjectModel.Collection`1[System.Management.Automation.PSObject]…
 
-    ---------- Example 3: Provide -BicepPath Parameter ----------
+  .EXAMPLE
+    Provide -BicepPath Parameter
 
-    Confirm-BicepFile -BicepPath ./examples/actionGroupErrors.bicep
+    Confirm-AzBPBicepFile -BicepPath ./examples/actionGroupErrors.bicep
 
-    Confirm-BicepFile: ../../../examples/actionGroupErrors.bicep:
-    Confirm-BicepFile: /workspaces/benchpress/examples/actionGroupErrors.bicep(6,7) : Warning no-unused-params: Parameter "location" is declared but never used. [https://aka.ms/bicep/linter/no-unused-params]
-    Confirm-BicepFile: /workspaces/benchpress/examples/actionGroupErrors.bicep(12,13) : Warning no-hardcoded-location: A resource location should not use a hard-coded string or variable value. Please use a parameter value, an expression, or the string 'global'. Found: 'westus' [https://aka.ms/bicep/linter/no-hardcoded-location]
+    Confirm-AzBPBicepFile: ../../../examples/actionGroupErrors.bicep:
+    Confirm-AzBPBicepFile: /workspaces/benchpress/examples/actionGroupErrors.bicep(6,7) : Warning no-unused-params: Parameter "location" is declared but never used. [https://aka.ms/bicep/linter/no-unused-params]
+    Confirm-AzBPBicepFile: /workspaces/benchpress/examples/actionGroupErrors.bicep(12,13) : Warning no-hardcoded-location: A resource location should not use a hard-coded string or variable value. Please use a parameter value, an expression, or the string 'global'. Found: 'westus' [https://aka.ms/bicep/linter/no-hardcoded-location]
     0
 
     BicepErrors
     -----------
     {@{Path=../../../examples/actionGroupErrors.bicep; ErrorResults=System.Collections.ObjectModel.Collection`1[System.Management.Automation.PSObject]…
 
-    ---------- Example 4: Path without -BicepPath Parameter ----------
+  .EXAMPLE
+      Path without -BicepPath Parameter
 
-    Confirm-BicepFile ./examples/actionGroupErrors.bicep
+    Confirm-AzBPBicepFile ./examples/actionGroupErrors.bicep
 
-    Confirm-BicepFile: ../../../examples/actionGroupErrors.bicep:
-    Confirm-BicepFile: /workspaces/benchpress/examples/actionGroupErrors.bicep(6,7) : Warning no-unused-params: Parameter "location" is declared but never used. [https://aka.ms/bicep/linter/no-unused-params]
-    Confirm-BicepFile: /workspaces/benchpress/examples/actionGroupErrors.bicep(12,13) : Warning no-hardcoded-location: A resource location should not use a hard-coded string or variable value. Please use a parameter value, an expression, or the string 'global'. Found: 'westus' [https://aka.ms/bicep/linter/no-hardcoded-location]
+    Confirm-AzBPBicepFile: ../../../examples/actionGroupErrors.bicep:
+    Confirm-AzBPBicepFile: /workspaces/benchpress/examples/actionGroupErrors.bicep(6,7) : Warning no-unused-params: Parameter "location" is declared but never used. [https://aka.ms/bicep/linter/no-unused-params]
+    Confirm-AzBPBicepFile: /workspaces/benchpress/examples/actionGroupErrors.bicep(12,13) : Warning no-hardcoded-location: A resource location should not use a hard-coded string or variable value. Please use a parameter value, an expression, or the string 'global'. Found: 'westus' [https://aka.ms/bicep/linter/no-hardcoded-location]
     0
 
     BicepErrors
@@ -115,18 +118,54 @@ function Confirm-BicepFile {
   }
 }
 
-function Deploy-BicepFeature([string]$path, $params, $resourceGroupName){
-  $fileName = [System.IO.Path]::GetFileNameWithoutExtension($path)
-  $folder = Split-Path $path
+<#
+  .SYNOPSIS
+    Deploys Azure resources using a bicep file.
+
+  .DESCRIPTION
+    Deploy-AzBPBicepFeature cmdlet deploys Azure resources when given a path to a bicep file. The cmdlet will transpile the
+    bicep file to an ARM template and uses the ARM template to deploy to Azure.
+
+  .PARAMETER BicepPath
+    This is the path to the bicep file that will be used to transpile to ARM and deploy to Azure.
+
+  .EXAMPLE
+    $params = @{
+      name           = "acrbenchpresstest1"
+      location       = "westus3"
+    }
+    Deploy-AzBPBicepFeature -BicepPath "./containerRegistry.bicep" -Params $params -ResourceGroupName "rg-test"
+
+  .INPUTS
+    System.String
+    System.Collections.Hashtable
+
+  .OUTPUTS
+    None
+#>
+function Deploy-BicepFeature(){
+  [CmdletBinding()]
+  param (
+    [Parameter(Mandatory=$true)]
+    [string]$BicepPath,
+
+    [Parameter(Mandatory=$true)]
+    [hashtable]$Params,
+
+    [Parameter(Mandatory=$false)]
+    [string]$ResourceGroupName
+  )
+  $fileName = [System.IO.Path]::GetFileNameWithoutExtension($BicepPath)
+  $folder = Split-Path $BicepPath
   $armPath  = Join-Path -Path $folder -ChildPath "$fileName.json"
 
   Write-Information "Transpiling Bicep to Arm"
-  az bicep build --file $path
+  az bicep build --file $BicepPath
 
   $code = $?
   if ($code -eq "True") {
-    $location = $params.location
-    $deploymentName = $params.deploymentName
+    $location = $Params.location
+    $deploymentName = $Params.deploymentName
 
     if ([string]::IsNullOrEmpty($deploymentName)) {
       $deploymentName = "BenchPressDeployment"
@@ -134,11 +173,11 @@ function Deploy-BicepFeature([string]$path, $params, $resourceGroupName){
 
     Write-Information "Deploying ARM Template ($deploymentName) to $location"
 
-    if ([string]::IsNullOrEmpty($resourceGroupName)) {
-      New-AzSubscriptionDeployment -Name "$deploymentName" -Location "$location" -TemplateFile "$armPath" -TemplateParameterObject $params -SkipTemplateParameterPrompt
+    if ([string]::IsNullOrEmpty($ResourceGroupName)) {
+      New-AzSubscriptionDeployment -Name "$deploymentName" -Location "$location" -TemplateFile "$armPath" -TemplateParameterObject $Params -SkipTemplateParameterPrompt
     }
     else{
-      New-AzResourceGroupDeployment -Name "$deploymentName" -ResourceGroupName "$resourceGroupName" -TemplateFile "$armPath" -TemplateParameterObject $params -SkipTemplateParameterPrompt
+      New-AzResourceGroupDeployment -Name "$deploymentName" -ResourceGroupName "$ResourceGroupName" -TemplateFile "$armPath" -TemplateParameterObject $Params -SkipTemplateParameterPrompt
     }
   }
 
@@ -146,6 +185,26 @@ function Deploy-BicepFeature([string]$path, $params, $resourceGroupName){
   Remove-Item "$armPath"
 }
 
+<#
+  .SYNOPSIS
+    Deletes Azure resources.
+
+  .DESCRIPTION
+    Remove-AzBPBicepFeature cmdlet will take an Azure Resource Group name and delete that resource group and all
+    resources contained in it.
+
+  .PARAMETER ResourceGroupName
+    Name of the Resource Group to delete
+
+  .EXAMPLE
+    Remove-AzBPBicepFeature -ResourceGroupName "rg-test"
+
+  .INPUTS
+    System.String
+
+  .OUTPUTS
+    None
+#>
 function Remove-BicepFeature(){
   [CmdletBinding()]
   [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseShouldProcessForStateChangingFunctions", "")]

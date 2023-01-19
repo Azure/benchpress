@@ -1,18 +1,24 @@
 <#
 .SYNOPSIS
-  Helper function for Azure Action Group
+  Gets an Action Group.
 
 .DESCRIPTION
-  Helper function for Azure Action Group
+  The Get-AzBPActionGroup cmdlet gets an action group using the specified Action Group and Resource Group name.
 
 .PARAMETER ActionGroupName
   The name of the Azure Action Group
 
 .PARAMETER ResourceGroupName
-  The name of the resource group
+  The name of the Resource Group
 
 .EXAMPLE
-  Get-ActionGroup -ActionGroupName "benchpresstest" -ResourceGroupName "rgbenchpresstest"
+  Get-AzBPActionGroup -ActionGroupName "benchpresstest" -ResourceGroupName "rgbenchpresstest"
+
+.INPUTS
+  System.String
+
+.OUTPUTS
+  Microsoft.Azure.Commands.Insights.OutputClasses.PSActionGroupResource
 #>
 function Get-ActionGroup {
   [CmdletBinding()]
@@ -30,19 +36,26 @@ function Get-ActionGroup {
 
 <#
 .SYNOPSIS
-  Helper function for Azure Action Group
+  Gets if an Action Group exists.
 
 .DESCRIPTION
-  Helper function for Azure Action Group
+  The Get-AzBPActionGroupExist cmdlet checks if an action group exists using the specified Action Group and
+  Resource Group name.
 
 .PARAMETER ActionGroupName
   The name of the Azure Action Group
 
 .PARAMETER ResourceGroupName
-  The name of the resource group
+  The name of the Resource Group
 
 .EXAMPLE
-  Get-ActionGroupExist -ActionGroupName "benchpresstest" -ResourceGroupName "rgbenchpresstest"
+  Get-AzBPActionGroupExist -ActionGroupName "benchpresstest" -ResourceGroupName "rgbenchpresstest"
+
+.INPUTS
+  System.String
+
+.OUTPUTS
+  System.Boolean
 #>
 function Get-ActionGroupExist {
   [CmdletBinding()]

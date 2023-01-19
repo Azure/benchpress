@@ -1,18 +1,24 @@
 <#
 .SYNOPSIS
-  Helper function for AKS Cluster
+  Gets an AKS Cluster.
 
 .DESCRIPTION
-  Helper function for AKS Cluster
+  The Get-AzBPAKSCluster cmdlet gets an AKS cluster using the specified AKS Cluster and Resource Group name.
 
 .PARAMETER AKSName
   The name of the AKS Cluster
 
 .PARAMETER ResourceGroupName
-  The name of the resource group
+  The name of the Resource Group
 
 .EXAMPLE
-  Get-AKSCluster -AKSName "benchpresstest" -ResourceGroupName "rgbenchpresstest"
+  Get-AzBPAKSCluster -AKSName "benchpresstest" -ResourceGroupName "rgbenchpresstest"
+
+.INPUTS
+  System.String
+
+.OUTPUTS
+  Microsoft.Azure.Commands.Aks.Models.PSKubernetesCluster
 #>
 function Get-AKSCluster {
   [CmdletBinding()]
@@ -30,19 +36,26 @@ function Get-AKSCluster {
 
 <#
 .SYNOPSIS
-  Helper function for AKS Cluster
+  Gets if an AKS Cluster exists.
 
 .DESCRIPTION
-  Helper function for AKS Cluster
+  The Get-AzBPAKSClusterExist cmdlet checks if an AKS cluster exists using the specified AKS Cluster and
+  Resource Group name.
 
 .PARAMETER AKSName
   The name of the AKS Cluster
 
 .PARAMETER ResourceGroupName
-  The name of the resource group
+  The name of the Resource Group
 
 .EXAMPLE
-  Get-AKSClusterExist -AKSName "benchpresstest" -ResourceGroupName "rgbenchpresstest"
+  Get-AzBPAKSClusterExist -AKSName "benchpresstest" -ResourceGroupName "rgbenchpresstest"
+
+.INPUTS
+  System.String
+
+.OUTPUTS
+  System.Boolean
 #>
 function Get-AKSClusterExist {
   [CmdletBinding()]
