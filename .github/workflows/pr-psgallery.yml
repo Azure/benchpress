@@ -24,7 +24,7 @@ jobs:
       - name: Publish AzBP Module
         shell: pwsh
         run: |
-          Publish-Module -Path ./BenchPress/Helpers/Azure -Repository LocalFeedPSRepo -Verbose
+          Publish-Module -Path ./BenchPress/Helpers/BenchPress.Azure -Repository LocalFeedPSRepo -Verbose
       - name: Install AzBP Module from the repository
         shell: pwsh
         run: |
