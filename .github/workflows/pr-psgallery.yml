@@ -1,0 +1,37 @@
+---
+name: pr-powershell
+on:  # yamllint disable-line rule:truthy
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/pr-psgallery.yml'
+      - '**.psd1'
+      - '**.psm1'
+      - '**.ps1'
+
+jobs:
+  local-psgallery:
+    name: Publish and import from/to local PSGallery
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Create the local PSGallery folder
+        shell: pwsh
+        run: |
+          $path = New-Item -Path ./packages -ItemType Directory
+          Register-PSRepository -Name LocalFeedPSRepo -SourceLocation $path.ToString() -PublishLocation $path.ToString() -InstallationPolicy Trusted
+      - name: Publish AzBP Module
+        shell: pwsh
+        run: |
+          Publish-Module -Path ./BenchPress/Helpers/Azure -Repository LocalFeedPSRepo -Verbose
+      - name: Install AzBP Module
+        shell: pwsh
+        run: |
+          Install-Module BenchPress.Azure
+      - name: Verify module exposes cmdlets
+        shell: pwsh
+        run: |
+          if ($(Get-Module -Name Az.Websites).ExportedCommands.Count -eq 0)
+          {
+            throw "No commands are available in the BenchPress.Azure Module."
+          }
