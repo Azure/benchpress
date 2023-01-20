@@ -32,7 +32,7 @@ jobs:
       - name: Verify module exposes cmdlets (smoke test)
         shell: pwsh
         run: |
-          if ($(Get-Module -Name Az.Websites).ExportedCommands.Count -eq 0)
+          if ($(Get-Module -Name BenchPress.Azure).ExportedCommands.Count -eq 0)
           {
             throw "No commands are available in the BenchPress.Azure Module."
           }
