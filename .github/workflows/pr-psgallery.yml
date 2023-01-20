@@ -19,16 +19,17 @@ jobs:
         shell: pwsh
         run: |
           $path = New-Item -Path ./packages -ItemType Directory
-          Register-PSRepository -Name LocalFeedPSRepo -SourceLocation $path.ToString() -PublishLocation $path.ToString() -InstallationPolicy Trusted
+          Register-PSRepository -Name LocalFeedPSRepo -SourceLocation $path.ToString() `
+            -PublishLocation $path.ToString() -InstallationPolicy Trusted
       - name: Publish AzBP Module
         shell: pwsh
         run: |
           Publish-Module -Path ./BenchPress/Helpers/Azure -Repository LocalFeedPSRepo -Verbose
-      - name: Install AzBP Module
+      - name: Install AzBP Module from the repository
         shell: pwsh
         run: |
           Install-Module BenchPress.Azure
-      - name: Verify module exposes cmdlets
+      - name: Verify module exposes cmdlets (smoke test)
         shell: pwsh
         run: |
           if ($(Get-Module -Name Az.Websites).ExportedCommands.Count -eq 0)
