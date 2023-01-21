@@ -28,7 +28,7 @@ jobs:
         run: |
           Invoke-ScriptAnalyzer -Path . -Recurse -EnableExit `
             -Settings $env:LINTER_CONFIG_DIR/PSScriptAnalyzerSettings.psd1
-  
+
   run-unit-tests:
     name: Run PowerShell Unit Tests
     runs-on: ubuntu-latest
