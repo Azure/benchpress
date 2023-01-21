@@ -29,8 +29,26 @@ Describe "Get-ResourceByType" {
       @{ ResourceType = [ResourceType]::VirtualMachine; Expected = "Get-VirtualMachine"}
       @{ ResourceType = [ResourceType]::WebApp; Expected = "Get-WebApp"}
     ) {
-      Get-ResourceByType -ResourceName resource -ResourceGroupName group -ResourceType $ResourceType `
-        | Should -Invoke -ModuleName Common -CommandName $Expected -Times 1
+      Get-ResourceByType -ResourceName resource -ResourceGroupName group -ResourceType $ResourceType
+      Should -Invoke -ModuleName Common -CommandName $Expected -Times 1
+    }
+  }
+}
+
+Describe "Get-Resource" {
+  Context "unit tests" -Tag "Unit" {
+    BeforeEach {
+      Mock -ModuleName Common Get-AzResource{}
+    }
+
+    It "Calls Get-AzResource without -ResourceGroupName parameter when not provided." {
+      Get-Resource -ResourceName "rn"
+      Should -Invoke -ModuleName Common -CommandName Get-AzResource -ParameterFilter { $name -eq "rn"; $resourceGroupName -eq $null }
+    }
+
+    It "Calls Get-AzResource with -ResourceGroupName parameter when provided." {
+      Get-Resource -ResourceName "rn" -ResourceGroupName "rgn"
+      Should -Invoke -ModuleName Common -CommandName Get-AzResource -ParameterFilter { $name -eq "rn"; $resourceGroupName -eq "rgn" }
     }
   }
 }
