@@ -3,11 +3,11 @@
     Confirm-AzBPBicepFile will confirm that the bicep files provided pass the checks executed by `bicep build`.
 
   .DESCRIPTION
-    Confirm-AzBPBicepFile executes `bicep build` and returns an object that has an array field BicepErrors. Each element of
+    Confirm-AzBPBicepFile executes `bicep build` and returns an object that has an array field Errors. Each element of
     this array is an object that contains the bicep file path that had errors and a collection of
     System.Object.ErrorRecord that correspond to the file at that path:
 
-    {BicepErrors: [
+    {Errors: [
         {Path: [string], ErrorResults: [ErrorRecord[]]}, {Path: [string], ErrorResults: [ErrorRecord[]]}, ...
       ]}
 
@@ -28,7 +28,7 @@
     Confirm-AzBPBicepFile: /workspaces/benchpress/examples/actionGroupErrors.bicep(12,13) : Warning no-hardcoded-location: A resource location should not use a hard-coded string or variable value. Please use a parameter value, an expression, or the string 'global'. Found: 'westus' [https://aka.ms/bicep/linter/no-hardcoded-location]
     0
 
-    BicepErrors
+    Errors
     -----------
     {@{Path=../../../examples/actionGroupErrors.bicep; ErrorResults=System.Collections.ObjectModel.Collection`1[System.Management.Automation.PSObject]…
 
@@ -46,7 +46,7 @@
     Confirm-AzBPBicepFile: /workspaces/benchpress/examples/actionGroupErrors.bicep(12,13) : Warning no-hardcoded-location: A resource location should not use a hard-coded string or variable value. Please use a parameter value, an expression, or the string 'global'. Found: 'westus' [https://aka.ms/bicep/linter/no-hardcoded-location]
     1
 
-    BicepErrors
+    Errors
     -----------
     {@{Path=../../../examples/actionGroupErrors.bicep; ErrorResults=System.Collections.ObjectModel.Collection`1[System.Management.Automation.PSObject]…
 
@@ -60,7 +60,7 @@
     Confirm-AzBPBicepFile: /workspaces/benchpress/examples/actionGroupErrors.bicep(12,13) : Warning no-hardcoded-location: A resource location should not use a hard-coded string or variable value. Please use a parameter value, an expression, or the string 'global'. Found: 'westus' [https://aka.ms/bicep/linter/no-hardcoded-location]
     0
 
-    BicepErrors
+    Errors
     -----------
     {@{Path=../../../examples/actionGroupErrors.bicep; ErrorResults=System.Collections.ObjectModel.Collection`1[System.Management.Automation.PSObject]…
 
@@ -74,7 +74,7 @@
     Confirm-AzBPBicepFile: /workspaces/benchpress/examples/actionGroupErrors.bicep(12,13) : Warning no-hardcoded-location: A resource location should not use a hard-coded string or variable value. Please use a parameter value, an expression, or the string 'global'. Found: 'westus' [https://aka.ms/bicep/linter/no-hardcoded-location]
     0
 
-    BicepErrors
+    Errors
     -----------
     {@{Path=../../../examples/actionGroupErrors.bicep; ErrorResults=System.Collections.ObjectModel.Collection`1[System.Management.Automation.PSObject]…
 
@@ -92,7 +92,7 @@ function Confirm-BicepFile {
   )
   Begin{
     $out = [PSCustomObject]@{
-      BicepErrors = New-Object System.Collections.ArrayList
+      Errors = New-Object System.Collections.ArrayList
     }
   }
   Process {
@@ -101,15 +101,15 @@ function Confirm-BicepFile {
       # 2>&1 will send errors to stdout so that they can be captured by PowerShell
       # Both the ARM template and any output from linting will be in the array $results, with individual errors in the
       # array separately
-      $results = Invoke-Command -ScriptBlock {bicep build $path --stdout 2>&1}
-      # .Where() returns a collection of System.Object.ErrorRecord or null if there are no errors
+      $results = Invoke-Command -ScriptBlock { bicep build $path --stdout 2>&1 }
+      # .Where() returns a collection of System.Management.Automation.ErrorRecord or null if there are no errors
       $errorResults = $results.Where({$PSItem.GetType().Name -eq 'ErrorRecord'})
 
       if ($errorResults.Count -gt 0) {
         Write-Error "${path}:"
         $errorResults | Write-Error
 
-        $out.BicepErrors.Add([PSCustomObject]@{Path = $path; ErrorResults = $errorResults})
+        $out.Errors.Add([PSCustomObject]@{Path = $path; ErrorResults = $errorResults})
       }
     }
   }
@@ -160,10 +160,15 @@ function Deploy-BicepFeature(){
   $armPath  = Join-Path -Path $folder -ChildPath "$fileName.json"
 
   Write-Information "Transpiling Bicep to Arm"
-  az bicep build --file $BicepPath
+  # 2>&1 will send errors to stdout so that they can be captured by PowerShell
+  # Both the ARM template and any output from linting will be in the array $results, with individual errors in the
+  # array separately
+  $results = Invoke-Command -ScriptBlock { bicep build $BicepPath 2>&1 }
+  # .Where() returns a collection of System.Management.Automation.ErrorRecord or null if there are no errors
+  $errorResults = $results.Where({$PSItem.GetType().Name -eq 'ErrorRecord'})
 
-  $code = $?
-  if ($code -eq "True") {
+  # Only deploy if there are no errors.
+  if ($errorResults.Count -eq 0) {
     $location = $Params.location
     $deploymentName = $Params.deploymentName
 
@@ -212,7 +217,8 @@ function Remove-BicepFeature(){
     [Parameter(Mandatory=$true)]
     [string]$ResourceGroupName
   )
-  Get-AzResourceGroup -Name $ResourceGroupName | Remove-AzResourceGroup -Force
+  $resourceGroup = Get-AzResourceGroup -Name $ResourceGroupName
+  Remove-AzResourceGroup -Name $resourceGroup -Force
 }
 
 Export-ModuleMember -Function Confirm-BicepFile, Deploy-BicepFeature, Remove-BicepFeature
