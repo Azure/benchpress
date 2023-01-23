@@ -214,8 +214,16 @@ to deploy to, but we never deployed that either! Let's go ahead and fix these as
 
 1. Create a resource group in your subscription.
 1. Deploy the container registry bicep file to that resource group:
-   `az deployment group create --resource-group <your-resource-group-name> --template-file .\containerRegistry.bicep`
-   (You could also use the `Deploy-AzBicepFeature` helper here)
+
+   ```PowerShell
+   New-AzResourceGroupDeployment -ResourceGroupName "<your-resource-group-name>"`
+    -TemplateFile ".\containerRegistry.bicep"
+   ```
+
+   (If you get an error that bicep is not recognized, you may need to
+   [manually install](https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/install#azure-powershell)
+   bicep.)
+
 1. Update the `ContainerRegistry.Tests.ps1` file to point to your new resource group:
    `$rgName = "<your-resource-group-name>"`
 1. Run your test again! Success!
