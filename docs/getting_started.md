@@ -208,7 +208,7 @@ the deployed resources using the `Remove-AzBPBicepFeature` helper.
 
 Now that we've done a walkthrough of the three tests, let's fix them.
 
-The first two tests assumed that our container container registry was already deployed to a resource group. However, we
+The first two tests assumed that our container registry was already deployed to a resource group. However, we
 never deployed the `containerRegistry.bicep` file ourselves! The third test assumed we had an existing resource group
 to deploy to, but we never deployed that either! Let's go ahead and fix these assumptions now:
 
