@@ -30,9 +30,11 @@ jobs:
     steps:
       - name: Checkout repository and submodules
         uses: actions/checkout@v3
+      - name: Initialize Bicep Submodule
+        run: git submodule update --init --recursive
       - name: Run Unit Tests
         working-directory: BenchPress
-        run: dotnet test --no-restore
+        run: dotnet test
       - name: Archive Unit Test Results
         if: ${{ success() }} || ${{ failure() }}
         uses: actions/upload-artifact@v3
