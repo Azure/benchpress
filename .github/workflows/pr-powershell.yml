@@ -28,3 +28,27 @@ jobs:
         run: |
           Invoke-ScriptAnalyzer -Path . -Recurse -EnableExit `
             -Settings $env:LINTER_CONFIG_DIR/PSScriptAnalyzerSettings.psd1
+
+  run-unit-tests:
+    name: Run PowerShell Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository and submodules
+        uses: actions/checkout@v3
+      - name: Install unit test module dependencies
+        shell: pwsh
+        run: |
+          Set-PSRepository PSGallery -InstallationPolicy Trusted
+          Install-Module Az -ErrorAction Stop
+          Install-Module Pester -ErrorAction Stop
+      - name: Run PowerShell Unit Tests
+        shell: pwsh
+        working-directory: BenchPress
+        run: |
+          Invoke-Pester -OutputFile ps-test-results.xml -OutputFormat NUnitXml
+      - name: Archive PowerShell Test Results
+        if: ${{ success() }} || ${{ failure() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: powershell-test-results
+          path: BenchPress/ps-test-results.xml
