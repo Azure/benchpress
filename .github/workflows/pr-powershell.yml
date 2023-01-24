@@ -35,10 +35,11 @@ jobs:
     steps:
       - name: Checkout repository and submodules
         uses: actions/checkout@v3
-      - name: Install Pester module
+      - name: Install unit test module dependencies
         shell: pwsh
         run: |
           Set-PSRepository PSGallery -InstallationPolicy Trusted
+          Install-Module Az -ErrorAction Stop
           Install-Module Pester -ErrorAction Stop
       - name: Run PowerShell Unit Tests
         shell: pwsh

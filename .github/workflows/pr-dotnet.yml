@@ -31,7 +31,6 @@ jobs:
       - name: Checkout repository and submodules
         uses: actions/checkout@v3
       - name: Run Unit Tests
-        working-directory: BenchPress
         run: dotnet test
       - name: Archive Unit Test Results
         if: ${{ success() }} || ${{ failure() }}
