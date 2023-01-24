@@ -12,7 +12,7 @@ The basic usage pattern for writing automated tests with BenchPress is to:
 
 ## Requirements
 
-BenchPress uses PowerShell and the Azure Az PowerShell module. It is also expected of users of BenchPress to use Pester
+BenchPress uses PowerShell and the Azure Az PowerShell module. Users should use Pester
 as their testing framework and runner. To use BenchPress, have the following installed:
 
 - [PowerShell](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows)
