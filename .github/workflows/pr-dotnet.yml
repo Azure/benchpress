@@ -23,7 +23,7 @@ jobs:
       - name: Lint .NET Solution
         working-directory: BenchPress
         run: dotnet format --exclude ./bicep/ --verify-no-changes
-  
+
   run-unit-tests:
     name: Run .NET Unit Tests
     runs-on: ubuntu-latest
