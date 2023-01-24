@@ -6,7 +6,7 @@ The basic usage pattern for writing automated tests with BenchPress is to:
 
 1. Write tests using [Pester testing framework](https://pester.dev/docs/quick-start). Create test files ending in
    `Tests.ps1` and run test files using `Invoke-Pester` .
-1. Deploy resources to Azure using bicep (or helpers from BenchPress)
+1. Deploy resources to Azure using bicep (or helpers from BenchPress).
 1. Use BenchPress to return information about deployed resources.
 1. (Optional) Use BenchPress to tear down resources at the end of the test.
 
