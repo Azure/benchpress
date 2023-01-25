@@ -13,5 +13,5 @@
     "**/obj/**",
     "**/*.svg",
     "BenchPress/bicep/**"
-]
+  ]
 }
