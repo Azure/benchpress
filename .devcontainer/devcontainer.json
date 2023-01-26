@@ -13,11 +13,7 @@
     "ghcr.io/eitsupi/devcontainer-features/jq-likes:0": {},
     "ghcr.io/rchaganti/vsc-devcontainer-features/azurebicep:1": {},
     "ghcr.io/natescherer/devcontainers-custom-features/powershell-resources:1": {
-      "resources": [
-        "Az",
-        "Pester",
-        "platyps"
-      ]
+      "resources": ["Az", "Pester", "platyps"]
     }
   },
   "settings": {},
