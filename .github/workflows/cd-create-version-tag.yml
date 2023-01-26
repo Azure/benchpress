@@ -1,16 +1,17 @@
 ---
 name: cd-create-version-tag
 
-on: # yamllint disable-line rule:truthy
+on: #  yamllint disable-line rule:truthy
   push:
     branches: [main]
   pull_request:
     branches: [main]
 
-jobs: create-version-tag
-  if: ${{ github.event_name == 'push' && github.event.pull_request.head.ref == 'refs/heads/version' }}
-  runs-on: ubuntu-latest
-  steps:
+jobs:
+  create-version-tag:
+    if: ${{ github.event_name == 'push' && github.event.pull_request.head.ref == 'refs/heads/version' }}
+    runs-on: ubuntu-latest
+    steps:
       - uses: actions/checkout@v2
       - name: Retrieve Version and Create Version Tag
         # I don't know why, but the first sed command adds a space to the beginning of the string so the second sed
