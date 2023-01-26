@@ -1,9 +1,10 @@
 ---
-name: "Create Automated PRs"
+name: create-automated-prs
 on:  # yamllint disable-line rule:truthy
   push:
-    branches: [docs,version]
-
+    branches:
+      - 'docs'
+      - 'version'
 
 jobs:
   publish-branch:
