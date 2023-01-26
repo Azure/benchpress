@@ -1,5 +1,5 @@
 ---
-name: ci-versioning
+name: ci-module-versioning
 
 on:  # yamllint disable-line rule:truthy
   push:
@@ -40,10 +40,8 @@ jobs:
         run: |
           sed -i 's/ModuleVersion = "[^"]*"/ModuleVersion = "${{ needs.get-tags.output.Version }}"/' \
             ./BenchPress/Helpers/BenchPress.Azure/BenchPress.Azure.psd1
-      - name: Commit and Tag Changes
+      - name: Commit Changes
         run: |
           git add ./BenchPress/Helpers/BenchPress.Azure/BenchPress.Azure.psd1
           git commit -m "version: updating version"
           git push origin version
-          git tag v${{ needs.get-tags.output.Version }}
-          git push origin v${{ needs.get-tags.output.Version }}
