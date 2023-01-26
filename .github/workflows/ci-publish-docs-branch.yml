@@ -1,10 +1,10 @@
 ---
 name: "Publish Docs branch"
-on:  # yamllint disable-line rule:truthy
+on: # yamllint disable-line rule:truthy
   push:
     branches: [main]
     paths:
-      - './BenchPress/Helpers/BenchPress.Azure/*.psm1'
+      - "./BenchPress/Helpers/BenchPress.Azure/*.psm1"
 
 jobs:
   publish-docs-branch:

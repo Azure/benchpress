@@ -1,6 +1,6 @@
 ---
 name: "Deploy Features"
-on:  # yamllint disable-line rule:truthy
+on: # yamllint disable-line rule:truthy
   push:
     tags:
       - "v*"
@@ -23,7 +23,7 @@ jobs:
       - name: Get or Create Release at current tag
         uses: ncipollo/release-action@v1
         with:
-          allowUpdates: true  # Upload our own artifact from previous step
+          allowUpdates: true # Upload our own artifact from previous step
           artifactErrorsFailBuild: true
           artifacts: "./devcontainer-features.tgz"
           token: ${{ secrets.GITHUB_TOKEN }}

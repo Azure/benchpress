@@ -24,7 +24,7 @@ Describe "Confirm-BicepFile" {
       Should -Invoke -ModuleName Bicep -CommandName "Invoke-Command"  -Times 1
     }
 
-    It "Calls Invoke-Command multiple times with an array of paths provided as first paramter without parameter name" {
+    It "Calls Invoke-Command multiple times with an array of paths provided as first parameter without parameter name" {
       Confirm-BicepFile  "./nothing.bicep","./stillnothing.bicep"
       Should -Invoke -ModuleName Bicep -CommandName "Invoke-Command"  -Times 2
     }
