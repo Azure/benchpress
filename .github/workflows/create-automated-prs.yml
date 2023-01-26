@@ -1,0 +1,15 @@
+---
+name: "Create Automated PRs"
+on:  # yamllint disable-line rule:truthy
+  push:
+    branches: [docs,version]
+
+
+jobs:
+  publish-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create pull request
+        run: gh pr create -B main -H ${{ github.ref_name }} --title 'Merge updated ${{ github.ref_name }} into main.' --body 'Created by Github action'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
