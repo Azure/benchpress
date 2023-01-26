@@ -1,7 +1,7 @@
-[System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseDeclaredVarsMoreThanAssignments',
-                                                          'This is an auto generated file by the Generator and should
-                                                           be ignored for now as the Generator is still under
-                                                           development.')]
+[System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseDeclaredVarsMoreThanAssignments', '',
+                                                          Justification='This is an auto generated file by the
+                                                          Generator and should be ignored for now as the Generator
+                                                          is still under development.')]
 [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('UnexpectedToken', '')]
 [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('MissingEndCurlyBrace', '')]
 [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('InvalidLeftHandSide', '')]
