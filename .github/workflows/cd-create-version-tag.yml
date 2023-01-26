@@ -1,14 +1,14 @@
 ---
 name: cd-create-version-tag
 
-on:
+on: # yamllint disable-line rule:truthy
   push:
     branches: [main]
   pull_request:
     branches: [main]
 
 jobs: create-version-tag
-  if: github.event_name == 'push' && github.event.pull_request.head.ref == 'refs/heads/version'
+  if: ${{ github.event_name == 'push' && github.event.pull_request.head.ref == 'refs/heads/version' }}
   runs-on: ubuntu-latest
   steps:
       - uses: actions/checkout@v2
