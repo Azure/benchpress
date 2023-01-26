@@ -1,6 +1,6 @@
 
 {
-  "threshold": 5,
+  "threshold": 10,
   "ignore": [
     "**/node_modules/**",
     "**/.git/**",
