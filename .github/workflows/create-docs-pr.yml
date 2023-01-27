@@ -1,0 +1,15 @@
+---
+name: "Create Docs PR"
+on:  # yamllint disable-line rule:truthy
+  push:
+    branches: [docs]
+
+
+jobs:
+  publish-docs-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create pull request
+        run: gh pr create -B main -H docs --title 'Merge updated docs into main.' --body 'Created by Github action'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
