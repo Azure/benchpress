@@ -6,10 +6,10 @@ Describe 'Verify Virtual Machine' {
     it 'Should contain a Virtual Machine with the given name' {
         #arrange
         $rgName = 'rg-test'
-        $vmName = 'vmtest1'
+        $vmName = 'simpleLinuxVM1'
         
         #act
-        $exists = Get-AzBPSqlServerExist -ResourceGroupName $rgName -VirtualMachineName $vmName
+        $exists = Get-AzBPVirtualMachine -ResourceGroupName $rgName -VirtualMachineName $vmName
 
         #assert
         $exists | Should -Not -BeNullOrEmpty
@@ -20,7 +20,7 @@ Describe 'Verify Virtual Machine Exists' {
     it 'Should contain a Virtual Machine with the given name' {
         #arrange
         $rgName = 'rg-test'
-        $vmName = 'vmtest1'
+        $vmName = 'simpleLinuxVM1'
         
         #act
         $exists = Get-AzBPVirtualMachineExist -ResourceGroupName $rgName -VirtualMachineName $vmName
@@ -33,11 +33,12 @@ Describe 'Verify Virtual Machine Exists' {
 Describe 'Spin up , Tear down a Virtual Machine' {
     it 'Should deploy a bicep file.' {
       #arrange
-      $resourceGroupName = "rg-test"
+      $resourceGroupName = "rg-test2"
       $bicepPath = "./virtualmachine.bicep"
       $params = @{
-        name           = "vmtest2"
-        location       = "westus3"
+        vmName             = "simpleLinuxVM2"
+        location           = "westus3"
+        adminPasswordOrKey = "<sample-passwords>"
       }
   
       #act
