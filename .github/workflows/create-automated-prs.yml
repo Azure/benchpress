@@ -1,6 +1,6 @@
 ---
 name: create-automated-prs
-on:  # yamllint disable-line rule:truthy
+on: # yamllint disable-line rule:truthy
   push:
     branches:
       - 'docs'

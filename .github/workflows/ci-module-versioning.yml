@@ -1,7 +1,7 @@
 ---
 name: ci-module-versioning
 
-on:  # yamllint disable-line rule:truthy
+on: # yamllint disable-line rule:truthy
   push:
     branches: [main]
     paths:
@@ -31,6 +31,8 @@ jobs:
     if: needs.get-tags.output.CommitsSinceVersionSource > 0
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Latest
+        uses: actions/checkout@v2
       - name: Create and checkout new version branch
         run: |
           git config --global user.name "github-actions[bot]"
