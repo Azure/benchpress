@@ -1,7 +1,4 @@
-﻿[Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseBOMForUnicodeEncodedFile', '', Scope='Function')]
-param(
-)
-<#
+﻿<#
   .SYNOPSIS
     Confirm-AzBPBicepFile will confirm that the bicep files provided pass the checks executed by `bicep build`.
 

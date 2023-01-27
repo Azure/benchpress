@@ -11,9 +11,9 @@ DISABLE_LINTERS:
   - CSHARP_DOTNET_FORMAT
 DISABLE_ERRORS_LINTERS:
   - REPOSITORY_DEVSKIM
-POWERSHELL_POWERSHELL_FILTER_REGEX_EXCLUDE: (BenchPress/Generators/templates/)
-JSON_JSONLINT_FILTER_REGEX_EXCLUDE: (.vscode/)
 SHOW_ELAPSED_TIME: true
 FILEIO_REPORTER: false
-# DISABLE_ERRORS: true # Uncomment if you want MegaLinter to detect errors but not block CI to pass
 LINTER_RULES_PATH: .github/config/linter
+POWERSHELL_POWERSHELL_FILTER_REGEX_EXCLUDE: (.*/Generators/templates/|.*/BenchPress.Azure/Bicep.psm1)
+JSON_JSONLINT_FILTER_REGEX_EXCLUDE: (.vscode/)
+ACTION_ACTIONLINT_FILTER_REGEX_EXCLUDE: (.github/)
