@@ -9,21 +9,6 @@ on: # yamllint disable-line rule:truthy
       - "!BenchPress/Helpers/**"
 
 jobs:
-  lint-dotnet:
-    name: Lint .NET Solution
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository and submodules
-        uses: actions/checkout@v3
-      - name: Initialize Bicep Submodule
-        run: git submodule update --init --recursive
-      - name: Restore Benchpress Solution
-        working-directory: BenchPress
-        run: dotnet restore
-      - name: Lint .NET Solution
-        working-directory: BenchPress
-        run: dotnet format --exclude ./bicep/ --verify-no-changes
-
   run-unit-tests:
     name: Run .NET Unit Tests
     runs-on: ubuntu-latest

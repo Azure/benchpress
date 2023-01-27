@@ -1,19 +1,11 @@
 ---
 # MegaLinter GitHub Action configuration file
 # More info at https://megalinter.io
-name: MegaLinter
+name: pr-mega-linter
 
 on: # yamllint disable-line rule:truthy
-  # Trigger mega-linter at every push. Action will also be visible from Pull Requests to master
-  push: # Comment this line to trigger action only on pull-requests (not recommended if you don't pay for GH Actions)
   pull_request:
-    branches: [master, main]
-
-env: # Comment env block if you do not want to apply fixes
-  # Apply linter fixes configuration
-  APPLY_FIXES: none
-  APPLY_FIXES_EVENT: pull_request
-  APPLY_FIXES_MODE: commit
+    branches: [main]
 
 concurrency:
   group: ${{ github.ref }}-${{ github.workflow }}
