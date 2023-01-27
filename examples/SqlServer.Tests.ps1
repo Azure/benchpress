@@ -6,7 +6,7 @@ Describe 'Verify Sql Server' {
     it 'Should contain a Sql Server with the given name' {
         #arrange
         $rgName = 'rg-test'
-        $serverName = 'sqlservertest1'
+        $serverName = 'azbenchpreesssqlservertest1'
         
         #act
         $exists = Get-AzBPSqlServer -ResourceGroupName $rgName -ServerName $serverName
@@ -20,7 +20,7 @@ Describe 'Verify Sql Server Exists' {
     it 'Should contain a Sql Server with the given name' {
         #arrange
         $rgName = 'rg-test'
-        $serverName = 'sqlservertest1'
+        $serverName = 'azbenchpreesssqlservertest1'
         
         #act
         $exists = Get-AzBPSqlServerExist -ResourceGroupName $rgName -ServerName $serverName
@@ -36,8 +36,8 @@ Describe 'Spin up , Tear down a Sql Server' {
       $resourceGroupName = "rg-test"
       $bicepPath = "./sqlserver.bicep"
       $params = @{
-        name           = "sqlservertest2"
-        location       = "westus2"
+        name           = "azbenchpreesssqlservertest2"
+        location       = "westus3"
       }
   
       #act

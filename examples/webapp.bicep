@@ -1,10 +1,10 @@
 
 param location string = resourceGroup().location
-param hostingPlanName string
-param websiteName string
+param appserviceplanName string = 'appservicetest1'
+param webappName string = 'azbpwebapptest1'
 
-resource hostingPlan 'Microsoft.Web/serverfarms@2022-03-01' = {
-  name: hostingPlanName
+resource appserviceplan 'Microsoft.Web/serverfarms@2022-03-01' = {
+  name: appserviceplanName
   location: location
   tags: {
     displayName: 'HostingPlan'
@@ -16,13 +16,13 @@ resource hostingPlan 'Microsoft.Web/serverfarms@2022-03-01' = {
 }
 
 resource website 'Microsoft.Web/sites@2022-03-01' = {
-  name: websiteName
+  name: webappName
   location: location
   tags: {
-    'hidden-related:${hostingPlan.id}': 'empty'
+    'hidden-related:${appserviceplan.id}': 'empty'
     displayName: 'Website'
   }
   properties: {
-    serverFarmId: hostingPlan.id
+    serverFarmId: appserviceplan.id
   }
 }

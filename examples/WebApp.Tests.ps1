@@ -6,7 +6,7 @@ Describe 'Verify Web App' {
     it 'Should contain a Web App with the given name' {
         #arrange
         $rgName = 'rg-test'
-        $webappName = 'webapptest1'
+        $webappName = 'azbpwebapptest1'
         
         #act
         $exists = Get-AzBPWebApp -ResourceGroupName $rgName -WebAppName $webappName
@@ -20,7 +20,7 @@ Describe 'Verify Web App Exists' {
     it 'Should contain a Web App with the given name' {
         #arrange
         $rgName = 'rg-test'
-        $webappName = 'webapptest1'
+        $webappName = 'azbpwebapptest1'
         
         #act
         $exists = Get-AzBPWebAppExist -ResourceGroupName $rgName -WebAppName $webappName
@@ -36,9 +36,9 @@ Describe 'Spin up , Tear down a Web App' {
       $resourceGroupName = "rg-test"
       $bicepPath = "./webapp.bicep"
       $params = @{
-        hostingPlanName = "webapptest2"
-        websiteName     = "websitetest2"
-        location        = "westus2"
+        appserviceplanName = "appservicetest2"
+        webappName     = "azbpwebapptest2"
+        location        = "westus3"
       }
   
       #act

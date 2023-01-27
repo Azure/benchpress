@@ -6,7 +6,7 @@ Describe 'Verify Sql Database without a provided database name' {
     it 'Should contain a Sql Database with the given name' {
         #arrange
         $rgName = 'rg-test'
-        $serverName = 'sqlservertest1'
+        $serverName = 'azbpsqlserverwithdatabasetest1'
         
         #act
         $exists = Get-AzBPSqlDatabase -ResourceGroupName $rgName -ServerName $serverName
@@ -20,8 +20,8 @@ Describe 'Verify Sql Database Exists' {
     it 'Should contain an Sql Database with the given name' {
         #arrange
         $rgName = 'rg-test'
-        $databaseName = 'sqldatabasetest1'
-        $serverName = 'sqlservertest1'
+        $serverName = 'azbpsqlserverwithdatabasetest1'
+        $databaseName = 'samplesqldatabase'
         
         #act
         $exists =  Get-AzBPSqlDatabaseExist -ResourceGroupName $rgName -DatabaseName $databaseName -ServerName $serverName
@@ -38,8 +38,8 @@ Describe 'Spin up , Tear down Sql Database' {
       $bicepPath = "./sqldatabase.bicep"
       $params = @{
         databaseName   = "sqldatabasetest2"
-        serverName     = "sqlservertest2"
-        location       = "westus2"
+        serverName     = "azbpsqlserverwithdatabasetest2"
+        location       = "westus3"
       }
   
       #act

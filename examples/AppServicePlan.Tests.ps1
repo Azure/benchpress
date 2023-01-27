@@ -9,7 +9,7 @@ Describe 'Verify App Service Plan' {
         $appServicePlanName = 'appserviceplantest1'
         
         #act
-        $exists = Get-AzBPAppServicePlan -ResourceGroupName $rgName -Name $appServicePlanName
+        $exists = Get-AzBPAppServicePlan -ResourceGroupName $rgName -AppServicePlanName $appServicePlanName
 
         #assert
         $exists | Should -Not -BeNullOrEmpty
@@ -23,7 +23,7 @@ Describe 'Verify App Service Plan Exists' {
         $appServicePlanName = 'appserviceplantest1'
         
         #act
-        $exists = Get-AzBPAppServicePlanExist -ResourceGroupName $rgName -Name $appServicePlanName
+        $exists = Get-AzBPAppServicePlanExist -ResourceGroupName $rgName -AppServicePlanName $appServicePlanName
 
         #assert
         $exists | Should -Be $true
@@ -37,7 +37,7 @@ Describe 'Spin up , Tear down App Service Plan' {
       $bicepPath = "./appserviceplan.bicep"
       $params = @{
         name           = "appserviceplantest2"
-        location       = "westus2"
+        location       = "westus3"
       }
   
       #act

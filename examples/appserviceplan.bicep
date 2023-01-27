@@ -1,5 +1,5 @@
 param location string = resourceGroup().location
-param name string = 'sample app service plan'
+param name string = 'appserviceplantest1'
 
 resource appServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
   name: name

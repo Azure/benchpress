@@ -37,7 +37,7 @@ Describe 'Spin up , Tear down a Virtual Machine' {
       $bicepPath = "./virtualmachine.bicep"
       $params = @{
         name           = "vmtest2"
-        location       = "westus2"
+        location       = "westus3"
       }
   
       #act
