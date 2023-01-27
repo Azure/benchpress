@@ -1,9 +1,8 @@
 ---
 name: "Create Docs PR"
-on:  # yamllint disable-line rule:truthy
+on: # yamllint disable-line rule:truthy
   push:
     branches: [docs]
-
 
 jobs:
   publish-docs-branch:

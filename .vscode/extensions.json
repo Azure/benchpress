@@ -5,5 +5,5 @@
     "ms-dotnettools.csharp",
     "ms-vscode.powershell",
     "ms-azuretools.vscode-docker"
-  ],
+  ]
 }

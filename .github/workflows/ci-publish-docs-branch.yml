@@ -1,10 +1,10 @@
 ---
 name: "Publish Docs branch"
-on:  # yamllint disable-line rule:truthy
+on: # yamllint disable-line rule:truthy
   push:
     branches: [main]
     paths:
-      - './BenchPress/Helpers/BenchPress.Azure/*.psm1'
+      - "./BenchPress/Helpers/BenchPress.Azure/*.psm1"
 
 jobs:
   publish-docs-branch:
@@ -32,7 +32,7 @@ jobs:
 
       - name: If there are changes push the branch
         run: |
-          if [ $(git ls-files --deleted --modified --others --exclude-standard -- ./docs | wc -l) -gt 0 ]
+          if [ "$(git ls-files --deleted --modified --others --exclude-standard -- ./docs | wc -l)" -gt 0 ]
           then
             git add docs
             git commit -m "docs: updating generated documentation"

@@ -1,7 +1,7 @@
 param name string = 'kvbenchpresstest'
 param location string = resourceGroup().location
 
-resource vault 'Microsoft.KeyVault/vaults@2021-11-01-preview' = {
+resource vault 'Microsoft.KeyVault/vaults@2022-07-01' = {
   name: name
   location: location
   properties: {
@@ -23,7 +23,7 @@ resource vault 'Microsoft.KeyVault/vaults@2021-11-01-preview' = {
   }
 }
 
-resource key 'Microsoft.KeyVault/vaults/keys@2021-11-01-preview' = {
+resource key 'Microsoft.KeyVault/vaults/keys@2022-07-01' = {
   parent: vault
   name: 'samplekey'
   properties: {
@@ -34,7 +34,7 @@ resource key 'Microsoft.KeyVault/vaults/keys@2021-11-01-preview' = {
   }
 }
 
-resource secret 'Microsoft.KeyVault/vaults/secrets@2021-11-01-preview' = {
+resource secret 'Microsoft.KeyVault/vaults/secrets@2022-07-01' = {
   parent: vault
   name: 'samplesecret'
   properties: {

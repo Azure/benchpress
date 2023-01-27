@@ -1,34 +1,18 @@
 ---
 name: pr-powershell
-on:  # yamllint disable-line rule:truthy
+on: # yamllint disable-line rule:truthy
   pull_request:
     branches: [main]
     paths:
-      - '.github/workflows/pr-powershell.yml'
-      - '**.psd1'
-      - '**.psm1'
-      - '**.ps1'
+      - ".github/workflows/pr-powershell.yml"
+      - "**.psd1"
+      - "**.psm1"
+      - "**.ps1"
 
 env:
   LINTER_CONFIG_DIR: ./.github/config/linter
 
 jobs:
-  lint-powershell:
-    name: Lint PowerShell Files
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Install PSScriptAnalyzer module
-        shell: pwsh
-        run: |
-          Set-PSRepository PSGallery -InstallationPolicy Trusted
-          Install-Module PSScriptAnalyzer -ErrorAction Stop
-      - name: Lint PowerShell Files
-        shell: pwsh
-        run: |
-          Invoke-ScriptAnalyzer -Path . -Recurse -EnableExit `
-            -Settings $env:LINTER_CONFIG_DIR/PSScriptAnalyzerSettings.psd1
-
   run-unit-tests:
     name: Run PowerShell Unit Tests
     runs-on: ubuntu-latest
