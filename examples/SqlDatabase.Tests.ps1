@@ -8,7 +8,7 @@ Describe 'Verify Sql Database' {
         $rgName = 'rg-test'
         $serverName = 'azbpsqlserverwithdatabasetest1'
         $databaseName = 'samplesqldatabase'
-        
+
         #act
         $exists = Get-AzBPSqlDatabase -ResourceGroupName $rgName -DatabaseName $databaseName -ServerName $serverName
 
@@ -23,7 +23,7 @@ Describe 'Verify Sql Database Exists' {
         $rgName = 'rg-test'
         $serverName = 'azbpsqlserverwithdatabasetest1'
         $databaseName = 'samplesqldatabase'
-        
+
         #act
         $exists =  Get-AzBPSqlDatabaseExist -ResourceGroupName $rgName -DatabaseName $databaseName -ServerName $serverName
 
@@ -37,7 +37,7 @@ Describe 'Verify Sql Database Exists without providing databaseName flag' {
         #arrange
         $rgName = 'rg-test'
         $serverName = 'azbpsqlserverwithdatabasetest1'
-        
+
         #act
         $exists =  Get-AzBPSqlDatabaseExist -ResourceGroupName $rgName -ServerName $serverName
 
@@ -56,13 +56,13 @@ Describe 'Spin up , Tear down Sql Database' {
         serverName     = "azbpsqlserverwithdatabasetest2"
         location       = "westus3"
       }
-  
+
       #act
       $deployment = Deploy-AzBPBicepFeature -BicepPath $bicepPath -Params $params -ResourceGroupName $resourceGroupName
-  
+
       #assert
       $deployment.ProvisioningState | Should -Be "Succeeded"
-  
+
       #clean up
       Remove-AzBPBicepFeature -ResourceGroupName $resourceGroupName
     }

@@ -7,7 +7,7 @@ Describe 'Verify App Service Plan' {
         #arrange
         $rgName = 'rg-test'
         $appServicePlanName = 'appserviceplantest1'
-        
+
         #act
         $exists = Get-AzBPAppServicePlan -ResourceGroupName $rgName -AppServicePlanName $appServicePlanName
 
@@ -21,7 +21,7 @@ Describe 'Verify App Service Plan Exists' {
         #arrange
         $rgName = 'rg-test'
         $appServicePlanName = 'appserviceplantest1'
-        
+
         #act
         $exists = Get-AzBPAppServicePlanExist -ResourceGroupName $rgName -AppServicePlanName $appServicePlanName
 
@@ -39,13 +39,13 @@ Describe 'Spin up , Tear down App Service Plan' {
         name           = "appserviceplantest2"
         location       = "westus3"
       }
-  
+
       #act
       $deployment = Deploy-AzBPBicepFeature -BicepPath $bicepPath -Params $params -ResourceGroupName $resourceGroupName
-  
+
       #assert
       $deployment.ProvisioningState | Should -Be "Succeeded"
-  
+
       #clean up
       Remove-AzBPBicepFeature -ResourceGroupName $resourceGroupName
     }

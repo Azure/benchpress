@@ -7,7 +7,7 @@ Describe 'Verify Web App' {
         #arrange
         $rgName = 'rg-test'
         $webappName = 'azbpwebapptest1'
-        
+
         #act
         $exists = Get-AzBPWebApp -ResourceGroupName $rgName -WebAppName $webappName
 
@@ -21,7 +21,7 @@ Describe 'Verify Web App Exists' {
         #arrange
         $rgName = 'rg-test'
         $webappName = 'azbpwebapptest1'
-        
+
         #act
         $exists = Get-AzBPWebAppExist -ResourceGroupName $rgName -WebAppName $webappName
 
@@ -40,13 +40,13 @@ Describe 'Spin up , Tear down a Web App' {
         webappName     = "azbpwebapptest2"
         location        = "westus3"
       }
-  
+
       #act
       $deployment = Deploy-AzBPBicepFeature -BicepPath $bicepPath -Params $params -ResourceGroupName $resourceGroupName
-  
+
       #assert
       $deployment.ProvisioningState | Should -Be "Succeeded"
-  
+
       #clean up
       Remove-AzBPBicepFeature -ResourceGroupName $resourceGroupName
     }

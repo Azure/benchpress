@@ -7,7 +7,7 @@ Describe 'Verify Virtual Machine' {
         #arrange
         $rgName = 'rg-test'
         $vmName = 'simpleLinuxVM1'
-        
+
         #act
         $exists = Get-AzBPVirtualMachine -ResourceGroupName $rgName -VirtualMachineName $vmName
 
@@ -21,7 +21,7 @@ Describe 'Verify Virtual Machine Exists' {
         #arrange
         $rgName = 'rg-test'
         $vmName = 'simpleLinuxVM1'
-        
+
         #act
         $exists = Get-AzBPVirtualMachineExist -ResourceGroupName $rgName -VirtualMachineName $vmName
 
@@ -40,13 +40,13 @@ Describe 'Spin up , Tear down a Virtual Machine' {
         location           = "westus3"
         adminPasswordOrKey = "<sample-password>"
       }
-  
+
       #act
       $deployment = Deploy-AzBPBicepFeature -BicepPath $bicepPath -Params $params -ResourceGroupName $resourceGroupName
-  
+
       #assert
       $deployment.ProvisioningState | Should -Be "Succeeded"
-  
+
       #clean up
       Remove-AzBPBicepFeature -ResourceGroupName $resourceGroupName
     }
