@@ -7,6 +7,7 @@ DISABLE_LINTERS:
   - REPOSITORY_CHECKOV
   - REPOSITORY_TRIVY
   - SPELL_CSPELL
+  - CSHARP_DOTNET_FORMAT
 DISABLE_ERRORS_LINTERS:
   - REPOSITORY_DEVSKIM
 POWERSHELL_POWERSHELL_FILTER_REGEX_EXCLUDE: (BenchPress/Generators/templates/)
@@ -15,5 +16,9 @@ SHOW_ELAPSED_TIME: true
 FILEIO_REPORTER: false
 # DISABLE_ERRORS: true # Uncomment if you want MegaLinter to detect errors but not block CI to pass
 LINTER_RULES_PATH: .github/config/linter
-CSHARP_DOTNET_FORMAT_PRE_COMMANDS:
-  - command: cd BenchPress
+# CSHARP_DOTNET_FORMAT_ARGUMENTS: /BenchPress/BenchPress.sln --exclude ./BenchPress/bicep/
+# CSHARP_DOTNET_FORMAT_PRE_COMMANDS:
+#   - command: git submodule update --init --recursive
+#     cwd: "workspace"
+#   - command: dotnet restore BenchPress
+#     cwd: "workspace"
