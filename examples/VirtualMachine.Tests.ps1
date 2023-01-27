@@ -38,7 +38,7 @@ Describe 'Spin up , Tear down a Virtual Machine' {
       $params = @{
         vmName             = "simpleLinuxVM2"
         location           = "westus3"
-        adminPasswordOrKey = "<sample-passwords>"
+        adminPasswordOrKey = "<sample-password>"
       }
   
       #act
