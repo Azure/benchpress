@@ -1,6 +1,6 @@
 ---
 name: "Deploy Features"
-on:  # yamllint disable-line rule:truthy
+on: # yamllint disable-line rule:truthy
   push:
     tags:
       - "v*"
@@ -13,7 +13,9 @@ jobs:
 
       - name: Get tag name
         id: get_tag_name
-        run: echo "::set-output name=tag::$(echo "${{ github.ref }}" | grep -oP 'refs/tags/\K(.+)')"
+        run: |
+          tag="$(echo "${{ github.ref }}" | grep -oP 'refs/tags/\K(.+)')"
+          echo "TAG=$tag" >> "$env:GITHUB_OUTPUT"
 
       - name: Publish dev container features
         uses: microsoft/publish-dev-container-features-action@main
@@ -23,7 +25,7 @@ jobs:
       - name: Get or Create Release at current tag
         uses: ncipollo/release-action@v1
         with:
-          allowUpdates: true  # Upload our own artifact from previous step
+          allowUpdates: true # Upload our own artifact from previous step
           artifactErrorsFailBuild: true
           artifacts: "./devcontainer-features.tgz"
           token: ${{ secrets.GITHUB_TOKEN }}

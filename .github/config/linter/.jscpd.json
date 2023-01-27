@@ -1,0 +1,16 @@
+{
+  "threshold": 10,
+  "ignore": [
+    "**/node_modules/**",
+    "**/.git/**",
+    "**/.rbenv/**",
+    "**/.venv/**",
+    "**/*cache*/**",
+    "**/.github/**",
+    "**/.idea/**",
+    "**/report/**",
+    "**/obj/**",
+    "**/*.svg",
+    "**/bicep/**"
+  ]
+}

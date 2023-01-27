@@ -2,18 +2,18 @@ namespace Generators;
 
 public class TestDefinition
 {
-  public TestDefinition(TestMetadata metadata, TestType type)
-  {
-    Metadata = metadata;
-    Type = type;
-  }
+    public TestDefinition(TestMetadata metadata, TestType type)
+    {
+        Metadata = metadata;
+        Type = type;
+    }
 
-  public TestMetadata Metadata { get; set; }
-  public TestType Type { get; set; }
+    public TestMetadata Metadata { get; set; }
+    public TestType Type { get; set; }
 }
 
 public enum TestType
 {
-  ResourceExists,
-  Location,
+    ResourceExists,
+    Location,
 }
