@@ -15,7 +15,7 @@ jobs:
         id: get_tag_name
         run: |
           tag="$(echo "${{ github.ref }}" | grep -oP 'refs/tags/\K(.+)')"
-          echo "TAG=$tag" >> $env:GITHUB_OUTPUT
+          echo "TAG=$tag" >> "$env:GITHUB_OUTPUT"
 
       - name: Publish dev container features
         uses: microsoft/publish-dev-container-features-action@main
