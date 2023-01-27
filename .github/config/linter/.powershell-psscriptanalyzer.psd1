@@ -1,5 +1,0 @@
-@{
-  ExcludeRules = @(
-      'PSUseBOMForUnicodeEncodedFile'
-  )
-}

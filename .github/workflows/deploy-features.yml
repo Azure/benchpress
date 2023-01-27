@@ -13,9 +13,8 @@ jobs:
 
       - name: Get tag name
         id: get_tag_name
-        shell: bash
         run: |
-          tag=$(echo "${{ github.ref }}" | grep -oP 'refs/tags/\K(.+)')
+          tag="$(echo "${{ github.ref }}" | grep -oP 'refs/tags/\K(.+)')"
           echo "TAG=$tag" >> $env:GITHUB_OUTPUT
 
       - name: Publish dev container features
