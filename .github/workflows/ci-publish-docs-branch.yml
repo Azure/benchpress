@@ -6,11 +6,28 @@ on: # yamllint disable-line rule:truthy
     paths:
       - "./BenchPress/Helpers/BenchPress.Azure/*.psm1"
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+env:
+  BUILD_PATH: "./docs-site"
+
 jobs:
   publish-docs-branch:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: docs
+          token: ${{ secrets.DOCS_ACTION_TOKEN }}
 
       - name: Install Platyps
         shell: pwsh
@@ -20,15 +37,52 @@ jobs:
 
       - name: Create and checkout new docs branch
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
           git checkout -b docs
 
       - name: Generate docs
         shell: pwsh
         run: |
           Import-Module ./BenchPress/Helpers/BenchPress.Azure/BenchPress.Azure.psd1
-          New-MarkdownHelp -Module BenchPress.Azure -OutputFolder ./docs
+
+          New-Item -ItemType Directory -Path "./docs/helpers" -Force
+
+          New-MarkdownHelp -Module BenchPress.Azure -OutputFolder ./docs/helpers -Force -AlphabeticParamsOrder -UseFullTypeName -NoMetadata
+
+          foreach ($File in Get-ChildItem ./docs/helpers/*.md) {
+            Write-Host "Updating $File"
+            # Add front matter
+            $Frontmatter = ""
+            $FrontMatter += "---`r`n"
+            $FrontMatter += "WARNING: `"PLEASE DO NOT MODIFY THIS FILE, IT'LL BE OVERWRITTEN`"`r`n"
+            $FrontMatter += "layout: `"../../layouts/main.astro`"`r`n"
+            $FrontMatter += "title: `"$($File.BaseName)`"`r`n"
+            $FrontMatter += "module: `"BenchPress.Azure`"`r`n"
+            $FrontMatter += "version: `"${{ github.sha }}`"`r`n"
+            $FrontMatter += "updatedOn: `"$(Get-Date -Format "yyyy-MM-dd HH:mm K")`"`r`n"
+            $FrontMatter += "---`r`n"
+            # Fix escaping issues
+            $Content = Get-Content $File -Raw
+            $Content = $Content -Replace '\\`', '`'
+            $Content = $Content -Replace "\\\[", "["
+            $Content = $Content -Replace "\\\]", "]"
+            # Fix syntax highlighting
+            $Lines = $Content -Split "`r`n"
+            for ($i = 0; $i -lt $Lines.Length; $i++) {
+              if ($Lines[$i] -match "^## SYNTAX") {
+                $j = $i + 2
+                if ($Lines[$j] -match '```') {
+                  $Lines[$j] = $Lines[$j] -Replace '```', '```powershell'
+                }
+              }
+            }
+            # Write out the file back
+            Set-Content $File ($FrontMatter + ($Lines -join "`r`n"))
+          }
+          Pop-Location
+          New-Item -ItemType Directory -Path "./docs-site/src/pages/docs" -Force
+          Copy-Item -Path "./docs/helpers/*" -Destination "./docs-site/src/pages/docs" -Include "*.md" -Recurse -Force
 
       - name: If there are changes push the branch
         run: |
@@ -38,3 +92,48 @@ jobs:
             git commit -m "docs: updating generated documentation"
             git push origin docs
           fi
+
+      - name: Detect package manager
+        id: detect-package-manager
+        run: |
+          echo "manager=npm" >> $GITHUB_OUTPUT
+          echo "command=ci" >> $GITHUB_OUTPUT
+          echo "runner=npx --no-install" >> $GITHUB_OUTPUT
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+          cache: ${{ steps.detect-package-manager.outputs.manager }}
+          cache-dependency-path: ${{ env.BUILD_PATH }}/package-lock.json
+
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v2
+
+      - name: Install dependencies
+        run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+        working-directory: ${{ env.BUILD_PATH }}
+
+      - name: Build with Astro
+        run: |
+          ${{ steps.detect-package-manager.outputs.runner }} astro build \
+            --site "${{ steps.pages.outputs.origin }}" \
+            --base "${{ steps.pages.outputs.base_path }}"
+        working-directory: ${{ env.BUILD_PATH }}
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: ${{ env.BUILD_PATH }}/dist
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    needs: build
+    runs-on: ubuntu-latest
+    name: Deploy
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
