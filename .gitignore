@@ -110,3 +110,5 @@ StyleCopReport.xml
 !?*.[Cc]ache/
 
 megalinter-reports/
+
+node_modules
