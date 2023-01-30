@@ -56,7 +56,7 @@ Describe 'Web Apps Tests' {
     $webApp | Should -Not -BeNullOrEmpty
   }
 
-  it 'Should have the ui web app available' {
+  it 'Should have the web app availability state as normal' {
     #arrange
     $rgName = "benchpress-rg-${env:ENVIRONMENT_SUFFIX}"
     $webAppName = "benchpress-web-${env:ENVIRONMENT_SUFFIX}"
@@ -68,7 +68,7 @@ Describe 'Web Apps Tests' {
     $webApp.AvailabilityState | Should -Be "Normal"
   }
 
-  it 'Should have the api web app https only' {
+  it 'Should have the web app works https only' {
     #arrange
     $rgName = "benchpress-rg-${env:ENVIRONMENT_SUFFIX}"
     $webAppName = "benchpress-web-${env:ENVIRONMENT_SUFFIX}"
@@ -80,7 +80,7 @@ Describe 'Web Apps Tests' {
     $webApp.HttpsOnly | Should -Be $true
   }
 
-  it 'Should contain configuration in the api web app' {
+  it 'Should contain configuration in the web app' {
     #arrange
     $rgName = "benchpress-rg-${env:ENVIRONMENT_SUFFIX}"
     $webAppName = "benchpress-web-${env:ENVIRONMENT_SUFFIX}"
@@ -92,7 +92,7 @@ Describe 'Web Apps Tests' {
     $webApp.SiteConfig.AppSettings | Should -Not -BeNullOrEmpty
   }
 
-  it 'Should contain application insights configuration in the api web app' {
+  it 'Should contain application insights configuration in the web app' {
     #arrange
     $rgName = "benchpress-rg-${env:ENVIRONMENT_SUFFIX}"
     $webAppName = "benchpress-web-${env:ENVIRONMENT_SUFFIX}"
@@ -107,7 +107,7 @@ Describe 'Web Apps Tests' {
 }
 
 Describe 'App is working properly' {
-  it 'Should have api endpoint that response with 200 OK' {
+  it 'Should have root endpoint that response with 200 OK' {
     #arrange
     $apiAddress = "https://benchpress-web-${env:ENVIRONMENT_SUFFIX}.azurewebsites.net/"
 
