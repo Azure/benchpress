@@ -1,83 +1,47 @@
 # Benchpress Demo Application
 
-ToDo Application with a Node.js API and Azure Cosmos DB API for MongoDB on Azure App Service
-
-A complete ToDo application that includes everything you need to build, deploy, and monitor an Azure solution.
-
-This application uses the Azure Developer CLI (azd) to get you up and running on Azure quickly using Bicep as the IaC provider, React.js for the Web application, Node.js for the API, Azure Cosmos DB API for MongoDB for storage, and Azure Monitor for monitoring and logging.
-
-It includes application code, tools, and pipelines that serve as a foundation from which you can build upon and customize when creating your own solutions.
-
-You can use this project to deploy a simple demo application to your Azure Subscription and run tests, using BenchPress.
-
-## Prerequisites
-
-* [Azure CLI](https://docs.microsoft.com/cli/azure/install-azure-cli?view=azure-cli-latest)
-* [Azure Developer CLI](https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/install-azd)
-* [Node.js](https://nodejs.org/en/download/)
-
-## Install ToDo NodeJs MongoDB project template
-
-* Login to Azure
+* Clone AspNetCore.Docs repository
 
 ```powershell
-azd login
+git clone https://github.com/dotnet/AspNetCore.Docs.git
 ```
 
-* In an empty folder create the project by executing azd init command with the following parameters:
-  * --template: The name of the template to use
-  * --environment: The name of the environment to use, like, `benchpress-demo`
-  * --location: The location to use
-  * --subscription: The subscription to use
+* Create a new resource group with a unique name
 
 ```powershell
-azd init --template todo-nodejs-mongo --environment <environment_name> --location <location> --subscription <subscription-id>
+$suffix = (Get-Random).ToString("x8")
+$location = "westus2"
+
+az group create --name "benchpress-rg-${suffix}" --location "${location}"
 ```
 
-## Deploying the demo application to Azure
+* Deploy the demo application infrastructure
 
-* Run azd up command to deploy the application
+   * Application Insights
+   * Action Group
+   * App Service Plan
+   * Web App
 
 ```powershell
-azd up
+az deployment group create --resource-group "benchpress-rg-${suffix}" --template-file "main.bicep" --parameters suffix="${suffix}"
 ```
 
-## Running the demo application locally
-
-* Go to ./src/api folder
+* Go to the demo application folder
 
 ```powershell
-cd ./src/api
+Push-Location -Path .\AspNetCore.Docs\aspnetcore\mvc\controllers\filters\samples\6.x\FiltersSample
 ```
 
-* Install the dependencies
+* Deploy the demo application
 
 ```powershell
-npm install
+az webapp up --name "benchpress-web-${suffix}" --resource-group "benchpress-rg-${suffix}" --location "${location}" --sku "F1"
 ```
 
-* Run the application
+* Go back to the previous directory
 
 ```powershell
-npm run start
-```
-
-* Go to ./src/web folder
-
-```powershell
-cd ./src/web
-```
-
-* Install the dependencies
-
-```powershell
-npm install
-```
-
-* Run the application
-
-```powershell
-npm run start
+Pop-Location
 ```
 
 ## Running the tests
@@ -85,11 +49,8 @@ npm run start
 * Setup the environment variables
 
 ```powershell
-# The name of the environment to use, like, `benchpress-demo
-$env:ENVIRONMENT_NAME = "<environment_name>"
-
-# Can be retrieved from the output of azd command, or `azure/<environment_name>/.env` file, like, `aiqqogaekwzue`
-$env:ENVIRONMENT_SUFFIX = "<environment_suffix>"
+# Can be retrieved from the output of the deploy command
+$env:ENVIRONMENT_SUFFIX = "${suffix}"
 ```
 
 * Run the tests by calling the test script file, or, `Invoke-Pester` command
@@ -107,5 +68,30 @@ Invoke-Pester
 * Delete the resource group
 
 ```powershell
-azd down
+az group delete --name "benchpress-rg-${suffix}" --yes
+```
+
+## Running the deployment, tests, and cleanup together
+
+```powershell
+git clone https://github.com/dotnet/AspNetCore.Docs.git
+
+$suffix = (Get-Random).ToString("x8")
+$location = "westus3"
+
+az group create --name "benchpress-rg-${suffix}" --location "${location}"
+
+az deployment group create --resource-group "benchpress-rg-${suffix}" --template-file "main.bicep" --parameters suffix="${suffix}"
+
+Push-Location -Path .\AspNetCore.Docs\aspnetcore\mvc\controllers\filters\samples\6.x\FiltersSample
+
+az webapp up --name "benchpress-web-${suffix}" --resource-group "benchpress-rg-${suffix}" --location "${location}" --sku "F1"
+
+Pop-Location
+
+$env:ENVIRONMENT_SUFFIX = "${suffix}"
+
+./DemoApp.Tests.ps1
+
+az group delete --name "benchpress-rg-${suffix}" --yes
 ```
