@@ -3,8 +3,8 @@ name: create-automated-prs
 on: # yamllint disable-line rule:truthy
   push:
     branches:
-      - 'docs'
-      - 'version'
+      - "docs"
+      - "version"
 
 jobs:
   publish-branch:

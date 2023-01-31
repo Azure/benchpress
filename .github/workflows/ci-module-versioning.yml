@@ -5,7 +5,7 @@ on: # yamllint disable-line rule:truthy
   push:
     branches: [main]
     paths:
-      - './BenchPress/Helpers/BenchPress.Azure/*'
+      - "./BenchPress/Helpers/BenchPress.Azure/*"
 
 jobs:
   get-tags:
@@ -17,7 +17,7 @@ jobs:
       - name: Install GitVersion
         uses: gittools/actions/gitversion/setup@v0.9.15
         with:
-          versionSpec: '5.x'
+          versionSpec: "5.x"
       - name: Checkout Latest
         uses: actions/checkout@v2
         with:
@@ -31,19 +31,16 @@ jobs:
     if: needs.get-tags.output.CommitsSinceVersionSource > 0
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Latest
-        uses: actions/checkout@v2
       - name: Create and checkout new version branch
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@users.noreply.github.com"
           git checkout -b version
       - name: Update manifest file
-        needs: [get-tags]
         run: |
           sed -i 's/ModuleVersion = "[^"]*"/ModuleVersion = "${{ needs.get-tags.output.Version }}"/' \
             ./BenchPress/Helpers/BenchPress.Azure/BenchPress.Azure.psd1
-      - name: Commit Changes
+      - name: Commit changes
         run: |
           git add ./BenchPress/Helpers/BenchPress.Azure/BenchPress.Azure.psd1
           git commit -m "version: updating version"
