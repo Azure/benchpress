@@ -14,7 +14,8 @@
     "ghcr.io/rchaganti/vsc-devcontainer-features/azurebicep:1": {},
     "ghcr.io/natescherer/devcontainers-custom-features/powershell-resources:1": {
       "resources": ["Az", "Pester", "platyps"]
-    }
+    },
+    "ghcr.io/devcontainers/features/node:1": {}
   },
   "settings": {},
   "extensions": [
@@ -22,7 +23,8 @@
     "GitHub.copilot",
     "ms-dotnettools.csharp",
     "ms-vscode.powershell",
-    "ms-azuretools.vscode-docker"
+    "ms-azuretools.vscode-docker",
+    "esbenp.prettier-vscode@9.10.4"
   ],
   "remoteUser": "vscode"
 }
