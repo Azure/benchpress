@@ -1,45 +1,16 @@
-@description('The name of you Virtual Machine.')
-param vmName string = 'simpleLinuxVM'
-
-@description('Username for the Virtual Machine.')
-param adminUsername string
-
-@description('Type of authentication to use on the Virtual Machine. SSH key is recommended.')
-@allowed([
-  'sshPublicKey'
-  'password'
-])
+param vmName string = 'simpleLinuxVM1'
+param adminUsername string = 'adminUserName'
 param authenticationType string = 'password'
 
-@description('SSH Key or password for the Virtual Machine. SSH key is recommended.')
 @secure()
 param adminPasswordOrKey string
+param dnsLabelPrefix string = toLower('${vmName}-${uniqueString(resourceGroup().id)}')
 
-@description('Unique DNS Name for the Public IP used to access the Virtual Machine.')
-param dnsLabelPrefix string = toLower('simplelinuxvm-${uniqueString(resourceGroup().id)}')
-
-@description('The Ubuntu version for the VM. This will pick a fully patched image of this given Ubuntu version.')
-@allowed([
-  '12.04.5-LTS'
-  '14.04.5-LTS'
-  '16.04.0-LTS'
-  '18.04-LTS'
-])
 param ubuntuOSVersion string = '18.04-LTS'
-
-@description('Location for all resources.')
 param location string = resourceGroup().location
-
-@description('The size of the VM')
 param vmSize string = 'Standard_B2s'
-
-@description('Name of the VNET')
 param virtualNetworkName string = 'vNet'
-
-@description('Name of the subnet in the virtual network')
 param subnetName string = 'Subnet'
-
-@description('Name of the Network Security Group')
 param networkSecurityGroupName string = 'SecGroupNet'
 
 var publicIPAddressName = '${vmName}PublicIP'
@@ -59,7 +30,7 @@ var linuxConfiguration = {
   }
 }
 
-resource nic 'Microsoft.Network/networkInterfaces@2022-07-01' = {
+resource nic 'Microsoft.Network/networkInterfaces@2021-05-01' = {
   name: networkInterfaceName
   location: location
   properties: {
@@ -83,7 +54,7 @@ resource nic 'Microsoft.Network/networkInterfaces@2022-07-01' = {
   }
 }
 
-resource nsg 'Microsoft.Network/networkSecurityGroups@2022-07-01' = {
+resource nsg 'Microsoft.Network/networkSecurityGroups@2021-05-01' = {
   name: networkSecurityGroupName
   location: location
   properties: {
@@ -105,7 +76,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2022-07-01' = {
   }
 }
 
-resource vnet 'Microsoft.Network/virtualNetworks@2022-07-01' = {
+resource vnet 'Microsoft.Network/virtualNetworks@2021-05-01' = {
   name: virtualNetworkName
   location: location
   properties: {
@@ -117,7 +88,7 @@ resource vnet 'Microsoft.Network/virtualNetworks@2022-07-01' = {
   }
 }
 
-resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
+resource subnet 'Microsoft.Network/virtualNetworks/subnets@2021-05-01' = {
   parent: vnet
   name: subnetName
   properties: {
@@ -127,7 +98,7 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2022-07-01' = {
   }
 }
 
-resource publicIP 'Microsoft.Network/publicIPAddresses@2022-07-01' = {
+resource publicIP 'Microsoft.Network/publicIPAddresses@2021-05-01' = {
   name: publicIPAddressName
   location: location
   sku: {
@@ -143,7 +114,7 @@ resource publicIP 'Microsoft.Network/publicIPAddresses@2022-07-01' = {
   }
 }
 
-resource vm 'Microsoft.Compute/virtualMachines@2022-08-01' = {
+resource vm 'Microsoft.Compute/virtualMachines@2021-11-01' = {
   name: vmName
   location: location
   properties: {

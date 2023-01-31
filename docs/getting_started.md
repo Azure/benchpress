@@ -19,6 +19,7 @@ as their testing framework and runner. To use BenchPress, have the following ins
   (PowerShell 7+ recommended)
 - [Az PowerShell module](https://learn.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-9.3.0)
 - [Pester](https://pester.dev/docs/introduction/installation)
+- [Bicep](https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/install#azure-powershell)
 
 An Azure subscription that you can deploy resources to is also a requirement.
 
