@@ -1,4 +1,4 @@
-﻿BeforeAll {
+BeforeAll {
   Import-Module $PSScriptRoot/Bicep.psm1
 }
 
@@ -100,3 +100,4 @@ Describe "Remove-BicepFeature" {
 AfterAll {
   Remove-Module Bicep
 }
+

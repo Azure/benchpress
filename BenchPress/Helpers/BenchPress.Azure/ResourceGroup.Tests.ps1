@@ -1,4 +1,4 @@
-﻿BeforeAll {
+BeforeAll {
   Import-Module $PSScriptRoot/ResourceGroup.psm1
   Import-Module Az
 }
@@ -32,3 +32,4 @@ Describe "Get-ResourceGroupExist" {
 AfterAll {
   Remove-Module ResourceGroup
 }
+

@@ -1,4 +1,4 @@
-﻿BeforeAll {
+BeforeAll {
   Import-Module $PSScriptRoot/KeyVault.psm1
   Import-Module Az
 }
@@ -110,3 +110,4 @@ Describe "Get-KeyVaultCertificateExist" {
 AfterAll {
   Remove-Module KeyVault
 }
+

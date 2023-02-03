@@ -1,4 +1,4 @@
-﻿BeforeAll {
+BeforeAll {
   Import-Module $PSScriptRoot/SqlDatabase.psm1
   Import-Module Az
 }
@@ -39,3 +39,4 @@ Describe "Get-SqlDatabaseExist" {
 AfterAll {
   Remove-Module SqlDatabase
 }
+

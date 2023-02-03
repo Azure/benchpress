@@ -137,3 +137,4 @@ function Get-Resource {
 }
 
 Export-ModuleMember -Function Get-Resource, Get-ResourceByType
+

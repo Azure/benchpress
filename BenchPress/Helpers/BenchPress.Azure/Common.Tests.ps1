@@ -1,4 +1,4 @@
-﻿using module ./Common.psm1
+using module ./Common.psm1
 
 BeforeAll {
   Import-Module $PSScriptRoot/AppServicePlan.psm1
@@ -62,3 +62,4 @@ AfterAll {
   Remove-Module VirtualMachine
   Remove-Module WebApp
 }
+

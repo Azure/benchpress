@@ -1,4 +1,4 @@
-﻿<#
+<#
   .SYNOPSIS
     Confirm-AzBPBicepFile will confirm that the bicep files provided pass the checks executed by `bicep build`.
 
@@ -222,3 +222,4 @@ function Remove-BicepFeature(){
 }
 
 Export-ModuleMember -Function Confirm-BicepFile, Deploy-BicepFeature, Remove-BicepFeature
+

@@ -96,3 +96,4 @@ function Get-SqlDatabaseExist {
 }
 
 Export-ModuleMember -Function Get-SqlDatabase, Get-SqlDatabaseExist
+

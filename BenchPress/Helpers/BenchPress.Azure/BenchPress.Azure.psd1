@@ -72,3 +72,4 @@
   HelpInfoURI = "https://github.com/Azure/benchpress/"
   DefaultCommandPrefix = "AzBP"
 }
+

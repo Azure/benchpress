@@ -1,4 +1,4 @@
-﻿BeforeAll {
+BeforeAll {
   Import-Module $PSScriptRoot/AzureCli.psm1
 }
 
@@ -26,3 +26,4 @@ Describe "Invoke-AzCli" {
 AfterAll {
   Remove-Module AzureCli
 }
+

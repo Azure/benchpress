@@ -1,4 +1,4 @@
-﻿BeforeAll {
+BeforeAll {
   Import-Module $PSScriptRoot/WebApp.psm1
   Import-Module Az
 }
@@ -32,3 +32,4 @@ Describe "Get-WebAppExist" {
 AfterAll {
   Remove-Module WebApp
 }
+

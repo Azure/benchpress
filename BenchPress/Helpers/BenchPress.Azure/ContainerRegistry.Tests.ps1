@@ -1,4 +1,4 @@
-﻿BeforeAll {
+BeforeAll {
   Import-Module $PSScriptRoot/ContainerRegistry.psm1
   Import-Module Az
 }
@@ -32,3 +32,4 @@ Describe "Get-ContainerRegistryExist" {
 AfterAll {
   Remove-Module ContainerRegistry
 }
+

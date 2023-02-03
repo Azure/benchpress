@@ -1,4 +1,4 @@
-﻿BeforeAll {
+BeforeAll {
   Import-Module $PSScriptRoot/SqlServer.psm1
   Import-Module Az
 }
@@ -32,3 +32,4 @@ Describe "Get-SqlServerExist" {
 AfterAll {
   Remove-Module SqlServer
 }
+

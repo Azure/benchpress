@@ -2,18 +2,15 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Generators.ResourceTypes;
 
-#pragma warning disable CS8603
-#pragma warning disable CS8602
 public abstract class ResourceType
 {
-    public static ResourceType Create(string resourceType)
+    public static ResourceType? Create(string resourceType)
     {
-        return AppDomain.CurrentDomain
-            .GetAssemblies()
-            .SelectMany(domainAssembly => domainAssembly.GetTypes())
-            .Where(type => typeof(ResourceType).IsAssignableFrom(type) && !type.IsAbstract)
-            .Select(type => Activator.CreateInstance(type) as ResourceType)
-            .FirstOrDefault(instance => instance.Id == resourceType);
+        return AppDomain.CurrentDomain.GetAssemblies()
+                                      .SelectMany(assembly => assembly.GetTypes())
+                                      .Where(type => !type.IsAbstract && typeof(ResourceType).IsAssignableFrom(type))
+                                      .Select(type => Activator.CreateInstance(type) as ResourceType)
+                                      .FirstOrDefault(instance => instance is not null && instance.Id == resourceType);
     }
 
     public abstract string Id { get; }
