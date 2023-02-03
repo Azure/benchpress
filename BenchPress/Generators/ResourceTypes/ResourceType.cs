@@ -15,7 +15,7 @@ public abstract class ResourceType
 
         if (resourceType is null)
         {
-          throw new UnknownResourceTypeException(resourceTypeString);
+            throw new UnknownResourceTypeException(resourceTypeString);
         }
 
         return resourceType;
