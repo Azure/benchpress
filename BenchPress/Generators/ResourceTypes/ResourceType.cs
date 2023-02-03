@@ -6,14 +6,21 @@ namespace Generators.ResourceTypes;
 #pragma warning disable CS8602
 public abstract class ResourceType
 {
-    public static ResourceType Create(string resourceType)
+    public static ResourceType Create(string resourceTypeString)
     {
-        return AppDomain.CurrentDomain
+        ResourceType? resourceType = AppDomain.CurrentDomain
             .GetAssemblies()
-            .SelectMany(domainAssembly => domainAssembly.GetTypes())
-            .Where(type => typeof(ResourceType).IsAssignableFrom(type) && !type.IsAbstract)
+            .SelectMany(assembly => assembly.GetTypes())
+            .Where(type => !type.IsAbstract && typeof(ResourceType).IsAssignableFrom(type))
             .Select(type => Activator.CreateInstance(type) as ResourceType)
-            .FirstOrDefault(instance => instance.Id == resourceType);
+            .FirstOrDefault(instance => instance is not null && instance.Id == resourceTypeString);
+
+        if (resourceType is null)
+        {
+            throw new UnknownResourceTypeException(resourceTypeString);
+        }
+
+        return resourceType;
     }
 
     public abstract string Id { get; }
