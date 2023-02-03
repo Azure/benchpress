@@ -6,11 +6,12 @@ public abstract class ResourceType
 {
     public static ResourceType? Create(string resourceType)
     {
-        return AppDomain.CurrentDomain.GetAssemblies()
-                                      .SelectMany(assembly => assembly.GetTypes())
-                                      .Where(type => !type.IsAbstract && typeof(ResourceType).IsAssignableFrom(type))
-                                      .Select(type => Activator.CreateInstance(type) as ResourceType)
-                                      .FirstOrDefault(instance => instance is not null && instance.Id == resourceType);
+        return AppDomain.CurrentDomain
+            .GetAssemblies()
+            .SelectMany(assembly => assembly.GetTypes())
+            .Where(type => !type.IsAbstract && typeof(ResourceType).IsAssignableFrom(type))
+            .Select(type => Activator.CreateInstance(type) as ResourceType)
+            .FirstOrDefault(instance => instance is not null && instance.Id == resourceType);
     }
 
     public abstract string Id { get; }

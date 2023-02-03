@@ -62,3 +62,4 @@ function Get-ResourceGroupExist {
 
 Export-ModuleMember -Function Get-ResourceGroup, Get-ResourceGroupExist
 
+
