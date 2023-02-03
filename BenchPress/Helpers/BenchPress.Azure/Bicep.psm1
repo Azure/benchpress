@@ -30,7 +30,7 @@
 
     Errors
     -----------
-    {@{Path=../../../examples/actionGroupErrors.bicep; ErrorResults=System.Collections.ObjectModel.Collection`1[System.Management.Automation.PSObject]…
+    {@{Path=../../../examples/actionGroupErrors.bicep; ErrorResults=System.Collections.ObjectModel.Collection`1[System.Management.Automation.PSObject]...
 
   .EXAMPLE
     Pipe multiple paths into Confirm-AzBPBicepFile
@@ -48,7 +48,7 @@
 
     Errors
     -----------
-    {@{Path=../../../examples/actionGroupErrors.bicep; ErrorResults=System.Collections.ObjectModel.Collection`1[System.Management.Automation.PSObject]…
+    {@{Path=../../../examples/actionGroupErrors.bicep; ErrorResults=System.Collections.ObjectModel.Collection`1[System.Management.Automation.PSObject]...
 
   .EXAMPLE
     Provide -BicepPath Parameter
@@ -62,7 +62,7 @@
 
     Errors
     -----------
-    {@{Path=../../../examples/actionGroupErrors.bicep; ErrorResults=System.Collections.ObjectModel.Collection`1[System.Management.Automation.PSObject]…
+    {@{Path=../../../examples/actionGroupErrors.bicep; ErrorResults=System.Collections.ObjectModel.Collection`1[System.Management.Automation.PSObject]...
 
   .EXAMPLE
       Path without -BicepPath Parameter
@@ -76,7 +76,7 @@
 
     Errors
     -----------
-    {@{Path=../../../examples/actionGroupErrors.bicep; ErrorResults=System.Collections.ObjectModel.Collection`1[System.Management.Automation.PSObject]…
+    {@{Path=../../../examples/actionGroupErrors.bicep; ErrorResults=System.Collections.ObjectModel.Collection`1[System.Management.Automation.PSObject]...
 
   .INPUTS
     System.String[]
