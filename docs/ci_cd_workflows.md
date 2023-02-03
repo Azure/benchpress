@@ -61,7 +61,7 @@ This stage consists of the following steps:
 - [`ci-module-versioning.yml`](../.github/workflows/ci-module-versioning.yml) - calculating the version for the
   PowerShell module using GitVersion and writing it to the module manifest on a branch named `version`.
 
-### Continous Deployment
+### Continuous Deployment
 
 The final stage of the CI/CD process is the CD stage. This stage is a little unlike the others where some of the steps
 are not automatically triggered. This stage consists of the following steps:
