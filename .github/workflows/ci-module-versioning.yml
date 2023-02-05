@@ -28,7 +28,7 @@ jobs:
 
   update-manifest:
     needs: [get-tags]
-    if: needs.get-tags.output.CommitsSinceVersionSource > 0
+    if: needs.get-tags.outputs.CommitsSinceVersionSource > 0
     runs-on: ubuntu-latest
     steps:
       - name: Create and checkout new version branch
@@ -38,7 +38,7 @@ jobs:
           git checkout -b version
       - name: Update manifest file
         run: |
-          sed -i 's/ModuleVersion = "[^"]*"/ModuleVersion = "${{ needs.get-tags.output.Version }}"/' \
+          sed -i 's/ModuleVersion = "[^"]*"/ModuleVersion = "${{ needs.get-tags.outputs.Version }}"/' \
             ./BenchPress/Helpers/BenchPress.Azure/BenchPress.Azure.psd1
       - name: Commit changes
         run: |
