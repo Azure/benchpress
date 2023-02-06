@@ -1,0 +1,49 @@
+---
+name: "Publish and test demo app"
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Prepare required variables
+        shell: pwsh
+        run: |
+          # Set the ENVIRONMENT_SUFFIX to a random value
+          # This will be used to create a unique resource group name
+          $env:ENVIRONMENT_SUFFIX = (Get-Random).ToString("x8")
+
+          # Set the location to westus2
+          $env:LOCATION = "westus2"
+
+      - name: Create resource group
+        shell: pwsh
+        run: |
+          az group create --name "benchpress-rg-${env:ENVIRONMENT_SUFFIX}" --location "${env:LOCATION}"
+
+      - name: Deploy demo app infrastructure
+        shell: pwsh
+        run: |
+          az deployment group create --resource-group "benchpress-rg-${env:ENVIRONMENT_SUFFIX}" --template-file "main.bicep" --parameters suffix="${env:ENVIRONMENT_SUFFIX}"
+
+      - name: Deploy demo app
+        shell: pwsh
+        run: |
+          git clone https://github.com/dotnet/AspNetCore.Docs.git
+          Push-Location -Path .\AspNetCore.Docs\aspnetcore\mvc\controllers\filters\samples\6.x\FiltersSample
+          az webapp up --name "benchpress-web-${env:ENVIRONMENT_SUFFIX}" --resource-group "benchpress-rg-${env:ENVIRONMENT_SUFFIX}" --location "${env:LOCATION}" --sku "F1"
+          Pop-Location
+
+      - name: Run the tests
+        shell: pwsh
+        run: |
+          ./DemoApp.Tests.ps1
+
+      - name: Clean up resources
+        shell: pwsh
+        run: |
+          az group delete --name "benchpress-rg-${env:ENVIRONMENT_SUFFIX}" --yes
