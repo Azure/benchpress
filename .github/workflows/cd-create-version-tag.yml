@@ -22,5 +22,5 @@ jobs:
           cd ./BenchPress/Helpers/BenchPress.Azure
           version=v$(sed -n 's/ModuleVersion = "\([^"]*\)"/\1/p' ./BenchPress.Azure.psd1 \
             | sed -n 's/\s*//p')
-          git tag $version
-          git push origin $version
+          git tag "$version"
+          git push origin "$version"
