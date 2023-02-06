@@ -105,17 +105,17 @@ but executed against the host path. This requires that the docker command that w
        1. Add a [reaction](https://github.com/blog/2119-add-reactions-to-pull-requests-issues-and-comments) to upvote
           (:+1:) or downvote (:-1:) an issue.
     1. If the issue does not exist create a new issue with the following guidelines:
-       * Do not submit multiple problems or features in a single submitted issue.
-       * Provide as much information as possible. The more information provided, the more likely that someone will
+       - Do not submit multiple problems or features in a single submitted issue.
+       - Provide as much information as possible. The more information provided, the more likely that someone will
          be successful in reproducing the issue and identifying the cause. Provide as much of the following
          information as possible (not an exhaustive list):
-           * Version of PowerShell being used.
-           * The operating system and version being used.
-           * Any container information, if used.
-           * An ordered list of reproducible steps that cause the issue to manifest.
-           * Expecations versus reality. What was expected to happen versus what actually happened.
-           * Any images, gifs, animations, links, videos, etc. that demonstrate the issue.
-           * A code snippet or link to a repository that contains code that reproduces the issue.
+           - Version of PowerShell being used.
+           - The operating system and version being used.
+           - Any container information, if used.
+           - An ordered list of reproducible steps that cause the issue to manifest.
+           - Expecations versus reality. What was expected to happen versus what actually happened.
+           - Any images, gifs, animations, links, videos, etc. that demonstrate the issue.
+           - A code snippet or link to a repository that contains code that reproduces the issue.
 
 ## Contributing to Code and Documentation
 
