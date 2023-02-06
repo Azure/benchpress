@@ -1,5 +1,5 @@
 BeforeAll {
-  Import-Module "../BenchPress/Helpers/Azure/BenchPress.Azure.psd1"
+  Import-Module "../BenchPress/Helpers/BenchPress.Azure/BenchPress.Azure.psd1"
 }
 
 Describe 'Verify AKS Cluster Exists' {
@@ -27,12 +27,12 @@ Describe 'Spin up , Tear down AKS Cluster' {
     }
 
     #act
-    $deployment = Deploy-AzBPBicepFeature $bicepPath $params $resourceGroupName
+    $deployment = Deploy-AzBPBicepFeature -BicepPath $bicepPath -Params $params -ResourceGroupName $resourceGroupName
 
     #assert
     $deployment.ProvisioningState | Should -Be "Succeeded"
 
     #clean up
-    Remove-AzBPBicepFeature $resourceGroupName
+    Remove-AzBPBicepFeature -ResourceGroupName $resourceGroupName
   }
 }

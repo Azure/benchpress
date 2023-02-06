@@ -1,30 +1,38 @@
 ---
 name: pr-powershell
-on:  # yamllint disable-line rule:truthy
+on: # yamllint disable-line rule:truthy
   pull_request:
     branches: [main]
     paths:
-      - '.github/workflows/pr-powershell.yml'
-      - '**.psd1'
-      - '**.psm1'
-      - '**.ps1'
+      - ".github/workflows/pr-powershell.yml"
+      - "**.psd1"
+      - "**.psm1"
+      - "**.ps1"
 
 env:
   LINTER_CONFIG_DIR: ./.github/config/linter
 
 jobs:
-  lint-powershell:
-    name: Lint PowerShell Files
+  run-unit-tests:
+    name: Run PowerShell Unit Tests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Install PSScriptAnalyzer module
+      - name: Checkout repository and submodules
+        uses: actions/checkout@v3
+      - name: Install unit test module dependencies
         shell: pwsh
         run: |
           Set-PSRepository PSGallery -InstallationPolicy Trusted
-          Install-Module PSScriptAnalyzer -ErrorAction Stop
-      - name: Lint PowerShell Files
+          Install-Module Az -ErrorAction Stop
+          Install-Module Pester -ErrorAction Stop
+      - name: Run PowerShell Unit Tests
         shell: pwsh
+        working-directory: BenchPress
         run: |
-          Invoke-ScriptAnalyzer -Path . -Recurse -EnableExit `
-            -Settings $env:LINTER_CONFIG_DIR/PSScriptAnalyzerSettings.psd1
+          Invoke-Pester -OutputFile ps-test-results.xml -OutputFormat NUnitXml
+      - name: Archive PowerShell Test Results
+        if: ${{ success() }} || ${{ failure() }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: powershell-test-results
+          path: BenchPress/ps-test-results.xml

@@ -1,0 +1,18 @@
+---
+name: cd-psgallery
+
+on: # yamllint disable-line rule:truthy
+  workflow_dispatch:
+
+jobs:
+  publish-to-gallery:
+    name: Publish to the PowerShell Gallery
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Checkout repository and submodules
+        env:
+          NUGET_KEY: ${{ secrets.NUGET_KEY }}
+        shell: pwsh
+        run: |
+          Publish-Module -Path ./BenchPress/Helpers/Azure -NugetAPIKey $env:NUGET_KEY -Verbose

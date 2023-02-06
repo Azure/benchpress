@@ -1,5 +1,5 @@
 BeforeAll {
-  Import-Module "../BenchPress/Helpers/Azure/BenchPress.Azure.psd1"
+  Import-Module "../BenchPress/Helpers/BenchPress.Azure/BenchPress.Azure.psd1"
 }
 
 Describe 'Verify Container Registry Exists' {
@@ -36,17 +36,17 @@ Describe 'Spin up , Tear down Container Registry' {
     $resourceGroupName = "rg-test"
     $bicepPath = "./containerRegistry.bicep"
     $params = @{
-      name           = "acrbenchpresstest1"
+      name           = "acrbenchpresstest2"
       location       = "westus3"
     }
 
     #act
-    $deployment = Deploy-BicepFeature $bicepPath $params $resourceGroupName
+    $deployment = Deploy-AzBPBicepFeature -BicepPath $bicepPath -Params $params -ResourceGroupName $resourceGroupName
 
     #assert
     $deployment.ProvisioningState | Should -Be "Succeeded"
 
     #clean up
-    Remove-BicepFeature $resourceGroupName
+    Remove-AzBPBicepFeature -ResourceGroupName $resourceGroupName
   }
 }

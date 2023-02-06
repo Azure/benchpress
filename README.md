@@ -1,9 +1,6 @@
-# Bicep testing framework
+# BenchPress
 
-This framework is intended to work as a testing framework for Azure deployment features by using [Bicep](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/overview?tabs=bicep).
-
-In order to see how you can work with this framework you can find one sample bicep file in the folder [samples](/examples)
-that will be deployed by using one PowerShell script.
+BenchPress is intended to work as a testing framework for Azure deployment features by using [Bicep](https://docs.microsoft.com/en-us/azure/azure-resource-manager/bicep/overview?tabs=bicep).
 
 Process is the following:
 
@@ -14,9 +11,13 @@ A[Creation] -->|Bicep| B[Verification]
 B --> C[Remove]
 ```
 
-**Creation**: New Features are gonna be deployed through Bicep files
-**Verification**: Test is going to confirm the resource exists and also assert if it matches the expected value
-**Remove**: Optionally resources can be removed after being tested
+- **Creation**: New resources are deployed through Bicep files
+- **Verification**: Test is going to confirm the resource exists and also assert if it matches the expected value
+- **Remove**: Optionally, resources can be removed after being tested
+
+Please see the following for more info:
+
+- [Getting Started with BenchPress](docs/getting_started.md)
 
 ## Contributing
 

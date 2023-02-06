@@ -1,7 +1,7 @@
 param name string
 param location string
 
-resource aksCluster 'Microsoft.ContainerService/managedClusters@2022-10-02-preview' = {
+resource aksCluster 'Microsoft.ContainerService/managedClusters@2022-09-01' = {
   name: name
   location: location
   identity: {

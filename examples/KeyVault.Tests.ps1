@@ -1,5 +1,5 @@
 BeforeAll {
-  Import-Module "../BenchPress/Helpers/Azure/BenchPress.Azure.psd1"
+  Import-Module "../BenchPress/Helpers/BenchPress.Azure/BenchPress.Azure.psd1"
 }
 
 Describe 'Verify KeyVault Exists' {
@@ -101,7 +101,7 @@ Describe 'Spin up , Tear down KeyVault' {
     }
 
     #act
-    $deployment = Deploy-BicepFeature $bicepPath $params $rgName
+    $deployment = Deploy-AzBPBicepFeature -BicepPath $bicepPath -Params $params -ResourceGroupName $rgName
 
     $currentUser=(Get-AzContext | Select-Object -Property Account -ExpandProperty Account | Select-Object Id -ExpandProperty Id)
     $userId=(Get-AzAdUser -UserPrincipalName $currentUser | Select-Object Id -ExpandProperty Id)
@@ -118,6 +118,6 @@ Describe 'Spin up , Tear down KeyVault' {
     $kvSecretExists | Should -Be $true
 
     #clean up
-    Remove-BicepFeature $rgName
+    Remove-AzBPBicepFeature -ResourceGroupName $rgName
   }
 }
