@@ -13,11 +13,6 @@ public class TestMetadata
         ResourceType = ResourceType.Create(resourceType);
         ResourceName = resourceName;
         ExtraProperties = extraProperties;
-
-        if (ResourceType is null)
-        {
-            throw new UnknownResourceTypeException(resourceType);
-        }
     }
 
     public ResourceType ResourceType { get; set; }
