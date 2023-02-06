@@ -17,10 +17,10 @@ az group create --name "benchpress-rg-${suffix}" --location "${location}"
 
 * Deploy the demo application infrastructure
 
-   * Application Insights
-   * Action Group
-   * App Service Plan
-   * Web App
+  * Application Insights
+  * Action Group
+  * App Service Plan
+  * Web App
 
 ```powershell
 az deployment group create --resource-group "benchpress-rg-${suffix}" --template-file "main.bicep" --parameters suffix="${suffix}"
