@@ -1,3 +1,5 @@
+<!-- markdownlint-disable MD013 -->
+
 # Benchpress Demo Application
 
 This demo application is used to demonstrate the capabilities of Benchpress. It is a simple ASP.NET Core application that has been instrumented with Benchpress. The application is deployed to Azure and then Benchpress is used to run the tests against the application.
