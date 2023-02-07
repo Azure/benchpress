@@ -2,6 +2,13 @@
 
 This demo application is used to demonstrate the capabilities of Benchpress. It is a simple ASP.NET Core application that has been instrumented with Benchpress. The application is deployed to Azure and then Benchpress is used to run the tests against the application.
 
+## Demo App Files
+
+* [main.bicep](main.bicep) - Bicep module used to deploy the demo application infrastructure
+* [deploy-demoapp.ps1](deploy-demoapp.ps1) - PowerShell script used to deploy the infrastructure and the demo application
+* [DemoApp.Tests.ps1](DemoApp.Tests.ps1) - PowerShell script used to run the Benchpress tests against the demo application
+* [demoapp-pipeline.yml](demoapp-pipeline.yml) - GitHub Action YAML file used to deploy the demo application infrastructure and run the Benchpress tests
+
 ## Guidelines for creating and testing a demo application
 
 * Clone AspNetCore.Docs repository
