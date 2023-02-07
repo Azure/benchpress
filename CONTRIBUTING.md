@@ -89,10 +89,10 @@ but executed against the host path. This requires that the docker command that w
 `mega-linter-runner` be adjusted for the host path:
 
 - Specific folder (recursively):
-  `docker run -v /var/run/docker.sock:/var/run/docker.sock:rw -v <host path to folder>:/tmp/lint:rw`
+  `docker run --rm -v /var/run/docker.sock:/var/run/docker.sock:rw -v <host path to folder>:/tmp/lint:rw`
   `oxsecurity/megalinter-dotnet:v6`
 - Specific file (or comma separated files):
-  `docker run -v /var/run/docker.sock:/var/run/docker.sock:rw -v <host path to folder>:/tmp/lint:rw`
+  `docker run --rm -v /var/run/docker.sock:/var/run/docker.sock:rw -v <host path to folder>:/tmp/lint:rw`
   `-e SKIP_CLI_LINT_MODES=project -e MEGALINTER_FILES_TO_LINT=<relative path to file(s) from folder>`
   `oxsecurity/megalinter-dotnet:v6`
 
