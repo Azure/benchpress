@@ -1,20 +1,27 @@
+/* stylelint-disable at-rule-no-unknown */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer components {
+
   h1 {
     @apply text-4xl;
   }
+
   h2 {
     @apply text-2xl;
   }
+
   h3 {
     @apply text-xl;
   }
+
   article div ul {
     @apply list-disc list-inside;
   }
+
   article div a {
     @apply text-green-600 hover:underline;
   }
@@ -22,19 +29,25 @@
   article h1 {
     @apply my-6 pb-4 border-b;
   }
+
   article h2 {
     @apply my-4 pb-4 border-b;
   }
+
   article h3 {
     @apply my-2;
   }
+
   article p {
     @apply my-1;
   }
+
   article pre {
     @apply my-2 p-4 rounded;
   }
+
   article p code {
     @apply dark:bg-zinc-900 bg-zinc-300 p-1 rounded;
   }
+
 }

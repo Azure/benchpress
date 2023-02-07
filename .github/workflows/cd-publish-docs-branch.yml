@@ -14,7 +14,7 @@ env:
   BUILD_PATH: "./docs-site"
 
 jobs:
-  publish-docs-branch:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
