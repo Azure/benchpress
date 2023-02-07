@@ -5,7 +5,6 @@
 @tailwind utilities;
 
 @layer components {
-
   h1 {
     @apply text-4xl;
   }
@@ -49,5 +48,4 @@
   article p code {
     @apply dark:bg-zinc-900 bg-zinc-300 p-1 rounded;
   }
-
 }
