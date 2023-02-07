@@ -57,7 +57,7 @@ The BenchPress repository contains a definition for a dev container. In order to
     - Dev Container
     - WSL
 1. Ensure that Docker Desktop or other container hosting engine is installed and running.
-1. Open the BenchPress repository folder.
+1. Open the BenchPress repository folder in VS Code.
 1. From the command window (Ctrl + Shift + P) choose "Reopen in Container".
 
 The BenchPress dev container is configured to provide the developer with all of the tools necessary to write and test
