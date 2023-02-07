@@ -1,4 +1,5 @@
 ---
+# yamllint disable line-length
 name: "Publish docs to GitHub Pages"
 
 on: # yamllint disable-line rule:truthy
