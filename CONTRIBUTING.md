@@ -26,6 +26,76 @@ When your pull request is created, it is checked by the CLA bot.
 If you have signed the CLA, the status check will be set to `passing`.  Otherwise, it will stay at `pending`.
 Once you sign a CLA, all your existing and future pull requests will have the status check automatically set at `passing`.
 
+## Local Environment Setup
+
+There are two methods to getting a development environment up and running: local setup and using a dev container.
+
+### Local Setup
+
+Using a local setup either VS Code or Visual Studio can be used to develop code for the BenchPress project. VS Code is
+the recommended IDE, but Visual Studio will work as well. For this guide we will cover VS Code prerequisites:
+
+1. Install PowerShell Modules:
+    - Azure PowerShell Module: `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser &&`
+      `Install-Module -Name Az -Scope CurrentUser -Repository PSGallery -Force`
+    - Pester: `Install-Module -Name Pester -Force -SkipPublisherCheck`.
+1. Install [Visual Studio Code](https://code.visualstudio.com/Download).
+1. Install [node.js](https://nodejs.org/en/download/) (required for running megalinter).
+1. Install VS Code Extensions:
+    - Azure CLI Tools
+    - Bicep
+    - C#
+    - Docker
+    - PowerShell
+    - Prettier (used for local linting)
+
+### Dev Container
+
+The BenchPress repository contains a definition for a dev container. In order to use the dev container:
+
+1. Install VS Code Extensions:
+    - Dev Container
+    - WSL
+1. Ensure that Docker Desktop or other container hosting engine is installed and running.
+1. Open the BenchPress repository folder in VS Code.
+1. From the command window (Ctrl + Shift + P) choose "Reopen in Container".
+
+The BenchPress dev container is configured to provide the developer with all of the tools necessary to write and test
+code for BenchPress.
+
+#### Using WSL2 with a Dev Container
+
+If your Docker Desktop or other container host is using WSL2, then there might be severe lag when using VSCode with
+a dev container when the code is hosted on the Windows subsystem. In order to remediate this it is recommended to use
+the WSL2 subsystem with the dev container.
+
+1. Install the **Remote Development Extension Pack** Extension in VSCode.
+1. If WSL2 is not installed, install WSL2. From a Windows Terminal execute `wsl --install` and then open a WSL terminal.
+1. From a terminal in WSL2:
+    1. Install the .NET SDK: `sudo apt-get update && sudo apt-get install -y dotnet-sdk-7.0`
+    1. Install .NET Core: `sudo apt-get update && sudo apt-get install -y dotnet-runtime-7.0`
+    1. Restart the WSL terminal.
+    1. Create a directory for source code and `cd` into it.
+    1. Clone or fork the repo as described below in
+       [Contributing to Code and Documentation](#contributing-to-code-and-documentation)
+    1. `cd` into the repo's directory
+    1. Open VSCode from the command line with: `code .`
+    1. From the command window (Ctrl + Shift + P) choose `Reopen in Container`
+
+#### Running Megalinter in a Dev Container
+
+Because megalinter executes in a container within the dev container the mapped paths are mapped to the container path,
+but executed against the host path. This requires that the docker command that would normally be executed with
+`mega-linter-runner` be adjusted for the host path:
+
+- Specific folder (recursively):
+  `docker run --rm -v /var/run/docker.sock:/var/run/docker.sock:rw -v <host path to folder>:/tmp/lint:rw`
+  `oxsecurity/megalinter-dotnet:v6`
+- Specific file (or comma separated files):
+  `docker run --rm -v /var/run/docker.sock:/var/run/docker.sock:rw -v <host path to folder>:/tmp/lint:rw`
+  `-e SKIP_CLI_LINT_MODES=project -e MEGALINTER_FILES_TO_LINT=<relative path to file(s) from folder>`
+  `oxsecurity/megalinter-dotnet:v6`
+
 ## Reporting Issues
 
 1. Check the [Issue Tracker](https://github.com/Azure/benchpress/issues) to determine whether the issue that you're
@@ -35,21 +105,22 @@ Once you sign a CLA, all your existing and future pull requests will have the st
        1. Add a [reaction](https://github.com/blog/2119-add-reactions-to-pull-requests-issues-and-comments) to upvote
           (:+1:) or downvote (:-1:) an issue.
     1. If the issue does not exist create a new issue with the following guidelines:
-       * Do not submit multiple problems or features in a single submitted issue.
-       * Provide as much information as possible. The more information provided, the more likely that someone will
+       - Do not submit multiple problems or features in a single submitted issue.
+       - Provide as much information as possible. The more information provided, the more likely that someone will
          be successful in reproducing the issue and identifying the cause. Provide as much of the following
          information as possible (not an exhaustive list):
-           * Version of PowerShell being used.
-           * The operating system and version being used.
-           * Any container information, if used.
-           * An ordered list of reproducible steps that cause the issue to manifest.
-           * Expecations versus reality. What was expected to happen versus what actually happened.
-           * Any images, gifs, animations, links, videos, etc. that demonstrate the issue.
-           * A code snippet or link to a repository that contains code that reproduces the issue.
+           - Version of PowerShell being used.
+           - The operating system and version being used.
+           - Any container information, if used.
+           - An ordered list of reproducible steps that cause the issue to manifest.
+           - Expecations versus reality. What was expected to happen versus what actually happened.
+           - Any images, gifs, animations, links, videos, etc. that demonstrate the issue.
+           - A code snippet or link to a repository that contains code that reproduces the issue.
 
 ## Contributing to Code and Documentation
 
-In order to setup a local environment to contribute to BenchPress review the [Local Environment Setup].
+In order to setup a local environment to contribute to BenchPress review the
+[Local Environment Setup](#local-environment-setup).
 
 Once an issue has been created or identified to contribute to, the following steps can be followed to contribute to the
 BenchPress code and documentation:
