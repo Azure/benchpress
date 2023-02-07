@@ -1,4 +1,5 @@
 ---
+# yamllint disable line-length
 name: "Publish and test demo app"
 on:
   push:
@@ -20,23 +21,10 @@ jobs:
           # Set the location to westus2
           $env:LOCATION = "westus2"
 
-      - name: Create resource group
+      - name: Deploy infrastructure and demo app
         shell: pwsh
         run: |
-          az group create --name "benchpress-rg-${env:ENVIRONMENT_SUFFIX}" --location "${env:LOCATION}"
-
-      - name: Deploy demo app infrastructure
-        shell: pwsh
-        run: |
-          az deployment group create --resource-group "benchpress-rg-${env:ENVIRONMENT_SUFFIX}" --template-file "main.bicep" --parameters suffix="${env:ENVIRONMENT_SUFFIX}"
-
-      - name: Deploy demo app
-        shell: pwsh
-        run: |
-          git clone https://github.com/dotnet/AspNetCore.Docs.git
-          Push-Location -Path .\AspNetCore.Docs\aspnetcore\mvc\controllers\filters\samples\6.x\FiltersSample
-          az webapp up --name "benchpress-web-${env:ENVIRONMENT_SUFFIX}" --resource-group "benchpress-rg-${env:ENVIRONMENT_SUFFIX}" --location "${env:LOCATION}" --sku "F1"
-          Pop-Location
+          ./deploy-demoapp.ps1
 
       - name: Run the tests
         shell: pwsh
