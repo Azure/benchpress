@@ -59,13 +59,6 @@ Pop-Location
 
 ## Running the tests
 
-* Setup the environment variables
-
-```powershell
-# Can be retrieved from the output of the deploy command
-$env:ENVIRONMENT_SUFFIX = "${suffix}"
-```
-
 * Run the tests by calling the test script file, or, `Invoke-Pester` command
 
 ```powershell
