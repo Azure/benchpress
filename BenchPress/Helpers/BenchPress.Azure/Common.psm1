@@ -64,18 +64,17 @@ enum ResourceType {
 function Get-ResourceByType {
   [CmdletBinding()]
   param (
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory = $true)]
     [string]$ResourceName,
 
-    [Parameter(Mandatory=$false)]
+    [Parameter(Mandatory = $false)]
     [string]$ResourceGroupName,
 
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory = $true)]
     [ResourceType]$ResourceType
   )
 
-  switch ($ResourceType)
-  {
+  switch ($ResourceType) {
     ActionGroup { return Get-ActionGroup -ActionGroupName $ResourceName -ResourceGroupName $ResourceGroupName }
     AKSCluster { return Get-AKSCluster -AKSName $ResourceName -ResourceGroupName $ResourceGroupName }
     AppServicePlan { return Get-AppServicePlan -AppServicePlanName $ResourceName -ResourceGroupName $ResourceGroupName }
@@ -121,19 +120,90 @@ function Get-ResourceByType {
 function Get-Resource {
   [CmdletBinding()]
   param (
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory = $true)]
     [string]$ResourceName,
 
-    [Parameter(Mandatory=$false)]
+    [Parameter(Mandatory = $false)]
     [string]$ResourceGroupName
   )
 
   if ([string]::IsNullOrEmpty($ResourceGroupName)) {
     return Get-AzResource -Name "${ResourceName}"
   }
-  else{
+  else {
     return Get-AzResource -Name "${ResourceName}" -ResourceGroupName "${ResourceGroupName}"
   }
 }
 
-Export-ModuleMember -Function Get-Resource, Get-ResourceByType
+class Result {
+  <# Define the class. Try constructors, properties, or methods. #>
+  [boolean]$StatusCode
+  [System.Management.Automation.ErrorRecord]$Error
+  [System.Object]$ResourceObj
+}
+
+function Confirm-Resource {
+  [CmdletBinding()]
+  param (
+    [Parameter(Mandatory = $false)]
+    [string]$ResourceGroupName,
+
+    [Parameter(Mandatory = $false)]
+    [ResourceType]$ResourceType,
+
+    [Parameter(Mandatory = $false)]
+    [string]$ResourceName,
+
+    [Parameter(Mandatory = $false)]
+    [string]$PropertyKey,
+
+    [Parameter(Mandatory = $false)]
+    [string]$PropertyValue
+
+  )
+
+  $resourceResult = [Result]::new()
+  switch ($ResourceType) {
+    ContainerRegistry { $resourceResult.ResourceObj = Get-ContainerRegistry -Name $ResourceName -ResourceGroupName $ResourceGroupName }
+    ResourceGroup { $resourceResult.ResourceObj = Get-ResourceGroup -ResourceGroupName $ResourceName }
+    VirtualMachine { $resourceResult.ResourceObj = Get-VirtualMachine -VirtualMachineName $ResourceName -ResourceGroupName $ResourceGroupName }
+  }
+
+  if ($null -ne $resourceResult.ResourceObj) {
+    $resourceResult.StatusCode = $true
+  }
+  else {
+    $resourceResult.StatusCode = $false
+    $resourceResult.Error = NotExistError -Expected $ResourceName
+    return $resourceResult
+  }
+
+  if($PropertyKey){
+    if($resourceResult.ResourceObj.$PropertyKey -ne $PropertyValue){
+      $resourceResult.StatusCode = $false
+      $resourceResult.Error = IncorrectValueError -ExpectedKey $PropertyKey -ExpectedValue $PropertyValue -Actual $resourceResult
+    }
+  }
+  return $resourceResult
+}
+
+function NotExistError([string]$Expected) {
+  $message = "Expected $Expected to exist, but it does not exist."
+  return New-ErrorRecord -Message $message -ErrorID "BenchPressExistFail"
+}
+
+function IncorrectValueError([string]$ExpectedKey, [string]$ExpectedValue, [Result]$Actual) {
+  $message = "Expected $ExpectedKey to be $ExpectedValue, but got $($Actual.ResourceObj.$ExpectedKey)"
+  return New-ErrorRecord -Message $message -ErrorID "BenchPressValueFail"
+}
+
+function New-ErrorRecord ([string] $Message, [string]$ErrorID) {
+  $exception = [Exception] $Message
+  $errorCategory = [System.Management.Automation.ErrorCategory]::InvalidResult
+  # we use ErrorRecord.TargetObject to pass structured information about the error to a reporting system.
+  $targetObject = @{ Message = $Message; }
+  $errorRecord = New-Object System.Management.Automation.ErrorRecord $exception, $ErrorID, $errorCategory, $targetObject
+  return $errorRecord
+}
+
+Export-ModuleMember -Function Get-Resource, Get-ResourceByType, Confirm-Resource

@@ -46,6 +46,7 @@
     "Get-KeyVaultCertificate",
     "Get-KeyVaultCertificateExist",
     "Get-ResourceByType",
+    "Confirm-Resource"
     "Get-Resource",
     "Get-ResourceGroup",
     "Get-ResourceGroupExist",
