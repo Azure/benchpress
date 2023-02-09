@@ -13,22 +13,7 @@ This demo application is used to demonstrate the capabilities of Benchpress. It 
 
 ## Guidelines for creating and testing a demo application
 
-* Clone AspNetCore.Docs repository
-
-```powershell
-git clone https://github.com/dotnet/AspNetCore.Docs.git
-```
-
-* Create a new resource group with a unique name
-
-```powershell
-$suffix = (Get-Random).ToString("x8")
-$location = "westus2"
-
-az group create --name "benchpress-rg-${suffix}" --location "${location}"
-```
-
-* Deploy the demo application infrastructure
+* Run the [deploy-demoapp.ps1](deploy-demoapp.ps1) script to deploy the demo application infrastructure and the demo application
 
   * [Application Insights](https://learn.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview?tabs=net)
   * [Action Group](https://learn.microsoft.com/en-us/azure/azure-monitor/alerts/action-groups)
@@ -36,25 +21,7 @@ az group create --name "benchpress-rg-${suffix}" --location "${location}"
   * [Web App](https://azure.microsoft.com/en-us/products/app-service/web)
 
 ```powershell
-az deployment group create --resource-group "benchpress-rg-${suffix}" --template-file "main.bicep" --parameters suffix="${suffix}"
-```
-
-* Go to the demo application folder
-
-```powershell
-Push-Location -Path .\AspNetCore.Docs\aspnetcore\mvc\controllers\filters\samples\6.x\FiltersSample
-```
-
-* Deploy the demo application
-
-```powershell
-az webapp up --name "benchpress-web-${suffix}" --resource-group "benchpress-rg-${suffix}" --location "${location}" --sku "F1"
-```
-
-* Go back to the previous directory
-
-```powershell
-Pop-Location
+./deploy-demoapp.ps1
 ```
 
 ## Running the tests
@@ -74,30 +41,15 @@ Invoke-Pester
 * Delete the resource group
 
 ```powershell
-az group delete --name "benchpress-rg-${suffix}" --yes
+az group delete --name "benchpress-rg-${env:ENVIRONMENT_SUFFIX}" --yes
 ```
 
 ## Running the deployment, tests, and cleanup together
 
 ```powershell
-git clone https://github.com/dotnet/AspNetCore.Docs.git
-
-$suffix = (Get-Random).ToString("x8")
-$location = "westus3"
-
-az group create --name "benchpress-rg-${suffix}" --location "${location}"
-
-az deployment group create --resource-group "benchpress-rg-${suffix}" --template-file "main.bicep" --parameters suffix="${suffix}"
-
-Push-Location -Path .\AspNetCore.Docs\aspnetcore\mvc\controllers\filters\samples\6.x\FiltersSample
-
-az webapp up --name "benchpress-web-${suffix}" --resource-group "benchpress-rg-${suffix}" --location "${location}" --sku "F1"
-
-Pop-Location
-
-$env:ENVIRONMENT_SUFFIX = "${suffix}"
+./deploy-demoapp.ps1
 
 ./DemoApp.Tests.ps1
 
-az group delete --name "benchpress-rg-${suffix}" --yes
+az group delete --name "benchpress-rg-${env:ENVIRONMENT_SUFFIX}" --yes
 ```
