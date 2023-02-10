@@ -9,7 +9,7 @@
     be written to Write-Error with the name of the variable in the output and exit will be called.
 
   .PARAMETER VariableName
-    This is the name of the enviroment variable to retrieve and validate that a value is present.
+    This is the name of the environment variable to retrieve and validate that a value is present.
 
   .EXAMPLE
     Provide -VariableName Parameter
@@ -160,3 +160,5 @@ function Disconnect-Account {
   }
   End { }
 }
+
+
