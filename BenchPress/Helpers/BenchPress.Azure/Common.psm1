@@ -22,6 +22,12 @@ enum ResourceType {
   WebApp
 }
 
+class ConfirmResult {
+  [boolean]$Success
+  [System.Management.Automation.ErrorRecord]$Error
+  [System.Object]$ResourceDetails
+}
+
 <#
 .SYNOPSIS
   Gets an Azure Resource.
@@ -135,24 +141,71 @@ function Get-Resource {
   }
 }
 
-class Result {
-  <# Define the class. Try constructors, properties, or methods. #>
-  [boolean]$StatusCode
-  [System.Management.Automation.ErrorRecord]$Error
-  [System.Object]$ResourceObj
-}
 
+<#
+  .SYNOPSIS
+    Confirms whether a resource exists or properties on a resource are configured correctly.
+
+  .DESCRIPTION
+    The Confirm-AzBPResource cmdlet confirms whether an Azure resource exists and/or confirms whether properties
+    on a resource exist and are configured to the correct value. The cmdlet will return a ConfirmResult object
+    which contains the following properties:
+    - Success: True if the resource exists and/or the property is set to the expected value. Otherwise, false.
+    - Error: System.Management.Automation.ErrorRecord containing an ErrorRecord with a message explaining
+             that a resource did not exist or property was not set to the expected value.
+    - ResourceDetails: System.Object that contains the details of the Azure Resource that is being confirmed.
+
+  .PARAMETER ResourceName
+    The name of the Resource
+
+  .PARAMETER ResourceGroupName
+    The name of the Resource Group
+
+  .PARAMETER ResourceType
+    The type of the Resource (currently support the following:
+    ActionGroup
+    AKSCluster
+    AppServicePlan
+    ContainerRegistry
+    KeyVault
+    ResourceGroup
+    SqlDatabase
+    SqlServer
+    VirtualMachine
+    WebApp)
+
+  .PARAMETER PropertyKey
+    The name of the property to check on the resource
+
+  .PARAMETER PropertyValue
+    The expected value of the property to check
+
+  .EXAMPLE
+    Checking whether a resource exists (i.e. Resource Group)
+    Confirm-AzBPResource -ResourceType $resourceType -ResourceName $resourceGroupName
+
+  .EXAMPLE
+    Confirm wheter a resource has a property configured correctly (i.e. Resource Group located in West US 3)
+    Confirm-AzBPResource -ResourceType $resourceType -ResourceName $resourceGroupName -PropertyKey "Location" `
+                         -PropertyValue "WestUS3"
+  .INPUTS
+    ResourceType
+    System.String
+
+  .OUTPUTS
+    ConfirmResult
+#>
 function Confirm-Resource {
   [CmdletBinding()]
   param (
-    [Parameter(Mandatory = $false)]
-    [string]$ResourceGroupName,
-
-    [Parameter(Mandatory = $false)]
+    [Parameter(Mandatory = $true)]
     [ResourceType]$ResourceType,
 
-    [Parameter(Mandatory = $false)]
+    [Parameter(Mandatory = $true)]
     [string]$ResourceName,
+
+    [Parameter(Mandatory = $false)]
+    [string]$ResourceGroupName,
 
     [Parameter(Mandatory = $false)]
     [string]$PropertyKey,
@@ -162,48 +215,113 @@ function Confirm-Resource {
 
   )
 
-  $resourceResult = [Result]::new()
-  switch ($ResourceType) {
-    ContainerRegistry { $resourceResult.ResourceObj = Get-ContainerRegistry -Name $ResourceName -ResourceGroupName $ResourceGroupName }
-    ResourceGroup { $resourceResult.ResourceObj = Get-ResourceGroup -ResourceGroupName $ResourceName }
-    VirtualMachine { $resourceResult.ResourceObj = Get-VirtualMachine -VirtualMachineName $ResourceName -ResourceGroupName $ResourceGroupName }
-  }
+  $ConfirmResult = [ConfirmResult]::new()
+  $ConfirmResult.ResourceDetails = Get-ResourceByType -ResourceGroupName $ResourceGroupName -ResourceName $ResourceName -ResourceType $ResourceType
 
-  if ($null -ne $resourceResult.ResourceObj) {
-    $resourceResult.StatusCode = $true
+  if ($null -ne $ConfirmResult.ResourceDetails) {
+    $ConfirmResult.Success = $true
   }
   else {
-    $resourceResult.StatusCode = $false
-    $resourceResult.Error = NotExistError -Expected $ResourceName
-    return $resourceResult
+    $ConfirmResult.Success = $false
+    $ConfirmResult.Error = New-NotExistError -Expected $ResourceName
+    return $ConfirmResult
   }
 
   if($PropertyKey){
-    if($resourceResult.ResourceObj.$PropertyKey -ne $PropertyValue){
-      $resourceResult.StatusCode = $false
-      $resourceResult.Error = IncorrectValueError -ExpectedKey $PropertyKey -ExpectedValue $PropertyValue -Actual $resourceResult
+    if($ConfirmResult.ResourceDetails.$PropertyKey -ne $PropertyValue){
+      $ConfirmResult.Success = $false
+      $ConfirmResult.Error = New-IncorrectValueError -ExpectedKey $PropertyKey -ExpectedValue $PropertyValue -ActualResult $ConfirmResult.ResourceDetails.$PropertyKey
     }
   }
-  return $resourceResult
+  return $ConfirmResult
 }
 
-function NotExistError([string]$Expected) {
-  $message = "Expected $Expected to exist, but it does not exist."
-  return New-ErrorRecord -Message $message -ErrorID "BenchPressExistFail"
+
+<#
+  .SYNOPSIS
+    Private function to create a message and ErrorRecord for when a resource does not exist.
+
+  .DESCRIPTION
+    New-NotExistError is a private helper function that can be used to construct a message and ErrorRecord
+    for when a resource does not exist.
+
+  .PARAMETER Expected
+    The name of the resource that was expected to exist.
+
+  .EXAMPLE
+    New-NotExistError -Expected "MyVM"
+
+  .INPUTS
+    System.String
+
+  .OUTPUTS
+    System.Management.Automation.ErrorRecord
+#>
+function New-NotExistError([string]$Expected) {
+  $Message = "Expected $Expected to exist, but it does not exist."
+  return New-ErrorRecord -Message $Message -ErrorID "BenchPressExistFail"
 }
 
-function IncorrectValueError([string]$ExpectedKey, [string]$ExpectedValue, [Result]$Actual) {
-  $message = "Expected $ExpectedKey to be $ExpectedValue, but got $($Actual.ResourceObj.$ExpectedKey)"
-  return New-ErrorRecord -Message $message -ErrorID "BenchPressValueFail"
+<#
+  .SYNOPSIS
+    Private function to create a message and ErrorRecord for when a resource property is not set correctly.
+
+  .DESCRIPTION
+    New-IncorrectValueError is a private helper function that can be used to construct a message and ErrorRecord
+    for when a resource property is not set to the expected value.
+
+  .PARAMETER ExpectedKey
+    The resource property name that is checked
+
+  .PARAMETER ExpectedValue
+    The expected value of the resource property
+
+  .PARAMETER ActualValue
+    The actual value of the resource property
+
+  .EXAMPLE
+    New-IncorrectValueError -ExpectedKey "Location" -ExpectedValue "WestUS3" -ActualValue "EastUS"
+
+  .INPUTS
+    System.String
+
+  .OUTPUTS
+    System.Management.Automation.ErrorRecord
+#>
+function New-IncorrectValueError([string]$ExpectedKey, [string]$ExpectedValue, [string]$ActualValue) {
+  $Message = "Expected $ExpectedKey to be $ExpectedValue, but got $ActualValue"
+  return New-ErrorRecord -Message $Message -ErrorID "BenchPressValueFail"
 }
 
+<#
+  .SYNOPSIS
+    Private function to help construct a ErrorRecord.
+
+  .DESCRIPTION
+    New-ErrorRecord is a private helper function that can be used to construct an ErrorRecord.
+
+  .PARAMETER Message
+    Message for the ErrorRecord
+
+  .PARAMETER ErrorID
+    A string that can be used to uniquily identify the ErrorRecord.
+
+  .EXAMPLE
+    New-ErrorRecord -Message $incorrectValueMessage -ErrorID "BenchPressValueFail"
+
+  .INPUTS
+    System.String
+
+  .OUTPUTS
+    System.Management.Automation.ErrorRecord
+#>
 function New-ErrorRecord ([string] $Message, [string]$ErrorID) {
-  $exception = [Exception] $Message
-  $errorCategory = [System.Management.Automation.ErrorCategory]::InvalidResult
-  # we use ErrorRecord.TargetObject to pass structured information about the error to a reporting system.
-  $targetObject = @{ Message = $Message; }
-  $errorRecord = New-Object System.Management.Automation.ErrorRecord $exception, $ErrorID, $errorCategory, $targetObject
-  return $errorRecord
+  $Exception = [Exception] $Message
+  $ErrorCategory = [System.Management.Automation.ErrorCategory]::InvalidResult
+  $TargetObject = @{ Message = $Message }
+  $ErrorRecord = New-Object System.Management.Automation.ErrorRecord $Exception, $ErrorID, $ErrorCategory, $TargetObject
+  return $ErrorRecord
 }
 
-Export-ModuleMember -Function Get-Resource, Get-ResourceByType, Confirm-Resource
+Export-ModuleMember -Function Get-Resource, Get-ResourceByType, Confirm-Resource, `
+  New-NotExistError, New-IncorrectValueError, New-ErrorRecord
