@@ -185,7 +185,7 @@ function Get-Resource {
     Confirm-AzBPResource -ResourceType $resourceType -ResourceName $resourceGroupName
 
   .EXAMPLE
-    Confirm wheter a resource has a property configured correctly (i.e. Resource Group located in West US 3)
+    Confirm whether a resource has a property configured correctly (i.e. Resource Group located in West US 3)
     Confirm-AzBPResource -ResourceType $resourceType -ResourceName $resourceGroupName -PropertyKey "Location" `
                          -PropertyValue "WestUS3"
   .INPUTS
@@ -223,14 +223,14 @@ function Confirm-Resource {
   }
   else {
     $ConfirmResult.Success = $false
-    $ConfirmResult.Error = New-NotExistError -Expected $ResourceName
+    $ConfirmResult.Error = Format-NotExistError -Expected $ResourceName
     return $ConfirmResult
   }
 
   if($PropertyKey){
     if($ConfirmResult.ResourceDetails.$PropertyKey -ne $PropertyValue){
       $ConfirmResult.Success = $false
-      $ConfirmResult.Error = New-IncorrectValueError -ExpectedKey $PropertyKey -ExpectedValue $PropertyValue -ActualResult $ConfirmResult.ResourceDetails.$PropertyKey
+      $ConfirmResult.Error = Format-IncorrectValueError -ExpectedKey $PropertyKey -ExpectedValue $PropertyValue -ActualResult $ConfirmResult.ResourceDetails.$PropertyKey
     }
   }
   return $ConfirmResult
@@ -242,14 +242,14 @@ function Confirm-Resource {
     Private function to create a message and ErrorRecord for when a resource does not exist.
 
   .DESCRIPTION
-    New-NotExistError is a private helper function that can be used to construct a message and ErrorRecord
+    Format-NotExistError is a private helper function that can be used to construct a message and ErrorRecord
     for when a resource does not exist.
 
   .PARAMETER Expected
     The name of the resource that was expected to exist.
 
   .EXAMPLE
-    New-NotExistError -Expected "MyVM"
+    Format-NotExistError -Expected "MyVM"
 
   .INPUTS
     System.String
@@ -257,9 +257,9 @@ function Confirm-Resource {
   .OUTPUTS
     System.Management.Automation.ErrorRecord
 #>
-function New-NotExistError([string]$Expected) {
+function Format-NotExistError([string]$Expected) {
   $Message = "Expected $Expected to exist, but it does not exist."
-  return New-ErrorRecord -Message $Message -ErrorID "BenchPressExistFail"
+  return Format-ErrorRecord -Message $Message -ErrorID "BenchPressExistFail"
 }
 
 <#
@@ -267,7 +267,7 @@ function New-NotExistError([string]$Expected) {
     Private function to create a message and ErrorRecord for when a resource property is not set correctly.
 
   .DESCRIPTION
-    New-IncorrectValueError is a private helper function that can be used to construct a message and ErrorRecord
+    Format-IncorrectValueError is a private helper function that can be used to construct a message and ErrorRecord
     for when a resource property is not set to the expected value.
 
   .PARAMETER ExpectedKey
@@ -280,7 +280,7 @@ function New-NotExistError([string]$Expected) {
     The actual value of the resource property
 
   .EXAMPLE
-    New-IncorrectValueError -ExpectedKey "Location" -ExpectedValue "WestUS3" -ActualValue "EastUS"
+    Format-IncorrectValueError -ExpectedKey "Location" -ExpectedValue "WestUS3" -ActualValue "EastUS"
 
   .INPUTS
     System.String
@@ -288,9 +288,9 @@ function New-NotExistError([string]$Expected) {
   .OUTPUTS
     System.Management.Automation.ErrorRecord
 #>
-function New-IncorrectValueError([string]$ExpectedKey, [string]$ExpectedValue, [string]$ActualValue) {
+function Format-IncorrectValueError([string]$ExpectedKey, [string]$ExpectedValue, [string]$ActualValue) {
   $Message = "Expected $ExpectedKey to be $ExpectedValue, but got $ActualValue"
-  return New-ErrorRecord -Message $Message -ErrorID "BenchPressValueFail"
+  return Format-ErrorRecord -Message $Message -ErrorID "BenchPressValueFail"
 }
 
 <#
@@ -298,7 +298,7 @@ function New-IncorrectValueError([string]$ExpectedKey, [string]$ExpectedValue, [
     Private function to help construct a ErrorRecord.
 
   .DESCRIPTION
-    New-ErrorRecord is a private helper function that can be used to construct an ErrorRecord.
+    Format-ErrorRecord is a private helper function that can be used to construct an ErrorRecord.
 
   .PARAMETER Message
     Message for the ErrorRecord
@@ -307,7 +307,7 @@ function New-IncorrectValueError([string]$ExpectedKey, [string]$ExpectedValue, [
     A string that can be used to uniquily identify the ErrorRecord.
 
   .EXAMPLE
-    New-ErrorRecord -Message $incorrectValueMessage -ErrorID "BenchPressValueFail"
+    Format-ErrorRecord -Message $incorrectValueMessage -ErrorID "BenchPressValueFail"
 
   .INPUTS
     System.String
@@ -315,13 +315,13 @@ function New-IncorrectValueError([string]$ExpectedKey, [string]$ExpectedValue, [
   .OUTPUTS
     System.Management.Automation.ErrorRecord
 #>
-function New-ErrorRecord ([string] $Message, [string]$ErrorID) {
+function Format-ErrorRecord ([string] $Message, [string]$ErrorID) {
   $Exception = [Exception] $Message
   $ErrorCategory = [System.Management.Automation.ErrorCategory]::InvalidResult
   $TargetObject = @{ Message = $Message }
-  $ErrorRecord = New-Object System.Management.Automation.ErrorRecord $Exception, $ErrorID, $ErrorCategory, $TargetObject
+  $ErrorRecord = Format-Object System.Management.Automation.ErrorRecord $Exception, $ErrorID, $ErrorCategory, $TargetObject
   return $ErrorRecord
 }
 
 Export-ModuleMember -Function Get-Resource, Get-ResourceByType, Confirm-Resource, `
-  New-NotExistError, New-IncorrectValueError, New-ErrorRecord
+  Format-NotExistError, Format-IncorrectValueError, Format-ErrorRecord
