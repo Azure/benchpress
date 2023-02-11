@@ -112,7 +112,7 @@ Describe "ErrorRecord Helper Methods" {
     }
 
     It "Creates ErrorRecord with correct message and ID when Format-ErrorRecord is called" {
-      Mock -ModuleName Common Format-Object{} -Verifiable
+      Mock -ModuleName Common New-Object{} -Verifiable
       Format-ErrorRecord -Message "testMessage" -ErrorID "testErrorID"
       Should -InvokeVerifiable
     }

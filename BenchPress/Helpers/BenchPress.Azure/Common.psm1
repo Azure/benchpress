@@ -319,7 +319,7 @@ function Format-ErrorRecord ([string] $Message, [string]$ErrorID) {
   $Exception = [Exception] $Message
   $ErrorCategory = [System.Management.Automation.ErrorCategory]::InvalidResult
   $TargetObject = @{ Message = $Message }
-  $ErrorRecord = Format-Object System.Management.Automation.ErrorRecord $Exception, $ErrorID, $ErrorCategory, $TargetObject
+  $ErrorRecord = New-Object System.Management.Automation.ErrorRecord $Exception, $ErrorID, $ErrorCategory, $TargetObject
   return $ErrorRecord
 }
 
