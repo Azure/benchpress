@@ -5,7 +5,8 @@ layout: "../layouts/main.astro"
 
 This framework is intended to work as a testing framework for Azure deployment features by using Bicep.
 
-In order to see how you can work with this framework you can find one sample bicep file in the folder samples that will be deployed by using one PowerShell script.
+In order to see how you can work with this framework you can find one sample bicep file in the folder samples
+that will be deployed by using one PowerShell script.
 
 ## Getting Started
 
