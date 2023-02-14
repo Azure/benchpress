@@ -14,7 +14,11 @@ function New-ResourceGroup {
     [string]$Tags
   )
 
+  Write-Progress -Activity "Creating resource group" -Status "Creating resource group ${Name} in ${Location}..." -PercentComplete 50
+
   az group create --name $Name --location $Location --tags $Tags
+
+  Write-Progress -Activity "Creating resource group" -Status "Resource group ${Name} created."
 }
 
 <#
@@ -40,7 +44,6 @@ function New-Deployment {
 .DESCRIPTION
   Deploys the demo app.
 #>
-
 function Deploy-DemoApp {
   [CmdletBinding()]
   param(
@@ -82,6 +85,14 @@ function Deploy-DemoApp {
 
     Pop-Location
   }
+}
+
+$loggedIn = az account show --query "user.name" -o tsv
+if (!$loggedIn) {
+  Write-Error "You must be logged in to Azure CLI."
+  Write-Error "Run 'az login' to log in."
+
+  exit 1
 }
 
 $ENVIRONMENT_SUFFIX = $env:ENVIRONMENT_SUFFIX ?? (Get-Random).ToString("x8")
