@@ -3,6 +3,7 @@
   Creates a resource group with given name, location and tags.
 #>
 function New-ResourceGroup {
+  [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseShouldProcessForStateChangingFunctions", "")]
   [CmdletBinding()]
   param(
     [Parameter(Mandatory=$true)]
@@ -21,6 +22,7 @@ function New-ResourceGroup {
   Creates a deployment.
 #>
 function New-Deployment {
+  [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseShouldProcessForStateChangingFunctions", "")]
   [CmdletBinding()]
   param(
     [Parameter(Mandatory=$true)]
