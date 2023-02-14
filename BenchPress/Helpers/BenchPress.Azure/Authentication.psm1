@@ -52,7 +52,7 @@ function Get-RequiredEnvironmentVariable {
 <#
   .SYNOPSIS
     Connect-Account uses environment variable values to log into an Azure context. This is an internal function and
-    should not be used outside of the module.
+    should not be used outside of the BenchPress module.
 
   .DESCRIPTION
     Connect-Account is designed to login to an Azure context using environment variables to login as a
@@ -112,7 +112,7 @@ function Connect-Account {
 <#
   .SYNOPSIS
     Disconnect-Account uses environment variable values to disconnect from a specific Azure context. This is an
-    internal function and should not be used outside of the module.
+    internal function and should not be used outside of the BenchPress module.
 
   .DESCRIPTION
     Disconnect-Account is designed to automatically log out of the specific Azure context using environment variables
