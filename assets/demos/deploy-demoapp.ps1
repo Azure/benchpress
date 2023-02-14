@@ -51,6 +51,8 @@ function Deploy-DemoApp {
     [string]$Location
   )
 
+  $Confirmed = $Force ? "y" : "n"
+
   if ($Force -eq $false) {
     Write-Information "This script will create a resource group, a deployment and a web app. If you want to force the execution, use the -Force switch."
     Write-Information ""
@@ -61,20 +63,25 @@ function Deploy-DemoApp {
     Write-Information "  - Application Insights: benchpress-application-insights-${EnvironmentSuffix}"
     Write-Information "  - Email Action Group: benchpress-email-action-group-${EnvironmentSuffix}"
     Write-Information ""
+
+    $Confirmed = Read-Host -Prompt "Do you want to continue? (y/n)"
+
     return
   }
 
-  New-ResourceGroup -Name "benchpress-rg-${EnvironmentSuffix}" -Location $Location -Tags "application=benchpress-demo suffix=${EnvironmentSuffix}"
+  if ($Confirmed -eq "y") {
+    New-ResourceGroup -Name "benchpress-rg-${EnvironmentSuffix}" -Location $Location -Tags "application=benchpress-demo suffix=${EnvironmentSuffix}"
 
-  New-Deployment -ResourceGroup "benchpress-rg-${EnvironmentSuffix}" -TemplateFile "main.bicep" -Parameters "suffix=${EnvironmentSuffix}"
+    New-Deployment -ResourceGroup "benchpress-rg-${EnvironmentSuffix}" -TemplateFile "main.bicep" -Parameters "suffix=${EnvironmentSuffix}"
 
-  git clone https://github.com/dotnet/AspNetCore.Docs.git
+    git clone https://github.com/dotnet/AspNetCore.Docs.git
 
-  Push-Location -Path .\AspNetCore.Docs\aspnetcore\mvc\controllers\filters\samples\6.x\FiltersSample
+    Push-Location -Path .\AspNetCore.Docs\aspnetcore\mvc\controllers\filters\samples\6.x\FiltersSample
 
-  az webapp up --name "benchpress-web-${EnvironmentSuffix}" --resource-group "benchpress-rg-${EnvironmentSuffix}" --location "${Location}" --sku "F1"
+    az webapp up --name "benchpress-web-${EnvironmentSuffix}" --resource-group "benchpress-rg-${EnvironmentSuffix}" --location "${Location}" --sku "F1"
 
-  Pop-Location
+    Pop-Location
+  }
 }
 
 $ENVIRONMENT_SUFFIX = $env:ENVIRONMENT_SUFFIX ?? (Get-Random).ToString("x8")
