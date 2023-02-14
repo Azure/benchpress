@@ -1,3 +1,5 @@
+Import-Module $PSScriptRoot/Authentication.psm1
+
 <#
 .SYNOPSIS
   Gets a Container Registry.
@@ -30,6 +32,8 @@ function Get-ContainerRegistry {
     [Parameter(Mandatory=$true)]
     [string]$ResourceGroupName
   )
+
+  Connect-Account
 
   $resource = Get-AzContainerRegistry -ResourceGroupName $ResourceGroupName -Name $Name
   return $resource

@@ -45,6 +45,20 @@ The easiest way to get started with BenchPress is to use the files in the `examp
   a String. `ConvertFrom-SecureString` will take the SecureString and convert it to an encrypted string. This value
   must then be saved as an environment variable. This ensures that the BenchPress code never uses the raw password at
   any point.
+   
+  You can either use a `.env` file and pass in the environment variables locally with a script,
+  or you must load each variable through the command line using: 
+    ```PowerShell
+    $Env:AZ_APPLICATION_ID="<sample-id>"
+    $Env:AZ_TENANT_ID="<sample-id>"
+    $Env:AZ_SUBSCRIPTION_ID="<sample-id>"
+    $Env:AZ_ENCRYPTED_PASSWORD="<sample-id>"
+    ```
+    
+  You can confirm if these are set up right on your local powershell using:
+    ```PowerShell
+    [Environment]::GetEnvironmentVariables() 
+    ```
 
 ## Running a test file
 

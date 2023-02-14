@@ -1,3 +1,5 @@
+Import-Module $PSScriptRoot/Authentication.psm1
+
 <#
 .SYNOPSIS
   Gets a Web App.
@@ -30,6 +32,8 @@ function Get-WebApp {
     [Parameter(Mandatory=$true)]
     [string]$ResourceGroupName
   )
+
+  Connect-Account
 
   $resource = Get-AzWebApp -ResourceGroupName $ResourceGroupName -Name $WebAppName
   return $resource
