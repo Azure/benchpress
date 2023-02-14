@@ -8,6 +8,10 @@ resource applicationInsights 'Microsoft.Insights/components@2020-02-02' = {
   properties: {
     Application_Type: 'web'
   }
+  tags: {
+    application: 'benchpress-demo'
+    suffix: suffix
+  }
 }
 
 resource emailActionGroup 'Microsoft.Insights/actionGroups@2022-06-01' = {
@@ -24,6 +28,9 @@ resource emailActionGroup 'Microsoft.Insights/actionGroups@2022-06-01' = {
       }
     ]
   }
+  tags: {
+    application: 'benchpress-demo'
+  }
 }
 
 resource hostingPlan 'Microsoft.Web/serverfarms@2022-03-01' = {
@@ -33,12 +40,14 @@ resource hostingPlan 'Microsoft.Web/serverfarms@2022-03-01' = {
     tier: 'Standard'
     name: 'S1'
   }
+  tags: {
+    application: 'benchpress-demo'
+  }
 }
 
 resource webApp 'Microsoft.Web/sites@2022-03-01' = {
   name: join( ['benchpress', 'web', suffix ], '-')
   location: location
-  tags: null
   identity: {
     type: 'SystemAssigned'
   }
@@ -67,5 +76,8 @@ resource webApp 'Microsoft.Web/sites@2022-03-01' = {
     }
     serverFarmId: hostingPlan.id
     httpsOnly: true
+  }
+  tags: {
+    application: 'benchpress-demo'
   }
 }

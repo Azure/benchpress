@@ -1,7 +1,7 @@
 $ENVIRONMENT_SUFFIX = $env:ENVIRONMENT_SUFFIX ?? "benchpress-rg-$((Get-Random).ToString("x8"))";
 $LOCATION = $env:LOCATION ?? "westus2";
 
-az group create --name "benchpress-rg-${ENVIRONMENT_SUFFIX}" --location "${LOCATION}"
+az group create --name "benchpress-rg-${ENVIRONMENT_SUFFIX}" --location "${LOCATION}" --tags "application=benchpress-demo suffix=${ENVIRONMENT_SUFFIX}"
 
 az deployment group create --resource-group "benchpress-rg-${ENVIRONMENT_SUFFIX}" --template-file "main.bicep" --parameters suffix="${ENVIRONMENT_SUFFIX}"
 
