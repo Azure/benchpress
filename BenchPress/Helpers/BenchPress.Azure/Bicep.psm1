@@ -221,6 +221,9 @@ function Remove-BicepFeature(){
     [Parameter(Mandatory=$true)]
     [string]$ResourceGroupName
   )
+
+  Connect-Account
+
   $resourceGroup = Get-AzResourceGroup -Name $ResourceGroupName
   Remove-AzResourceGroup -Name $resourceGroup -Force
 }

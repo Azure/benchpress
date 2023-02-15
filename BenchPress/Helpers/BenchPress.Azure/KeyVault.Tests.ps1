@@ -1,4 +1,5 @@
 ﻿BeforeAll {
+  Import-Module $PSScriptRoot/Authentication.psm1
   Import-Module $PSScriptRoot/KeyVault.psm1
   Import-Module Az
 }
@@ -6,6 +7,7 @@
 Describe "Get-KeyVault" {
   Context "unit tests" -Tag "Unit" {
     BeforeEach {
+      Mock -ModuleName KeyVault Connect-Account{}
       Mock -ModuleName KeyVault Get-AzKeyVault{}
     }
 
@@ -32,6 +34,7 @@ Describe "Get-KeyVaultExist" {
 Describe "Get-KeyVaultSecret" {
   Context "unit tests" -Tag "Unit" {
     BeforeEach {
+      Mock -ModuleName KeyVault Connect-Account{}
       Mock -ModuleName KeyVault Get-AzKeyVaultSecret{}
     }
 
@@ -58,6 +61,7 @@ Describe "Get-KeyVaultSecretExist" {
 Describe "Get-KeyVaultKey" {
   Context "unit tests" -Tag "Unit" {
     BeforeEach {
+      Mock -ModuleName KeyVault Connect-Account{}
       Mock -ModuleName KeyVault Get-AzKeyVaultKey{}
     }
 
@@ -84,6 +88,7 @@ Describe "Get-KeyVaultKeyExist" {
 Describe "Get-KeyVaultCertificate" {
   Context "unit tests" -Tag "Unit" {
     BeforeEach {
+      Mock -ModuleName KeyVault Connect-Account{}
       Mock -ModuleName KeyVault Get-AzKeyVaultCertificate{}
     }
 
@@ -108,5 +113,6 @@ Describe "Get-KeyVaultCertificateExist" {
 }
 
 AfterAll {
+  Remove-Module Authentication
   Remove-Module KeyVault
 }
