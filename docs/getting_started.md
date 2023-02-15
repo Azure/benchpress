@@ -48,6 +48,7 @@ The easiest way to get started with BenchPress is to use the files in the `examp
 
   You can either use a `.env` file and pass in the environment variables locally with a script,
   or you must load each variable through the command line using:
+
     ```PowerShell
     $Env:AZ_APPLICATION_ID="<sample-application-id>"
     $Env:AZ_TENANT_ID="<sample-tenant-id>"
@@ -56,6 +57,7 @@ The easiest way to get started with BenchPress is to use the files in the `examp
     ```
 
   You can confirm if these are set up right on your local powershell using:
+
     ```PowerShell
     [Environment]::GetEnvironmentVariables()
     ```
