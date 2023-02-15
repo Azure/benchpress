@@ -1,3 +1,5 @@
+Import-Module $PSScriptRoot/Authentication.psm1
+
 <#
 .SYNOPSIS
   Gets an Action Group.
@@ -29,6 +31,8 @@ function Get-ActionGroup {
     [Parameter(Mandatory=$true)]
     [string]$ResourceGroupName
   )
+
+  Connect-Account
 
   $resource = Get-AzActionGroup -ResourceGroupName $ResourceGroupName -Name $ActionGroupName
   return $resource

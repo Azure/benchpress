@@ -4,6 +4,7 @@
 *.user
 *.userosscache
 *.sln.docstates
+.env
 
 # Build results
 [Dd]ebug/

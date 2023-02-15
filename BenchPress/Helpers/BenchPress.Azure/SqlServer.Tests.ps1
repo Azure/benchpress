@@ -1,4 +1,5 @@
 ﻿BeforeAll {
+  Import-Module $PSScriptRoot/Authentication.psm1
   Import-Module $PSScriptRoot/SqlServer.psm1
   Import-Module Az
 }
@@ -6,6 +7,7 @@
 Describe "Get-SqlServer" {
   Context "unit tests" -Tag "Unit" {
     BeforeEach {
+      Mock -ModuleName SqlServer Connect-Account{}
       Mock -ModuleName SqlServer Get-AzSqlServer{}
     }
 
@@ -30,5 +32,6 @@ Describe "Get-SqlServerExist" {
 }
 
 AfterAll {
+  Remove-Module Authentication
   Remove-Module SqlServer
 }

@@ -1,4 +1,5 @@
 ﻿BeforeAll {
+  Import-Module $PSScriptRoot/Authentication.psm1
   Import-Module $PSScriptRoot/SqlDatabase.psm1
   Import-Module Az
 }
@@ -6,6 +7,7 @@
 Describe "Get-SqlDatabase" {
   Context "unit tests" -Tag "Unit" {
     BeforeEach {
+      Mock -ModuleName SqlDatabase Connect-Account{}
       Mock -ModuleName SqlDatabase Get-AzSqlDatabase{}
     }
 
@@ -37,5 +39,6 @@ Describe "Get-SqlDatabaseExist" {
 }
 
 AfterAll {
+  Remove-Module Authentication
   Remove-Module SqlDatabase
 }

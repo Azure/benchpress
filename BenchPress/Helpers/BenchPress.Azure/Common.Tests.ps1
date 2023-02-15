@@ -2,6 +2,7 @@
 
 BeforeAll {
   Import-Module $PSScriptRoot/AppServicePlan.psm1
+  Import-Module $PSScriptRoot/Authentication.psm1
   Import-Module $PSScriptRoot/Common.psm1
   Import-Module $PSScriptRoot/ResourceGroup.psm1
   Import-Module $PSScriptRoot/SqlDatabase.psm1
@@ -38,6 +39,7 @@ Describe "Get-ResourceByType" {
 Describe "Get-Resource" {
   Context "unit tests" -Tag "Unit" {
     BeforeEach {
+      Mock -ModuleName Common Connect-Account{}
       Mock -ModuleName Common Get-AzResource{}
     }
 
@@ -123,6 +125,7 @@ AfterAll {
   Remove-Module Common
   Remove-Module ResourceGroup
   Remove-Module AppServicePlan
+  Remove-Module Authentication
   Remove-Module SqlDatabase
   Remove-Module SqlServer
   Remove-Module VirtualMachine

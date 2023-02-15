@@ -1,6 +1,7 @@
 Import-Module $PSScriptRoot/ActionGroup.psm1
 Import-Module $PSScriptRoot/AKSCluster.psm1
 Import-Module $PSScriptRoot/AppServicePlan.psm1
+Import-Module $PSScriptRoot/Authentication.psm1
 Import-Module $PSScriptRoot/ContainerRegistry.psm1
 Import-Module $PSScriptRoot/KeyVault.psm1
 Import-Module $PSScriptRoot/ResourceGroup.psm1
@@ -132,6 +133,8 @@ function Get-Resource {
     [Parameter(Mandatory = $false)]
     [string]$ResourceGroupName
   )
+
+  Connect-Account
 
   if ([string]::IsNullOrEmpty($ResourceGroupName)) {
     return Get-AzResource -Name "${ResourceName}"

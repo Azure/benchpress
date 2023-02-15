@@ -1,3 +1,5 @@
+Import-Module $PSScriptRoot/Authentication.psm1
+
 <#
 .SYNOPSIS
   Gets an AKS Cluster.
@@ -29,6 +31,8 @@ function Get-AKSCluster {
     [Parameter(Mandatory=$true)]
     [string]$ResourceGroupName
   )
+
+  Connect-Account
 
   $resource = Get-AzAksCluster -ResourceGroupName $ResourceGroupName -Name $AKSName
   return $resource

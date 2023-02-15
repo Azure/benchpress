@@ -1,4 +1,5 @@
 ﻿BeforeAll {
+  Import-Module $PSScriptRoot/Authentication.psm1
   Import-Module $PSScriptRoot/WebApp.psm1
   Import-Module Az
 }
@@ -6,6 +7,7 @@
 Describe "Get-WebApp" {
   Context "unit tests" -Tag "Unit" {
     BeforeEach {
+      Mock -ModuleName WebApp Connect-Account{}
       Mock -ModuleName WebApp Get-AzWebApp{}
     }
 
@@ -30,5 +32,6 @@ Describe "Get-WebAppExist" {
 }
 
 AfterAll {
+  Remove-Module Authentication
   Remove-Module WebApp
 }

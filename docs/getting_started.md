@@ -46,6 +46,22 @@ The easiest way to get started with BenchPress is to use the files in the `examp
   must then be saved as an environment variable. This ensures that the BenchPress code never uses the raw password at
   any point.
 
+  You can either use a `.env` file and pass in the environment variables locally with a script,
+  or you must load each variable through the command line using:
+
+    ```PowerShell
+    $Env:AZ_APPLICATION_ID="<sample-application-id>"
+    $Env:AZ_TENANT_ID="<sample-tenant-id>"
+    $Env:AZ_SUBSCRIPTION_ID="<sample-subscription-id>"
+    $Env:AZ_ENCRYPTED_PASSWORD="<sample-encrypted-password>"
+    ```
+
+  You can confirm if these are set up right on your local powershell using:
+
+    ```PowerShell
+    [Environment]::GetEnvironmentVariables()
+    ```
+
 ## Running a test file
 
 1. You can use any of the `*.Tests.ps1` for this quickstart, but we will specifically use `containerRegistry.bicep` and

@@ -1,11 +1,13 @@
 ﻿BeforeAll {
   Import-Module $PSScriptRoot/ActionGroup.psm1
+  Import-Module $PSScriptRoot/Authentication.psm1
   Import-Module Az
 }
 
 Describe "Get-ActionGroup" {
   Context "unit tests" -Tag "Unit" {
     BeforeEach {
+      Mock -ModuleName ActionGroup Connect-Account{}
       Mock -ModuleName ActionGroup Get-AzActionGroup{}
     }
 
@@ -31,4 +33,5 @@ Describe "Get-ActionGroupExist" {
 
 AfterAll {
   Remove-Module ActionGroup
+  Remove-Module Authentication
 }

@@ -1,3 +1,5 @@
+Import-Module $PSScriptRoot/Authentication.psm1
+
 <#
 .SYNOPSIS
   Gets one or more SQL Databases.
@@ -39,6 +41,8 @@ function Get-SqlDatabase {
     [Parameter(Mandatory=$true)]
     [string]$ResourceGroupName
   )
+
+  Connect-Account
 
   if ([string]::IsNullOrEmpty($databaseName)) {
     $resource = Get-AzSqlDatabase -ResourceGroupName $resourceGroupName -ServerName $serverName
