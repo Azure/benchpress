@@ -1,11 +1,13 @@
 ﻿BeforeAll {
   Import-Module $PSScriptRoot/AKSCluster.psm1
+  Import-Module $PSScriptRoot/Authentication.psm1
   Import-Module Az
 }
 
 Describe "Get-AKSCluster" {
   Context "unit tests" -Tag "Unit" {
     BeforeEach {
+      Mock -ModuleName AKSCluster Connect-Account{}
       Mock -ModuleName AKSCluster Get-AzAKSCluster{}
     }
 
@@ -31,4 +33,5 @@ Describe "Get-AKSClusterExist" {
 
 AfterAll {
   Remove-Module AKSCluster
+  Remove-Module Authentication
 }

@@ -1,4 +1,5 @@
 ﻿BeforeAll {
+  Import-Module $PSScriptRoot/Authentication.psm1
   Import-Module $PSScriptRoot/ResourceGroup.psm1
   Import-Module Az
 }
@@ -6,6 +7,7 @@
 Describe "Get-ResourceGroup" {
   Context "unit tests" -Tag "Unit" {
     BeforeEach {
+      Mock -ModuleName ResourceGroup Connect-Account{}
       Mock -ModuleName ResourceGroup Get-AzResourceGroup{}
     }
 
@@ -30,5 +32,6 @@ Describe "Get-ResourceGroupExist" {
 }
 
 AfterAll {
+  Remove-Module Authentication
   Remove-Module ResourceGroup
 }

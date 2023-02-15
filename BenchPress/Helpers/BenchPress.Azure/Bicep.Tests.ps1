@@ -1,4 +1,5 @@
 ﻿BeforeAll {
+  Import-Module $PSScriptRoot/Authentication.psm1
   Import-Module $PSScriptRoot/Bicep.psm1
 }
 
@@ -53,6 +54,7 @@ Describe "Confirm-BicepFile" {
 Describe "Deploy-BicepFeature" {
   Context "unit-test" -Tag "Unit" {
     BeforeEach {
+      Mock -ModuleName Bicep Connect-Account{}
       Mock -ModuleName Bicep New-AzResourceGroupDeployment
       Mock -ModuleName Bicep Remove-Item
     }
@@ -77,6 +79,7 @@ Describe "Deploy-BicepFeature" {
 Describe "Remove-BicepFeature" {
   Context "unit-test" -Tag "Unit" {
     BeforeEach {
+      Mock -ModuleName Bicep Connect-Account{}
       Mock -ModuleName Bicep Get-AzResourceGroup { "Resource" }
       Mock -ModuleName Bicep Remove-AzResourceGroup {}
     }
@@ -98,5 +101,6 @@ Describe "Remove-BicepFeature" {
 }
 
 AfterAll {
+  Remove-Module Authentication
   Remove-Module Bicep
 }

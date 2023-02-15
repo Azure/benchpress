@@ -1,6 +1,7 @@
 Import-Module $PSScriptRoot/ActionGroup.psm1
 Import-Module $PSScriptRoot/AKSCluster.psm1
 Import-Module $PSScriptRoot/AppServicePlan.psm1
+Import-Module $PSScriptRoot/Authentication.psm1
 Import-Module $PSScriptRoot/ContainerRegistry.psm1
 Import-Module $PSScriptRoot/KeyVault.psm1
 Import-Module $PSScriptRoot/ResourceGroup.psm1
@@ -133,6 +134,8 @@ function Get-Resource {
     [string]$ResourceGroupName
   )
 
+  Connect-Account
+
   if ([string]::IsNullOrEmpty($ResourceGroupName)) {
     return Get-AzResource -Name "${ResourceName}"
   }
@@ -162,7 +165,11 @@ function Get-Resource {
     The name of the Resource Group
 
   .PARAMETER ResourceType
+<<<<<<< HEAD
     The type of the Resource (currently support the following:
+=======
+    The type of the Resource (currently supports the following:
+>>>>>>> main
     ActionGroup
     AKSCluster
     AppServicePlan
@@ -220,19 +227,18 @@ function Confirm-Resource {
 
   if ($null -ne $ConfirmResult.ResourceDetails) {
     $ConfirmResult.Success = $true
+    if ($PropertyKey) {
+      if ($ConfirmResult.ResourceDetails.$PropertyKey -ne $PropertyValue) {
+        $ConfirmResult.Success = $false
+        $ConfirmResult.Error = Format-IncorrectValueError -ExpectedKey $PropertyKey -ExpectedValue $PropertyValue -ActualResult $ConfirmResult.ResourceDetails.$PropertyKey
+      }
+    }
   }
   else {
     $ConfirmResult.Success = $false
     $ConfirmResult.Error = Format-NotExistError -Expected $ResourceName
-    return $ConfirmResult
   }
 
-  if($PropertyKey){
-    if($ConfirmResult.ResourceDetails.$PropertyKey -ne $PropertyValue){
-      $ConfirmResult.Success = $false
-      $ConfirmResult.Error = Format-IncorrectValueError -ExpectedKey $PropertyKey -ExpectedValue $PropertyValue -ActualResult $ConfirmResult.ResourceDetails.$PropertyKey
-    }
-  }
   return $ConfirmResult
 }
 

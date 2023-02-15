@@ -1,4 +1,5 @@
 ﻿BeforeAll {
+  Import-Module $PSScriptRoot/Authentication.psm1
   Import-Module $PSScriptRoot/VirtualMachine.psm1
   Import-Module Az
 }
@@ -6,6 +7,7 @@
 Describe "Get-VirtualMachine" {
   Context "unit tests" -Tag "Unit" {
     BeforeEach {
+      Mock -ModuleName VirtualMachine Connect-Account{}
       Mock -ModuleName VirtualMachine Get-AzVM{}
     }
 
@@ -30,5 +32,6 @@ Describe "Get-VirtualMachineExist" {
 }
 
 AfterAll {
+  Remove-Module Authentication
   Remove-Module VirtualMachine
 }

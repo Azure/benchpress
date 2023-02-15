@@ -58,7 +58,8 @@ Describe 'Use Confirm-AzBPResource to confirm resource and/or properties exist'{
       $containerRegistryName = "testcontaineregistry"
 
       #act
-      $result = Confirm-AzBPResource -ResourceGroupName $resourceGroupName -ResourceType $resourceType -ResourceName $containerRegistryName
+      $result = Confirm-AzBPResource -ResourceGroupName $resourceGroupName -ResourceType $resourceType `
+                  -ResourceName $containerRegistryName
 
       #assert
       $result.Success | Should -Be $true
@@ -73,7 +74,8 @@ Describe 'Use Confirm-AzBPResource to confirm resource and/or properties exist'{
       $expectedValue = "Standard"
 
       #act
-      $result = Confirm-AzBPResource -ResourceGroupName $resourceGroupName -ResourceType $resourceType -ResourceName $containerRegistryName -PropertyKey $property -PropertyValue $expectedValue
+      $result = Confirm-AzBPResource -ResourceGroupName $resourceGroupName -ResourceType $resourceType `
+                  -ResourceName $containerRegistryName -PropertyKey $property -PropertyValue $expectedValue
 
       #assert
       $result.Success | Should -Be $true
@@ -100,7 +102,8 @@ Describe 'Use Confirm-AzBPResource to confirm resource and/or properties exist'{
       $expectedValue = "WestUS3"
 
       #act
-      $result = Confirm-AzBPResource -ResourceType $resourceType -ResourceName $resourceGroupName -PropertyKey $property -PropertyValue $expectedValue
+      $result = Confirm-AzBPResource -ResourceType $resourceType -ResourceName $resourceGroupName `
+                  -PropertyKey $property -PropertyValue $expectedValue
 
       #assert
       $result.Success | Should -Be $true
@@ -114,7 +117,8 @@ Describe 'Use Confirm-AzBPResource to confirm resource and/or properties exist'{
       $sqlServerName = "testserver"
       $resourceType = "SqlServer"
       #act
-      $result = Confirm-AzBPResource -ResourceGroupName $resourceGroupName -ResourceType $resourceType -ResourceName $sqlServerName
+      $result = Confirm-AzBPResource -ResourceGroupName $resourceGroupName -ResourceType $resourceType `
+                  -ResourceName $sqlServerName
 
       #assert
       $result.Success | Should -Be $true

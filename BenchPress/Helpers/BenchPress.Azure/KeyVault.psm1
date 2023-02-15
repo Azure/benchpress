@@ -1,3 +1,5 @@
+Import-Module $PSScriptRoot/Authentication.psm1
+
 <#
 .SYNOPSIS
   Gets a Key Vault.
@@ -30,6 +32,8 @@ function Get-KeyVault {
     [Parameter(Mandatory = $true)]
     [string]$ResourceGroupName
   )
+
+  Connect-Account
 
   $resource = Get-AzKeyVault -ResourceGroupName $ResourceGroupName -VaultName $Name
   return $resource
@@ -105,6 +109,8 @@ function Get-KeyVaultSecret {
     [string]$KeyVaultName
   )
 
+  Connect-Account
+
   $resource = Get-AzKeyVaultSecret -Name $Name -VaultName $KeyVaultName
   return $resource
 }
@@ -179,6 +185,8 @@ function Get-KeyVaultKey {
     [string]$KeyVaultName
   )
 
+  Connect-Account
+
   $resource = Get-AzKeyVaultKey -Name $Name -VaultName $KeyVaultName
   return $resource
 }
@@ -252,6 +260,8 @@ function Get-KeyVaultCertificate {
     [Parameter(Mandatory = $true)]
     [string]$KeyVaultName
   )
+
+  Connect-Account
 
   $resource = Get-AzKeyVaultCertificate -Name $Name -VaultName $KeyVaultName
   return $resource
