@@ -18,7 +18,7 @@ Astro project, and, publish the documentation site to GitHub Pages.
 - Import Benchpress.Azure module
 - Import PlatyPS module
 - Generate Markdown files based on the comments in the BenchPress.Azure module functions
-- Format Markdown files using [generate-docs-workflow.psm1](.github/scripts/generate-docs-workflow.psm1) script
+- Format Markdown files using [generate-docs-workflow.psm1](../.github/scripts/generate-docs-workflow.psm1) script
   - Add frontmatter to the Markdown files, so Astro can use it to generate the documentation site, such as,
   layout, title, module, version, updatedOn, etc.
   - Remove escape characters (\\) from (` , [ and ]) characters
