@@ -4,6 +4,8 @@ name: "Publish docs to GitHub Pages"
 
 on: # yamllint disable-line rule:truthy
   workflow_dispatch:
+  repository_dispatch:
+    types: [ci-publish-docs-branch]
 
 permissions:
   contents: read
