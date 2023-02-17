@@ -86,6 +86,23 @@ Describe 'Verify KeyVault Exists' {
   }
 }
 
+Describe 'Verify KeyVault Does Not Exist' {
+  it 'Should not contain a KeyVault with the given name' {
+    #arrange
+    $rgName = "rg-test"
+    $kvName = "kvbenchpresstest"
+
+    #act
+    # The '-ErrorAction SilentlyContinue' command
+    # suppresses errors when the underlying functions
+    # don't find the resource; remove this to see the error
+    $exists = Get-AzBPKeyVaultExist -ResourceGroupName $rgName -Name $kvName -ErrorAction SilentlyContinue
+
+    #assert
+    $exists | Should -Be $false
+  }
+}
+
 Describe 'Spin up , Tear down KeyVault' {
   it 'Should deploy a bicep file.' {
     #arrange

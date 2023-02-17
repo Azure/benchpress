@@ -3,7 +3,7 @@ BeforeAll {
 }
 
 Describe 'Verify AKS Cluster Exists' {
-  it 'Should contain a resource group named rgbenchpresstest' {
+  it 'Should contain an AKS cluster named aksbenchpresstest' {
     #arrange
     $resourceGroupName = "rg-test"
     $aksName = "aksbenchpresstest"
@@ -13,6 +13,23 @@ Describe 'Verify AKS Cluster Exists' {
 
     #assert
     $exists | Should -Be $true
+  }
+}
+
+Describe 'Verify AKS Cluster Does Not Exist' {
+  it 'Should not contain an AKS cluster named aksbenchpresstest' {
+    #arrange
+    $resourceGroupName = "rg-test"
+    $aksName = "aksbenchpresstest"
+
+    #act
+    # The '-ErrorAction SilentlyContinue' command
+    # suppresses errors when the underlying functions
+    # don't find the resource; remove this to see the error
+    $exists = Get-AzBPAKSClusterExist -ResourceGroupName $resourceGroupName -AKSName $aksName -ErrorAction SilentlyContinue
+
+    #assert
+    $exists | Should -Be $false
   }
 }
 

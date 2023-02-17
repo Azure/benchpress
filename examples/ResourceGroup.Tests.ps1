@@ -15,6 +15,22 @@ Describe 'Verify Resource Group Exists' {
   }
 }
 
+Describe 'Verify Resource Group Does Not Exist' {
+  it 'Should not contain a resource group named tflintrules' {
+    #arrange
+    $rgName = "tflintrules"
+
+    #act
+    # The '-ErrorAction SilentlyContinue' command
+    # suppresses errors when the underlying functions
+    # don't find the resource; remove this to see the error
+    $exists = Get-AzBPResourceGroupExist -ResourceGroupName $rgName -ErrorAction SilentlyContinue
+
+    #assert
+    $exists | Should -Be $false
+  }
+}
+
 Describe 'Spin up , Tear down Resource Group' {
   it 'Should deploy a bicep file.' {
     #arrange

@@ -46,6 +46,24 @@ Describe 'Verify Sql Database Exists without providing databaseName flag' {
     }
 }
 
+Describe 'Verify Sql Database Does Not Exist' {
+    it 'Should not contain a Sql Database with the given name' {
+        #arrange
+        $rgName = 'rg-test'
+        $serverName = 'azbpsqlserverwithdatabasetest1'
+        $databaseName = 'samplesqldatabase'
+
+        #act
+        # The '-ErrorAction SilentlyContinue' command
+        # suppresses errors when the underlying functions
+        # don't find the resource; remove this to see the error
+        $exists =  Get-AzBPSqlDatabaseExist -ResourceGroupName $rgName -DatabaseName $databaseName -ServerName $serverName -ErrorAction SilentlyContinue
+
+        #assert
+        $exists | Should -Be $false
+    }
+}
+
 Describe 'Spin up , Tear down Sql Database' {
     it 'Should deploy a bicep file.' {
       #arrange
