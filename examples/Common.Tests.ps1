@@ -87,7 +87,7 @@ Describe 'Use Confirm-AzBPResource to confirm resource and/or properties exist'{
       #arrange
       $resourceGroupName = "testrg"
       $resourceType = "ResourceGroup"
-  
+
       #act
       $result = Confirm-AzBPResource -ResourceType $resourceType -ResourceName $resourceGroupName
 
