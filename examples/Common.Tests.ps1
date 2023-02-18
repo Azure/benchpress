@@ -87,6 +87,7 @@ Describe 'Use Confirm-AzBPResource to confirm resource and/or properties exist'{
       #arrange
       $resourceGroupName = "testrg"
       $resourceType = "ResourceGroup"
+
       #act
       $result = Confirm-AzBPResource -ResourceType $resourceType -ResourceName $resourceGroupName
 
@@ -94,7 +95,7 @@ Describe 'Use Confirm-AzBPResource to confirm resource and/or properties exist'{
       $result.Success | Should -Be $true
     }
 
-    it 'Should contain a a resource group named testrg in WestUS3' {
+    it 'Should contain a resource group named testrg in WestUS3' {
       #arrange
       $resourceGroupName = "testrg"
       $resourceType = "ResourceGroup"
@@ -116,6 +117,7 @@ Describe 'Use Confirm-AzBPResource to confirm resource and/or properties exist'{
       $resourceGroupName = "testrg"
       $sqlServerName = "testserver"
       $resourceType = "SqlServer"
+
       #act
       $result = Confirm-AzBPResource -ResourceGroupName $resourceGroupName -ResourceType $resourceType `
                   -ResourceName $sqlServerName
@@ -123,5 +125,38 @@ Describe 'Use Confirm-AzBPResource to confirm resource and/or properties exist'{
       #assert
       $result.Success | Should -Be $true
     }
+  }
+}
+
+Describe 'Verify Resource Group Does Not Exist' {
+  it 'Should not contain a resource group named testrg2' {
+    #arrange
+    $resourceGroupName = "testrg2"
+    $resourceType = "ResourceGroup"
+
+    #act
+    #This will throw an error
+    $result = Confirm-AzBPResource -ResourceType $resourceType -ResourceName $resourceGroupName
+
+    #assert
+    $result.Success | Should -Be $false
+  }
+
+  it 'Should not contain a resource group named testrg in WestUS2' {
+    #arrange
+    $resourceGroupName = "testrg"
+    $resourceType = "ResourceGroup"
+    $property = "Location"
+    $expectedValue = "WestUS2"
+
+    #act
+    # The '-ErrorAction SilentlyContinue' command suppresses all errors.
+    # In this test, it will suppress the error message when a resource cannot be found.
+    # Remove this field to see all errors.
+    $result = Confirm-AzBPResource -ResourceType $resourceType -ResourceName $resourceGroupName `
+                -PropertyKey $property -PropertyValue $expectedValue -ErrorAction SilentlyContinue
+
+    #assert
+    $result.Success | Should -Be $false
   }
 }
