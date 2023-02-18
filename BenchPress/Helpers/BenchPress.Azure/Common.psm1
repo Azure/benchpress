@@ -258,7 +258,12 @@ function Confirm-Resource {
       }
       if ($ActualValue -ne $PropertyValue) {
         $ConfirmResult.Success = $false
-        $ConfirmResult.Error = Format-IncorrectValueError -ExpectedKey $PropertyKey -ExpectedValue $PropertyValue -ActualResult $ActualValue
+        if ($ActualValue) {
+          $ConfirmResult.Error = Format-IncorrectValueError -ExpectedKey $PropertyKey -ExpectedValue $PropertyValue -ActualValue $ActualValue
+        }
+        else {
+          $ConfirmResult.Error = Format-PropertyDoesNotExistError -PropertyKey $PropertyKey
+        }
       }
     }
   }
@@ -329,6 +334,31 @@ function Format-IncorrectValueError([string]$ExpectedKey, [string]$ExpectedValue
 
 <#
   .SYNOPSIS
+    Private function to create a message and ErrorRecord for when a resource property does not exist.
+
+  .DESCRIPTION
+    Format-PropertyDoesNotExistError is a private helper function that can be used to construct a message and ErrorRecord
+    for when a resource property does not exist.
+
+  .PARAMETER PropertyKey
+    The resource property name that is checked
+
+  .EXAMPLE
+    Format-PropertyDoesNotExistError -PropertyKey "Location"
+
+  .INPUTS
+    System.String
+
+  .OUTPUTS
+    System.Management.Automation.ErrorRecord
+#>
+function Format-PropertyDoesNotExistError([string]$PropertyKey) {
+  $Message = "$PropertyKey is not a property on the resource"
+  return Format-ErrorRecord -Message $Message -ErrorID "BenchPressPropertyFail"
+}
+
+<#
+  .SYNOPSIS
     Private function to help construct a ErrorRecord.
 
   .DESCRIPTION
@@ -354,8 +384,9 @@ function Format-ErrorRecord ([string] $Message, [string]$ErrorID) {
   $ErrorCategory = [System.Management.Automation.ErrorCategory]::InvalidResult
   $TargetObject = @{ Message = $Message }
   $ErrorRecord = New-Object System.Management.Automation.ErrorRecord $Exception, $ErrorID, $ErrorCategory, $TargetObject
+  Write-Error $ErrorRecord
   return $ErrorRecord
 }
 
 Export-ModuleMember -Function Get-Resource, Get-ResourceByType, Confirm-Resource, `
-  Format-NotExistError, Format-IncorrectValueError, Format-ErrorRecord
+  Format-NotExistError, Format-IncorrectValueError, Format-ErrorRecord, Format-PropertyDoesNotExistError
