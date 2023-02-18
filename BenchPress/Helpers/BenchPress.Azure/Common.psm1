@@ -62,10 +62,11 @@ enum ResourceType {
   System.String
 
 .OUTPUTS
-  Microsoft.Azure.Commands.ResourceManager.Cmdlets.SdkModels.PSResource
+  ConfirmResult
 #>
 function Get-ResourceByType {
   [CmdletBinding()]
+  [OutputType([ConfirmResult])]
   param (
     [Parameter(Mandatory = $true)]
     [string]$ResourceName,
@@ -214,12 +215,15 @@ function Confirm-Resource {
 
   )
 
-  $ConfirmResult = [ConfirmResult]::new()
-  $ConfirmResult.ResourceDetails = `
-    Get-ResourceByType -ResourceGroupName $ResourceGroupName -ResourceName $ResourceName -ResourceType $ResourceType
+  $ResourceParams = @{
+    ResourceGroupName = $ResourceGroupName
+    ResourceName = $ResourceName
+    ResourceType = $ResourceType
+  }
 
-  if ($null -ne $ConfirmResult.ResourceDetails) {
-    $ConfirmResult.Success = $true
+  $ConfirmResult = Get-ResourceByType @ResourceParams
+
+  if ($null -ne $ConfirmResult -and $ConfirmResult.Success) {
     if ($PropertyKey) {
       if ($ConfirmResult.ResourceDetails.$PropertyKey -ne $PropertyValue) {
         $ConfirmResult.Success = $false
@@ -230,12 +234,8 @@ function Confirm-Resource {
       }
     }
   }
-  else {
-    $ConfirmResult.Success = $false
-    $ConfirmResult.Error = Format-NotExistError -Expected $ResourceName
-  }
 
-  return $ConfirmResult
+  $ConfirmResult
 }
 
 
