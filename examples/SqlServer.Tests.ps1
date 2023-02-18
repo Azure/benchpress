@@ -37,9 +37,9 @@ Describe 'Verify Sql Server Does Not Exist' {
         $serverName = 'azbenchpreesssqlservertest1'
 
         #act
-        # The '-ErrorAction SilentlyContinue' command
-        # suppresses errors when the underlying functions
-        # don't find the resource; remove this to see the error
+        # The '-ErrorAction SilentlyContinue' command suppresses all errors.
+        # In this test, it will suppress the error message when a resource cannot be found.
+        # Remove this field to see all errors.
         $exists = Get-AzBPSqlServerExist -ResourceGroupName $rgName -ServerName $serverName -ErrorAction SilentlyContinue
 
         #assert
