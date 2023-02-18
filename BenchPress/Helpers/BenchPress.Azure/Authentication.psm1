@@ -1,4 +1,5 @@
 using module ./public/classes/AuthenticationResult.psm1
+using module ./public/classes/AuthenticationData.psm1
 
 <#
   .SYNOPSIS
@@ -107,11 +108,7 @@ function Connect-Account {
     } else {
       # The current context is not correct, create the credentials and login to the correct account
       $ClientSecret = Get-RequiredEnvironmentVariable AZ_ENCRYPTED_PASSWORD | ConvertTo-SecureString
-      $CredentialParams = @{
-        TypeName = "System.Management.Automation.PSCredential"
-        ArgumentList = $ApplicationId, $ClientSecret
-      }
-      $Credential = New-Object @CredentialParams
+      $Credential = New-Object System.Management.Automation.PSCredential -ArgumentList $ApplicationId, $ClientSecret
 
       try {
         $ConnectionParams = @{
