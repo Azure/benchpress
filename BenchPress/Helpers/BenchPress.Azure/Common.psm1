@@ -1,3 +1,5 @@
+using module ./public/classes/ConfirmResult.psm1
+
 Import-Module $PSScriptRoot/ActionGroup.psm1
 Import-Module $PSScriptRoot/AksCluster.psm1
 Import-Module $PSScriptRoot/AppServicePlan.psm1
