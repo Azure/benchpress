@@ -223,11 +223,14 @@ function Confirm-Resource {
 
   $ConfirmResult = Get-ResourceByType @ResourceParams
 
-  if ($null -ne $ConfirmResult -and $ConfirmResult.Success) {
+  if ($null -eq $ConfirmResult) {
+    $ErrorRecord = Format-ErrorRecord -Message "ResourceType is invalid" -ErrorID "InvalidResourceType"
+    $ConfirmResult = [ConfirmResult]::new($ErrorRecord, $null)
+  } elseif ($ConfirmResult.Success) {
     if ($PropertyKey) {
       if ($ConfirmResult.ResourceDetails.$PropertyKey -ne $PropertyValue) {
         $ConfirmResult.Success = $false
-        $ConfirmResult.Error = `
+        $ConfirmResult.ErrorRecord = `
           Format-IncorrectValueError -ExpectedKey $PropertyKey `
                                      -ExpectedValue $PropertyValue `
                                      -ActualResult $ConfirmResult.ResourceDetails.$PropertyKey
