@@ -7,7 +7,7 @@ Import-Module $PSScriptRoot/Authentication.psm1
   Confirms that an AKS Cluster exists.
 
 .DESCRIPTION
-  The Confirm-AzBPAKSCluster cmdlet gets an AKS cluster using the specified AKS Cluster and Resource Group name.
+  The Confirm-AzBPAksCluster cmdlet gets an AKS cluster using the specified AKS Cluster and Resource Group name.
 
 .PARAMETER AKSName
   The name of the AKS Cluster
@@ -16,7 +16,7 @@ Import-Module $PSScriptRoot/Authentication.psm1
   The name of the Resource Group
 
 .EXAMPLE
-  Confirm-AzBPAKSCluster -AKSName "benchpresstest" -ResourceGroupName "rgbenchpresstest"
+  Confirm-AzBPAksCluster -AKSName "benchpresstest" -ResourceGroupName "rgbenchpresstest"
 
 .INPUTS
   System.String

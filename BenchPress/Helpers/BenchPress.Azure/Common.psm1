@@ -1,5 +1,5 @@
 Import-Module $PSScriptRoot/ActionGroup.psm1
-Import-Module $PSScriptRoot/AKSCluster.psm1
+Import-Module $PSScriptRoot/AksCluster.psm1
 Import-Module $PSScriptRoot/AppServicePlan.psm1
 Import-Module $PSScriptRoot/Authentication.psm1
 Import-Module $PSScriptRoot/ContainerRegistry.psm1
@@ -12,7 +12,7 @@ Import-Module $PSScriptRoot/WebApp.psm1
 
 enum ResourceType {
   ActionGroup
-  AKSCluster
+  AksCluster
   AppServicePlan
   ContainerRegistry
   KeyVault
@@ -40,7 +40,7 @@ enum ResourceType {
 .PARAMETER ResourceType
   The type of the Resource (currently support the following:
   ActionGroup
-  AKSCluster
+  AksCluster
   AppServicePlan
   ContainerRegistry
   KeyVault
@@ -76,16 +76,16 @@ function Get-ResourceByType {
   )
 
   switch ($ResourceType) {
-    ActionGroup { return Get-ActionGroup -ActionGroupName $ResourceName -ResourceGroupName $ResourceGroupName }
-    AKSCluster { return Get-AKSCluster -AKSName $ResourceName -ResourceGroupName $ResourceGroupName }
-    AppServicePlan { return Get-AppServicePlan -AppServicePlanName $ResourceName -ResourceGroupName $ResourceGroupName }
-    ContainerRegistry { return Get-ContainerRegistry -Name $ResourceName -ResourceGroupName $ResourceGroupName }
-    KeyVault { return Get-KeyVault -Name $ResourceName -ResourceGroupName $ResourceGroupName }
-    ResourceGroup { return Get-ResourceGroup -ResourceGroupName $ResourceName }
-    SqlDatabase { return Get-SqlDatabase -ServerName $ResourceName -ResourceGroupName $ResourceGroupName }
-    SqlServer { return Get-SqlServer -ServerName $ResourceName -ResourceGroupName $ResourceGroupName }
-    VirtualMachine { return Get-VirtualMachine -VirtualMachineName $ResourceName -ResourceGroupName $ResourceGroupName }
-    WebApp { return Get-WebApp -WebAppName $ResourceName -ResourceGroupName $ResourceGroupName }
+    ActionGroup { return Confirm-ActionGroup -ActionGroupName $ResourceName -ResourceGroupName $ResourceGroupName }
+    AksCluster { return Confirm-AksCluster -AKSName $ResourceName -ResourceGroupName $ResourceGroupName }
+    AppServicePlan { return Confirm-AppServicePlan -AppServicePlanName $ResourceName -ResourceGroupName $ResourceGroupName }
+    ContainerRegistry { return Confirm-ContainerRegistry -Name $ResourceName -ResourceGroupName $ResourceGroupName }
+    KeyVault { return Confirm-KeyVault -Name $ResourceName -ResourceGroupName $ResourceGroupName }
+    ResourceGroup { return Confirm-ResourceGroup -ResourceGroupName $ResourceName }
+    SqlDatabase { return Confirm-SqlDatabase -ServerName $ResourceName -ResourceGroupName $ResourceGroupName }
+    SqlServer { return Confirm-SqlServer -ServerName $ResourceName -ResourceGroupName $ResourceGroupName }
+    VirtualMachine { return Confirm-VirtualMachine -VirtualMachineName $ResourceName -ResourceGroupName $ResourceGroupName }
+    WebApp { return Confirm-WebApp -WebAppName $ResourceName -ResourceGroupName $ResourceGroupName }
     default {
       Write-Information "Not implemented yet"
       return $null
@@ -161,7 +161,7 @@ function Get-Resource {
   .PARAMETER ResourceType
     The type of the Resource (currently supports the following:
     ActionGroup
-    AKSCluster
+    AksCluster
     AppServicePlan
     ContainerRegistry
     KeyVault

@@ -11,7 +11,7 @@
   RequiredModules = @()
   NestedModules = @(
     "ActionGroup.psm1",
-    "AKSCluster.psm1",
+    "AksCluster.psm1",
     "AppServicePlan.psm1",
     "Authentication.psm1",
     "AzureCli.psm1",
@@ -31,7 +31,7 @@
     "Deploy-BicepFeature",
     "Remove-BicepFeature",
     "Confirm-ActionGroup",
-    "Confirm-AKSCluster",
+    "Confirm-AksCluster",
     "Confirm-AppServicePlan",
     "Confirm-ContainerRegistry",
     "Confirm-KeyVault",
@@ -49,7 +49,7 @@
   )
   PrivateData = @{
     PSData = @{
-      Tags = @("Azure", "BenchPress", "Bicep", "ARM", "Test", "ActionGroup", "AKS", "AKSCluster", "ContainerRegistry", "KeyVault", "ResourceGroup", "ServicePlan", "SqlDatabase", "SqlServer", "VirtualMachine", "WebApp")
+      Tags = @("Azure", "BenchPress", "Bicep", "ARM", "Test", "ActionGroup", "AKS", "AksCluster", "ContainerRegistry", "KeyVault", "ResourceGroup", "ServicePlan", "SqlDatabase", "SqlServer", "VirtualMachine", "WebApp")
       LicenseUri = ""
       ProjectUri = "https://github.com/Azure/benchpress/"
       IconUri = ""
