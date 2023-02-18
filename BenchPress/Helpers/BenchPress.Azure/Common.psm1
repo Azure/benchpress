@@ -23,12 +23,6 @@ enum ResourceType {
   WebApp
 }
 
-class ConfirmResult {
-  [boolean]$Success
-  [System.Management.Automation.ErrorRecord]$Error
-  [System.Object]$ResourceDetails
-}
-
 <#
 .SYNOPSIS
   Gets an Azure Resource.
@@ -165,11 +159,7 @@ function Get-Resource {
     The name of the Resource Group
 
   .PARAMETER ResourceType
-<<<<<<< HEAD
-    The type of the Resource (currently support the following:
-=======
     The type of the Resource (currently supports the following:
->>>>>>> main
     ActionGroup
     AKSCluster
     AppServicePlan
@@ -223,14 +213,18 @@ function Confirm-Resource {
   )
 
   $ConfirmResult = [ConfirmResult]::new()
-  $ConfirmResult.ResourceDetails = Get-ResourceByType -ResourceGroupName $ResourceGroupName -ResourceName $ResourceName -ResourceType $ResourceType
+  $ConfirmResult.ResourceDetails = `
+    Get-ResourceByType -ResourceGroupName $ResourceGroupName -ResourceName $ResourceName -ResourceType $ResourceType
 
   if ($null -ne $ConfirmResult.ResourceDetails) {
     $ConfirmResult.Success = $true
     if ($PropertyKey) {
       if ($ConfirmResult.ResourceDetails.$PropertyKey -ne $PropertyValue) {
         $ConfirmResult.Success = $false
-        $ConfirmResult.Error = Format-IncorrectValueError -ExpectedKey $PropertyKey -ExpectedValue $PropertyValue -ActualResult $ConfirmResult.ResourceDetails.$PropertyKey
+        $ConfirmResult.Error = `
+          Format-IncorrectValueError -ExpectedKey $PropertyKey `
+                                     -ExpectedValue $PropertyValue `
+                                     -ActualResult $ConfirmResult.ResourceDetails.$PropertyKey
       }
     }
   }

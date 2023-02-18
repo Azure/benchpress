@@ -1,11 +1,13 @@
+using module ./public/classes/ConfirmResult.psm1
+
 Import-Module $PSScriptRoot/Authentication.psm1
 
 <#
 .SYNOPSIS
-  Gets a Web App.
+  Confirms that a Web App exists.
 
 .DESCRIPTION
-  The Get-AzBPWebApp cmdlet gets a Web App using the specified Web App and
+  The Confirm-AzBPWebApp cmdlet gets a Web App using the specified Web App and
   Resource Group name.
 
 .PARAMETER WebAppName
@@ -15,16 +17,17 @@ Import-Module $PSScriptRoot/Authentication.psm1
   The name of the Resource Group
 
 .EXAMPLE
-  Get-AzBPWebApp -WebAppName "benchpresstest" -ResourceGroupName "rgbenchpresstest"
+  Confirm-AzBPWebApp -WebAppName "benchpresstest" -ResourceGroupName "rgbenchpresstest"
 
 .INPUTS
   System.String
 
 .OUTPUTS
-  Microsoft.Azure.Commands.WebApps.Models.PSSite
+  ConfirmResult
 #>
-function Get-WebApp {
+function Confirm-WebApp {
   [CmdletBinding()]
+  [OutputType([ConfirmResult])]
   param (
     [Parameter(Mandatory=$true)]
     [string]$WebAppName,
@@ -32,48 +35,30 @@ function Get-WebApp {
     [Parameter(Mandatory=$true)]
     [string]$ResourceGroupName
   )
+  Begin {
+    $ConnectResults = Connect-Account
+  }
+  Process {
+    [ConfirmResult]$Results = $null
 
-  Connect-Account
+    try {
+      $Resource = Get-AzWebApp -ResourceGroupName $ResourceGroupName -Name $WebAppName
 
-  $resource = Get-AzWebApp -ResourceGroupName $ResourceGroupName -Name $WebAppName
-  return $resource
+      $Results = [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+    } catch {
+      $Exception = $_
+      $ErrorRecord = [System.Management.Automation.ErrorRecord]::new(
+        $Exception,
+        "GetResourceError",
+        [System.Management.Automation.ErrorCategory]::InvalidResult,
+        $null
+      )
+
+      $Results = [ConfirmResult]::new($ErrorRecord, $ConnectResults.AuthenticationData)
+    }
+
+    $Results
+  }
 }
 
-<#
-.SYNOPSIS
-  Gets if a Web App exists.
-
-.DESCRIPTION
-  The Get-AzBPWebAppExist cmdlet checks if a Web App exists using the specified
-  Web App and Resource Group name.
-
-.PARAMETER WebAppName
-  The name of the Web App
-
-.PARAMETER ResourceGroupName
-  The name of the Resource Group
-
-.EXAMPLE
-  Get-AzBPWebAppExist -WebAppName "benchpresstest" -ResourceGroupName "rgbenchpresstest"
-
-.INPUTS
-  System.String
-
-.OUTPUTS
-  System.Boolean
-#>
-function Get-WebAppExist {
-  [CmdletBinding()]
-  param (
-    [Parameter(Mandatory=$true)]
-    [string]$WebAppName,
-
-    [Parameter(Mandatory=$true)]
-    [string]$ResourceGroupName
-  )
-
-  $resource = Get-WebApp -WebAppName $WebAppName -ResourceGroupName $ResourceGroupName
-  return ($null -ne $resource)
-}
-
-Export-ModuleMember -Function Get-WebApp, Get-WebAppExist
+Export-ModuleMember -Function Confirm-WebApp

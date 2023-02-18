@@ -1,3 +1,5 @@
+using module ./public/classes/AuthenticationResult.psm1
+
 <#
   .SYNOPSIS
     Get-RequiredEnvironmentVariable is a private helper method that retrieves environment variables with the
@@ -49,62 +51,89 @@ function Get-RequiredEnvironmentVariable {
   }
 }
 
-<#
-  .SYNOPSIS
-    Connect-Account uses environment variable values to log into an Azure context. This is an internal function and
-    should not be used outside of the BenchPress module.
-
-  .DESCRIPTION
-    Connect-Account is designed to login to an Azure context using environment variables to login as a
-    ServicePrincipal for the PowerShell session.
-
-    The expected environment variables are:
-
-    AZ_APPLICATION_ID - The Service Principal ID
-    AZ_ENCRYPTED_PASSWORD - The Service Principal account password properly encrypted using ConvertTo-SecureString and
-                            saved as an environment variable using ConvertFrom-SecureString
-    AZ_TENANT_ID - The Tenant ID to login to
-    AZ_SUBSCRIPTION_ID - The Subscription ID to login to
-
-    If the current context that is logged in to matches the Service Principal, Tenant, and Subscription this function
-    is a no-op.
-
-  .EXAMPLE
-    There is only one way to call Connect-Account:
-
-    Connect-Account
-
-  .INPUTS
-    None
-
-  .OUTPUTS
-    None
-#>
 function Connect-Account {
-  [OutputType([System.Void])]
+  <#
+    .SYNOPSIS
+      Connect-Account uses environment variable values to log into an Azure context. This is an internal function and
+      should not be used outside of the BenchPress module.
+
+    .DESCRIPTION
+      Connect-Account is designed to login to an Azure context using environment variables to login as a
+      ServicePrincipal for the PowerShell session.
+
+      The expected environment variables are:
+
+      AZ_APPLICATION_ID - The Service Principal ID
+      AZ_ENCRYPTED_PASSWORD - The Service Principal account password properly encrypted using ConvertTo-SecureString and
+                              saved as an environment variable using ConvertFrom-SecureString
+      AZ_TENANT_ID - The Tenant ID to login to
+      AZ_SUBSCRIPTION_ID - The Subscription ID to login to
+
+      If the current context that is logged in to matches the Service Principal, Tenant, and Subscription this function
+      is a no-op.
+
+    .EXAMPLE
+      There is only one way to call Connect-Account:
+
+      Connect-Account
+
+    .INPUTS
+      None
+
+    .OUTPUTS
+      AuthenticationResult
+  #>
+  [OutputType([AuthenticationResult])]
+  [CmdletBinding()]
   param ( )
-  Begin {
+  Begin { }
+  Process {
     $ApplicationId = Get-RequiredEnvironmentVariable AZ_APPLICATION_ID
     $TenantId = Get-RequiredEnvironmentVariable AZ_TENANT_ID
     $SubscriptionId = Get-RequiredEnvironmentVariable AZ_SUBSCRIPTION_ID
     $CurrentConnection = Get-AzContext
-  }
-  Process {
-    # If the current context matches the subscription, tentant, and service principal, then we're already properly
+    $Results = [AuthenticationResult]::new()
+
+    # If the current context matches the subscription, tenant, and service principal, then we're already properly
     # logged in.
     if ($null -ne $CurrentConnection `
       -and ($CurrentConnection).Account.Type -eq 'ServicePrincipal' `
       -and ($CurrentConnection).Account.Id -eq $ApplicationId `
       -and ($CurrentConnection).Tenant.Id -eq $TenantId `
       -and ($CurrentConnection).Subscription.Id -eq $SubscriptionId) {
-      return
-    }
+      $Results.Success = $true
+      $Results.AuthenticationData = [AuthenticationData]::new()
+      $Results.AuthenticationData.SubscriptionId = ($CurrentConnection).Subscription.Id
+    } else {
+      # The current context is not correct, create the credentials and login to the correct account
+      $ClientSecret = Get-RequiredEnvironmentVariable AZ_ENCRYPTED_PASSWORD | ConvertTo-SecureString
+      $CredentialParams = @{
+        TypeName = "System.Management.Automation.PSCredential"
+        ArgumentList = $ApplicationId, $ClientSecret
+      }
+      $Credential = New-Object @CredentialParams
 
-    # The current context is not correct, create the credentials and login
-    $ClientSecret = Get-RequiredEnvironmentVariable AZ_ENCRYPTED_PASSWORD | ConvertTo-SecureString
-    $Credential = `
-      New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $ApplicationId, $ClientSecret
-    Connect-AzAccount -ServicePrincipal -Credential $Credential -TenantId $TenantId -Subscription $SubscriptionId
+      try {
+        $ConnectionParams = @{
+          Credential = $Credential
+          TenantId = $TenantId
+          Subscription = $SubscriptionId
+        }
+        $Connection = Connect-AzAccount -ServicePrincipal @ConnectionParams
+
+        $Results.Success = $true
+        $Results.AuthenticationData = [AuthenticationData]::new()
+        $Results.AuthenticationData.SubscriptionId = $Connection.Context.Subscription.Id
+      } catch {
+        $Exception = $_
+
+        $Results.Success = $false
+        $Results.Error = New-Object System.Management.Automation.ErrorRecord $Exception, "AuthenticationError",
+            [System.Management.Automation.ErrorCategory]::AuthenticationError, $null
+      }
+
+      $Results
+    }
   }
   End { }
 }
@@ -139,6 +168,7 @@ function Connect-Account {
 #>
 function Disconnect-Account {
   [OutputType([System.Void])]
+  [CmdletBinding()]
   param ( )
   Begin {
     $ApplicationId = Get-RequiredEnvironmentVariable AZ_APPLICATION_ID
@@ -161,4 +191,4 @@ function Disconnect-Account {
   End { }
 }
 
-
+Export-ModuleMember -Function Connect-Account, Disconnect-Account

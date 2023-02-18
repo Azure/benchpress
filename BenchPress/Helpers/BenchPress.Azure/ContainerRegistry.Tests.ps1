@@ -4,29 +4,22 @@
   Import-Module Az
 }
 
-Describe "Get-ContainerRegistry" {
+Describe "Confirm-ContainerRegistry" {
   Context "unit tests" -Tag "Unit" {
     BeforeEach {
       Mock -ModuleName ContainerRegistry Connect-Account{}
-      Mock -ModuleName ContainerRegistry Get-AzContainerRegistry{}
     }
 
     It "Calls Get-AzContainerRegistry" {
-      Get-ContainerRegistry -Name "cr" -ResourceGroupName "rgn"
+      Mock -ModuleName ContainerRegistry Get-AzContainerRegistry{}
+      Confirm-ContainerRegistry -Name "cr" -ResourceGroupName "rgn"
       Should -Invoke -ModuleName ContainerRegistry -CommandName "Get-AzContainerRegistry" -Times 1
     }
-  }
-}
 
-Describe "Get-ContainerRegistryExist" {
-  Context "unit tests" -Tag "Unit" {
-    BeforeEach {
-      Mock -ModuleName ContainerRegistry Get-ContainerRegistry{}
-    }
-
-    It "Calls Get-ContainerRegistry" {
-      Get-ContainerRegistryExist -Name "cr" -ResourceGroupName "rgn"
-      Should -Invoke -ModuleName ContainerRegistry -CommandName "Get-ContainerRegistry" -Times 1
+    It "Sets the ErrorRecord when an exception is thrown" {
+      Mock -ModuleName ContainerRegistry Get-AzContainerRegistry{ throw [Exception]::new("Exception") }
+      $Results = Confirm-ContainerRegistry -Name "cr" -ResourceGroupName "rgn"
+      $Results.ErrorRecord | Should -Not -Be $null
     }
   }
 }
@@ -34,4 +27,5 @@ Describe "Get-ContainerRegistryExist" {
 AfterAll {
   Remove-Module Authentication
   Remove-Module ContainerRegistry
+  Remove-Module Az
 }

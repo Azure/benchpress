@@ -1,67 +1,59 @@
+using module ./public/classes/ConfirmResult.psm1
+
 Import-Module $PSScriptRoot/Authentication.psm1
 
 <#
 .SYNOPSIS
-  Gets a Resource Group.
+  Confirms that a Resource Group exists.
 
 .DESCRIPTION
-  The Get-AzBPResourceGroup cmdlet gets a Resource Group using the specified Resource Group and
+  The Confirm-AzBPResourceGroup cmdlet gets a Resource Group using the specified Resource Group and
   Resource Group name.
 
 .PARAMETER ResourceGroupName
   The name of the Resource Group
 
 .EXAMPLE
-  Get-AzBPResourceGroup -ResourceGroupName "rgbenchpresstest"
+  Confirm-AzBPResourceGroup -ResourceGroupName "rgbenchpresstest"
 
 .INPUTS
   System.String
 
 .OUTPUTS
-  Microsoft.Azure.Commands.ResourceManager.Cmdlets.SdkModels.PSResourceGroup
+  ConfirmResult
 #>
-function Get-ResourceGroup {
+function Confirm-ResourceGroup {
   [CmdletBinding()]
+  [OutputType([ConfirmResult])]
   param (
     [Parameter(Mandatory=$true)]
     [string]$ResourceGroupName
   )
+  Begin {
+    $ConnectResults = Connect-Account
+  }
+  Process {
+    [ConfirmResult]$Results = $null
 
-  Connect-Account
+    try {
+      $Resource = Get-AzResourceGroup $ResourceGroupName
 
-  $resource = Get-AzResourceGroup $ResourceGroupName
-  return $resource
+      $Results = [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+    } catch {
+      $Exception = $_
+      $ErrorRecord = [System.Management.Automation.ErrorRecord]::new(
+        $Exception,
+        "GetResourceError",
+        [System.Management.Automation.ErrorCategory]::InvalidResult,
+        $null
+      )
+
+      $Results = [ConfirmResult]::new($ErrorRecord, $ConnectResults.AuthenticationData)
+    }
+
+    $Results
+  }
+  End { }
 }
 
-<#
-.SYNOPSIS
-  Gets if a Resource Group exists.
-
-.DESCRIPTION
-  The Get-AzBPResourceGroupExist cmdlet checks if a Resource Group exists using the specified
-  Resource Group and Resource Group name.
-
-.PARAMETER ResourceGroupName
-  The name of the Resource Group
-
-.EXAMPLE
-  Get-AzBPResourceGroupExist -ResourceGroupName "rgbenchpresstest"
-
-.INPUTS
-  System.String
-
-.OUTPUTS
-  System.Boolean
-#>
-function Get-ResourceGroupExist {
-  [CmdletBinding()]
-  param (
-    [Parameter(Mandatory=$true)]
-    [string]$ResourceGroupName
-  )
-
-  $resource = Get-ResourceGroup $ResourceGroupName
-  return ($null -ne $resource)
-}
-
-Export-ModuleMember -Function Get-ResourceGroup, Get-ResourceGroupExist
+Export-ModuleMember -Function Confirm-ResourceGroup

@@ -1,11 +1,13 @@
+using module ./public/classes/ConfirmResult.psm1
+
 Import-Module $PSScriptRoot/Authentication.psm1
 
 <#
 .SYNOPSIS
-  Gets a Key Vault.
+  Confirms that a Key Vault exists.
 
 .DESCRIPTION
-  The Get-AzBPKeyVault cmdlet gets a Key Vault using the specified Key Vault and
+  The Confirm-AzBPKeyVault cmdlet gets a Key Vault using the specified Key Vault and
   Resource Group name.
 
 .PARAMETER Name
@@ -15,16 +17,17 @@ Import-Module $PSScriptRoot/Authentication.psm1
   The name of the Resource Group
 
 .EXAMPLE
-  Get-AzBPKeyVault -Name "benchpresstest" -ResourceGroupName "rgbenchpresstest"
+  Confirm-AzBPKeyVault -Name "benchpresstest" -ResourceGroupName "rgbenchpresstest"
 
 .INPUTS
   System.String
 
 .OUTPUTS
-  Microsoft.Azure.Commands.KeyVault.Models.PSKeyVault
+  ConfirmResult
 #>
-function Get-KeyVault {
+function Confirm-KeyVault {
   [CmdletBinding()]
+  [OutputType([ConfirmResult])]
   param (
     [Parameter(Mandatory = $true)]
     [string]$Name,
@@ -32,56 +35,39 @@ function Get-KeyVault {
     [Parameter(Mandatory = $true)]
     [string]$ResourceGroupName
   )
+  Begin {
+    $ConnectResults = Connect-Account
+  }
+  Process {
+    [ConfirmResult]$Results = $null
 
-  Connect-Account
+    try {
+      $Resource = Get-AzKeyVault -ResourceGroupName $ResourceGroupName -VaultName $Name
 
-  $resource = Get-AzKeyVault -ResourceGroupName $ResourceGroupName -VaultName $Name
-  return $resource
+      $Results = [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+    } catch {
+      $Exception = $_
+      $ErrorRecord = [System.Management.Automation.ErrorRecord]::new(
+        $Exception,
+        "GetResourceError",
+        [System.Management.Automation.ErrorCategory]::InvalidResult,
+        $null
+      )
+
+      $Results = [ConfirmResult]::new($ErrorRecord, $ConnectResults.AuthenticationData)
+    }
+
+    $Results
+  }
+  End { }
 }
 
 <#
 .SYNOPSIS
-  Gets if a Key Vault exists.
+  Confirms that a Key Vault Secret exists.
 
 .DESCRIPTION
-  The Get-AzBPKeyVaultExist cmdlet checks if a Key Vault exists using the specified
-  Key Vault and Resource Group name.
-
-.PARAMETER Name
-  The name of the Key Vault
-
-.PARAMETER ResourceGroupName
-  The name of the Resource Group
-
-.EXAMPLE
-  Get-AzBPKeyVaultExist -Name "benchpresstest" -ResourceGroupName "rgbenchpresstest"
-
-.INPUTS
-  System.String
-
-.OUTPUTS
-  System.Boolean
-#>
-function Get-KeyVaultExist {
-  [CmdletBinding()]
-  param (
-    [Parameter(Mandatory = $true)]
-    [string]$Name,
-
-    [Parameter(Mandatory = $true)]
-    [string]$ResourceGroupName
-  )
-
-  $resource = Get-KeyVault -Name $Name -ResourceGroupName $ResourceGroupName
-  return ($null -ne $resource)
-}
-
-<#
-.SYNOPSIS
-  Gets a Key Vault Secret.
-
-.DESCRIPTION
-  The Get-AzBPKeyVaultSecret cmdlet gets a Key Vault Secret using the specified Key Vault and
+  The Confirm-AzBPKeyVaultSecret cmdlet gets a Key Vault Secret using the specified Key Vault and
   Secret name.
 
 .PARAMETER Name
@@ -91,16 +77,17 @@ function Get-KeyVaultExist {
   The name of the Key Vault
 
 .EXAMPLE
-  Get-AzBPKeyVaultSecret -Name "benchpresstest" -KeyVaultName "kvbenchpresstest"
+  Confirm-AzBPKeyVaultSecret -Name "benchpresstest" -KeyVaultName "kvbenchpresstest"
 
 .INPUTS
   System.String
 
 .OUTPUTS
-  Microsoft.Azure.Commands.KeyVault.Models.PSKeyVaultSecret
+  ConfirmResult
 #>
-function Get-KeyVaultSecret {
+function Confirm-KeyVaultSecret {
   [CmdletBinding()]
+  [OutputType([ConfirmResult])]
   param (
     [Parameter(Mandatory = $true)]
     [string]$Name,
@@ -108,56 +95,39 @@ function Get-KeyVaultSecret {
     [Parameter(Mandatory = $true)]
     [string]$KeyVaultName
   )
+  Begin {
+    $ConnectResults = Connect-Account
+  }
+  Process {
+    [ConfirmResult]$Results = $null
 
-  Connect-Account
+    try {
+      $Resource = Get-AzKeyVaultSecret -Name $Name -VaultName $KeyVaultName
 
-  $resource = Get-AzKeyVaultSecret -Name $Name -VaultName $KeyVaultName
-  return $resource
+      $Results = [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+    } catch {
+      $Exception = $_
+      $ErrorRecord = [System.Management.Automation.ErrorRecord]::new(
+        $Exception,
+        "GetResourceError",
+        [System.Management.Automation.ErrorCategory]::InvalidResult,
+        $null
+      )
+
+      $Results = [ConfirmResult]::new($ErrorRecord, $ConnectResults.AuthenticationData)
+    }
+
+    $Results
+  }
+  End { }
 }
 
 <#
 .SYNOPSIS
-  Gets if a Key Vault Secret exists.
+  Confirms that a Key Vault Key exist.
 
 .DESCRIPTION
-  The Get-AzBPKeyVaultSecretExist cmdlet checks if a Key Vault Secret exists using the specified
-  Key Vault and Secret name.
-
-.PARAMETER Name
-  The name of the Secret
-
-.PARAMETER KeyVaultName
-  The name of the Key Vault
-
-.EXAMPLE
-  Get-AzBPKeyVaultSecretExist -Name "benchpresstest" -KeyVaultName "kvbenchpresstest"
-
-.INPUTS
-  System.String
-
-.OUTPUTS
-  System.Boolean
-#>
-function Get-KeyVaultSecretExist {
-  [CmdletBinding()]
-  param (
-    [Parameter(Mandatory = $true)]
-    [string]$Name,
-
-    [Parameter(Mandatory = $true)]
-    [string]$KeyVaultName
-  )
-
-  $resource = Get-KeyVaultSecret -Name $Name -KeyVaultName $KeyVaultName
-  return ($null -ne $resource)
-}
-
-<#
-.SYNOPSIS
-  Gets a Key Vault Key.
-
-.DESCRIPTION
-  The Get-AzBPKeyVaultKey cmdlet gets a Key Vault Key using the specified Key Vault and
+  The Confirm-AzBPKeyVaultKey cmdlet gets a Key Vault Key using the specified Key Vault and
   Key name.
 
 .PARAMETER Name
@@ -167,16 +137,17 @@ function Get-KeyVaultSecretExist {
   The name of the Key Vault
 
 .EXAMPLE
-  Get-AzBPKeyVaultKey -Name "benchpresstest" -KeyVaultName "kvbenchpresstest"
+  Confirm-AzBPKeyVaultKey -Name "benchpresstest" -KeyVaultName "kvbenchpresstest"
 
 .INPUTS
   System.String
 
 .OUTPUTS
-  Microsoft.Azure.Commands.KeyVault.Models.PSKeyVaultKey
+  ConfirmResult
 #>
-function Get-KeyVaultKey {
+function Confirm-KeyVaultKey {
   [CmdletBinding()]
+  [OutputType([ConfirmResult])]
   param (
     [Parameter(Mandatory = $true)]
     [string]$Name,
@@ -184,56 +155,39 @@ function Get-KeyVaultKey {
     [Parameter(Mandatory = $true)]
     [string]$KeyVaultName
   )
+  Begin {
+    $ConnectResults = Connect-Account
+  }
+  Process {
+    [ConfirmResult]$Results = $null
 
-  Connect-Account
+    try {
+      $Resource = Get-AzKeyVaultKey -Name $Name -VaultName $KeyVaultName
 
-  $resource = Get-AzKeyVaultKey -Name $Name -VaultName $KeyVaultName
-  return $resource
+      $Results = [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+    } catch {
+      $Exception = $_
+      $ErrorRecord = [System.Management.Automation.ErrorRecord]::new(
+        $Exception,
+        "GetResourceError",
+        [System.Management.Automation.ErrorCategory]::InvalidResult,
+        $null
+      )
+
+      $Results = [ConfirmResult]::new($ErrorRecord, $ConnectResults.AuthenticationData)
+    }
+
+    $Results
+  }
+  End { }
 }
 
 <#
 .SYNOPSIS
-  Gets if a Key Vault Key exists.
+  Confirms that a Key Vault Certificate exists.
 
 .DESCRIPTION
-  The Get-AzBPKeyVaultKeyExist cmdlet checks if a Key Vault Key exists using the specified
-  Key Vault and Key name.
-
-.PARAMETER Name
-  The name of the Key
-
-.PARAMETER KeyVaultName
-  The name of the Key Vault
-
-.EXAMPLE
-  Get-AzBPKeyVaultKeyExist -Name "benchpresstest" -KeyVaultName "kvbenchpresstest"
-
-.INPUTS
-  System.String
-
-.OUTPUTS
-  System.Boolean
-#>
-function Get-KeyVaultKeyExist {
-  [CmdletBinding()]
-  param (
-    [Parameter(Mandatory = $true)]
-    [string]$Name,
-
-    [Parameter(Mandatory = $true)]
-    [string]$KeyVaultName
-  )
-
-  $resource = Get-KeyVaultKey -Name $Name -KeyVaultName $KeyVaultName
-  return ($null -ne $resource)
-}
-
-<#
-.SYNOPSIS
-  Gets a Key Vault Certificate.
-
-.DESCRIPTION
-  The Get-AzBPKeyVaultCertificate cmdlet gets a Key Vault Certificate using the specified Key Vault and
+  The Confirm-AzBPKeyVaultCertificate cmdlet gets a Key Vault Certificate using the specified Key Vault and
   Certificate name.
 
 .PARAMETER Name
@@ -243,16 +197,17 @@ function Get-KeyVaultKeyExist {
   The name of the Key Vault
 
 .EXAMPLE
-  Get-AzBPKeyVaultCertificate -Name "benchpresstest" -KeyVaultName "kvbenchpresstest"
+  Confirm-AzBPKeyVaultCertificate -Name "benchpresstest" -KeyVaultName "kvbenchpresstest"
 
 .INPUTS
   System.String
 
 .OUTPUTS
-  Microsoft.Azure.Commands.KeyVault.Models.PSKeyVaultCertificate
+  ConfirmResult
 #>
-function Get-KeyVaultCertificate {
+function Confirm-KeyVaultCertificate {
   [CmdletBinding()]
+  [OutputType([ConfirmResult])]
   param (
     [Parameter(Mandatory = $true)]
     [string]$Name,
@@ -260,48 +215,34 @@ function Get-KeyVaultCertificate {
     [Parameter(Mandatory = $true)]
     [string]$KeyVaultName
   )
+  Begin {
+    $ConnectResults = Connect-Account
+  }
+  Process {
+    [ConfirmResult]$Results = $null
 
-  Connect-Account
+    try {
+      $Resource = Get-AzKeyVaultCertificate -Name $Name -VaultName $KeyVaultName
 
-  $resource = Get-AzKeyVaultCertificate -Name $Name -VaultName $KeyVaultName
-  return $resource
+      $Results = [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+    } catch {
+      $Exception = $_
+      $ErrorRecord = [System.Management.Automation.ErrorRecord]::new(
+        $Exception,
+        "GetResourceError",
+        [System.Management.Automation.ErrorCategory]::InvalidResult,
+        $null
+      )
+
+      $Results = [ConfirmResult]::new($ErrorRecord, $ConnectResults.AuthenticationData)
+    }
+
+    $Results
+  }
+  End { }
 }
 
-<#
-.SYNOPSIS
-  Gets if a Key Vault Certificate exists.
-
-.DESCRIPTION
-  The Get-AzBPKeyVaultCertificateExist cmdlet checks if a Key Vault Certificate exists using the specified
-  Key Vault and Certificate name.
-
-.PARAMETER Name
-  The name of the Certificate
-
-.PARAMETER KeyVaultName
-  The name of the Key Vault
-
-.EXAMPLE
-  Get-AzBPKeyVaultCertificateExist -Name "benchpresstest" -KeyVaultName "kvbenchpresstest"
-
-.INPUTS
-  System.String
-
-.OUTPUTS
-  System.Boolean
-#>
-function Get-KeyVaultCertificateExist {
-  [CmdletBinding()]
-  param (
-    [Parameter(Mandatory = $true)]
-    [string]$Name,
-
-    [Parameter(Mandatory = $true)]
-    [string]$KeyVaultName
-  )
-
-  $resource = Get-KeyVaultCertificate -Name $Name -KeyVaultName $KeyVaultName
-  return ($null -ne $resource)
-}
-
-Export-ModuleMember -Function Get-KeyVault, Get-KeyVaultExist, Get-KeyVaultSecret, Get-KeyVaultSecretExist, Get-KeyVaultKey, Get-KeyVaultKeyExist, Get-KeyVaultCertificate, Get-KeyVaultCertificateExist
+Export-ModuleMember -Function Confirm-KeyVault,
+  Confirm-KeyVaultSecret,
+  Confirm-KeyVaultKey,
+  Confirm-KeyVaultCertificate

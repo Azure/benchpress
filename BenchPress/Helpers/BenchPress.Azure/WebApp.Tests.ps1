@@ -4,29 +4,22 @@
   Import-Module Az
 }
 
-Describe "Get-WebApp" {
+Describe "Confirm-WebApp" {
   Context "unit tests" -Tag "Unit" {
     BeforeEach {
       Mock -ModuleName WebApp Connect-Account{}
-      Mock -ModuleName WebApp Get-AzWebApp{}
     }
 
     It "Calls Get-AzWebApp" {
-      Get-WebApp -WebAppName "wan" -ResourceGroupName "rgn"
+      Mock -ModuleName WebApp Get-AzWebApp{}
+      Confirm-WebApp -WebAppName "wan" -ResourceGroupName "rgn"
       Should -Invoke -ModuleName WebApp -CommandName "Get-AzWebApp" -Times 1
     }
-  }
-}
 
-Describe "Get-WebAppExist" {
-  Context "unit tests" -Tag "Unit" {
-    BeforeEach {
-      Mock -ModuleName WebApp Get-WebApp{}
-    }
-
-    It "Calls Get-WebApp" {
-      Get-WebAppExist -WebAppName "wan" -ResourceGroupName "rgn"
-      Should -Invoke -ModuleName WebApp -CommandName "Get-WebApp" -Times 1
+    It "Sets the ErrorRecord when an exception is thrown" {
+      Mock -ModuleName WebApp Get-AzWebApp{ throw [Exception]::new("Exception") }
+      $Results = Confirm-WebApp -WebAppName "wan" -ResourceGroupName "rgn"
+      $Results.ErrorRecord | Should -Not -Be $null
     }
   }
 }

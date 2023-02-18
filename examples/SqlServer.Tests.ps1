@@ -2,20 +2,6 @@ BeforeAll {
     Import-Module "../BenchPress/Helpers/BenchPress.Azure/BenchPress.Azure.psd1"
 }
 
-Describe 'Verify Sql Server' {
-    it 'Should contain a Sql Server with the given name' {
-        #arrange
-        $rgName = 'rg-test'
-        $serverName = 'azbenchpreesssqlservertest1'
-
-        #act
-        $exists = Get-AzBPSqlServer -ResourceGroupName $rgName -ServerName $serverName
-
-        #assert
-        $exists | Should -Not -BeNullOrEmpty
-    }
-}
-
 Describe 'Verify Sql Server Exists' {
     it 'Should contain a Sql Server with the given name' {
         #arrange
@@ -23,10 +9,10 @@ Describe 'Verify Sql Server Exists' {
         $serverName = 'azbenchpreesssqlservertest1'
 
         #act
-        $exists = Get-AzBPSqlServerExist -ResourceGroupName $rgName -ServerName $serverName
+        $result = Confirm-AzBPSqlServer -ResourceGroupName $rgName -ServerName $serverName
 
         #assert
-        $exists | Should -Be $true
+        $result.Success | Should -Be $true
     }
 }
 

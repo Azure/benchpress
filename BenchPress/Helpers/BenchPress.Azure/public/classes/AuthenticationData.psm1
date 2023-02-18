@@ -1,0 +1,3 @@
+﻿class AuthenticationData {
+  [string]$SubscriptionId
+}

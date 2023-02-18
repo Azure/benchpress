@@ -8,10 +8,10 @@ Describe 'Verify Resource Group Exists' {
     $rgName = "tflintrules"
 
     #act
-    $exists = Get-AzBPResourceGroupExist -ResourceGroupName $rgName
+    $result = Confirm-AzBPResourceGroup -ResourceGroupName $rgName
 
     #assert
-    $exists | Should -Be $true
+    $result.Success | Should -Be $true
   }
 }
 

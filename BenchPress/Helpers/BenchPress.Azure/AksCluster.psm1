@@ -4,19 +4,19 @@ Import-Module $PSScriptRoot/Authentication.psm1
 
 <#
 .SYNOPSIS
-  Confirms that an Action Group exists.
+  Confirms that an AKS Cluster exists.
 
 .DESCRIPTION
-  The Confirm-AzBPActionGroup cmdlet gets an action group using the specified Action Group and Resource Group name.
+  The Confirm-AzBPAKSCluster cmdlet gets an AKS cluster using the specified AKS Cluster and Resource Group name.
 
-.PARAMETER ActionGroupName
-  The name of the Azure Action Group
+.PARAMETER AKSName
+  The name of the AKS Cluster
 
 .PARAMETER ResourceGroupName
   The name of the Resource Group
 
 .EXAMPLE
-  Confirm-AzBPActionGroup -ActionGroupName "benchpresstest" -ResourceGroupName "rgbenchpresstest"
+  Confirm-AzBPAKSCluster -AKSName "benchpresstest" -ResourceGroupName "rgbenchpresstest"
 
 .INPUTS
   System.String
@@ -24,24 +24,24 @@ Import-Module $PSScriptRoot/Authentication.psm1
 .OUTPUTS
   ConfirmResult
 #>
-function Confirm-ActionGroup {
+function Confirm-AksCluster {
   [CmdletBinding()]
   [OutputType([ConfirmResult])]
   param (
     [Parameter(Mandatory=$true)]
-    [string]$ActionGroupName,
+    [string]$AksName,
 
     [Parameter(Mandatory=$true)]
     [string]$ResourceGroupName
   )
   Begin {
-    $ConnectResults = Connect-Account
+    Connect-Account
   }
   Process {
     [ConfirmResult]$Results = $null
 
     try {
-      $Resource = Get-AzActionGroup -ResourceGroupName $ResourceGroupName -Name $ActionGroupName
+      $Resource = Get-AzAksCluster -ResourceGroupName $ResourceGroupName -Name $AksName
 
       $Results = [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
     } catch {
@@ -61,4 +61,4 @@ function Confirm-ActionGroup {
   End { }
 }
 
-Export-ModuleMember -Function Confirm-ActionGroup
+Export-ModuleMember -Function Confirm-AksCluster

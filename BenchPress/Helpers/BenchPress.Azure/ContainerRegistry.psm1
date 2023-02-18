@@ -1,11 +1,13 @@
+using module ./public/classes/ConfirmResult.psm1
+
 Import-Module $PSScriptRoot/Authentication.psm1
 
 <#
 .SYNOPSIS
-  Gets a Container Registry.
+  Confirms that a Container Registry exists.
 
 .DESCRIPTION
-  The Get-AzBPContainerRegistry cmdlet gets a Container Registry using the specified Container Registry and
+  The Confirm-AzBPContainerRegistry cmdlet gets a Container Registry using the specified Container Registry and
   Resource Group name.
 
 .PARAMETER Name
@@ -15,16 +17,17 @@ Import-Module $PSScriptRoot/Authentication.psm1
   The name of the Resource Group
 
 .EXAMPLE
-  Get-AzBPContainerRegistry -Name "benchpresstest" -ResourceGroupName "rgbenchpresstest"
+  Confirm-AzBPContainerRegistry -Name "benchpresstest" -ResourceGroupName "rgbenchpresstest"
 
 .INPUTS
   System.String
 
 .OUTPUTS
-  Microsoft.Azure.Commands.ContainerRegistry.PSContainerRegistry
+  ConfirmResult
 #>
-function Get-ContainerRegistry {
+function Confirm-ContainerRegistry {
   [CmdletBinding()]
+  [OutputType([ConfirmResult])]
   param (
     [Parameter(Mandatory=$true)]
     [string]$Name,
@@ -32,47 +35,31 @@ function Get-ContainerRegistry {
     [Parameter(Mandatory=$true)]
     [string]$ResourceGroupName
   )
+  Begin {
+    Connect-Account
+  }
+  Process {
+    [ConfirmResult]$Results = $null
 
-  Connect-Account
+    try {
+      $Resource = Get-AzContainerRegistry -ResourceGroupName $ResourceGroupName -Name $Name
 
-  $resource = Get-AzContainerRegistry -ResourceGroupName $ResourceGroupName -Name $Name
-  return $resource
+      $Results = [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+    } catch {
+      $Exception = $_
+      $ErrorRecord = [System.Management.Automation.ErrorRecord]::new(
+        $Exception,
+        "GetResourceError",
+        [System.Management.Automation.ErrorCategory]::InvalidResult,
+        $null
+      )
+
+      $Results = [ConfirmResult]::new($ErrorRecord, $ConnectResults.AuthenticationData)
+    }
+
+    $Results
+  }
+  End { }
 }
 
-<#
-.SYNOPSIS
-  Gets if a Container Registry exists.
-
-.DESCRIPTION
-  The Get-AzBPContainerRegistryExist cmdlet checks if a Container Registry exists using the specified
-  Container Registry and Resource Group name.
-
-.PARAMETER Name
-  The name of the Container Registry
-
-.PARAMETER ResourceGroupName
-  The name of the Resource Group
-
-.EXAMPLE
-  Get-AzBPContainerRegistryExist -Name "benchpresstest" -ResourceGroupName "rgbenchpresstest"
-
-.INPUTS
-  System.String
-
-.OUTPUTS
-  System.Boolean
-#>
-function Get-ContainerRegistryExist {
-  [CmdletBinding()]
-  param (
-    [Parameter(Mandatory=$true)]
-    [string]$Name,
-
-    [Parameter(Mandatory=$true)]
-    [string]$ResourceGroupName
-  )
-  $resource = Get-ContainerRegistry -Name $Name -ResourceGroupName $ResourceGroupName
-  return ($null -ne $resource)
-}
-
-Export-ModuleMember -Function Get-ContainerRegistry, Get-ContainerRegistryExist
+Export-ModuleMember -Function Confirm-ContainerRegistry

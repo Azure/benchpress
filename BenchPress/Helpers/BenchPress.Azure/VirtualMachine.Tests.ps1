@@ -4,29 +4,22 @@
   Import-Module Az
 }
 
-Describe "Get-VirtualMachine" {
+Describe "Confirm-VirtualMachine" {
   Context "unit tests" -Tag "Unit" {
     BeforeEach {
       Mock -ModuleName VirtualMachine Connect-Account{}
-      Mock -ModuleName VirtualMachine Get-AzVM{}
     }
 
     It "Calls Get-AzVM" {
-      Get-VirtualMachine -VirtualMachineName "vmn" -ResourceGroupName "rgn"
+      Mock -ModuleName VirtualMachine Get-AzVM{}
+      Confirm-VirtualMachine -VirtualMachineName "vmn" -ResourceGroupName "rgn"
       Should -Invoke -ModuleName VirtualMachine -CommandName "Get-AzVM" -Times 1
     }
-  }
-}
 
-Describe "Get-VirtualMachineExist" {
-  Context "unit tests" -Tag "Unit" {
-    BeforeEach {
-      Mock -ModuleName VirtualMachine Get-VirtualMachine{}
-    }
-
-    It "Calls Get-VirtualMachine" {
-      Get-VirtualMachineExist -VirtualMachineName "vmn" -ResourceGroupName "rgn"
-      Should -Invoke -ModuleName VirtualMachine -CommandName "Get-VirtualMachine" -Times 1
+    It "Sets the ErrorRecord when an exception is thrown" {
+      Mock -ModuleName VirtualMachine Get-AzVM{ throw [Exception]::new("Exception") }
+      $Results = Confirm-VirtualMachine -VirtualMachineName "vmn" -ResourceGroupName "rgn"
+      $Results.ErrorRecord | Should -Not -Be $null
     }
   }
 }
@@ -34,4 +27,5 @@ Describe "Get-VirtualMachineExist" {
 AfterAll {
   Remove-Module Authentication
   Remove-Module VirtualMachine
+  Remove-Module Az
 }

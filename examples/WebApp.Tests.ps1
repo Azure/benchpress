@@ -2,20 +2,6 @@ BeforeAll {
     Import-Module "../BenchPress/Helpers/BenchPress.Azure/BenchPress.Azure.psd1"
 }
 
-Describe 'Verify Web App' {
-    it 'Should contain a Web App with the given name' {
-        #arrange
-        $rgName = 'rg-test'
-        $webappName = 'azbpwebapptest1'
-
-        #act
-        $exists = Get-AzBPWebApp -ResourceGroupName $rgName -WebAppName $webappName
-
-        #assert
-        $exists | Should -Not -BeNullOrEmpty
-    }
-}
-
 Describe 'Verify Web App Exists' {
     it 'Should contain a Web App with the given name' {
         #arrange
@@ -23,10 +9,10 @@ Describe 'Verify Web App Exists' {
         $webappName = 'azbpwebapptest1'
 
         #act
-        $exists = Get-AzBPWebAppExist -ResourceGroupName $rgName -WebAppName $webappName
+        $result = Confirm-AzBPWebApp -ResourceGroupName $rgName -WebAppName $webappName
 
         #assert
-        $exists | Should -Be $true
+        $result.Success | Should -Be $true
     }
 }
 

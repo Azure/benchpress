@@ -4,29 +4,22 @@
   Import-Module Az
 }
 
-Describe "Get-ActionGroup" {
+Describe "Confirm-ActionGroup" {
   Context "unit tests" -Tag "Unit" {
     BeforeEach {
       Mock -ModuleName ActionGroup Connect-Account{}
-      Mock -ModuleName ActionGroup Get-AzActionGroup{}
     }
 
     It "Calls Get-AzActionGroup" {
-      Get-ActionGroup -ActionGroupName "agn" -ResourceGroupName "rgn"
+      Mock -ModuleName ActionGroup Get-AzActionGroup{}
+      Confirm-ActionGroup -ActionGroupName "agn" -ResourceGroupName "rgn"
       Should -Invoke -ModuleName ActionGroup -CommandName "Get-AzActionGroup" -Times 1
     }
-  }
-}
 
-Describe "Get-ActionGroupExist" {
-  Context "unit tests" -Tag "Unit" {
-    BeforeEach {
-      Mock -ModuleName ActionGroup Get-ActionGroup{}
-    }
-
-    It "Calls Get-ActionGroup" {
-      Get-ActionGroupExist -ActionGroupName "agn" -ResourceGroupName "rgn"
-      Should -Invoke -ModuleName ActionGroup -CommandName "Get-ActionGroup" -Times 1
+    It "Sets the ErrorRecord when an exception is thrown" {
+      Mock -ModuleName ActionGroup Get-AzActionGroup{ throw [Exception]::new("Exception") }
+      $Results = Confirm-ActionGroup -ActionGroupName "agn" -ResourceGroupName "rgn"
+      $Results.ErrorRecord | Should -Not -Be $null
     }
   }
 }
@@ -34,4 +27,5 @@ Describe "Get-ActionGroupExist" {
 AfterAll {
   Remove-Module ActionGroup
   Remove-Module Authentication
+  Remove-Module Az
 }

@@ -4,7 +4,7 @@
   Import-Module Az
 }
 
-Describe "Get-AppServicePlan" {
+Describe "Confirm-AppServicePlan" {
   Context "unit tests" -Tag "Unit" {
     BeforeEach {
       Mock -ModuleName AppServicePlan Connect-Account{}
@@ -12,21 +12,15 @@ Describe "Get-AppServicePlan" {
     }
 
     It "Calls Get-AzAppServicePlan" {
-      Get-AppServicePlan -AppServicePlanName "aspn" -ResourceGroupName "rgn"
+      Mock -ModuleName AppServicePlan Get-AzAppServicePlan{}
+      Confirm-AppServicePlan -AppServicePlanName "aspn" -ResourceGroupName "rgn"
       Should -Invoke -ModuleName AppServicePlan -CommandName "Get-AzAppServicePlan" -Times 1
     }
-  }
-}
 
-Describe "Get-AppServicePlanExist" {
-  Context "unit tests" -Tag "Unit" {
-    BeforeEach {
-      Mock -ModuleName AppServicePlan Get-AppServicePlan{}
-    }
-
-    It "Calls Get-AppServicePlan" {
-      Get-AppServicePlanExist -AppServicePlanName "aspn" -ResourceGroupName "rgn"
-      Should -Invoke -ModuleName AppServicePlan -CommandName "Get-AppServicePlan" -Times 1
+    It "Sets the ErrorRecord when an exception is thrown" {
+      Mock -ModuleName AppServicePlan Get-AzAppServicePlan{ throw [Exception]::new("Exception") }
+      $Results = Confirm-AppServicePlan -AppServicePlanName "aspn" -ResourceGroupName "rgn"
+      $Results.ErrorRecord | Should -Not -Be $null
     }
   }
 }
@@ -34,4 +28,5 @@ Describe "Get-AppServicePlanExist" {
 AfterAll {
   Remove-Module AppServicePlan
   Remove-Module Authentication
+  Remove-Module Az
 }
