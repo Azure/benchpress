@@ -32,19 +32,6 @@ Describe "Confirm-SqlDatabase" {
   }
 }
 
-Describe "Confirm-SqlDatabaseExist" {
-  Context "unit tests" -Tag "Unit" {
-    BeforeEach {
-      Mock -ModuleName SqlDatabase Confirm-SqlDatabase{}
-    }
-
-    It "Calls Confirm-SqlDatabase" {
-      Confirm-SqlDatabaseExist -DatabaseName "dbn" -ServerName "sn" -ResourceGroupName "rgn"
-      Should -Invoke -ModuleName SqlDatabase -CommandName "Confirm-SqlDatabase" -Times 1
-    }
-  }
-}
-
 AfterAll {
   Remove-Module Authentication
   Remove-Module SqlDatabase
