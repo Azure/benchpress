@@ -32,7 +32,7 @@ Import-Module $PSScriptRoot/Authentication.psm1
 function Get-SqlDatabase {
   [CmdletBinding()]
   param (
-    [Parameter(Mandatory=$false)]
+    [Parameter(Mandatory=$true)]
     [string]$DatabaseName,
 
     [Parameter(Mandatory=$true)]
@@ -44,11 +44,7 @@ function Get-SqlDatabase {
 
   Connect-Account
 
-  if ([string]::IsNullOrEmpty($databaseName)) {
-    $resource = Get-AzSqlDatabase -ResourceGroupName $resourceGroupName -ServerName $serverName
-  } else {
-    $resource = Get-AzSqlDatabase -ResourceGroupName $resourceGroupName -ServerName $serverName -DatabaseName $databaseName
-  }
+  $resource = Get-AzSqlDatabase -ResourceGroupName $resourceGroupName -ServerName $serverName -DatabaseName $databaseName
 
   return $resource
 }
@@ -85,7 +81,7 @@ function Get-SqlDatabase {
 function Get-SqlDatabaseExist {
   [CmdletBinding()]
   param (
-    [Parameter(Mandatory=$false)]
+    [Parameter(Mandatory=$true)]
     [string]$DatabaseName,
 
     [Parameter(Mandatory=$true)]

@@ -56,6 +56,9 @@ class ConfirmResult {
   VirtualMachine
   WebApp)
 
+.PARAMETER ServerName
+  If testing an Azure SQL Database resource, the name of the server to which the database is assigned.
+
 .EXAMPLE
   Get-AzBPResourceByType -ResourceType ActionGroup -ResourceName "bpactiongroup" -ResourceGroupName "rgbenchpresstest"
 
@@ -78,7 +81,10 @@ function Get-ResourceByType {
     [string]$ResourceGroupName,
 
     [Parameter(Mandatory = $true)]
-    [ResourceType]$ResourceType
+    [ResourceType]$ResourceType,
+
+    [Parameter(Mandatory = $false)]
+    [string]$ServerName
   )
 
   switch ($ResourceType) {
@@ -88,7 +94,7 @@ function Get-ResourceByType {
     ContainerRegistry { return Get-ContainerRegistry -Name $ResourceName -ResourceGroupName $ResourceGroupName }
     KeyVault { return Get-KeyVault -Name $ResourceName -ResourceGroupName $ResourceGroupName }
     ResourceGroup { return Get-ResourceGroup -ResourceGroupName $ResourceName }
-    SqlDatabase { return Get-SqlDatabase -ServerName $ResourceName -ResourceGroupName $ResourceGroupName }
+    SqlDatabase { return Get-SqlDatabase -ServerName $ServerName -DatabaseName $ResourceName -ResourceGroupName $ResourceGroupName}
     SqlServer { return Get-SqlServer -ServerName $ResourceName -ResourceGroupName $ResourceGroupName }
     VirtualMachine { return Get-VirtualMachine -VirtualMachineName $ResourceName -ResourceGroupName $ResourceGroupName }
     WebApp { return Get-WebApp -WebAppName $ResourceName -ResourceGroupName $ResourceGroupName }
@@ -177,6 +183,9 @@ function Get-Resource {
     VirtualMachine
     WebApp)
 
+  .PARAMETER ServerName
+    If testing an Azure SQL Database resource, the name of the server to which the database is assigned.
+
   .PARAMETER PropertyKey
     The name of the property to check on the resource
 
@@ -191,6 +200,20 @@ function Get-Resource {
     Confirm whether a resource has a property configured correctly (i.e. Resource Group located in West US 3)
     Confirm-AzBPResource -ResourceType $resourceType -ResourceName $resourceGroupName -PropertyKey "Location" `
                          -PropertyValue "WestUS3"
+
+  .EXAMPLE
+    Checking whether a nested property on a resource is configured correctly (i.e. OS of VM is Linux)
+
+    $params = @{
+      ResourceGroupName = "testrg";
+      ResourceType = "VirtualMachine";
+      ResourceName = "testvm";
+      PropertyKey = "StorageProfile.OsDisk.OsType";
+      PropertyValue = "Linux"
+    }
+
+    $result = Confirm-AzBPResource @params
+
   .INPUTS
     ResourceType
     System.String
@@ -211,22 +234,31 @@ function Confirm-Resource {
     [string]$ResourceGroupName,
 
     [Parameter(Mandatory = $false)]
+    [string]$ServerName,
+
+    [Parameter(Mandatory = $false)]
     [string]$PropertyKey,
 
     [Parameter(Mandatory = $false)]
     [string]$PropertyValue
-
   )
 
   $ConfirmResult = [ConfirmResult]::new()
-  $ConfirmResult.ResourceDetails = Get-ResourceByType -ResourceGroupName $ResourceGroupName -ResourceName $ResourceName -ResourceType $ResourceType
+  $PSBoundParameters.Remove("PropertyKey")
+  $PSBoundParameters.Remove("PropertyValue")
+  $ConfirmResult.ResourceDetails = Get-ResourceByType @PSBoundParameters
 
   if ($null -ne $ConfirmResult.ResourceDetails) {
     $ConfirmResult.Success = $true
     if ($PropertyKey) {
-      if ($ConfirmResult.ResourceDetails.$PropertyKey -ne $PropertyValue) {
+      $ActualValue = $ConfirmResult.ResourceDetails
+      $Keys = $PropertyKey.Split(".")
+      foreach($Key in $Keys){
+        $ActualValue = $ActualValue.$Key
+      }
+      if ($ActualValue -ne $PropertyValue) {
         $ConfirmResult.Success = $false
-        $ConfirmResult.Error = Format-IncorrectValueError -ExpectedKey $PropertyKey -ExpectedValue $PropertyValue -ActualResult $ConfirmResult.ResourceDetails.$PropertyKey
+        $ConfirmResult.Error = Format-IncorrectValueError -ExpectedKey $PropertyKey -ExpectedValue $PropertyValue -ActualResult $ActualValue
       }
     }
   }
