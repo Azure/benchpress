@@ -14,21 +14,21 @@ BeforeAll {
 Describe "Get-ResourceByType" {
   Context "unit tests" -Tag "Unit" {
     BeforeEach {
-      Mock -ModuleName Common Get-ResourceGroup{}
-      Mock -ModuleName Common Get-AppServicePlan{}
-      Mock -ModuleName Common Get-SqlDatabase{}
-      Mock -ModuleName Common Get-SqlServer{}
-      Mock -ModuleName Common Get-VirtualMachine{}
-      Mock -ModuleName Common Get-WebApp{}
+      Mock -ModuleName Common Confirm-ResourceGroup{}
+      Mock -ModuleName Common Confirm-AppServicePlan{}
+      Mock -ModuleName Common Confirm-SqlDatabase{}
+      Mock -ModuleName Common Confirm-SqlServer{}
+      Mock -ModuleName Common Confirm-VirtualMachine{}
+      Mock -ModuleName Common Confirm-WebApp{}
     }
 
     It "Calls <expected> when [ResourceType]::<resourceType> is used" -TestCases @(
-      @{ ResourceType = [ResourceType]::ResourceGroup; Expected = "Get-ResourceGroup"}
-      @{ ResourceType = [ResourceType]::AppServicePlan; Expected = "Get-AppServicePlan"}
-      @{ ResourceType = [ResourceType]::SqlDatabase; Expected = "Get-SqlDatabase"}
-      @{ ResourceType = [ResourceType]::SqlServer; Expected = "Get-SqlServer"}
-      @{ ResourceType = [ResourceType]::VirtualMachine; Expected = "Get-VirtualMachine"}
-      @{ ResourceType = [ResourceType]::WebApp; Expected = "Get-WebApp"}
+      @{ ResourceType = [ResourceType]::ResourceGroup; Expected = "Confirm-ResourceGroup"}
+      @{ ResourceType = [ResourceType]::AppServicePlan; Expected = "Confirm-AppServicePlan"}
+      @{ ResourceType = [ResourceType]::SqlDatabase; Expected = "Confirm-SqlDatabase"}
+      @{ ResourceType = [ResourceType]::SqlServer; Expected = "Confirm-SqlServer"}
+      @{ ResourceType = [ResourceType]::VirtualMachine; Expected = "Confirm-VirtualMachine"}
+      @{ ResourceType = [ResourceType]::WebApp; Expected = "Confirm-WebApp"}
     ) {
       Get-ResourceByType -ResourceName resource -ResourceGroupName group -ResourceType $ResourceType
       Should -Invoke -ModuleName Common -CommandName $Expected -Times 1
