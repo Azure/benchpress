@@ -61,14 +61,7 @@ function Confirm-SqlDatabase {
 
       $Results = [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
     } catch {
-      $Exception = $_
-      $ErrorRecord = [System.Management.Automation.ErrorRecord]::new(
-        $Exception,
-        "GetResourceError",
-        [System.Management.Automation.ErrorCategory]::InvalidResult,
-        $null
-      )
-
+      $ErrorRecord = $_
       $Results = [ConfirmResult]::new($ErrorRecord, $ConnectResults.AuthenticationData)
     }
 

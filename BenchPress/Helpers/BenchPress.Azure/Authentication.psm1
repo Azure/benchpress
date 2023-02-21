@@ -103,8 +103,7 @@ function Connect-Account {
       -and ($CurrentConnection).Tenant.Id -eq $TenantId `
       -and ($CurrentConnection).Subscription.Id -eq $SubscriptionId) {
       $Results.Success = $true
-      $Results.AuthenticationData = [AuthenticationData]::new()
-      $Results.AuthenticationData.SubscriptionId = ($CurrentConnection).Subscription.Id
+      $Results.AuthenticationData = [AuthenticationData]::new(($CurrentConnection).Subscription.Id)
     } else {
       # The current context is not correct, create the credentials and login to the correct account
       $ClientSecret = Get-RequiredEnvironmentVariable AZ_ENCRYPTED_PASSWORD | ConvertTo-SecureString
@@ -123,10 +122,8 @@ function Connect-Account {
         $Results.AuthenticationData.SubscriptionId = $Connection.Context.Subscription.Id
       } catch {
         $Exception = $_
-
+        $Results.Error = $Exception
         $Results.Success = $false
-        $Results.Error = New-Object System.Management.Automation.ErrorRecord $Exception, "AuthenticationError",
-            [System.Management.Automation.ErrorCategory]::AuthenticationError, $null
       }
 
       $Results

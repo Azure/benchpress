@@ -1,4 +1,6 @@
-﻿BeforeAll {
+﻿using module ./public/classes/ConfirmResult.psm1
+
+BeforeAll {
   Import-Module $PSScriptRoot/AppServicePlan.psm1
   Import-Module $PSScriptRoot/Authentication.psm1
   Import-Module Az

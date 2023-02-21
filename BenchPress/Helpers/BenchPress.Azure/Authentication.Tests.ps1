@@ -1,4 +1,7 @@
-﻿BeforeAll {
+﻿using module ./public/classes/AuthenticationResult.psm1
+using module ./public/classes/AuthenticationData.psm1
+
+BeforeAll {
   Import-Module $PSScriptRoot/Authentication.psm1
   Import-Module Az
 }
