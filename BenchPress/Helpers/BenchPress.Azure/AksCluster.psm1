@@ -35,7 +35,7 @@ function Confirm-AksCluster {
     [string]$ResourceGroupName
   )
   Begin {
-    Connect-Account
+    $ConnectResults = Connect-Account
   }
   Process {
     [ConfirmResult]$Results = $null

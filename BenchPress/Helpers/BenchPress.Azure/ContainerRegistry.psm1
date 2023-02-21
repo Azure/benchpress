@@ -36,7 +36,7 @@ function Confirm-ContainerRegistry {
     [string]$ResourceGroupName
   )
   Begin {
-    Connect-Account
+    $ConnectResults = Connect-Account
   }
   Process {
     [ConfirmResult]$Results = $null
