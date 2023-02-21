@@ -4,7 +4,7 @@ using module ./public/classes/ConfirmResult.psm1
 BeforeAll {
   Import-Module $PSScriptRoot/AppServicePlan.psm1
   Import-Module $PSScriptRoot/Authentication.psm1
-  Import-Module $PSScriptRoot/Common.psm1 -Force
+  Import-Module $PSScriptRoot/Common.psm1
   Import-Module $PSScriptRoot/ResourceGroup.psm1
   Import-Module $PSScriptRoot/SqlDatabase.psm1
   Import-Module $PSScriptRoot/SqlServer.psm1

@@ -1,5 +1,5 @@
 BeforeAll {
-  Import-Module "../BenchPress/Helpers/BenchPress.Azure/BenchPress.Azure.psd1" -Force
+  Import-Module "../BenchPress/Helpers/BenchPress.Azure/BenchPress.Azure.psd1"
 }
 
 Describe 'Verify Resource Exists' {
@@ -116,7 +116,7 @@ Describe 'Use Confirm-AzBPResource to confirm resource and/or properties exist'{
       $params = @{
         ResourceGroupName = "testrg";
         ResourceType = "SqlServer";
-        ResourceName = "testserver"
+        ResourceName = "testserver5020"
       }
       #act
       $result = Confirm-AzBPResource @params
@@ -129,7 +129,7 @@ Describe 'Use Confirm-AzBPResource to confirm resource and/or properties exist'{
       $params = @{
         ResourceGroupName = "testrg";
         ResourceType = "SqlDatabase";
-        ServerName = "testserver";
+        ServerName = "testserver5020";
         ResourceName = "testdb"
       }
       #act
@@ -143,10 +143,10 @@ Describe 'Use Confirm-AzBPResource to confirm resource and/or properties exist'{
     it 'Should contain a VM named testvm with OSType Linux' {
       #arrange
       $params = @{
-        ResourceGroupName = "testrg";
+        ResourceGroupName = "marysha-devwork";
         ResourceType = "VirtualMachine";
-        ResourceName = "testvm";
-        PropertyKey = "StorageProfile.OsDisk.OsType";
+        ResourceName = "benchpresstestvm";
+        PropertyKey = "StorageProfile.notexist.OsType";
         PropertyValue = "Linux"
       }
       #act
