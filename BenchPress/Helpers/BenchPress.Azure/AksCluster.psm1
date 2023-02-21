@@ -4,20 +4,19 @@ Import-Module $PSScriptRoot/Authentication.psm1
 
 <#
 .SYNOPSIS
-  Confirms that a Web App exists.
+  Confirms that an AKS Cluster exists.
 
 .DESCRIPTION
-  The Confirm-AzBPWebApp cmdlet gets a Web App using the specified Web App and
-  Resource Group name.
+  The Confirm-AzBPAksCluster cmdlet gets an AKS cluster using the specified AKS Cluster and Resource Group name.
 
-.PARAMETER WebAppName
-  The name of the Web App
+.PARAMETER AKSName
+  The name of the AKS Cluster
 
 .PARAMETER ResourceGroupName
   The name of the Resource Group
 
 .EXAMPLE
-  Confirm-AzBPWebApp -WebAppName "benchpresstest" -ResourceGroupName "rgbenchpresstest"
+  Confirm-AzBPAksCluster -AKSName "benchpresstest" -ResourceGroupName "rgbenchpresstest"
 
 .INPUTS
   System.String
@@ -25,12 +24,12 @@ Import-Module $PSScriptRoot/Authentication.psm1
 .OUTPUTS
   ConfirmResult
 #>
-function Confirm-WebApp {
+function Confirm-AksCluster {
   [CmdletBinding()]
   [OutputType([ConfirmResult])]
   param (
     [Parameter(Mandatory=$true)]
-    [string]$WebAppName,
+    [string]$AksName,
 
     [Parameter(Mandatory=$true)]
     [string]$ResourceGroupName
@@ -42,7 +41,7 @@ function Confirm-WebApp {
     [ConfirmResult]$Results = $null
 
     try {
-      $Resource = Get-AzWebApp -ResourceGroupName $ResourceGroupName -Name $WebAppName
+      $Resource = Get-AzAksCluster -ResourceGroupName $ResourceGroupName -Name $AksName
 
       $Results = [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
     } catch {
@@ -52,6 +51,7 @@ function Confirm-WebApp {
 
     $Results
   }
+  End { }
 }
 
-Export-ModuleMember -Function Confirm-WebApp
+Export-ModuleMember -Function Confirm-AksCluster

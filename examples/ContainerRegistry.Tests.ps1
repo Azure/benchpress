@@ -9,24 +9,10 @@ Describe 'Verify Container Registry Exists' {
     $acrName = "acrbenchpresstest1"
 
     #act
-    $exists = Get-AzBPContainerRegistry -ResourceGroupName $rgName -Name $acrName
+    $result = Confirm-AzBPContainerRegistry -ResourceGroupName $rgName -Name $acrName
 
     #assert
-    $exists | Should -Not -BeNullOrEmpty
-  }
-}
-
-Describe 'Verify Container Registry Exists' {
-  it 'Should contain a container registry with the given name' {
-    #arrange
-    $rgName = "rg-test"
-    $acrName = "acrbenchpresstest1"
-
-    #act
-    $exists = Get-AzBPContainerRegistryExist -ResourceGroupName $rgName -Name $acrName
-
-    #assert
-    $exists | Should -Be $true
+    $result.Success | Should -Be $true
   }
 }
 

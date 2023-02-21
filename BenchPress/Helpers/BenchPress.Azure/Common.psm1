@@ -1,5 +1,7 @@
+using module ./public/classes/ConfirmResult.psm1
+
 Import-Module $PSScriptRoot/ActionGroup.psm1
-Import-Module $PSScriptRoot/AKSCluster.psm1
+Import-Module $PSScriptRoot/AksCluster.psm1
 Import-Module $PSScriptRoot/AppServicePlan.psm1
 Import-Module $PSScriptRoot/Authentication.psm1
 Import-Module $PSScriptRoot/ContainerRegistry.psm1
@@ -12,7 +14,7 @@ Import-Module $PSScriptRoot/WebApp.psm1
 
 enum ResourceType {
   ActionGroup
-  AKSCluster
+  AksCluster
   AppServicePlan
   ContainerRegistry
   KeyVault
@@ -21,12 +23,6 @@ enum ResourceType {
   SqlServer
   VirtualMachine
   WebApp
-}
-
-class ConfirmResult {
-  [boolean]$Success
-  [System.Management.Automation.ErrorRecord]$Error
-  [System.Object]$ResourceDetails
 }
 
 <#
@@ -46,7 +42,7 @@ class ConfirmResult {
 .PARAMETER ResourceType
   The type of the Resource (currently support the following:
   ActionGroup
-  AKSCluster
+  AksCluster
   AppServicePlan
   ContainerRegistry
   KeyVault
@@ -69,10 +65,11 @@ class ConfirmResult {
   System.String
 
 .OUTPUTS
-  Microsoft.Azure.Commands.ResourceManager.Cmdlets.SdkModels.PSResource
+  ConfirmResult
 #>
 function Get-ResourceByType {
   [CmdletBinding()]
+  [OutputType([ConfirmResult])]
   param (
     [Parameter(Mandatory = $true)]
     [string]$ResourceName,
@@ -88,16 +85,16 @@ function Get-ResourceByType {
   )
 
   switch ($ResourceType) {
-    ActionGroup { return Get-ActionGroup -ActionGroupName $ResourceName -ResourceGroupName $ResourceGroupName }
-    AKSCluster { return Get-AKSCluster -AKSName $ResourceName -ResourceGroupName $ResourceGroupName }
-    AppServicePlan { return Get-AppServicePlan -AppServicePlanName $ResourceName -ResourceGroupName $ResourceGroupName }
-    ContainerRegistry { return Get-ContainerRegistry -Name $ResourceName -ResourceGroupName $ResourceGroupName }
-    KeyVault { return Get-KeyVault -Name $ResourceName -ResourceGroupName $ResourceGroupName }
-    ResourceGroup { return Get-ResourceGroup -ResourceGroupName $ResourceName }
-    SqlDatabase { return Get-SqlDatabase -ServerName $ServerName -DatabaseName $ResourceName -ResourceGroupName $ResourceGroupName}
-    SqlServer { return Get-SqlServer -ServerName $ResourceName -ResourceGroupName $ResourceGroupName }
-    VirtualMachine { return Get-VirtualMachine -VirtualMachineName $ResourceName -ResourceGroupName $ResourceGroupName }
-    WebApp { return Get-WebApp -WebAppName $ResourceName -ResourceGroupName $ResourceGroupName }
+    ActionGroup { return Confirm-ActionGroup -ActionGroupName $ResourceName -ResourceGroupName $ResourceGroupName }
+    AksCluster { return Confirm-AksCluster -AKSName $ResourceName -ResourceGroupName $ResourceGroupName }
+    AppServicePlan { return Confirm-AppServicePlan -AppServicePlanName $ResourceName -ResourceGroupName $ResourceGroupName }
+    ContainerRegistry { return Confirm-ContainerRegistry -Name $ResourceName -ResourceGroupName $ResourceGroupName }
+    KeyVault { return Confirm-KeyVault -Name $ResourceName -ResourceGroupName $ResourceGroupName }
+    ResourceGroup { return Confirm-ResourceGroup -ResourceGroupName $ResourceName }
+    SqlDatabase { return Confirm-SqlDatabase -ServerName $ServerName -DatabaseName $ResourceName -ResourceGroupName $ResourceGroupName}
+    SqlServer { return Confirm-SqlServer -ServerName $ResourceName -ResourceGroupName $ResourceGroupName }
+    VirtualMachine { return Confirm-VirtualMachine -VirtualMachineName $ResourceName -ResourceGroupName $ResourceGroupName }
+    WebApp { return Confirm-WebApp -WebAppName $ResourceName -ResourceGroupName $ResourceGroupName }
     default {
       Write-Information "Not implemented yet"
       return $null
@@ -173,7 +170,7 @@ function Get-Resource {
   .PARAMETER ResourceType
     The type of the Resource (currently supports the following:
     ActionGroup
-    AKSCluster
+    AksCluster
     AppServicePlan
     ContainerRegistry
     KeyVault
@@ -243,13 +240,18 @@ function Confirm-Resource {
     [string]$PropertyValue
   )
 
-  $ConfirmResult = [ConfirmResult]::new()
-  $PSBoundParameters.Remove("PropertyKey")
-  $PSBoundParameters.Remove("PropertyValue")
-  $ConfirmResult.ResourceDetails = Get-ResourceByType @PSBoundParameters
+  $ResourceParams = @{
+    ResourceGroupName = $ResourceGroupName
+    ResourceName = $ResourceName
+    ResourceType = $ResourceType
+  }
 
-  if ($null -ne $ConfirmResult.ResourceDetails) {
-    $ConfirmResult.Success = $true
+  $ConfirmResult = Get-ResourceByType @ResourceParams
+
+  if ($null -eq $ConfirmResult) {
+    $ErrorRecord = Format-ErrorRecord -Message "ResourceType is invalid" -ErrorID "InvalidResourceType"
+    $ConfirmResult = [ConfirmResult]::new($ErrorRecord, $null)
+  } elseif ($ConfirmResult.Success) {
     if ($PropertyKey) {
       $ActualValue = $ConfirmResult.ResourceDetails
       $Keys = $PropertyKey.Split(".")
@@ -267,12 +269,8 @@ function Confirm-Resource {
       }
     }
   }
-  else {
-    $ConfirmResult.Success = $false
-    $ConfirmResult.Error = Format-NotExistError -Expected $ResourceName
-  }
 
-  return $ConfirmResult
+  $ConfirmResult
 }
 
 

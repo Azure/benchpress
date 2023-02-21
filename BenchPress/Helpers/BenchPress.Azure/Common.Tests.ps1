@@ -1,4 +1,5 @@
 ﻿using module ./Common.psm1
+using module ./public/classes/ConfirmResult.psm1
 
 BeforeAll {
   Import-Module $PSScriptRoot/AppServicePlan.psm1
@@ -14,21 +15,21 @@ BeforeAll {
 Describe "Get-ResourceByType" {
   Context "unit tests" -Tag "Unit" {
     BeforeEach {
-      Mock -ModuleName Common Get-ResourceGroup{}
-      Mock -ModuleName Common Get-AppServicePlan{}
-      Mock -ModuleName Common Get-SqlDatabase{}
-      Mock -ModuleName Common Get-SqlServer{}
-      Mock -ModuleName Common Get-VirtualMachine{}
-      Mock -ModuleName Common Get-WebApp{}
+      Mock -ModuleName Common Confirm-ResourceGroup{}
+      Mock -ModuleName Common Confirm-AppServicePlan{}
+      Mock -ModuleName Common Confirm-SqlDatabase{}
+      Mock -ModuleName Common Confirm-SqlServer{}
+      Mock -ModuleName Common Confirm-VirtualMachine{}
+      Mock -ModuleName Common Confirm-WebApp{}
     }
 
     It "Calls <expected> when [ResourceType]::<resourceType> is used" -TestCases @(
-      @{ ResourceType = [ResourceType]::ResourceGroup; Expected = "Get-ResourceGroup"}
-      @{ ResourceType = [ResourceType]::AppServicePlan; Expected = "Get-AppServicePlan"}
-      @{ ResourceType = [ResourceType]::SqlDatabase; Expected = "Get-SqlDatabase"}
-      @{ ResourceType = [ResourceType]::SqlServer; Expected = "Get-SqlServer"}
-      @{ ResourceType = [ResourceType]::VirtualMachine; Expected = "Get-VirtualMachine"}
-      @{ ResourceType = [ResourceType]::WebApp; Expected = "Get-WebApp"}
+      @{ ResourceType = [ResourceType]::ResourceGroup; Expected = "Confirm-ResourceGroup"}
+      @{ ResourceType = [ResourceType]::AppServicePlan; Expected = "Confirm-AppServicePlan"}
+      @{ ResourceType = [ResourceType]::SqlDatabase; Expected = "Confirm-SqlDatabase"}
+      @{ ResourceType = [ResourceType]::SqlServer; Expected = "Confirm-SqlServer"}
+      @{ ResourceType = [ResourceType]::VirtualMachine; Expected = "Confirm-VirtualMachine"}
+      @{ ResourceType = [ResourceType]::WebApp; Expected = "Confirm-WebApp"}
     ) {
       Get-ResourceByType -ResourceName resource -ResourceGroupName group -ResourceType $ResourceType -ServerName server
       Should -Invoke -ModuleName Common -CommandName $Expected -Times 1
@@ -59,12 +60,14 @@ Describe "Confirm-Resource" {
   Context "unit tests" -Tag "Unit" {
     BeforeEach {
       Mock -ModuleName Common Format-NotExistError{}
+      Mock -ModuleName Common Format-ErrorRecord{}
       Mock -ModuleName Common Format-IncorrectValueError{}
       Mock -ModuleName Common Format-PropertyDoesNotExistError{}
     }
 
-    It "Calls Get-ResourceByType; returns true when Get-ResourceByType returns non empty object." {
-      Mock -ModuleName Common Get-ResourceByType{ return "SomethingReturned" } -Verifiable
+    It "Calls Get-ResourceByType; returns true when Get-ResourceByType returns a Success ConfirmResult." {
+      $ConfirmResult = [ConfirmResult]::new("resource", $null)
+      Mock -ModuleName Common Get-ResourceByType{ $ConfirmResult } -Verifiable
 
       $result = Confirm-Resource -ResourceType "ResourceGroup" -ResourceName "mockResourceName"
 
@@ -74,19 +77,34 @@ Describe "Confirm-Resource" {
       $result.Success | Should -Be $true
     }
 
-    It "Calls Get-ResourceByType and Format-NotExistError; returns false when Get-ResourceByType returns empty object." {
+    It "Calls Get-ResourceByType; returns true when property matches value." {
+      $ConfirmResult = [ConfirmResult]::new(@{TestKey = "RightValue"}, $null)
+      Mock -ModuleName Common Get-ResourceByType{ $ConfirmResult } -Verifiable
+
+      $result = Confirm-Resource -ResourceType "ResourceGroup" -ResourceName "mockResourceName" `
+        -PropertyKey "TestKey" -PropertyValue "RightValue"
+
+      Should -InvokeVerifiable
+      Should -Invoke -ModuleName Common -CommandName "Format-NotExistError" -Times 0
+      Should -Invoke -ModuleName Common -CommandName "Format-IncorrectValueError" -Times 0
+
+      $result.Success | Should -Be $true
+    }
+
+    It "Calls Get-ResourceByType and Format-Error; returns false when Get-ResourceByType returns empty object." {
       Mock -ModuleName Common Get-ResourceByType{ return $null } -Verifiable
 
       $result = Confirm-Resource -ResourceType "ResourceGroup" -ResourceName "mockResourceName"
 
       Should -InvokeVerifiable
-      Should -Invoke -ModuleName Common -CommandName "Format-NotExistError" -Times 1
+      Should -Invoke -ModuleName Common -CommandName "Format-ErrorRecord" -Times 1
       Should -Invoke -ModuleName Common -CommandName "Format-IncorrectValueError" -Times 0
       $result.Success | Should -Be $false
     }
 
     It "Calls Get-ResourceByType and Format-IncorrectValueError; returns false when property does not match value." {
-      Mock -ModuleName Common Get-ResourceByType{ return  @{TestKey = "WrongValue"} } -Verifiable
+      $ConfirmResult = [ConfirmResult]::new(@{TestKey = "WrongValue"}, $null)
+      Mock -ModuleName Common Get-ResourceByType{ $ConfirmResult } -Verifiable
 
       $result = Confirm-Resource -ResourceType "ResourceGroup" -ResourceName "mockResourceName" `
         -PropertyKey "TestKey" -PropertyValue "RightValue"

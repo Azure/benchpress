@@ -1,11 +1,12 @@
-Import-Module $PSScriptRoot/Authentication.psm1
+using module ./public/classes/ConfirmResult.psm1
 
+Import-Module $PSScriptRoot/Authentication.psm1
 <#
 .SYNOPSIS
-  Gets a SQL Server.
+  Confirms that a SQL Server exists.
 
 .DESCRIPTION
-  The Get-AzBPSqlServer cmdlet gets a SQL Server using the specified SQL Server and
+  The Confirm-AzBPSqlServer cmdlet gets a SQL Server using the specified SQL Server and
   Resource Group name.
 
 .PARAMETER ServerName
@@ -15,16 +16,17 @@ Import-Module $PSScriptRoot/Authentication.psm1
   The name of the Resource Group
 
 .EXAMPLE
-  Get-AzBPSqlServer -ServerName "testserver" -ResourceGroupName "rgbenchpresstest"
+  Confirm-AzBPSqlServer -ServerName "testserver" -ResourceGroupName "rgbenchpresstest"
 
 .INPUTS
   System.String
 
 .OUTPUTS
-  Microsoft.Azure.Commands.Sql.Server.Model.AzureSqlServerModel
+  ConfirmResult
 #>
-function Get-SqlServer {
+function Confirm-SqlServer {
   [CmdletBinding()]
+  [OutputType([ConfirmResult])]
   param (
     [Parameter(Mandatory=$true)]
     [string]$ServerName,
@@ -32,48 +34,23 @@ function Get-SqlServer {
     [Parameter(Mandatory=$true)]
     [string]$ResourceGroupName
   )
+  Begin {
+    $ConnectResults = Connect-Account
+  }
+  Process {
+    [ConfirmResult]$Results = $null
 
-  Connect-Account
+    try {
+      $Resource = Get-AzSqlServer -ResourceGroupName $ResourceGroupName -ServerName $ServerName
 
-  $resource = Get-AzSqlServer -ResourceGroupName $ResourceGroupName -ServerName $ServerName
-  return $resource
+      $Results = [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+    } catch {
+      $ErrorRecord = $_
+      $Results = [ConfirmResult]::new($ErrorRecord, $ConnectResults.AuthenticationData)
+    }
+
+    $Results
+  }
 }
 
-<#
-.SYNOPSIS
-  Gets if a SQL Server exists.
-
-.DESCRIPTION
-  The Get-AzBPSqlServerExist cmdlet checks if a SQL Server exists using the specified
-  SQL Server and Resource Group name.
-
-.PARAMETER ServerName
-  The name of the SQL Server
-
-.PARAMETER ResourceGroupName
-  The name of the Resource Group
-
-.EXAMPLE
-  Get-AzBPSqlServerExist -ServerName "benchpresstest" -ResourceGroupName "rgbenchpresstest"
-
-.INPUTS
-  System.String
-
-.OUTPUTS
-  System.Boolean
-#>
-function Get-SqlServerExist {
-  [CmdletBinding()]
-  param (
-    [Parameter(Mandatory=$true)]
-    [string]$ServerName,
-
-    [Parameter(Mandatory=$true)]
-    [string]$ResourceGroupName
-  )
-
-  $resource = Get-SqlServer -ServerName $ServerName -ResourceGroupName $ResourceGroupName
-  return ($null -ne $resource)
-}
-
-Export-ModuleMember -Function Get-SqlServer, Get-SqlServerExist
+Export-ModuleMember -Function Confirm-SqlServer

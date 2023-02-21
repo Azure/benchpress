@@ -11,7 +11,7 @@
   RequiredModules = @()
   NestedModules = @(
     "ActionGroup.psm1",
-    "AKSCluster.psm1",
+    "AksCluster.psm1",
     "AppServicePlan.psm1",
     "Authentication.psm1",
     "AzureCli.psm1",
@@ -30,39 +30,26 @@
     "Confirm-BicepFile",
     "Deploy-BicepFeature",
     "Remove-BicepFeature",
-    "Get-ActionGroup",
-    "Get-ActionGroupExist",
-    "Get-AKSCluster",
-    "Get-AKSClusterExist",
-    "Get-AppServicePlan",
-    "Get-AppServicePlanExist",
-    "Get-ContainerRegistry",
-    "Get-ContainerRegistryExist",
-    "Get-KeyVault",
-    "Get-KeyVaultExist",
-    "Get-KeyVaultSecret",
-    "Get-KeyVaultSecretExist",
-    "Get-KeyVaultKey",
-    "Get-KeyVaultKeyExist",
-    "Get-KeyVaultCertificate",
-    "Get-KeyVaultCertificateExist",
+    "Confirm-ActionGroup",
+    "Confirm-AksCluster",
+    "Confirm-AppServicePlan",
+    "Confirm-ContainerRegistry",
+    "Confirm-KeyVault",
+    "Confirm-KeyVaultSecret",
+    "Confirm-KeyVaultKey",
+    "Confirm-KeyVaultCertificate",
     "Get-ResourceByType",
     "Confirm-Resource"
     "Get-Resource",
-    "Get-ResourceGroup",
-    "Get-ResourceGroupExist",
-    "Get-SqlDatabase",
-    "Get-SqlDatabaseExist",
-    "Get-SqlServer",
-    "Get-SqlServerExist",
-    "Get-VirtualMachine",
-    "Get-VirtualMachineExist",
-    "Get-WebApp",
-    "Get-WebAppExist"
+    "Confirm-ResourceGroup",
+    "Confirm-SqlDatabase",
+    "Confirm-SqlServer",
+    "Confirm-VirtualMachine",
+    "Confirm-WebApp"
   )
   PrivateData = @{
     PSData = @{
-      Tags = @("Azure", "BenchPress", "Bicep", "ARM", "Test", "ActionGroup", "AKS", "AKSCluster", "ContainerRegistry", "KeyVault", "ResourceGroup", "ServicePlan", "SqlDatabase", "SqlServer", "VirtualMachine", "WebApp")
+      Tags = @("Azure", "BenchPress", "Bicep", "ARM", "Test", "ActionGroup", "AKS", "AksCluster", "ContainerRegistry", "KeyVault", "ResourceGroup", "ServicePlan", "SqlDatabase", "SqlServer", "VirtualMachine", "WebApp")
       LicenseUri = ""
       ProjectUri = "https://github.com/Azure/benchpress/"
       IconUri = ""
