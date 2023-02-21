@@ -3,7 +3,7 @@
 BeforeAll {
   Import-Module $PSScriptRoot/AppServicePlan.psm1
   Import-Module $PSScriptRoot/Authentication.psm1
-  Import-Module $PSScriptRoot/Common.psm1
+  Import-Module $PSScriptRoot/Common.psm1 -Force
   Import-Module $PSScriptRoot/ResourceGroup.psm1
   Import-Module $PSScriptRoot/SqlDatabase.psm1
   Import-Module $PSScriptRoot/SqlServer.psm1
@@ -134,7 +134,7 @@ Describe "ErrorRecord Helper Methods" {
     }
 
     It "Creates ErrorRecord with correct message and ID when Format-ErrorRecord is called" {
-      Mock -ModuleName Common New-Object{} -Verifiable
+      Mock -ModuleName Common Write-Error{} -Verifiable
       Format-ErrorRecord -Message "testMessage" -ErrorID "testErrorID"
       Should -InvokeVerifiable
     }
