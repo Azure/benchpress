@@ -117,10 +117,11 @@ Describe "Confirm-Resource" {
     }
 
     It "Calls Get-ResourceByType and Format-PropertyDoesNotExistError; returns false when property does not exist." {
-      Mock -ModuleName Common Get-ResourceByType{ return  @{TestKey = "WrongValue"} } -Verifiable
+      $ConfirmResult = [ConfirmResult]::new(@{TestKey = "TestValue"}, $null)
+      Mock -ModuleName Common Get-ResourceByType{ $ConfirmResult } -Verifiable
 
       $result = Confirm-Resource -ResourceType "ResourceGroup" -ResourceName "mockResourceName" `
-        -PropertyKey "WrongKey" -PropertyValue "RightValue"
+        -PropertyKey "WrongKey" -PropertyValue "TestValue"
 
       Should -InvokeVerifiable
       Should -Invoke -ModuleName Common -CommandName "Format-NotExistError" -Times 0
@@ -152,7 +153,7 @@ Describe "ErrorRecord Helper Methods" {
     }
 
     It "Creates ErrorRecord with correct message and ID when Format-ErrorRecord is called" {
-      Mock -ModuleName Common Write-Error{} -Verifiable
+      Mock -ModuleName Common New-Object{} -Verifiable
       Format-ErrorRecord -Message "testMessage" -ErrorID "testErrorID"
       Should -InvokeVerifiable
     }

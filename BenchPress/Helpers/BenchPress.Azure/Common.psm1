@@ -244,6 +244,7 @@ function Confirm-Resource {
     ResourceGroupName = $ResourceGroupName
     ResourceName = $ResourceName
     ResourceType = $ResourceType
+    ServerName = $ServerName
   }
 
   $ConfirmResult = Get-ResourceByType @ResourceParams
@@ -259,12 +260,13 @@ function Confirm-Resource {
         $ActualValue = $ActualValue.$Key
       }
       if ($ActualValue -ne $PropertyValue) {
-        $ConfirmResult.Success = $false
         if ($ActualValue) {
-          $ConfirmResult.Error = Format-IncorrectValueError -ExpectedKey $PropertyKey -ExpectedValue $PropertyValue -ActualValue $ActualValue
+          $ErrorRecord = Format-IncorrectValueError -ExpectedKey $PropertyKey -ExpectedValue $PropertyValue -ActualValue $ActualValue
+          $ConfirmResult = [ConfirmResult]::new($ErrorRecord, $null)
         }
         else {
-          $ConfirmResult.Error = Format-PropertyDoesNotExistError -PropertyKey $PropertyKey
+          $ErrorRecord = Format-PropertyDoesNotExistError -PropertyKey $PropertyKey
+          $ConfirmResult = [ConfirmResult]::new($ErrorRecord, $null)
         }
       }
     }
@@ -382,7 +384,6 @@ function Format-ErrorRecord ([string] $Message, [string]$ErrorID) {
   $ErrorCategory = [System.Management.Automation.ErrorCategory]::InvalidResult
   $TargetObject = @{ Message = $Message }
   $ErrorRecord = New-Object System.Management.Automation.ErrorRecord $Exception, $ErrorID, $ErrorCategory, $TargetObject
-  Write-Error $ErrorRecord
   return $ErrorRecord
 }
 
