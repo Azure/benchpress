@@ -262,14 +262,14 @@ function Confirm-Resource {
             $ActualValue = $ActualValue[$Key]
           } catch {
             $ErrorRecord = $_
-            $ConfirmResult = [ConfirmResult]::new($ErrorRecord, $ConnectResults.AuthenticationData)
+            $ConfirmResult = [ConfirmResult]::new($ErrorRecord, $null)
           }
         }
         else{
           $ActualValue = $ActualValue.$Key
         }
       }
-      if ($ActualValue -ne $PropertyValue) {
+      if ($ActualValue -ne $PropertyValue -and $ConfirmResult.Success -ne $false) {
         if ($ActualValue) {
           $ErrorRecord = `
             Format-IncorrectValueError -ExpectedKey $PropertyKey `
