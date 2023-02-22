@@ -56,17 +56,17 @@ function Deploy-DemoApp {
 
   $Confirmed = $Force ? "y" : "n"
 
-  if ($Force -eq $false) {
-    Write-Information "This script will create a resource group, a deployment and a web app. If you want to force the execution, use the -Force switch."
-    Write-Information ""
-    Write-Information "Resources that will be created:"
-    Write-Information "  - Resource group: benchpress-rg-${EnvironmentSuffix}"
-    Write-Information "  - App Service Plan: benchpress-hosting-plan-${EnvironmentSuffix}"
-    Write-Information "  - Web app: benchpress-web-${EnvironmentSuffix}"
-    Write-Information "  - Application Insights: benchpress-application-insights-${EnvironmentSuffix}"
-    Write-Information "  - Email Action Group: benchpress-email-action-group-${EnvironmentSuffix}"
-    Write-Information ""
+  Write-Information "This script will create a resource group, a deployment and a web app."
+  Write-Information ""
+  Write-Information "Resources that will be created:"
+  Write-Information "  - Resource group: benchpress-rg-${EnvironmentSuffix}"
+  Write-Information "  - App Service Plan: benchpress-hosting-plan-${EnvironmentSuffix}"
+  Write-Information "  - Web app: benchpress-web-${EnvironmentSuffix}"
+  Write-Information "  - Application Insights: benchpress-application-insights-${EnvironmentSuffix}"
+  Write-Information "  - Email Action Group: benchpress-email-action-group-${EnvironmentSuffix}"
+  Write-Information ""
 
+  if ($Force -eq $false) {
     $Confirmed = Read-Host -Prompt "Do you want to continue? (y/n)"
 
     return
@@ -98,4 +98,4 @@ if (!$loggedIn) {
 $ENVIRONMENT_SUFFIX = $env:ENVIRONMENT_SUFFIX ?? (Get-Random).ToString("x8")
 $LOCATION = $env:LOCATION ?? "westus2";
 
-Deploy-DemoApp -EnvironmentSuffix $ENVIRONMENT_SUFFIX -Location $LOCATION
+Deploy-DemoApp -Force -EnvironmentSuffix $ENVIRONMENT_SUFFIX -Location $LOCATION
