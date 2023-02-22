@@ -31,7 +31,7 @@ Describe "Get-ResourceByType" {
       @{ ResourceType = [ResourceType]::VirtualMachine; Expected = "Confirm-VirtualMachine"}
       @{ ResourceType = [ResourceType]::WebApp; Expected = "Confirm-WebApp"}
     ) {
-      Get-ResourceByType -ResourceName resource -ResourceGroupName group -ResourceType $ResourceType
+      Get-ResourceByType -ResourceName resource -ResourceGroupName group -ResourceType $ResourceType -ServerName server
       Should -Invoke -ModuleName Common -CommandName $Expected -Times 1
     }
   }
@@ -62,6 +62,7 @@ Describe "Confirm-Resource" {
       Mock -ModuleName Common Format-NotExistError{}
       Mock -ModuleName Common Format-ErrorRecord{}
       Mock -ModuleName Common Format-IncorrectValueError{}
+      Mock -ModuleName Common Format-PropertyDoesNotExistError{}
     }
 
     It "Calls Get-ResourceByType; returns true when Get-ResourceByType returns a Success ConfirmResult." {
@@ -114,6 +115,20 @@ Describe "Confirm-Resource" {
 
       $result.Success | Should -Be $false
     }
+
+    It "Calls Get-ResourceByType and Format-PropertyDoesNotExistError; returns false when property does not exist." {
+      $ConfirmResult = [ConfirmResult]::new(@{TestKey = "TestValue"}, $null)
+      Mock -ModuleName Common Get-ResourceByType{ $ConfirmResult } -Verifiable
+
+      $result = Confirm-Resource -ResourceType "ResourceGroup" -ResourceName "mockResourceName" `
+        -PropertyKey "WrongKey" -PropertyValue "TestValue"
+
+      Should -InvokeVerifiable
+      Should -Invoke -ModuleName Common -CommandName "Format-NotExistError" -Times 0
+      Should -Invoke -ModuleName Common -CommandName "Format-PropertyDoesNotExistError" -Times 1
+
+      $result.Success | Should -Be $false
+    }
   }
 }
 
@@ -128,6 +143,12 @@ Describe "ErrorRecord Helper Methods" {
     It "Calls Format-ErrorRecord when Format-IncorrectValueError is called" {
       Mock -ModuleName Common Format-ErrorRecord{} -Verifiable
       Format-IncorrectValueError -Message "testMessage"
+      Should -InvokeVerifiable
+    }
+
+    It "Calls Format-ErrorRecord when Format-PropertyDoesNotExistError is called" {
+      Mock -ModuleName Common Format-ErrorRecord{} -Verifiable
+      Format-PropertyDoesNotExistError -PropertyKey "testKey"
       Should -InvokeVerifiable
     }
 

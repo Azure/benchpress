@@ -52,6 +52,9 @@ enum ResourceType {
   VirtualMachine
   WebApp)
 
+.PARAMETER ServerName
+  If testing an Azure SQL Database resource, the name of the server to which the database is assigned.
+
 .EXAMPLE
   Get-AzBPResourceByType -ResourceType ActionGroup -ResourceName "bpactiongroup" -ResourceGroupName "rgbenchpresstest"
 
@@ -75,7 +78,10 @@ function Get-ResourceByType {
     [string]$ResourceGroupName,
 
     [Parameter(Mandatory = $true)]
-    [ResourceType]$ResourceType
+    [ResourceType]$ResourceType,
+
+    [Parameter(Mandatory = $false)]
+    [string]$ServerName
   )
 
   switch ($ResourceType) {
@@ -85,7 +91,7 @@ function Get-ResourceByType {
     ContainerRegistry { return Confirm-ContainerRegistry -Name $ResourceName -ResourceGroupName $ResourceGroupName }
     KeyVault { return Confirm-KeyVault -Name $ResourceName -ResourceGroupName $ResourceGroupName }
     ResourceGroup { return Confirm-ResourceGroup -ResourceGroupName $ResourceName }
-    SqlDatabase { return Confirm-SqlDatabase -ServerName $ResourceName -ResourceGroupName $ResourceGroupName }
+    SqlDatabase { return Confirm-SqlDatabase -ServerName $ServerName -DatabaseName $ResourceName -ResourceGroupName $ResourceGroupName}
     SqlServer { return Confirm-SqlServer -ServerName $ResourceName -ResourceGroupName $ResourceGroupName }
     VirtualMachine { return Confirm-VirtualMachine -VirtualMachineName $ResourceName -ResourceGroupName $ResourceGroupName }
     WebApp { return Confirm-WebApp -WebAppName $ResourceName -ResourceGroupName $ResourceGroupName }
@@ -174,6 +180,9 @@ function Get-Resource {
     VirtualMachine
     WebApp)
 
+  .PARAMETER ServerName
+    If testing an Azure SQL Database resource, the name of the server to which the database is assigned.
+
   .PARAMETER PropertyKey
     The name of the property to check on the resource
 
@@ -188,6 +197,20 @@ function Get-Resource {
     Confirm whether a resource has a property configured correctly (i.e. Resource Group located in West US 3)
     Confirm-AzBPResource -ResourceType $resourceType -ResourceName $resourceGroupName -PropertyKey "Location" `
                          -PropertyValue "WestUS3"
+
+  .EXAMPLE
+    Checking whether a nested property on a resource is configured correctly (i.e. OS of VM is Linux)
+
+    $params = @{
+      ResourceGroupName = "testrg";
+      ResourceType = "VirtualMachine";
+      ResourceName = "testvm";
+      PropertyKey = "StorageProfile.OsDisk.OsType";
+      PropertyValue = "Linux"
+    }
+
+    $result = Confirm-AzBPResource @params
+
   .INPUTS
     ResourceType
     System.String
@@ -208,17 +231,20 @@ function Confirm-Resource {
     [string]$ResourceGroupName,
 
     [Parameter(Mandatory = $false)]
+    [string]$ServerName,
+
+    [Parameter(Mandatory = $false)]
     [string]$PropertyKey,
 
     [Parameter(Mandatory = $false)]
     [string]$PropertyValue
-
   )
 
   $ResourceParams = @{
     ResourceGroupName = $ResourceGroupName
     ResourceName = $ResourceName
     ResourceType = $ResourceType
+    ServerName = $ServerName
   }
 
   $ConfirmResult = Get-ResourceByType @ResourceParams
@@ -228,12 +254,23 @@ function Confirm-Resource {
     $ConfirmResult = [ConfirmResult]::new($ErrorRecord, $null)
   } elseif ($ConfirmResult.Success) {
     if ($PropertyKey) {
-      if ($ConfirmResult.ResourceDetails.$PropertyKey -ne $PropertyValue) {
-        $ConfirmResult.Success = $false
-        $ConfirmResult.ErrorRecord = `
-          Format-IncorrectValueError -ExpectedKey $PropertyKey `
-                                     -ExpectedValue $PropertyValue `
-                                     -ActualResult $ConfirmResult.ResourceDetails.$PropertyKey
+      $ActualValue = $ConfirmResult.ResourceDetails
+      $Keys = $PropertyKey.Split(".")
+      foreach($Key in $Keys){
+        $ActualValue = $ActualValue.$Key
+      }
+      if ($ActualValue -ne $PropertyValue) {
+        if ($ActualValue) {
+          $ErrorRecord = `
+            Format-IncorrectValueError -ExpectedKey $PropertyKey `
+                                       -ExpectedValue $PropertyValue `
+                                       -ActualValue $ActualValue
+          $ConfirmResult = [ConfirmResult]::new($ErrorRecord, $null)
+        }
+        else {
+          $ErrorRecord = Format-PropertyDoesNotExistError -PropertyKey $PropertyKey
+          $ConfirmResult = [ConfirmResult]::new($ErrorRecord, $null)
+        }
       }
     }
   }
@@ -300,6 +337,31 @@ function Format-IncorrectValueError([string]$ExpectedKey, [string]$ExpectedValue
 
 <#
   .SYNOPSIS
+    Private function to create a message and ErrorRecord for when a resource property does not exist.
+
+  .DESCRIPTION
+    Format-PropertyDoesNotExistError is a private helper function that can be used to construct a message and ErrorRecord
+    for when a resource property does not exist.
+
+  .PARAMETER PropertyKey
+    The resource property name that is checked
+
+  .EXAMPLE
+    Format-PropertyDoesNotExistError -PropertyKey "Location"
+
+  .INPUTS
+    System.String
+
+  .OUTPUTS
+    System.Management.Automation.ErrorRecord
+#>
+function Format-PropertyDoesNotExistError([string]$PropertyKey) {
+  $Message = "$PropertyKey is not a property on the resource"
+  return Format-ErrorRecord -Message $Message -ErrorID "BenchPressPropertyFail"
+}
+
+<#
+  .SYNOPSIS
     Private function to help construct a ErrorRecord.
 
   .DESCRIPTION
@@ -329,4 +391,4 @@ function Format-ErrorRecord ([string] $Message, [string]$ErrorID) {
 }
 
 Export-ModuleMember -Function Get-Resource, Get-ResourceByType, Confirm-Resource, `
-  Format-NotExistError, Format-IncorrectValueError, Format-ErrorRecord
+  Format-NotExistError, Format-IncorrectValueError, Format-ErrorRecord, Format-PropertyDoesNotExistError

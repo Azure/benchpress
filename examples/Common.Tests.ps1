@@ -111,16 +111,47 @@ Describe 'Use Confirm-AzBPResource to confirm resource and/or properties exist'{
     }
   }
 
-  Describe 'Verify SQL Server' {
+  Describe 'Verify SQL Server and DB' {
     it 'Should contain a SQL Server named testserver' {
       #arrange
-      $resourceGroupName = "testrg"
-      $sqlServerName = "testserver"
-      $resourceType = "SqlServer"
-
+      $params = @{
+        ResourceGroupName = "testrg";
+        ResourceType = "SqlServer";
+        ResourceName = "testserver"
+      }
       #act
-      $result = Confirm-AzBPResource -ResourceGroupName $resourceGroupName -ResourceType $resourceType `
-                  -ResourceName $sqlServerName
+      $result = Confirm-AzBPResource @params
+
+      #assert
+      $result.Success | Should -Be $true
+    }
+    it 'Should contain a SQL Server named testserver with a Sql Database named testdb' {
+      #arrange
+      $params = @{
+        ResourceGroupName = "testrg";
+        ResourceType = "SqlDatabase";
+        ServerName = "testserver";
+        ResourceName = "testdb"
+      }
+      #act
+      $result = Confirm-AzBPResource @params
+
+      #assert
+      $result.Success | Should -Be $true
+    }
+  }
+  Describe 'Verify VM' {
+    it 'Should contain a VM named testvm with OSType Linux' {
+      #arrange
+      $params = @{
+        ResourceGroupName = "testrg";
+        ResourceType = "VirtualMachine";
+        ResourceName = "testvm";
+        PropertyKey = "StorageProfile.OsDisk.OsType";
+        PropertyValue = "Linux"
+      }
+      #act
+      $result = Confirm-AzBPResource @params
 
       #assert
       $result.Success | Should -Be $true

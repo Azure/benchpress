@@ -35,7 +35,7 @@ function Confirm-SqlDatabase {
   [CmdletBinding()]
   [OutputType([ConfirmResult])]
   param (
-    [Parameter(Mandatory=$false)]
+    [Parameter(Mandatory=$true)]
     [string]$DatabaseName,
 
     [Parameter(Mandatory=$true)]
@@ -53,11 +53,7 @@ function Confirm-SqlDatabase {
     try {
       [Microsoft.Azure.Commands.Sql.Database.Model.AzureSqlDatabaseModel]$Resource = $null
 
-      if ([string]::IsNullOrEmpty($databaseName)) {
-        $Resource = Get-AzSqlDatabase -ResourceGroupName $resourceGroupName -ServerName $serverName
-      } else {
-        $Resource = Get-AzSqlDatabase -ResourceGroupName $resourceGroupName -ServerName $serverName -DatabaseName $databaseName
-      }
+      $Resource = Get-AzSqlDatabase -ResourceGroupName $ResourceGroupName -ServerName $ServerName -DatabaseName $DatabaseName
 
       $Results = [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
     } catch {
