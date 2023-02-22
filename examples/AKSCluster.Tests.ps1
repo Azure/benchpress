@@ -9,10 +9,10 @@ Describe 'Verify AKS Cluster Exists' {
     $aksName = "aksbenchpresstest"
 
     #act
-    $exists = Get-AzBPAKSClusterExist -ResourceGroupName $resourceGroupName -AKSName $aksName
+    $result = Confirm-AzBPAksCluster -ResourceGroupName $resourceGroupName -AKSName $aksName
 
     #assert
-    $exists | Should -Be $true
+    $result.Success | Should -Be $true
   }
 }
 

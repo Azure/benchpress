@@ -9,10 +9,10 @@ Describe 'Verify Action Group Exists' {
     $actionGroupName = "sampleaction"
 
     #act
-    $exists = Get-AzBPActionGroupExist -ResourceGroupName $resourceGroupName -ActionGroupName $actionGroupName
+    $result = Confirm-AzBPActionGroup -ResourceGroupName $resourceGroupName -ActionGroupName $actionGroupName
 
     #assert
-    $exists | Should -Be $true
+    $result.Success | Should -Be $true
   }
 }
 

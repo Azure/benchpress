@@ -1,11 +1,13 @@
+using module ./public/classes/ConfirmResult.psm1
+
 Import-Module $PSScriptRoot/Authentication.psm1
 
 <#
 .SYNOPSIS
-  Gets a Virtual Machine.
+  Confirms that a Virtual Machine exists.
 
 .DESCRIPTION
-  The Get-AzBPVirtualMachine cmdlet gets a Virtual Machine using the specified Virtual Machine and
+  The Confirm-AzBPVirtualMachine cmdlet gets a Virtual Machine using the specified Virtual Machine and
   Resource Group name.
 
 .PARAMETER VirtualMachineName
@@ -15,16 +17,17 @@ Import-Module $PSScriptRoot/Authentication.psm1
   The name of the Resource Group
 
 .EXAMPLE
-  Get-AzBPVirtualMachine -VirtualMachineName "benchpresstest" -ResourceGroupName "rgbenchpresstest"
+  Confirm-AzBPVirtualMachine -VirtualMachineName "benchpresstest" -ResourceGroupName "rgbenchpresstest"
 
 .INPUTS
   System.String
 
 .OUTPUTS
-  Microsoft.Azure.Commands.Compute.Models.PSVirtualMachine
+  ConfirmResult
 #>
-function Get-VirtualMachine {
+function Confirm-VirtualMachine {
   [CmdletBinding()]
+  [OutputType([ConfirmResult])]
   param (
     [Parameter(Mandatory=$true)]
     [string]$VirtualMachineName,
@@ -32,48 +35,23 @@ function Get-VirtualMachine {
     [Parameter(Mandatory=$true)]
     [string]$ResourceGroupName
   )
+  Begin {
+    $ConnectResults = Connect-Account
+  }
+  Process {
+    [ConfirmResult]$Results = $null
 
-  Connect-Account
+    try {
+      $Resource = Get-AzVM -ResourceGroupName $ResourceGroupName -Name $VirtualMachineName
 
-  $resource = Get-AzVM -ResourceGroupName $ResourceGroupName -Name $VirtualMachineName
-  return $resource
+      $Results = [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+    } catch {
+      $ErrorRecord = $_
+      $Results = [ConfirmResult]::new($ErrorRecord, $ConnectResults.AuthenticationData)
+    }
+
+    $Results
+  }
 }
 
-<#
-.SYNOPSIS
-  Gets if a Virtual Machine exists.
-
-.DESCRIPTION
-  The Get-AzBPVirtualMachineExist cmdlet checks if a Virtual Machine exists using the specified
-  Virtual Machine and Resource Group name.
-
-.PARAMETER VirtualMachineName
-  The name of the Virtual Machine
-
-.PARAMETER ResourceGroupName
-  The name of the Resource Group
-
-.EXAMPLE
-  Get-AzBPVirtualMachineExist -VirtualMachineName "benchpresstest" -ResourceGroupName "rgbenchpresstest"
-
-.INPUTS
-  System.String
-
-.OUTPUTS
-  System.Boolean
-#>
-function Get-VirtualMachineExist {
-  [CmdletBinding()]
-  param (
-    [Parameter(Mandatory=$true)]
-    [string]$VirtualMachineName,
-
-    [Parameter(Mandatory=$true)]
-    [string]$ResourceGroupName
-  )
-
-  $resource = Get-VirtualMachine -VirtualMachineName $VirtualMachineName -ResourceGroupName $ResourceGroupName
-  return ($null -ne $resource)
-}
-
-Export-ModuleMember -Function Get-VirtualMachine, Get-VirtualMachineExist
+Export-ModuleMember -Function Confirm-VirtualMachine

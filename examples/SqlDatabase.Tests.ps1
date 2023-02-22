@@ -2,21 +2,6 @@ BeforeAll {
     Import-Module "../BenchPress/Helpers/BenchPress.Azure/BenchPress.Azure.psd1"
 }
 
-Describe 'Verify Sql Database' {
-    it 'Should contain a Sql Database with the given name' {
-        #arrange
-        $rgName = 'rg-test'
-        $serverName = 'azbpsqlserverwithdatabasetest1'
-        $databaseName = 'samplesqldatabase'
-
-        #act
-        $exists = Get-AzBPSqlDatabase -ResourceGroupName $rgName -DatabaseName $databaseName -ServerName $serverName
-
-        #assert
-        $exists | Should -Not -BeNullOrEmpty
-    }
-}
-
 Describe 'Verify Sql Database Exists' {
     it 'Should contain a Sql Database with the given name' {
         #arrange
@@ -25,10 +10,10 @@ Describe 'Verify Sql Database Exists' {
         $databaseName = 'samplesqldatabase'
 
         #act
-        $exists =  Get-AzBPSqlDatabaseExist -ResourceGroupName $rgName -DatabaseName $databaseName -ServerName $serverName
+        $result =  Confirm-AzBPSqlDatabase -ResourceGroupName $rgName -DatabaseName $databaseName -ServerName $serverName
 
         #assert
-        $exists | Should -Be $true
+        $result.Success | Should -Be $true
     }
 }
 
@@ -39,10 +24,10 @@ Describe 'Verify Sql Database Exists without providing databaseName flag' {
         $serverName = 'azbpsqlserverwithdatabasetest1'
 
         #act
-        $exists =  Get-AzBPSqlDatabaseExist -ResourceGroupName $rgName -ServerName $serverName
+        $result =  Confirm-AzBPSqlDatabase -ResourceGroupName $rgName -ServerName $serverName
 
         #assert
-        $exists | Should -Be $true
+        $result.Success | Should -Be $true
     }
 }
 

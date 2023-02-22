@@ -1,11 +1,13 @@
+using module ./public/classes/ConfirmResult.psm1
+
 Import-Module $PSScriptRoot/Authentication.psm1
 
 <#
 .SYNOPSIS
-  Gets an Action Group.
+  Confirms that an Action Group exists.
 
 .DESCRIPTION
-  The Get-AzBPActionGroup cmdlet gets an action group using the specified Action Group and Resource Group name.
+  The Confirm-AzBPActionGroup cmdlet gets an action group using the specified Action Group and Resource Group name.
 
 .PARAMETER ActionGroupName
   The name of the Azure Action Group
@@ -14,16 +16,17 @@ Import-Module $PSScriptRoot/Authentication.psm1
   The name of the Resource Group
 
 .EXAMPLE
-  Get-AzBPActionGroup -ActionGroupName "benchpresstest" -ResourceGroupName "rgbenchpresstest"
+  Confirm-AzBPActionGroup -ActionGroupName "benchpresstest" -ResourceGroupName "rgbenchpresstest"
 
 .INPUTS
   System.String
 
 .OUTPUTS
-  Microsoft.Azure.Commands.Insights.OutputClasses.PSActionGroupResource
+  ConfirmResult
 #>
-function Get-ActionGroup {
+function Confirm-ActionGroup {
   [CmdletBinding()]
+  [OutputType([ConfirmResult])]
   param (
     [Parameter(Mandatory=$true)]
     [string]$ActionGroupName,
@@ -31,48 +34,24 @@ function Get-ActionGroup {
     [Parameter(Mandatory=$true)]
     [string]$ResourceGroupName
   )
+  Begin {
+    $ConnectResults = Connect-Account
+  }
+  Process {
+    [ConfirmResult]$Results = $null
 
-  Connect-Account
+    try {
+      $Resource = Get-AzActionGroup -ResourceGroupName $ResourceGroupName -Name $ActionGroupName
 
-  $resource = Get-AzActionGroup -ResourceGroupName $ResourceGroupName -Name $ActionGroupName
-  return $resource
+      $Results = [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+    } catch {
+      $ErrorRecord = $_
+      $Results = [ConfirmResult]::new($ErrorRecord, $ConnectResults.AuthenticationData)
+    }
+
+    $Results
+  }
+  End { }
 }
 
-<#
-.SYNOPSIS
-  Gets if an Action Group exists.
-
-.DESCRIPTION
-  The Get-AzBPActionGroupExist cmdlet checks if an action group exists using the specified Action Group and
-  Resource Group name.
-
-.PARAMETER ActionGroupName
-  The name of the Azure Action Group
-
-.PARAMETER ResourceGroupName
-  The name of the Resource Group
-
-.EXAMPLE
-  Get-AzBPActionGroupExist -ActionGroupName "benchpresstest" -ResourceGroupName "rgbenchpresstest"
-
-.INPUTS
-  System.String
-
-.OUTPUTS
-  System.Boolean
-#>
-function Get-ActionGroupExist {
-  [CmdletBinding()]
-  param (
-    [Parameter(Mandatory=$true)]
-    [string]$ActionGroupName,
-
-    [Parameter(Mandatory=$true)]
-    [string]$ResourceGroupName
-  )
-
-  $resource = Get-ActionGroup -ActionGroupName $actionGroupName -ResourceGroupName $ResourceGroupName
-  return ($null -ne $resource)
-}
-
-Export-ModuleMember -Function Get-ActionGroup, Get-ActionGroupExist
+Export-ModuleMember -Function Confirm-ActionGroup

@@ -2,20 +2,6 @@ BeforeAll {
     Import-Module "../BenchPress/Helpers/BenchPress.Azure/BenchPress.Azure.psd1"
 }
 
-Describe 'Verify Virtual Machine' {
-    it 'Should contain a Virtual Machine with the given name' {
-        #arrange
-        $rgName = 'rg-test'
-        $vmName = 'simpleLinuxVM1'
-
-        #act
-        $exists = Get-AzBPVirtualMachine -ResourceGroupName $rgName -VirtualMachineName $vmName
-
-        #assert
-        $exists | Should -Not -BeNullOrEmpty
-    }
-}
-
 Describe 'Verify Virtual Machine Exists' {
     it 'Should contain a Virtual Machine with the given name' {
         #arrange
@@ -23,10 +9,10 @@ Describe 'Verify Virtual Machine Exists' {
         $vmName = 'simpleLinuxVM1'
 
         #act
-        $exists = Get-AzBPVirtualMachineExist -ResourceGroupName $rgName -VirtualMachineName $vmName
+        $result = Confirm-AzBPVirtualMachine -ResourceGroupName $rgName -VirtualMachineName $vmName
 
         #assert
-        $exists | Should -Be $true
+        $result.Success | Should -Be $true
     }
 }
 

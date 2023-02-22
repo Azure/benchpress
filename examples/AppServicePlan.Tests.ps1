@@ -2,20 +2,6 @@ BeforeAll {
     Import-Module "../BenchPress/Helpers/BenchPress.Azure/BenchPress.Azure.psd1"
 }
 
-Describe 'Verify App Service Plan' {
-    it 'Should contain an App Service Plan with the given name' {
-        #arrange
-        $rgName = 'rg-test'
-        $appServicePlanName = 'appserviceplantest1'
-
-        #act
-        $exists = Get-AzBPAppServicePlan -ResourceGroupName $rgName -AppServicePlanName $appServicePlanName
-
-        #assert
-        $exists | Should -Not -BeNullOrEmpty
-    }
-}
-
 Describe 'Verify App Service Plan Exists' {
     it 'Should contain an App Service Plan with the given name' {
         #arrange
@@ -23,10 +9,10 @@ Describe 'Verify App Service Plan Exists' {
         $appServicePlanName = 'appserviceplantest1'
 
         #act
-        $exists = Get-AzBPAppServicePlanExist -ResourceGroupName $rgName -AppServicePlanName $appServicePlanName
+        $result = Confirm-AzBPAppServicePlan -ResourceGroupName $rgName -AppServicePlanName $appServicePlanName
 
         #assert
-        $exists | Should -Be $true
+        $result.Success | Should -Be $true
     }
 }
 

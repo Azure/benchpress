@@ -1,113 +1,87 @@
-﻿BeforeAll {
+﻿using module ./public/classes/ConfirmResult.psm1
+
+BeforeAll {
   Import-Module $PSScriptRoot/Authentication.psm1
   Import-Module $PSScriptRoot/KeyVault.psm1
   Import-Module Az
 }
 
-Describe "Get-KeyVault" {
+Describe "Confirm-KeyVault" {
   Context "unit tests" -Tag "Unit" {
     BeforeEach {
       Mock -ModuleName KeyVault Connect-Account{}
-      Mock -ModuleName KeyVault Get-AzKeyVault{}
     }
 
     It "Calls Get-AzKeyVault" {
-      Get-KeyVault -Name "vn" -ResourceGroupName "rgn"
+      Mock -ModuleName KeyVault Get-AzKeyVault{}
+      Confirm-KeyVault -Name "vn" -ResourceGroupName "rgn"
       Should -Invoke -ModuleName KeyVault -CommandName "Get-AzKeyVault" -Times 1
     }
-  }
-}
 
-Describe "Get-KeyVaultExist" {
-  Context "unit tests" -Tag "Unit" {
-    BeforeEach {
-      Mock -ModuleName KeyVault Get-KeyVault{}
-    }
-
-    It "Calls Get-KeyVaultExist" {
-      Get-KeyVaultExist -Name "vn" -ResourceGroupName "rgn"
-      Should -Invoke -ModuleName KeyVault -CommandName "Get-KeyVault" -Times 1
+    It "Sets the ErrorRecord when an exception is thrown" {
+      Mock -ModuleName KeyVault Get-AzKeyVault{ throw [Exception]::new("Exception") }
+      $Results = Confirm-KeyVault -Name "vn" -ResourceGroupName "rgn"
+      $Results.ErrorRecord | Should -Not -Be $null
     }
   }
 }
 
-Describe "Get-KeyVaultSecret" {
+Describe "Confirm-KeyVaultSecret" {
   Context "unit tests" -Tag "Unit" {
     BeforeEach {
       Mock -ModuleName KeyVault Connect-Account{}
-      Mock -ModuleName KeyVault Get-AzKeyVaultSecret{}
     }
 
     It "Calls Get-AzKeyVaultSecret" {
-      Get-KeyVaultSecret -Name "n" -KeyVaultName "kvn"
+      Mock -ModuleName KeyVault Get-AzKeyVaultSecret{}
+      Confirm-KeyVaultSecret -Name "n" -KeyVaultName "kvn"
       Should -Invoke -ModuleName KeyVault -CommandName "Get-AzKeyVaultSecret" -Times 1
     }
-  }
-}
 
-Describe "Get-KeyVaultSecretExist" {
-  Context "unit tests" -Tag "Unit" {
-    BeforeEach {
-      Mock -ModuleName KeyVault Get-KeyVaultSecret{}
-    }
-
-    It "Calls Get-KeyVaultSecret" {
-      Get-KeyVaultSecretExist -Name "n" -KeyVaultName "kvn"
-      Should -Invoke -ModuleName KeyVault -CommandName "Get-KeyVaultSecret" -Times 1
+    It "Sets the ErrorRecord when an exception is thrown" {
+      Mock -ModuleName KeyVault Get-AzKeyVaultSecret{ throw [Exception]::new("Exception") }
+      $Results = Confirm-KeyVaultSecret -Name "n" -KeyVaultName "kvn"
+      $Results.ErrorRecord | Should -Not -Be $null
     }
   }
 }
 
-Describe "Get-KeyVaultKey" {
+Describe "Confirm-KeyVaultKey" {
   Context "unit tests" -Tag "Unit" {
     BeforeEach {
       Mock -ModuleName KeyVault Connect-Account{}
-      Mock -ModuleName KeyVault Get-AzKeyVaultKey{}
     }
 
     It "Calls Get-AzKeyVaultKey" {
-      Get-KeyVaultKey -Name "n" -KeyVaultName "kvn"
+      Mock -ModuleName KeyVault Get-AzKeyVaultKey{}
+      Confirm-KeyVaultKey -Name "n" -KeyVaultName "kvn"
       Should -Invoke -ModuleName KeyVault -CommandName "Get-AzKeyVaultKey" -Times 1
     }
-  }
-}
 
-Describe "Get-KeyVaultKeyExist" {
-  Context "unit tests" -Tag "Unit" {
-    BeforeEach {
-      Mock -ModuleName KeyVault Get-KeyVaultKey{}
-    }
-
-    It "Calls Get-KeyVaultKey" {
-      Get-KeyVaultKeyExist -Name "n" -KeyVaultName "kvn"
-      Should -Invoke -ModuleName KeyVault -CommandName "Get-KeyVaultKey" -Times 1
+    It "Sets the ErrorRecord when an exception is thrown" {
+      Mock -ModuleName KeyVault Get-AzKeyVaultKey{ throw [Exception]::new("Exception") }
+      $Results = Confirm-KeyVaultKey -Name "n" -KeyVaultName "kvn"
+      $Results.ErrorRecord | Should -Not -Be $null
     }
   }
 }
 
-Describe "Get-KeyVaultCertificate" {
+Describe "Confirm-KeyVaultCertificate" {
   Context "unit tests" -Tag "Unit" {
     BeforeEach {
       Mock -ModuleName KeyVault Connect-Account{}
-      Mock -ModuleName KeyVault Get-AzKeyVaultCertificate{}
     }
 
     It "Calls Get-AzKeyVaultCertificate" {
-      Get-KeyVaultCertificate -Name "n" -KeyVaultName "kvn"
+      Mock -ModuleName KeyVault Get-AzKeyVaultCertificate{}
+      Confirm-KeyVaultCertificate -Name "n" -KeyVaultName "kvn"
       Should -Invoke -ModuleName KeyVault -CommandName "Get-AzKeyVaultCertificate" -Times 1
     }
-  }
-}
 
-Describe "Get-KeyVaultCertificateExist" {
-  Context "unit tests" -Tag "Unit" {
-    BeforeEach {
-      Mock -ModuleName KeyVault Get-KeyVaultCertificate{}
-    }
-
-    It "Calls Get-KeyVaultCertificate" {
-      Get-KeyVaultCertificateExist -Name "n" -KeyVaultName "kvn"
-      Should -Invoke -ModuleName KeyVault -CommandName "Get-KeyVaultCertificate" -Times 1
+    It "Sets the ErrorRecord when an exception is thrown" {
+      Mock -ModuleName KeyVault Get-AzKeyVaultCertificate{ throw [Exception]::new("Exception") }
+      $Results = Confirm-KeyVaultCertificate -Name "n" -KeyVaultName "kvn"
+      $Results.ErrorRecord | Should -Not -Be $null
     }
   }
 }
@@ -115,4 +89,5 @@ Describe "Get-KeyVaultCertificateExist" {
 AfterAll {
   Remove-Module Authentication
   Remove-Module KeyVault
+  Remove-Module Az
 }
