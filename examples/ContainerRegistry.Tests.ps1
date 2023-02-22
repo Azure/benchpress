@@ -26,17 +26,17 @@ Describe 'Verify Container Registry Does Not Exist' {
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
-    $exists = Get-AzBPContainerRegistryExist -ResourceGroupName $rgName -Name $acrName -ErrorAction SilentlyContinue
+    $result = Confirm-AzBPContainerRegistry -ResourceGroupName $rgName -Name $acrName -ErrorAction SilentlyContinue
 
     #assert
-    $exists | Should -Be $false
+    $result.Success | Should -Be $false
   }
 }
 
 Describe 'Spin up , Tear down Container Registry' {
   it 'Should deploy a bicep file.' {
     #arrange
-    $resourceGroupName = "rg-test"
+    $resourceGroupName = "rg-test2"
     $bicepPath = "./containerRegistry.bicep"
     $params = @{
       name           = "acrbenchpresstest2"

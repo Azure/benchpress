@@ -42,10 +42,10 @@ Describe 'Verify Sql Database Does Not Exist' {
         # The '-ErrorAction SilentlyContinue' command suppresses all errors.
         # In this test, it will suppress the error message when a resource cannot be found.
         # Remove this field to see all errors.
-        $exists =  Get-AzBPSqlDatabaseExist -ResourceGroupName $rgName -DatabaseName $databaseName -ServerName $serverName -ErrorAction SilentlyContinue
+        $result =  Confirm-AzBPSqlDatabase -ResourceGroupName $rgName -DatabaseName $databaseName -ServerName $serverName -ErrorAction SilentlyContinue
 
         #assert
-        $exists | Should -Be $false
+        $result.Success | Should -Be $false
     }
 }
 
