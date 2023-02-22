@@ -1,3 +1,5 @@
+Import-Module $PSScriptRoot/Authentication.psm1
+
 <#
 .SYNOPSIS
   Gets a SQL Server.
@@ -30,6 +32,8 @@ function Get-SqlServer {
     [Parameter(Mandatory=$true)]
     [string]$ResourceGroupName
   )
+
+  Connect-Account
 
   $resource = Get-AzSqlServer -ResourceGroupName $ResourceGroupName -ServerName $ServerName
   return $resource

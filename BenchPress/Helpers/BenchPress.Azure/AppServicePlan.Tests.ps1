@@ -1,11 +1,13 @@
 ﻿BeforeAll {
   Import-Module $PSScriptRoot/AppServicePlan.psm1
+  Import-Module $PSScriptRoot/Authentication.psm1
   Import-Module Az
 }
 
 Describe "Get-AppServicePlan" {
   Context "unit tests" -Tag "Unit" {
     BeforeEach {
+      Mock -ModuleName AppServicePlan Connect-Account{}
       Mock -ModuleName AppServicePlan Get-AzAppServicePlan{}
     }
 
@@ -31,4 +33,5 @@ Describe "Get-AppServicePlanExist" {
 
 AfterAll {
   Remove-Module AppServicePlan
+  Remove-Module Authentication
 }

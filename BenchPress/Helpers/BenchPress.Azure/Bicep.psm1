@@ -1,4 +1,6 @@
-﻿<#
+﻿Import-Module $PSScriptRoot/Authentication.psm1
+
+<#
   .SYNOPSIS
     Confirm-AzBPBicepFile will confirm that the bicep files provided pass the checks executed by `bicep build`.
 
@@ -159,6 +161,8 @@ function Deploy-BicepFeature(){
   $folder = Split-Path $BicepPath
   $armPath  = Join-Path -Path $folder -ChildPath "$fileName.json"
 
+  Connect-Account
+
   Write-Information "Transpiling Bicep to Arm"
   # 2>&1 will send errors to stdout so that they can be captured by PowerShell
   # Both the ARM template and any output from linting will be in the array $results, with individual errors in the
@@ -217,6 +221,9 @@ function Remove-BicepFeature(){
     [Parameter(Mandatory=$true)]
     [string]$ResourceGroupName
   )
+
+  Connect-Account
+
   $resourceGroup = Get-AzResourceGroup -Name $ResourceGroupName
   Remove-AzResourceGroup -Name $resourceGroup -Force
 }

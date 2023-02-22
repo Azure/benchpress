@@ -1,3 +1,5 @@
+Import-Module $PSScriptRoot/Authentication.psm1
+
 <#
 .SYNOPSIS
   Gets a Virtual Machine.
@@ -30,6 +32,8 @@ function Get-VirtualMachine {
     [Parameter(Mandatory=$true)]
     [string]$ResourceGroupName
   )
+
+  Connect-Account
 
   $resource = Get-AzVM -ResourceGroupName $ResourceGroupName -Name $VirtualMachineName
   return $resource

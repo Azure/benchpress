@@ -20,6 +20,8 @@ as their testing framework and runner. To use BenchPress, have the following ins
 - [Az PowerShell module](https://learn.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-9.3.0)
 - [Pester](https://pester.dev/docs/introduction/installation)
 - [Bicep](https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/install#azure-powershell)
+- [Service Principal](https://learn.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal)
+  created for your application.
 
 An Azure subscription that you can deploy resources to is also a requirement.
 
@@ -29,7 +31,36 @@ The easiest way to get started with BenchPress is to use the files in the `examp
 
 1. Clone the repository, open a PowerShell terminal, and navigate to the `examples` folder.
 
-1. Login to your Azure subscription by running `Connect-AzAccount` and follow the additional prompts to login.
+1. Set the following environment variables so that the BenchPress tools can deploy (if necessary), confirm, and destroy
+   (if necessary) resources in the target subscription.
+
+- AZ_APPLICATION_ID - The Service Principal's application ID
+- AZ_TENANT_ID - The Tenant ID of the Azure Tenant to access
+- AZ_SUBSCRIPTION_ID - The Subscription ID of the Subscription within the Tenant to access
+- AZ_ENCRYPTED_PASSWORD - The **encrypted** password of the Service Principal. This value must be an encrypted string.
+  It is the responsibility of the user to encrypt the Service Principal password. The following PowerShell code can be
+  used to encrypt the Service Principal password before saving as an environment variable:
+  `<raw password> | ConvertTo-SecureString -AsPlainText -Force | ConvertFrom-SecureString`.
+  This takes the raw password and converts the password to a SecureString. This SecureString must then be converted to
+  a String. `ConvertFrom-SecureString` will take the SecureString and convert it to an encrypted string. This value
+  must then be saved as an environment variable. This ensures that the BenchPress code never uses the raw password at
+  any point.
+
+  You can either use a `.env` file and pass in the environment variables locally with a script,
+  or you must load each variable through the command line using:
+
+    ```PowerShell
+    $Env:AZ_APPLICATION_ID="<sample-application-id>"
+    $Env:AZ_TENANT_ID="<sample-tenant-id>"
+    $Env:AZ_SUBSCRIPTION_ID="<sample-subscription-id>"
+    $Env:AZ_ENCRYPTED_PASSWORD="<sample-encrypted-password>"
+    ```
+
+  You can confirm if these are set up right on your local powershell using:
+
+    ```PowerShell
+    [Environment]::GetEnvironmentVariables()
+    ```
 
 ## Running a test file
 

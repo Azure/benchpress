@@ -2,7 +2,7 @@ BeforeAll {
   Import-Module "../BenchPress/Helpers/BenchPress.Azure/BenchPress.Azure.psd1"
 }
 
-Describe 'Verify Container Registry Exists' {
+Describe 'Verify Container Registry' {
   it 'Should contain a container registry with the given name' {
     #arrange
     $rgName = "rg-test"
@@ -27,6 +27,23 @@ Describe 'Verify Container Registry Exists' {
 
     #assert
     $exists | Should -Be $true
+  }
+}
+
+Describe 'Verify Container Registry Does Not Exist' {
+  it 'Should not contain a container registry with the given name' {
+    #arrange
+    $rgName = "rg-test"
+    $acrName = "acrbenchpresstest1"
+
+    #act
+    # The '-ErrorAction SilentlyContinue' command suppresses all errors.
+    # In this test, it will suppress the error message when a resource cannot be found.
+    # Remove this field to see all errors.
+    $exists = Get-AzBPContainerRegistryExist -ResourceGroupName $rgName -Name $acrName -ErrorAction SilentlyContinue
+
+    #assert
+    $exists | Should -Be $false
   }
 }
 

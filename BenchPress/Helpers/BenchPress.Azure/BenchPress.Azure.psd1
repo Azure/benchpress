@@ -13,6 +13,7 @@
     "ActionGroup.psm1",
     "AKSCluster.psm1",
     "AppServicePlan.psm1",
+    "Authentication.psm1",
     "AzureCli.psm1",
     "Bicep.psm1",
     "Common.psm1",
@@ -46,6 +47,7 @@
     "Get-KeyVaultCertificate",
     "Get-KeyVaultCertificateExist",
     "Get-ResourceByType",
+    "Confirm-Resource"
     "Get-Resource",
     "Get-ResourceGroup",
     "Get-ResourceGroupExist",

@@ -1,3 +1,5 @@
+Import-Module $PSScriptRoot/Authentication.psm1
+
 <#
 .SYNOPSIS
   Gets a Resource Group.
@@ -24,6 +26,8 @@ function Get-ResourceGroup {
     [Parameter(Mandatory=$true)]
     [string]$ResourceGroupName
   )
+
+  Connect-Account
 
   $resource = Get-AzResourceGroup $ResourceGroupName
   return $resource
