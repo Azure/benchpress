@@ -261,7 +261,10 @@ function Confirm-Resource {
       }
       if ($ActualValue -ne $PropertyValue) {
         if ($ActualValue) {
-          $ErrorRecord = Format-IncorrectValueError -ExpectedKey $PropertyKey -ExpectedValue $PropertyValue -ActualValue $ActualValue
+          $ErrorRecord = `
+            Format-IncorrectValueError -ExpectedKey $PropertyKey `
+                                       -ExpectedValue $PropertyValue `
+                                       -ActualValue $ActualValue
           $ConfirmResult = [ConfirmResult]::new($ErrorRecord, $null)
         }
         else {
