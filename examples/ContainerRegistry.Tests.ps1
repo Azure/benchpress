@@ -36,7 +36,7 @@ Describe 'Verify Container Registry Does Not Exist' {
 Describe 'Spin up , Tear down Container Registry' {
   it 'Should deploy a bicep file.' {
     #arrange
-    $resourceGroupName = "rg-test2"
+    $resourceGroupName = "rg-test"
     $bicepPath = "./containerRegistry.bicep"
     $params = @{
       name           = "acrbenchpresstest2"

@@ -34,7 +34,7 @@ Describe 'Verify Action Group Does Not Exist' {
 }
 
 Describe 'Spin up , Tear down Action Group' {
-  it 'Should deploy a bi  cep file.' {
+  it 'Should deploy a bicep file.' {
     #arrange
     $resourceGroupName = "test-rg"
     $bicepPath = "./actionGroup.bicep"
