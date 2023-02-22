@@ -255,9 +255,19 @@ function Confirm-Resource {
   } elseif ($ConfirmResult.Success) {
     if ($PropertyKey) {
       $ActualValue = $ConfirmResult.ResourceDetails
-      $Keys = $PropertyKey.Split(".")
+      $Keys = ($PropertyKey -split '[\[\]\.]').Where({ $_ -ne "" })
       foreach($Key in $Keys){
-        $ActualValue = $ActualValue.$Key
+        if($Key -match "^\d+$"){
+          try {
+            $ActualValue = $ActualValue[$Key]
+          } catch {
+            $ErrorRecord = $_
+            $ConfirmResult = [ConfirmResult]::new($ErrorRecord, $ConnectResults.AuthenticationData)
+          }
+        }
+        else{
+          $ActualValue = $ActualValue.$Key
+        }
       }
       if ($ActualValue -ne $PropertyValue) {
         if ($ActualValue) {
