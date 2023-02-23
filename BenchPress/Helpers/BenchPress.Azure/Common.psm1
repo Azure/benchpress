@@ -263,6 +263,7 @@ function Confirm-Resource {
           } catch {
             $ErrorRecord = $_
             $ConfirmResult = [ConfirmResult]::new($ErrorRecord, $null)
+            break
           }
         }
         else{
