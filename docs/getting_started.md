@@ -180,7 +180,8 @@ Describe 'Verify Container Registry' {
 }
 ```
 
-This test uses the `Confirm-AzBPContainerRegistry` helper from BenchPress. `Confirm-AzBPContainerRegistry` returns a `ConfirmResult` object
+This test uses the `Confirm-AzBPContainerRegistry` helper
+from BenchPress. `Confirm-AzBPContainerRegistry` returns a `ConfirmResult` object
 with information about the success of the call,
 resource details, authentication data and an error record.
 Assuming the container registry exists, we assert that
