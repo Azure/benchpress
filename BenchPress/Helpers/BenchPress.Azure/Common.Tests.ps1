@@ -63,7 +63,7 @@ Describe "Confirm-Resource" {
       Mock -ModuleName Common Format-ErrorRecord{}
       Mock -ModuleName Common Format-IncorrectValueError{}
       Mock -ModuleName Common Format-PropertyDoesNotExistError{}
-      $ConfirmResult = [ConfirmResult]::new(
+      $script:ConfirmResult = [ConfirmResult]::new(
         @{
           TestKey = "TestValue"
           TestArray = @(@{AnotherKey = "AnotherValue"})
