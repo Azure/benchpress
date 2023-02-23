@@ -1,5 +1,5 @@
 BeforeAll {
-  Import-Module "../../BenchPress/Helpers/Azure/BenchPress.Azure.psd1"
+  Import-Module "../../BenchPress/Helpers/BenchPress.Azure/BenchPress.Azure.psd1"
 }
 
 Describe 'Resource Group Tests' {
@@ -8,10 +8,10 @@ Describe 'Resource Group Tests' {
     $rgName = "benchpress-rg-${env:ENVIRONMENT_SUFFIX}"
 
     #act
-    $resourceGroup = Get-AzBPResourceGroup -ResourceGroupName $rgName
+    $resourceGroup = Confirm-AzBPResourceGroup -ResourceGroupName $rgName
 
     #assert
-    $resourceGroup | Should -Not -BeNullOrEmpty
+    $resourceGroup.Success | Should -Be $true
   }
 }
 
@@ -22,10 +22,10 @@ Describe 'Service Plan Tests' {
     $svcPlanName = "benchpress-hosting-plan-${env:ENVIRONMENT_SUFFIX}"
 
     #act
-    $servicePlan = Get-AzBPAppServicePlan -ResourceGroupName $rgName -AppServicePlanName $svcPlanName
+    $servicePlan = Confirm-AzBPAppServicePlan -ResourceGroupName $rgName -AppServicePlanName $svcPlanName
 
     #assert
-    $servicePlan | Should -Not -BeNullOrEmpty
+    $servicePlan.Success | Should -Be $true
   }
 }
 
@@ -36,10 +36,10 @@ Describe 'Action Group Tests' {
     $agName = "benchpress-email-action-group-${env:ENVIRONMENT_SUFFIX}"
 
     #act
-    $ag = Get-AzBPActionGroup -ResourceGroupName $rgName -ActionGroupName $agName
+    $ag = Confirm-AzBPActionGroup -ResourceGroupName $rgName -ActionGroupName $agName
 
     #assert
-    $ag | Should -Not -BeNullOrEmpty
+    $ag | Should -Be $true
   }
 }
 
@@ -50,10 +50,10 @@ Describe 'Web Apps Tests' {
     $webAppName = "benchpress-web-${env:ENVIRONMENT_SUFFIX}"
 
     #act
-    $webApp = Get-AzBPWebApp -ResourceGroupName $rgName -WebAppName $webAppName
+    $webApp = Confirm-AzBPWebApp -ResourceGroupName $rgName -WebAppName $webAppName
 
     #assert
-    $webApp | Should -Not -BeNullOrEmpty
+    $webApp.Success | Should -Be $true
   }
 
   it 'Should have the web app availability state as normal' {
@@ -62,10 +62,10 @@ Describe 'Web Apps Tests' {
     $webAppName = "benchpress-web-${env:ENVIRONMENT_SUFFIX}"
 
     #act
-    $webApp = Get-AzBPWebApp -ResourceGroupName $rgName -WebAppName $webAppName
+    $webApp = Confirm-AzBPWebApp -ResourceGroupName $rgName -WebAppName $webAppName
 
     #assert
-    $webApp.AvailabilityState | Should -Be "Normal"
+    $webApp.ResourceDetails.AvailabilityState | Should -Be "Normal"
   }
 
   it 'Should have the web app works https only' {
@@ -74,10 +74,10 @@ Describe 'Web Apps Tests' {
     $webAppName = "benchpress-web-${env:ENVIRONMENT_SUFFIX}"
 
     #act
-    $webApp = Get-AzBPWebApp -ResourceGroupName $rgName -WebAppName $webAppName
+    $webApp = Confirm-AzBPWebApp -ResourceGroupName $rgName -WebAppName $webAppName
 
     #assert
-    $webApp.HttpsOnly | Should -Be $true
+    $webApp.ResourceDetails.HttpsOnly | Should -Be $true
   }
 
   it 'Should contain configuration in the web app' {
@@ -86,10 +86,10 @@ Describe 'Web Apps Tests' {
     $webAppName = "benchpress-web-${env:ENVIRONMENT_SUFFIX}"
 
     #act
-    $webApp = Get-AzBPWebApp -ResourceGroupName $rgName -WebAppName $webAppName
+    $webApp = Confirm-AzBPWebApp -ResourceGroupName $rgName -WebAppName $webAppName
 
     #assert
-    $webApp.SiteConfig.AppSettings | Should -Not -BeNullOrEmpty
+    $webApp.ResourceDetails.SiteConfig.AppSettings | Should -Not -BeNullOrEmpty
   }
 
   it 'Should contain application insights configuration in the web app' {
@@ -98,8 +98,8 @@ Describe 'Web Apps Tests' {
     $webAppName = "benchpress-web-${env:ENVIRONMENT_SUFFIX}"
 
     #act
-    $webApp = Get-AzBPWebApp -ResourceGroupName $rgName -WebAppName $webAppName
-    $aiAppSetting = $webApp.SiteConfig.AppSettings | Where-object {$_.Name -eq "APPLICATIONINSIGHTS_CONNECTION_STRING"} | Select-Object -First 1
+    $webApp = Confirm-AzBPWebApp -ResourceGroupName $rgName -WebAppName $webAppName
+    $aiAppSetting = $webApp.ResourceDetails.SiteConfig.AppSettings | Where-object {$_.Name -eq "APPLICATIONINSIGHTS_CONNECTION_STRING"} | Select-Object -First 1
 
     #assert
     $aiAppSetting | Should -Not -BeNullOrEmpty
