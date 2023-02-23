@@ -1,5 +1,4 @@
 ---
-# yamllint disable line-length
 name: "Publish and test demo app"
 on:
   push:
@@ -21,13 +20,31 @@ jobs:
           # Set the location to westus2
           $env:LOCATION = "westus2"
 
+      - name: Login via az module
+        uses: azure/login@v1
+        with:
+          creds: ${{secrets.AZURE_CREDENTIALS}}
+          enable-AzPSSession: true
+
+      - name: Installing Az module
+        shell: pwsh
+        run: |
+          Install-Module -Name Az -Scope CurrentUser -Repository PSGallery -Force
+
       - name: Deploy infrastructure and demo app
         shell: pwsh
+        working-directory: ./assets/demos
         run: |
           ./deploy-demoapp.ps1
 
       - name: Run the tests
         shell: pwsh
+        working-directory: ./assets/demos
+        env:
+          AZ_TENANT_ID: ${{secrets.AZ_TENANT_ID}}
+          AZ_SUBSCRIPTION_ID: ${{secrets.AZ_SUBSCRIPTION_ID}}
+          AZ_APPLICATION_ID: ${{secrets.AZ_APPLICATION_ID}}
+          AZ_ENCRYPTED_PASSWORD: ${{secrets.AZ_ENCRYPTED_PASSWORD}}
         run: |
           ./DemoApp.Tests.ps1
 
