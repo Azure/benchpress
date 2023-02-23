@@ -74,13 +74,18 @@ The easiest way to get started with BenchPress is to use the files in the `examp
     Starting discovery in 1 files.
     Discovery found 3 tests in 44ms.
     Running tests.
-    Get-AzContainerRegistry: The Resource 'Microsoft.ContainerRegistry/registries/acrbenchpresstest1' under resource group 'rg-test' was not found.
+    Get-AzContainerRegistry: The Resource
+    'Microsoft.ContainerRegistry/registries/acrbenchpresstest1' under
+    resource group 'rg-test' was not found.
     For more details please go to https://aka.ms/ARMResourceNotFoundFix
     [-] Verify Container Registry.Should contain a container registry with the given name 894ms (893ms|1ms)
     Expected $true, but got $false.
-    at $result.Success | Should -Be $true, BenchPress\benchpress\examples\ContainerRegistry.Tests.ps1:15
+    at $result.Success | Should -Be $true,
+    BenchPress\benchpress\examples\ContainerRegistry.Tests.ps1:15
     at <ScriptBlock>, BenchPress\benchpress\examples\ContainerRegistry.Tests.ps1:15
-    New-AzResourceGroupDeployment: 3:01:24 PM - Error: Code=ResourceGroupNotFound; Message=Resource group 'rg-test' could not be found.
+    New-AzResourceGroupDeployment: 3:01:24 PM -
+    Error: Code=ResourceGroupNotFound; Message=Resource group
+    'rg-test' could not be found.
     New-AzResourceGroupDeployment: The deployment validation failed
     [-] Spin up , Tear down Container Registry.Should deploy a bicep file. 4.52s (4.52s|1ms)
     Expected 'Succeeded', but got $null.
@@ -176,8 +181,10 @@ Describe 'Verify Container Registry' {
 ```
 
 This test uses the `Confirm-AzBPContainerRegistry` helper from BenchPress. `Confirm-AzBPContainerRegistry` returns a `ConfirmResult` object
-with information about the success of the call, resource details, authentication data and an error record.
-Assuming the container registry exists, we assert that the object returned by `Confirm-AzBPContainerRegistry` is successful.
+with information about the success of the call,
+resource details, authentication data and an error record.
+Assuming the container registry exists, we assert that
+the object returned by `Confirm-AzBPContainerRegistry` is successful.
 
 Let's look at the second `Describe` block:
 
