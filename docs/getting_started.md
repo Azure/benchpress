@@ -68,31 +68,31 @@ The easiest way to get started with BenchPress is to use the files in the `examp
    `ContainerRegistry.Tests.ps1` as our examples. To run the `ContainerRegistry.Tests.ps1` tests, execute
    `.\ContainerRegistry.Tests.ps1` or `Invoke-Pester -Path .\ContainerRegistry.Tests.ps1`.
 
-1. Your test results will most likely be three test failures:
+1. Your test results will most likely be two test failures:
 
    ```PowerShell
-   Starting discovery in 1 files.
-   Discovery found 3 tests in 40ms.
-   Running tests.
-   Get-AzContainerRegistry: Resource group 'rg-test' could not be found.
-   [-] Verify Container Registry Exists.Should contain a container registry with the given name 537ms (530ms|7ms)
-    Expected a value, but got $null or empty.
-    at $exists | Should -Not -BeNullOrEmpty, \benchpress\examples\ContainerRegistry.Tests.ps1:15
-    at <ScriptBlock>, \benchpress\examples\ContainerRegistry.Tests.ps1:15
-   Get-AzContainerRegistry: Resource group 'rg-test' could not be found.
-   [-] Verify Container Registry Exists.Should contain a container registry with the given name 213ms (213ms|0ms)
+    Starting discovery in 1 files.
+    Discovery found 3 tests in 44ms.
+    Running tests.
+    Get-AzContainerRegistry: The Resource
+    'Microsoft.ContainerRegistry/registries/acrbenchpresstest1' under
+    resource group 'rg-test' was not found.
+    For more details please go to https://aka.ms/ARMResourceNotFoundFix
+    [-] Verify Container Registry.Should contain a container registry with the given name 894ms (893ms|1ms)
     Expected $true, but got $false.
-    at $exists | Should -Be $true, \benchpress\examples\ContainerRegistry.Tests.ps1:29
-    at <ScriptBlock>, \benchpress\examples\ContainerRegistry.Tests.ps1:29
-   New-AzResourceGroupDeployment: 1:48:19 PM - Error: Code=ResourceGroupNotFound; Message=Resource group 'rg-test'
-   could not be found.
-   New-AzResourceGroupDeployment: The deployment validation failed
-   [-] Spin up , Tear down Container Registry.Should deploy a bicep file. 6.01s (6.01s|0ms)
+    at $result.Success | Should -Be $true,
+    BenchPress\benchpress\examples\ContainerRegistry.Tests.ps1:15
+    at <ScriptBlock>, BenchPress\benchpress\examples\ContainerRegistry.Tests.ps1:15
+    New-AzResourceGroupDeployment: 3:01:24 PM -
+    Error: Code=ResourceGroupNotFound; Message=Resource group
+    'rg-test' could not be found.
+    New-AzResourceGroupDeployment: The deployment validation failed
+    [-] Spin up , Tear down Container Registry.Should deploy a bicep file. 4.52s (4.52s|1ms)
     Expected 'Succeeded', but got $null.
-    at $deployment.ProvisioningState | Should -Be "Succeeded", \benchpress\examples\ContainerRegistry.Tests.ps1:47
-    at <ScriptBlock>, \benchpress\examples\ContainerRegistry.Tests.ps1:47
-   Tests completed in 4.74s
-   Tests Passed: 0, Failed: 3, Skipped: 0 NotRun: 0
+    at $deployment.ProvisioningState | Should -Be "Succeeded", BenchPress\benchpress\examples\ContainerRegistry.Tests.ps1:50
+    at <ScriptBlock>, BenchPress\benchpress\examples\ContainerRegistry.Tests.ps1:50
+    Tests completed in 6.3s
+    Tests Passed: 1, Failed: 2, Skipped: 0 NotRun: 0
    ```
 
 ## Walkthrough of Test File
@@ -105,31 +105,34 @@ BeforeAll {
   Import-Module "../BenchPress/Helpers/Azure/BenchPress.Azure.psd1"
 }
 
-Describe 'Verify Container Registry Exists' {
+Describe 'Verify Container Registry' {
   it 'Should contain a container registry with the given name' {
     #arrange
     $rgName = "rg-test"
     $acrName = "acrbenchpresstest1"
 
     #act
-    $exists = Get-AzBPContainerRegistry -ResourceGroupName $rgName -Name $acrName
+    $result = Confirm-AzBPContainerRegistry -ResourceGroupName $rgName -Name $acrName
 
     #assert
-    $exists | Should -Not -BeNullOrEmpty
+    $result.Success | Should -Be $true
   }
 }
 
-Describe 'Verify Container Registry Exists' {
-  it 'Should contain a container registry with the given name' {
+Describe 'Verify Container Registry Does Not Exist' {
+  it 'Should not contain a container registry with the given name' {
     #arrange
     $rgName = "rg-test"
     $acrName = "acrbenchpresstest1"
 
     #act
-    $exists = Get-AzBPContainerRegistryExist -ResourceGroupName $rgName -Name $acrName
+    # The '-ErrorAction SilentlyContinue' command suppresses all errors.
+    # In this test, it will suppress the error message when a resource cannot be found.
+    # Remove this field to see all errors.
+    $result = Confirm-AzBPContainerRegistry -ResourceGroupName $rgName -Name $acrName -ErrorAction SilentlyContinue
 
     #assert
-    $exists | Should -Be $true
+    $result.Success | Should -Be $false
   }
 }
 
@@ -144,8 +147,7 @@ Describe 'Spin up , Tear down Container Registry' {
     }
 
     #act
-    $deployment = Deploy-AzBPBicepFeature -BicepPath $bicepPath -Params $params `
-                  -ResourceGroupName $resourceGroupName
+    $deployment = Deploy-AzBPBicepFeature -BicepPath $bicepPath -Params $params -ResourceGroupName $resourceGroupName
 
     #assert
     $deployment.ProvisioningState | Should -Be "Succeeded"
@@ -163,48 +165,51 @@ BenchPress module in the `BeforeAll` block.
 Let's look at the first `Describe` block:
 
 ```PowerShell
-Describe 'Verify Container Registry Exists' {
+Describe 'Verify Container Registry' {
   it 'Should contain a container registry with the given name' {
     #arrange
     $rgName = "rg-test"
     $acrName = "acrbenchpresstest1"
 
     #act
-    $exists = Get-AzBPContainerRegistry -ResourceGroupName $rgName -Name $acrName
+    $result = Confirm-AzBPContainerRegistry -ResourceGroupName $rgName -Name $acrName
 
     #assert
-    $exists | Should -Not -BeNullOrEmpty
+    $result.Success | Should -Be $true
   }
 }
 ```
 
-This test uses the `Get-AzBPContainerRegistry` helper from BenchPress. `Get-AzBPContainerRegistry` returns an object
-representing the container registry in the specified resource group and with the specified container registry name.
-Assuming the container registry exists, we assert that the object returned by `Get-AzBPContainerRegistry` is not null
-or empty.
+This test uses the `Confirm-AzBPContainerRegistry` helper
+from BenchPress. `Confirm-AzBPContainerRegistry` returns a `ConfirmResult` object
+with information about the success of the call,
+resource details, authentication data and an error record.
+Assuming the container registry exists, we assert that
+the object returned by `Confirm-AzBPContainerRegistry` is successful.
 
 Let's look at the second `Describe` block:
 
 ```PowerShell
-Describe 'Verify Container Registry Exists' {
-  it 'Should contain a container registry with the given name' {
+Describe 'Verify Container Registry Does Not Exist' {
+  it 'Should not contain a container registry with the given name' {
     #arrange
     $rgName = "rg-test"
     $acrName = "acrbenchpresstest1"
 
     #act
-    $exists = Get-AzBPContainerRegistryExist -ResourceGroupName $rgName -Name $acrName
+    # The '-ErrorAction SilentlyContinue' command suppresses all errors.
+    # In this test, it will suppress the error message when a resource cannot be found.
+    # Remove this field to see all errors.
+    $result = Confirm-AzBPContainerRegistry -ResourceGroupName $rgName -Name $acrName -ErrorAction SilentlyContinue
 
     #assert
-    $exists | Should -Be $true
+    $result.Success | Should -Be $false
   }
 }
 ```
 
-This test looks very similar to the first test, except it is using the `Get-AzBPContainerRegistryExist` helper instead.
-This helper doesn't return the object representing the Container Registry, but instead returns true if the Container
-Registry exists and false if it does not exists. Assuming the container registry exists, we assert that the return
-should be true.
+This test looks very similar to the first test, except it checks that the container registry does not exist.
+Take note of the `-ErrorAction SilentlyContinue` comment.
 
 Now let's look at the third `Describe` block:
 
@@ -240,7 +245,7 @@ the deployed resources using the `Remove-AzBPBicepFeature` helper.
 
 Now that we've done a walkthrough of the three tests, let's fix them.
 
-The first two tests assumed that our container registry was already deployed to a resource group. However, we
+The first test assumed that our container registry was already deployed to a resource group. However, we
 never deployed the `containerRegistry.bicep` file ourselves! The third test assumed we had an existing resource group
 to deploy to, but we never deployed that either! Let's go ahead and fix these assumptions now:
 

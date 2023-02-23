@@ -54,10 +54,10 @@ Describe 'Verify KeyVault Does Not Exist' {
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
-    $exists = Get-AzBPKeyVaultExist -ResourceGroupName $rgName -Name $kvName -ErrorAction SilentlyContinue
+    $result = Confirm-AzBPKeyVault -ResourceGroupName $rgName -Name $kvName -ErrorAction SilentlyContinue
 
     #assert
-    $exists | Should -Be $false
+    $result.Success | Should -Be $false
   }
 }
 

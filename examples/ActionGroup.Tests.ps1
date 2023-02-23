@@ -26,10 +26,10 @@ Describe 'Verify Action Group Does Not Exist' {
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
-    $exists = Get-AzBPActionGroupExist -ResourceGroupName $resourceGroupName -ActionGroupName $actionGroupName -ErrorAction SilentlyContinue
+    $result = Confirm-AzBPActionGroup -ResourceGroupName $resourceGroupName -ActionGroupName $actionGroupName -ErrorAction SilentlyContinue
 
     #assert
-    $exists | Should -Be $false
+    $result.Success | Should -Be $false
   }
 }
 

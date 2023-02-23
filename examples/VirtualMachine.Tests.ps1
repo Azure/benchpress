@@ -26,10 +26,10 @@ Describe 'Verify Virtual Machine Does Not Exist' {
         # The '-ErrorAction SilentlyContinue' command suppresses all errors.
         # In this test, it will suppress the error message when a resource cannot be found.
         # Remove this field to see all errors.
-        $exists = Get-AzBPVirtualMachineExist -ResourceGroupName $rgName -VirtualMachineName $vmName -ErrorAction SilentlyContinue
+        $result = Confirm-AzBPVirtualMachine -ResourceGroupName $rgName -VirtualMachineName $vmName -ErrorAction SilentlyContinue
 
         #assert
-        $exists | Should -Be $false
+        $result.Success | Should -Be $false
     }
 }
 

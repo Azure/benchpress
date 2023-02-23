@@ -24,10 +24,10 @@ Describe 'Verify Resource Group Does Not Exist' {
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
-    $exists = Get-AzBPResourceGroupExist -ResourceGroupName $rgName -ErrorAction SilentlyContinue
+    $result = Confirm-AzBPResourceGroup -ResourceGroupName $rgName -ErrorAction SilentlyContinue
 
     #assert
-    $exists | Should -Be $false
+    $result.Success | Should -Be $false
   }
 }
 
