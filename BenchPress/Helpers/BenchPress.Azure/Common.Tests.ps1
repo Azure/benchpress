@@ -63,10 +63,14 @@ Describe "Confirm-Resource" {
       Mock -ModuleName Common Format-ErrorRecord{}
       Mock -ModuleName Common Format-IncorrectValueError{}
       Mock -ModuleName Common Format-PropertyDoesNotExistError{}
+      $script:ConfirmResult = [ConfirmResult]::new(
+        @{
+          TestKey = "TestValue"
+          TestArray = @(@{AnotherKey = "AnotherValue"})
+        }, $null)
     }
 
     It "Calls Get-ResourceByType; returns true when Get-ResourceByType returns a Success ConfirmResult." {
-      $ConfirmResult = [ConfirmResult]::new("resource", $null)
       Mock -ModuleName Common Get-ResourceByType{ $ConfirmResult } -Verifiable
 
       $result = Confirm-Resource -ResourceType "ResourceGroup" -ResourceName "mockResourceName"
@@ -78,11 +82,23 @@ Describe "Confirm-Resource" {
     }
 
     It "Calls Get-ResourceByType; returns true when property matches value." {
-      $ConfirmResult = [ConfirmResult]::new(@{TestKey = "RightValue"}, $null)
       Mock -ModuleName Common Get-ResourceByType{ $ConfirmResult } -Verifiable
 
       $result = Confirm-Resource -ResourceType "ResourceGroup" -ResourceName "mockResourceName" `
-        -PropertyKey "TestKey" -PropertyValue "RightValue"
+        -PropertyKey "TestKey" -PropertyValue "TestValue"
+
+      Should -InvokeVerifiable
+      Should -Invoke -ModuleName Common -CommandName "Format-NotExistError" -Times 0
+      Should -Invoke -ModuleName Common -CommandName "Format-IncorrectValueError" -Times 0
+
+      $result.Success | Should -Be $true
+    }
+
+    It "Calls Get-ResourceByType; returns true when accessing property in array and matches value." {
+      Mock -ModuleName Common Get-ResourceByType{ $ConfirmResult } -Verifiable
+
+      $result = Confirm-Resource -ResourceType "ResourceGroup" -ResourceName "mockResourceName" `
+        -PropertyKey "TestArray[0].AnotherKey" -PropertyValue "AnotherValue"
 
       Should -InvokeVerifiable
       Should -Invoke -ModuleName Common -CommandName "Format-NotExistError" -Times 0
@@ -103,11 +119,10 @@ Describe "Confirm-Resource" {
     }
 
     It "Calls Get-ResourceByType and Format-IncorrectValueError; returns false when property does not match value." {
-      $ConfirmResult = [ConfirmResult]::new(@{TestKey = "WrongValue"}, $null)
       Mock -ModuleName Common Get-ResourceByType{ $ConfirmResult } -Verifiable
 
       $result = Confirm-Resource -ResourceType "ResourceGroup" -ResourceName "mockResourceName" `
-        -PropertyKey "TestKey" -PropertyValue "RightValue"
+        -PropertyKey "TestKey" -PropertyValue "WrongValue"
 
       Should -InvokeVerifiable
       Should -Invoke -ModuleName Common -CommandName "Format-NotExistError" -Times 0
@@ -116,8 +131,19 @@ Describe "Confirm-Resource" {
       $result.Success | Should -Be $false
     }
 
+    It "Calls Get-ResourceByType; returns false when indexing incorrectly into property array" {
+      Mock -ModuleName Common Get-ResourceByType{ $ConfirmResult } -Verifiable
+
+      $result = Confirm-Resource -ResourceType "ResourceGroup" -ResourceName "mockResourceName" `
+        -PropertyKey "WrongArray[0].AnotherKey" -PropertyValue "AnotherValue"
+
+      Should -InvokeVerifiable
+
+      $result.Success | Should -Be $false
+      $result.ErrorRecord | Should -Not -Be $null
+    }
+
     It "Calls Get-ResourceByType and Format-PropertyDoesNotExistError; returns false when property does not exist." {
-      $ConfirmResult = [ConfirmResult]::new(@{TestKey = "TestValue"}, $null)
       Mock -ModuleName Common Get-ResourceByType{ $ConfirmResult } -Verifiable
 
       $result = Confirm-Resource -ResourceType "ResourceGroup" -ResourceName "mockResourceName" `

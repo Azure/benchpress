@@ -91,7 +91,7 @@ function Get-ResourceByType {
     ContainerRegistry { return Confirm-ContainerRegistry -Name $ResourceName -ResourceGroupName $ResourceGroupName }
     KeyVault { return Confirm-KeyVault -Name $ResourceName -ResourceGroupName $ResourceGroupName }
     ResourceGroup { return Confirm-ResourceGroup -ResourceGroupName $ResourceName }
-    SqlDatabase { return Confirm-SqlDatabase -ServerName $ServerName -DatabaseName $ResourceName -ResourceGroupName $ResourceGroupName}
+    SqlDatabase { return Confirm-SqlDatabase -ServerName $ServerName -DatabaseName $ResourceName -ResourceGroupName $ResourceGroupName }
     SqlServer { return Confirm-SqlServer -ServerName $ResourceName -ResourceGroupName $ResourceGroupName }
     VirtualMachine { return Confirm-VirtualMachine -VirtualMachineName $ResourceName -ResourceGroupName $ResourceGroupName }
     WebApp { return Confirm-WebApp -WebAppName $ResourceName -ResourceGroupName $ResourceGroupName }
@@ -242,9 +242,9 @@ function Confirm-Resource {
 
   $ResourceParams = @{
     ResourceGroupName = $ResourceGroupName
-    ResourceName = $ResourceName
-    ResourceType = $ResourceType
-    ServerName = $ServerName
+    ResourceName      = $ResourceName
+    ResourceType      = $ResourceType
+    ServerName        = $ServerName
   }
 
   $ConfirmResult = Get-ResourceByType @ResourceParams
@@ -252,19 +252,34 @@ function Confirm-Resource {
   if ($null -eq $ConfirmResult) {
     $ErrorRecord = Format-ErrorRecord -Message "ResourceType is invalid" -ErrorID "InvalidResourceType"
     $ConfirmResult = [ConfirmResult]::new($ErrorRecord, $null)
-  } elseif ($ConfirmResult.Success) {
+  }
+  elseif ($ConfirmResult.Success) {
     if ($PropertyKey) {
       $ActualValue = $ConfirmResult.ResourceDetails
-      $Keys = $PropertyKey.Split(".")
-      foreach($Key in $Keys){
-        $ActualValue = $ActualValue.$Key
+      # Split property path on open and close square brackets and periods. Remove empty items from array.
+      $Keys = ($PropertyKey -split '[\[\]\.]').Where({ $_ -ne "" })
+      foreach ($Key in $Keys) {
+        # If key is a numerical value, index into array
+        if ($Key -match "^\d+$") {
+          try {
+            $ActualValue = $ActualValue[$Key]
+          }
+          catch {
+            $ErrorRecord = $_
+            $ConfirmResult = [ConfirmResult]::new($ErrorRecord, $null)
+            break
+          }
+        }
+        else {
+          $ActualValue = $ActualValue.$Key
+        }
       }
-      if ($ActualValue -ne $PropertyValue) {
+      if ($ActualValue -ne $PropertyValue -and $ConfirmResult.Success -ne $false) {
         if ($ActualValue) {
           $ErrorRecord = `
             Format-IncorrectValueError -ExpectedKey $PropertyKey `
-                                       -ExpectedValue $PropertyValue `
-                                       -ActualValue $ActualValue
+            -ExpectedValue $PropertyValue `
+            -ActualValue $ActualValue
           $ConfirmResult = [ConfirmResult]::new($ErrorRecord, $null)
         }
         else {

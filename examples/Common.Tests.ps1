@@ -157,6 +157,38 @@ Describe 'Use Confirm-AzBPResource to confirm resource and/or properties exist'{
       $result.Success | Should -Be $true
     }
   }
+
+  Describe 'Verify Key Vault' {
+    it 'Should contain a key vault named testkv' {
+      #arrange
+      $params = @{
+        ResourceGroupName = "testrg";
+        ResourceType = "KeyVault";
+        ResourceName = "testkv";
+      }
+      #act
+      $result = Confirm-AzBPResource @params
+
+      #assert
+      $result.Success | Should -Be $true
+    }
+
+    it 'Should contain a key vault named testkv with an access policy for testsp service principal' {
+      #arrange
+      $params = @{
+        ResourceGroupName = "testrg";
+        ResourceType = "KeyVault";
+        ResourceName = "testkv";
+        PropertyKey = "AccessPolicies[1].DisplayName";
+        PropertyValue = "testsp (<your-testsp-appid>)"
+      }
+      #act
+      $result = Confirm-AzBPResource @params
+
+      #assert
+      $result.Success | Should -Be $true
+    }
+  }
 }
 
 Describe 'Verify Resource Group Does Not Exist' {
