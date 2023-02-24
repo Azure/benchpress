@@ -173,7 +173,7 @@ Describe 'Use Confirm-AzBPResource to confirm resource and/or properties exist'{
       $result.Success | Should -Be $true
     }
 
-    it 'Should contain a key vault named with an access policy for testsp service principal' {
+    it 'Should contain a key vault named testkv with an access policy for testsp service principal' {
       #arrange
       $params = @{
         ResourceGroupName = "testrg";
