@@ -58,7 +58,7 @@ Describe 'Use Confirm-AzBPResource to confirm resource and/or properties exist'{
       $containerRegistryName = "testcontaineregistry"
 
       #act
-      $result = Confirm-AzBPResource -ResourceGroupName $resourceGroupName -ResourceType $resourceType `
+      $result = Confirm-AzBPResource -ResourceGroupName $resourceGroupName -ResourceType $ResourceType `
                   -ResourceName $containerRegistryName
 
       #assert
@@ -74,7 +74,7 @@ Describe 'Use Confirm-AzBPResource to confirm resource and/or properties exist'{
       $expectedValue = "Standard"
 
       #act
-      $result = Confirm-AzBPResource -ResourceGroupName $resourceGroupName -ResourceType $resourceType `
+      $result = Confirm-AzBPResource -ResourceGroupName $resourceGroupName -ResourceType $ResourceType `
                   -ResourceName $containerRegistryName -PropertyKey $property -PropertyValue $expectedValue
 
       #assert
