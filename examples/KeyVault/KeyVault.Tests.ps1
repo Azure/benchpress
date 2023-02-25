@@ -1,5 +1,5 @@
 BeforeAll {
-  Import-Module "../BenchPress/Helpers/BenchPress.Azure/BenchPress.Azure.psd1"
+  Import-Module "../Modules/BenchPress.Azure/BenchPress.Azure.psd1"
 }
 
 Describe 'Verify KeyVault Exists' {

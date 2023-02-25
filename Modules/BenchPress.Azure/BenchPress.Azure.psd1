@@ -9,43 +9,28 @@
   Copyright = "(c) Microsoft. All rights reserved."
   Description = "Benchpress Test Framework for Azure Deployment Scenarios"
   RequiredModules = @()
-  NestedModules = @(
-    "ActionGroup.psm1",
-    "AksCluster.psm1",
-    "AppServicePlan.psm1",
-    "Authentication.psm1",
-    "AzureCli.psm1",
-    "Bicep.psm1",
-    "Common.psm1",
-    "ContainerRegistry.psm1",
-    "KeyVault.psm1",
-    "ResourceGroup.psm1",
-    "SqlDatabase.psm1",
-    "SqlServer.psm1",
-    "VirtualMachine.psm1",
-    "WebApp.psm1"
-  )
+  NestedModules = @()
   FunctionsToExport = @(
-    "Invoke-AzCli",
-    "Confirm-BicepFile",
-    "Deploy-BicepFeature",
-    "Remove-BicepFeature",
     "Confirm-ActionGroup",
     "Confirm-AksCluster",
     "Confirm-AppServicePlan",
+    "Confirm-BicepFile",
     "Confirm-ContainerRegistry",
     "Confirm-KeyVault",
-    "Confirm-KeyVaultSecret",
-    "Confirm-KeyVaultKey",
     "Confirm-KeyVaultCertificate",
-    "Get-ResourceByType",
-    "Confirm-Resource"
-    "Get-Resource",
+    "Confirm-KeyVaultKey",
+    "Confirm-KeyVaultSecret",
+    "Confirm-Resource",
     "Confirm-ResourceGroup",
     "Confirm-SqlDatabase",
     "Confirm-SqlServer",
     "Confirm-VirtualMachine",
-    "Confirm-WebApp"
+    "Confirm-WebApp",
+    "Deploy-BicepFeature",
+    "Get-Resource",
+    "Get-ResourceByType",
+    "Invoke-AzCli",
+    "Remove-BicepFeature"
   )
   PrivateData = @{
     PSData = @{

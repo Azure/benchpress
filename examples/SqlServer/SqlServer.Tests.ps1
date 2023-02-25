@@ -1,47 +1,46 @@
 BeforeAll {
-    Import-Module "../BenchPress/Helpers/BenchPress.Azure/BenchPress.Azure.psd1"
+  Import-Module "../Modules/BenchPress.Azure/BenchPress.Azure.psd1"
 }
 
-Describe 'Verify Web App Exists' {
-    it 'Should contain a Web App with the given name' {
+Describe 'Verify Sql Server Exists' {
+    it 'Should contain a Sql Server with the given name' {
         #arrange
         $rgName = 'rg-test'
-        $webappName = 'azbpwebapptest1'
+        $serverName = 'azbenchpreesssqlservertest1'
 
         #act
-        $result = Confirm-AzBPWebApp -ResourceGroupName $rgName -WebAppName $webappName
+        $result = Confirm-AzBPSqlServer -ResourceGroupName $rgName -ServerName $serverName
 
         #assert
         $result.Success | Should -Be $true
     }
 }
 
-Describe 'Verify Web App Does Not Exist' {
-    it 'Should not contain a Web App with the given name' {
+Describe 'Verify Sql Server Does Not Exist' {
+    it 'Should not contain a Sql Server with the given name' {
         #arrange
         $rgName = 'rg-test'
-        $webappName = 'azbpwebapptest1'
+        $serverName = 'azbenchpreesssqlservertest1'
 
         #act
         # The '-ErrorAction SilentlyContinue' command suppresses all errors.
         # In this test, it will suppress the error message when a resource cannot be found.
         # Remove this field to see all errors.
-        $result = Confirm-AzBPWebApp -ResourceGroupName $rgName -WebAppName $webappName -ErrorAction SilentlyContinue
+        $result = Confirm-AzBPSqlServer -ResourceGroupName $rgName -ServerName $serverName -ErrorAction SilentlyContinue
 
         #assert
         $result.Success | Should -Be $false
     }
 }
 
-Describe 'Spin up , Tear down a Web App' {
+Describe 'Spin up , Tear down a Sql Server' {
     it 'Should deploy a bicep file.' {
       #arrange
       $resourceGroupName = "rg-test"
-      $bicepPath = "./webapp.bicep"
+      $bicepPath = "./sqlserver.bicep"
       $params = @{
-        appserviceplanName = "appservicetest2"
-        webappName     = "azbpwebapptest2"
-        location        = "westus3"
+        name           = "azbenchpreesssqlservertest2"
+        location       = "westus3"
       }
 
       #act

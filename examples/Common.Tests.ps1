@@ -1,5 +1,5 @@
 BeforeAll {
-  Import-Module "../BenchPress/Helpers/BenchPress.Azure/BenchPress.Azure.psd1"
+  Import-Module "../BenchPress/Modules/BenchPress.Azure/BenchPress.Azure.psd1"
 }
 
 Describe 'Verify Resource Exists' {
