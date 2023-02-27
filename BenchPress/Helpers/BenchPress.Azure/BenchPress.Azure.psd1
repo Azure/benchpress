@@ -15,6 +15,9 @@
     "AppServicePlan.psm1",
     "Authentication.psm1",
     "AzureCli.psm1",
+    "BeDeployed.psm1",
+    "BeInLocation.psm1",
+    "BeInResourceGroup.psm1",
     "Bicep.psm1",
     "Common.psm1",
     "ContainerRegistry.psm1",
@@ -27,6 +30,9 @@
   )
   FunctionsToExport = @(
     "Invoke-AzCli",
+    "BeDeployed",
+    "BeInLocation",
+    "BeInResourceGroup",
     "Confirm-BicepFile",
     "Deploy-BicepFeature",
     "Remove-BicepFeature",
