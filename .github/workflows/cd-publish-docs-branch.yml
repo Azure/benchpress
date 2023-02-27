@@ -7,8 +7,8 @@ on: # yamllint disable-line rule:truthy
     branches:
       - docs
     paths:
-      - docs
-      - docs-site
+      - docs/**
+      - docs-site/**
   workflow_dispatch:
 
 permissions:
