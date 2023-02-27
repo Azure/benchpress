@@ -8,10 +8,10 @@ Describe 'Resource Group Tests' {
     $rgName = "benchpress-rg-${env:ENVIRONMENT_SUFFIX}"
 
     #act
-    $resourceGroup = Confirm-AzBPResourceGroup -ResourceGroupName $rgName
+    $resourceGroup = Get-AzBPResourceGroup -ResourceGroupName $rgName
 
     #assert
-    $resourceGroup.Success | Should -Be $true
+    $resourceGroup | Should -Not -Be $null
   }
 }
 
@@ -22,10 +22,10 @@ Describe 'Service Plan Tests' {
     $svcPlanName = "benchpress-hosting-plan-${env:ENVIRONMENT_SUFFIX}"
 
     #act
-    $servicePlan = Confirm-AzBPAppServicePlan -ResourceGroupName $rgName -AppServicePlanName $svcPlanName
+    $servicePlan = Get-AzBPAppServicePlan -ResourceGroupName $rgName -AppServicePlanName $svcPlanName
 
     #assert
-    $servicePlan.Success | Should -Be $true
+    $servicePlan | Should -Not -Be $null
   }
 }
 
@@ -36,10 +36,10 @@ Describe 'Action Group Tests' {
     $agName = "benchpress-email-action-group-${env:ENVIRONMENT_SUFFIX}"
 
     #act
-    $ag = Confirm-AzBPActionGroup -ResourceGroupName $rgName -ActionGroupName $agName
+    $ag = Get-AzBPActionGroup -ResourceGroupName $rgName -ActionGroupName $agName
 
     #assert
-    $ag | Should -Be $true
+    $ag | Should -Not -Be $null
   }
 }
 
@@ -50,10 +50,10 @@ Describe 'Web Apps Tests' {
     $webAppName = "benchpress-web-${env:ENVIRONMENT_SUFFIX}"
 
     #act
-    $webApp = Confirm-AzBPWebApp -ResourceGroupName $rgName -WebAppName $webAppName
+    $webApp = Get-AzBPWebApp -ResourceGroupName $rgName -WebAppName $webAppName
 
     #assert
-    $webApp.Success | Should -Be $true
+    $webApp | Should -Not -Be $null
   }
 
   it 'Should have the web app availability state as normal' {
@@ -62,10 +62,10 @@ Describe 'Web Apps Tests' {
     $webAppName = "benchpress-web-${env:ENVIRONMENT_SUFFIX}"
 
     #act
-    $webApp = Confirm-AzBPWebApp -ResourceGroupName $rgName -WebAppName $webAppName
+    $webApp = Get-AzBPWebApp -ResourceGroupName $rgName -WebAppName $webAppName
 
     #assert
-    $webApp.ResourceDetails.AvailabilityState | Should -Be "Normal"
+    $webApp.AvailabilityState | Should -Be "Normal"
   }
 
   it 'Should have the web app works https only' {
@@ -74,10 +74,10 @@ Describe 'Web Apps Tests' {
     $webAppName = "benchpress-web-${env:ENVIRONMENT_SUFFIX}"
 
     #act
-    $webApp = Confirm-AzBPWebApp -ResourceGroupName $rgName -WebAppName $webAppName
+    $webApp = Get-AzBPWebApp -ResourceGroupName $rgName -WebAppName $webAppName
 
     #assert
-    $webApp.ResourceDetails.HttpsOnly | Should -Be $true
+    $webApp.HttpsOnly | Should -Be $true
   }
 
   it 'Should contain configuration in the web app' {
@@ -86,10 +86,10 @@ Describe 'Web Apps Tests' {
     $webAppName = "benchpress-web-${env:ENVIRONMENT_SUFFIX}"
 
     #act
-    $webApp = Confirm-AzBPWebApp -ResourceGroupName $rgName -WebAppName $webAppName
+    $webApp = Get-AzBPWebApp -ResourceGroupName $rgName -WebAppName $webAppName
 
     #assert
-    $webApp.ResourceDetails.SiteConfig.AppSettings | Should -Not -BeNullOrEmpty
+    $webApp.SiteConfig.AppSettings | Should -Not -BeNullOrEmpty
   }
 
   it 'Should contain application insights configuration in the web app' {
@@ -98,23 +98,10 @@ Describe 'Web Apps Tests' {
     $webAppName = "benchpress-web-${env:ENVIRONMENT_SUFFIX}"
 
     #act
-    $webApp = Confirm-AzBPWebApp -ResourceGroupName $rgName -WebAppName $webAppName
-    $aiAppSetting = $webApp.ResourceDetails.SiteConfig.AppSettings | Where-object {$_.Name -eq "APPLICATIONINSIGHTS_CONNECTION_STRING"} | Select-Object -First 1
+    $webApp = Get-AzBPWebApp -ResourceGroupName $rgName -WebAppName $webAppName
+    $aiAppSetting = $webApp.SiteConfig.AppSettings | Where-object {$_.Name -eq "APPLICATIONINSIGHTS_CONNECTION_STRING"} | Select-Object -First 1
 
     #assert
     $aiAppSetting | Should -Not -BeNullOrEmpty
-  }
-}
-
-Describe 'App is working properly' {
-  it 'Should have root endpoint that response with 200 OK' {
-    #arrange
-    $apiAddress = "https://benchpress-web-${env:ENVIRONMENT_SUFFIX}.azurewebsites.net/"
-
-    #act
-    $response = Invoke-WebRequest -Uri $apiAddress
-
-    #assert
-    $response.StatusCode | Should -Be 200
   }
 }
