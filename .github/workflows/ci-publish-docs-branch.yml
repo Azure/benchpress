@@ -63,9 +63,3 @@ jobs:
             git commit -m "docs: updating generated documentation"
             git push origin docs
           fi
-
-      - name: Trigger next workflow
-        if: ${{ success() }}
-        uses: peter-evans/repository-dispatch@v1
-        with:
-          event-type: ci-publish-docs-branch
