@@ -36,7 +36,7 @@ function BeDeployed ($ActualValue, [switch] $Negate, [string] $Because) {
             $failureMessage = "Resource not available. This was supposed to fail."
         }
         else {
-            $failureMessage = "Resource not available."
+            $failureMessage = "Resource not deployed or there was an error when confirming resource."
             if ($Because) { $failureMessage = "Resource not available $Because." }
         }
     }

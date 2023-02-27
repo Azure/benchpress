@@ -28,7 +28,6 @@
 #>
 
 function BeInResourceGroup ($ActualValue, [string]$ExpectedValue, [switch] $Negate, [string] $Because) {
-  Write-Host $ActualValue.ResourceDetails.ResourceGroupName
     [bool] $succeeded = $ActualValue.ResourceDetails.ResourceGroupName -eq $ExpectedValue
     if ($Negate) { $succeeded = -not $succeeded }
 
@@ -37,7 +36,7 @@ function BeInResourceGroup ($ActualValue, [string]$ExpectedValue, [switch] $Nega
             $failureMessage = "Resource not in resource group. This is expected for $ExpectedValue"
         }
         else {
-          $failureMessage = "Resource not in resource group."
+          $failureMessage = "Resource not in resource group or there was an error when confirming resource."
           if ($Because) { $failureMessage = "Resource not in resource group. This failed $Because." }
         }
     }

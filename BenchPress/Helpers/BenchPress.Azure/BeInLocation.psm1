@@ -36,7 +36,7 @@ function BeInLocation ($ActualValue, [string]$ExpectedValue, [switch] $Negate, [
             $failureMessage = "Resource not in location: This is expected for $ExpectedValue"
         }
         else {
-            $failureMessage = "Resource not in location."
+            $failureMessage = "Resource not in location Or there was an error when confirming resource."
             if ($Because) { $failureMessage = "Resource not in location $Because." }
         }
     }

@@ -66,3 +66,16 @@ BeforeAll {
       $result | Should -BeInResourceGroup 'testrg'
     }
   }
+
+  Describe 'Verify Continer Registry Does Not Exist in Resource Group' {
+    it 'Should not contain a CR in testrg2' {
+      #arrange
+      $rgName = "testrg"
+
+      #act
+      $result = Confirm-AzBPContainerRegistry -Name "testcontaineregistry" -ResourceGroupName $rgName
+  
+      #assert
+      $result | Should -Not -BeInResourceGroup 'testrg2'
+    }
+  }
