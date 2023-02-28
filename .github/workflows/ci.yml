@@ -33,4 +33,33 @@ jobs:
           path: |
             ./bin/BenchPress.Azure.psd1
             ./bin/BenchPress.Azure.psm1
-
+  local-psgallery:
+    name: Publish and import from/to local PSGallery
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create the local PSGallery folder
+        shell: pwsh
+        run: |
+          $path = New-Item -Path ./packages -ItemType Directory
+          Register-PSRepository -Name LocalFeedPSRepo -SourceLocation $path.ToString() `
+            -PublishLocation $path.ToString() -InstallationPolicy Trusted
+      - name: Download module artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: benchpress-gallery-module
+          path: ./module
+      - name: Publish AzBP Module
+        shell: pwsh
+        run: |
+          Publish-Module -Path ./module -Repository LocalFeedPSRepo -Verbose
+      - name: Install AzBP Module from the repository
+        shell: pwsh
+        run: |
+          Install-Module BenchPress.Azure
+      - name: Verify module exposes cmdlets (smoke test)
+        shell: pwsh
+        run: |
+          if ($(Get-Module -Name BenchPress.Azure -ListAvailable).ExportedCommands.Count -eq 0)
+          {
+            throw "No commands are available in the BenchPress.Azure Module."
+          }
