@@ -4,7 +4,9 @@ on: # yamllint disable-line rule:truthy
   push:
     branches: [main]
     paths:
-      - "./BenchPress/Helpers/BenchPress.Azure/*.psm1"
+      - "./Modules/BenchPress.Azure/Classes/*.psm1"
+      - "./Modules/BenchPress.Azure/Public/*.ps1"
+      - "./Modules/BenchPress.Azure/Private/*.ps1"
 
 jobs:
   publish-docs-branch:
@@ -27,7 +29,7 @@ jobs:
       - name: Generate docs
         shell: pwsh
         run: |
-          Import-Module ./BenchPress/Helpers/BenchPress.Azure/BenchPress.Azure.psd1
+          Import-Module ./Modules/BenchPress.Azure/BenchPress.Azure.psd1
           New-MarkdownHelp -Module BenchPress.Azure -OutputFolder ./docs
 
       - name: If there are changes push the branch

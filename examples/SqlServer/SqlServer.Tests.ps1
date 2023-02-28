@@ -1,5 +1,5 @@
 BeforeAll {
-  Import-Module "../Modules/BenchPress.Azure/BenchPress.Azure.psd1"
+  Import-Module Az-InfrastructureTest
 }
 
 Describe 'Verify Sql Server Exists' {

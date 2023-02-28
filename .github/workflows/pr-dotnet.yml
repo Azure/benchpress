@@ -6,7 +6,6 @@ on: # yamllint disable-line rule:truthy
     paths:
       - ".github/workflows/pr-dotnet.yml"
       - "BenchPress/**"
-      - "!BenchPress/Helpers/**"
 
 jobs:
   run-unit-tests:

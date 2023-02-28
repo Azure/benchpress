@@ -102,7 +102,7 @@ Infrastructure as Code (IaC) and why our tests are failing.
 
 ```PowerShell
 BeforeAll {
-  Import-Module "../BenchPress/Helpers/Azure/BenchPress.Azure.psd1"
+  Import-Module Az.InfrastructureTest
 }
 
 Describe 'Verify Container Registry' {
