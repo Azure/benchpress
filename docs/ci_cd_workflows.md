@@ -55,9 +55,9 @@ CI/CD process. This stage consists of the following steps:
 After pull requests are merged to the `main` branch, they will automatically trigger the CI stage of the CI/CD process.
 This stage consists of the following steps:
 
-- [`ci.yml`](../.github/workflows/ci.yml) - building the .NET solution.
-- [`ci-publish-docs-branch.yml`](../.github/workflows/ci-publish-docs-branch.yml) - generates documentation using help
-  comments for PowerShell cmdlets and saves documentation to a branch named `docs`.
+- [`ci.yml`](../.github/workflows/ci.yml) - builds the .NET solution and the final module file for BenchPress. It also
+tests the module for deployability to a local PS Repo. Lastly, it generates documentation using help comments for
+PowerShell cmdlets and saves documentation to a branch named `docs`.
 - [`ci-module-versioning.yml`](../.github/workflows/ci-module-versioning.yml) - calculating the version for the
   PowerShell module using GitVersion and writing it to the module manifest on a branch named `version`.
 
