@@ -1,3 +1,4 @@
+# INLINE_SKIP
 using module ./../Classes/ConfirmResult.psm1
 using module ./../Classes/ResourceType.psm1
 
@@ -5,6 +6,7 @@ using module ./../Classes/ResourceType.psm1
 . $PSScriptRoot/../Private/Format-ErrorRecord.ps1
 . $PSScriptRoot/../Private/Format-IncorrectValueError.ps1
 . $PSScriptRoot/../Private/Format-PropertyDoesNotExistError.ps1
+# end INLINE_SKIP
 
 function Confirm-Resource {
   <#

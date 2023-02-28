@@ -1,4 +1,6 @@
-﻿. $PSScriptRoot/../Private/Connect-Account.ps1
+﻿# INLINE_SKIP
+. $PSScriptRoot/../Private/Connect-Account.ps1
+# end INLINE_SKIP
 
 function Confirm-BicepFile {
   <#

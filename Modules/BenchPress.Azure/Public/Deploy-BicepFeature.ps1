@@ -1,4 +1,6 @@
-﻿using module ./../Classes/ConfirmResult.psm1
+﻿# INLINE_SKIP
+using module ./../Classes/ConfirmResult.psm1
+# end INLINE_SKIP
 
 function Deploy-BicepFeature(){
   <#

@@ -1,3 +1,4 @@
+# INLINE_SKIP
 using module ./../Classes/ConfirmResult.psm1
 using module ./../Classes/ResourceType.psm1
 
@@ -11,6 +12,7 @@ using module ./../Classes/ResourceType.psm1
 . $PSScriptRoot/Confirm-SqlServer.ps1
 . $PSScriptRoot/Confirm-VirtualMachine.ps1
 . $PSScriptRoot/Confirm-WebApp.ps1
+# end INLINE_SKIP
 
 function Get-ResourceByType {
   <#

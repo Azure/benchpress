@@ -1,9 +1,11 @@
+# INLINE_SKIP
 using module ./../Classes/AuthenticationResult.psm1
 using module ./../Classes/AuthenticationData.psm1
 
 Import-Module Az
 
 . $PSScriptRoot/../Private/Get-RequiredEnvironmentVariable.ps1
+# end INLINE_SKIP
 
 function Connect-Account {
   <#
