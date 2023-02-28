@@ -27,7 +27,7 @@ jobs:
           Install-Module Pester -ErrorAction Stop
       - name: Run PowerShell Unit Tests
         shell: pwsh
-        working-directory: BenchPress
+        working-directory: ./Modules/BenchPress.Azure
         run: |
           Invoke-Pester -OutputFile ps-test-results.xml -OutputFormat NUnitXml
       - name: Archive PowerShell Test Results
