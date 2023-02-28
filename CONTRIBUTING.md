@@ -137,6 +137,20 @@ BenchPress code and documentation:
 1. If necessary address any automated Pull Request checks by making fixes on the local feature branch and pushing the
    fixes when completed. Repeat this process until all PR checks have been resolved.
 
+## Requirements for submitting functions or classes
+
+- It is required that there is one file per class/function.
+- Functions will be written to `.ps1` files.
+- Classes will be written to `.psm1` files.
+- The filename of a function must match the function name (e.g., `Get-Something` function must be in a file named
+`Get-Something.ps1`).
+- Any function that is used internally and not desired to be exposed via `Export-ModuleMember` must reside in the
+`Private` folder.
+- Any statements at the beginning of a file that import data from another relative file (e.g., `using module`, or dot
+sourcing another file), or that execute `Import-Module` must be at the top of the file, and must be preceded by a line
+with the content `# INLINE_SKIP` and followed by a line with the content `# end INLINE_SKIP`. These denote to the build
+script that content which will not be built into the final inline module script.
+
 ## Thank You
 
 Thank you for your interest and contribution to the BenchPress open-source project.
