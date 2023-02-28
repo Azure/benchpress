@@ -16,3 +16,21 @@ jobs:
       - name: Build Benchpress Solution
         working-directory: BenchPress
         run: dotnet build
+  build-modules:
+    name: Build the PS Gallery Modules
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository and submodules
+        uses: actions/checkout@v3
+      - name: Build Module Files
+        shell: pwsh
+        run: |
+          ./build.ps1 -InLine
+      - name: Archive Module artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: benchpress-gallery-module
+          path: |
+            ./bin/BenchPress.Azure.psd1
+            ./bin/BenchPress.Azure.psm1
+
