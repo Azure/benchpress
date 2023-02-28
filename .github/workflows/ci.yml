@@ -16,6 +16,7 @@ jobs:
       - name: Build Benchpress Solution
         working-directory: BenchPress
         run: dotnet build
+
   build-modules:
     name: Build the PS Gallery Modules
     runs-on: ubuntu-latest
@@ -33,8 +34,10 @@ jobs:
           path: |
             ./bin/BenchPress.Azure.psd1
             ./bin/BenchPress.Azure.psm1
+
   local-psgallery:
     name: Publish and import from/to local PSGallery
+    needs: build-modules
     runs-on: ubuntu-latest
     steps:
       - name: Create the local PSGallery folder
@@ -47,11 +50,11 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: benchpress-gallery-module
-          path: ./module
-      - name: Publish AzBP Module
+          path: ./bin
+      - name: Publish AzBP Module locally
         shell: pwsh
         run: |
-          Publish-Module -Path ./module -Repository LocalFeedPSRepo -Verbose
+          Publish-Module -Path ./bin -Repository LocalFeedPSRepo -Verbose
       - name: Install AzBP Module from the repository
         shell: pwsh
         run: |
@@ -63,3 +66,37 @@ jobs:
           {
             throw "No commands are available in the BenchPress.Azure Module."
           }
+
+  build-docs-branch:
+    name: Build Generated Docs
+    needs: build-modules
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download module artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: benchpress-gallery-module
+          path: ./bin
+      - name: Install Platyps
+        shell: pwsh
+        run: |
+          Install-Module -Name platyPS -Scope CurrentUser -Force
+          Import-Module platyPS
+      - name: Create and checkout new docs branch
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b docs
+      - name: Generate docs
+        shell: pwsh
+        run: |
+          Import-Module ./bin/BenchPress.Azure.psd1
+          New-MarkdownHelp -Module BenchPress.Azure -OutputFolder ./docs
+      - name: If there are changes push the branch
+        run: |
+          if [ "$(git ls-files --deleted --modified --others --exclude-standard -- ./docs | wc -l)" -gt 0 ]
+          then
+            git add docs
+            git commit -m "docs: updating generated documentation"
+            git push origin docs
+          fi
