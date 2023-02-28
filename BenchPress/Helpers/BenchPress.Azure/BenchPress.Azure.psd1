@@ -22,6 +22,7 @@
     "ResourceGroup.psm1",
     "SqlDatabase.psm1",
     "SqlServer.psm1",
+    "StorageAccount.psm1",
     "VirtualMachine.psm1",
     "WebApp.psm1"
   )
@@ -42,6 +43,7 @@
     "Confirm-Resource"
     "Get-Resource",
     "Confirm-ResourceGroup",
+    "Confirm-StorageAccount",
     "Confirm-SqlDatabase",
     "Confirm-SqlServer",
     "Confirm-VirtualMachine",

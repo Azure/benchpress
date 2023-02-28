@@ -9,6 +9,7 @@ Import-Module $PSScriptRoot/KeyVault.psm1
 Import-Module $PSScriptRoot/ResourceGroup.psm1
 Import-Module $PSScriptRoot/SqlServer.psm1
 Import-Module $PSScriptRoot/SqlDatabase.psm1
+Import-Module $PSScriptRoot/StorageAccount.psm1
 Import-Module $PSScriptRoot/VirtualMachine.psm1
 Import-Module $PSScriptRoot/WebApp.psm1
 
@@ -21,6 +22,7 @@ enum ResourceType {
   ResourceGroup
   SqlDatabase
   SqlServer
+  StorageAccount
   VirtualMachine
   WebApp
 }
@@ -49,6 +51,7 @@ enum ResourceType {
   ResourceGroup
   SqlDatabase
   SqlServer
+  StorageAccount
   VirtualMachine
   WebApp)
 
@@ -93,6 +96,7 @@ function Get-ResourceByType {
     ResourceGroup { return Confirm-ResourceGroup -ResourceGroupName $ResourceName }
     SqlDatabase { return Confirm-SqlDatabase -ServerName $ServerName -DatabaseName $ResourceName -ResourceGroupName $ResourceGroupName }
     SqlServer { return Confirm-SqlServer -ServerName $ResourceName -ResourceGroupName $ResourceGroupName }
+    StorageAccount { return Confirm-StorageAccount -Name $ResourceName -ResourceGroupName $ResourceGroupName }
     VirtualMachine { return Confirm-VirtualMachine -VirtualMachineName $ResourceName -ResourceGroupName $ResourceGroupName }
     WebApp { return Confirm-WebApp -WebAppName $ResourceName -ResourceGroupName $ResourceGroupName }
     default {
@@ -177,6 +181,7 @@ function Get-Resource {
     ResourceGroup
     SqlDatabase
     SqlServer
+    StorageAccount
     VirtualMachine
     WebApp)
 
