@@ -7,6 +7,7 @@ param (
   [switch] $Inline,
   [switch] $Import
 )
+
 function Copy-Content ($Content) {
   foreach ($c in $content) {
     $source, $destination = $c
@@ -63,7 +64,7 @@ if ($Inline) {
 
     foreach ($line in $lines) {
       # when inlining the code skip everything wrapped in # INLINE_SKIP, # end INLINE_SKIP
-      if ($line -match '^.*#\s*INLINE_SKIP') {
+      if (-not $skipLine -and $line -match '^.*#\s*INLINE_SKIP') {
         $skipLine = $true
       }
 
@@ -71,7 +72,7 @@ if ($Inline) {
         $null = $sb.AppendLine($line)
       }
 
-      if ($line -match '^.*#\s*end\s*INLINE_SKIP') {
+      if ($skipLine -and $line -match '^.*#\s*end\s*INLINE_SKIP') {
         $skipLine = $false
       }
     }
@@ -97,13 +98,12 @@ $null = $sb.AppendLine("Export-ModuleMember $($publicFunctions.BaseName -join ',
 
 $sb.ToString() | Set-Content "$PSScriptRoot/bin/BenchPress.Azure.psm1" -Encoding UTF8
 
-$powershell = Get-Process -Id $PID | Select-Object -ExpandProperty Path
-
 if ($Load) {
-    & $powershell -c "'Load: ' + (Measure-Command { Import-Module '$PSScriptRoot/bin/BenchPress.Azure.psd1' -ErrorAction Stop}).TotalMilliseconds + 'ms'"
-    if (0 -ne $LASTEXITCODE) {
-        throw "load failed!"
-    }
+  $powershell = Get-Process -Id $PID | Select-Object -ExpandProperty Path
+  & $powershell -c "'Load: ' + (Measure-Command { Import-Module '$PSScriptRoot/bin/BenchPress.Azure.psd1' -ErrorAction Stop}).TotalMilliseconds + 'ms'"
+  if (0 -ne $LASTEXITCODE) {
+    throw "load failed!"
+  }
 }
 
 if ($Import) {
