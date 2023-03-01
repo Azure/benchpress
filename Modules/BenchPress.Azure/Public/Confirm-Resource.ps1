@@ -1,6 +1,5 @@
 # INLINE_SKIP
 using module ./../Classes/ConfirmResult.psm1
-using module ./../Classes/ResourceType.psm1
 
 . $PSScriptRoot/Get-ResourceByType.ps1
 . $PSScriptRoot/../Private/Format-ErrorRecord.ps1

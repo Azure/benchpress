@@ -1,5 +1,4 @@
 ﻿using module ./../../Classes/ConfirmResult.psm1
-using module ./../../Classes/ResourceType.psm1
 
 BeforeAll {
   . $PSScriptRoot/../../Private/Format-ErrorRecord.ps1
