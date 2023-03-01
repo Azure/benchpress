@@ -50,11 +50,11 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: benchpress-gallery-module
-          path: ./bin
+          path: ./BenchPress.Azure
       - name: Publish AzBP Module locally
         shell: pwsh
         run: |
-          Publish-Module -Path ./bin -Repository LocalFeedPSRepo -Verbose
+          Publish-Module -Path ./BenchPress.Azure -Repository LocalFeedPSRepo -Verbose
       - name: Install AzBP Module from the repository
         shell: pwsh
         run: |
@@ -72,11 +72,13 @@ jobs:
     needs: build-modules
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository and submodules
+        uses: actions/checkout@v3
       - name: Download module artifacts
         uses: actions/download-artifact@v3
         with:
           name: benchpress-gallery-module
-          path: ./bin
+          path: ./BenchPress.Azure
       - name: Install Platyps
         shell: pwsh
         run: |
@@ -90,7 +92,7 @@ jobs:
       - name: Generate docs
         shell: pwsh
         run: |
-          Import-Module ./bin/BenchPress.Azure.psd1
+          Import-Module ./BenchPress.Azure/BenchPress.Azure.psd1
           New-MarkdownHelp -Module BenchPress.Azure -OutputFolder ./docs
       - name: If there are changes push the branch
         run: |
