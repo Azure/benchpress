@@ -1,11 +1,21 @@
-param name string = 'kvbenchpresstest'
+param name string = 'kv${take(uniqueString(resourceGroup().id), 5)}'
 param location string = resourceGroup().location
 
 resource vault 'Microsoft.KeyVault/vaults@2022-07-01' = {
   name: name
   location: location
   properties: {
-    accessPolicies:[]
+    accessPolicies:[
+      {
+        tenantId: subscription().tenantId
+        objectId: 'your-service-principal-oid'
+        permissions: {
+          secrets: ['get', 'list']
+          certificates: ['get', 'list']
+          keys: ['get', 'list']
+        }
+      }
+    ]
     enableRbacAuthorization: false
     enableSoftDelete: false
     enabledForDeployment: false
