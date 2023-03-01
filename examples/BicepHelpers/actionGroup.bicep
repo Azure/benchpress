@@ -1,9 +1,5 @@
-/*
-  This file will throw two errors during bicep build. One for unused parameter and the other for hard coding the
-  location.
-*/
-param actionGroupName string = 'sample action group'
-param location string = resourceGroup().location
+param actionGroupName string = 'ag${take(uniqueString(resourceGroup().id), 5)}'
+param location string = 'global'
 
 var actionGroupEmail = 'sampleactiongroup@contoso.com'
 
