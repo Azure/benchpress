@@ -25,7 +25,7 @@ Describe "Confirm-Resource" {
     }
 
     It "Calls Get-ResourceByType; returns true when Get-ResourceByType returns a Success ConfirmResult." {
-      Mock Get-ResourceByType{ }
+      Mock Get-ResourceByType{ $ConfirmResult }
 
       $result = Confirm-Resource -ResourceType "ResourceGroup" -ResourceName "mockResourceName"
 

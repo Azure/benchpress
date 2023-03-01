@@ -1,6 +1,5 @@
 # INLINE_SKIP
 using module ./../Classes/ConfirmResult.psm1
-using module ./../Classes/ResourceType.psm1
 
 . $PSScriptRoot/Get-ResourceByType.ps1
 . $PSScriptRoot/../Private/Format-ErrorRecord.ps1
@@ -82,7 +81,9 @@ function Confirm-Resource {
   [CmdletBinding()]
   param (
     [Parameter(Mandatory = $true)]
-    [ResourceType]$ResourceType,
+    [ValidateSet("ActionGroup", "AksCluster", "AppServicePlan", "ContainerRegistry", "KeyVault", "ResourceGroup",
+      "SqlDatabase", "SqlServer", "VirtualMachine", "WebApp")]
+    [string]$ResourceType,
 
     [Parameter(Mandatory = $true)]
     [string]$ResourceName,
