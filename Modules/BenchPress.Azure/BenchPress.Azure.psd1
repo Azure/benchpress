@@ -33,7 +33,10 @@
     "Get-Resource",
     "Get-ResourceByType",
     "Invoke-AzCli",
-    "Remove-BicepFeature"
+    "Remove-BicepFeature",
+    "ShouldBeDeployed",
+    "ShouldBeInLocation",
+    "ShouldBeInResourceGroup"
   )
   PrivateData = @{
     PSData = @{
