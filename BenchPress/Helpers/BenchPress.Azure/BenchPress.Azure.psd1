@@ -30,9 +30,6 @@
   )
   FunctionsToExport = @(
     "Invoke-AzCli",
-    "BeDeployed",
-    "BeInLocation",
-    "BeInResourceGroup",
     "Confirm-BicepFile",
     "Deploy-BicepFeature",
     "Remove-BicepFeature",

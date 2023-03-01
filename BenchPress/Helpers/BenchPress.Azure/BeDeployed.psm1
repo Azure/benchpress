@@ -1,43 +1,47 @@
-#Requires -Module Pester
+function ShouldBeDeployed ($ActualValue, [switch] $Negate, [string] $Because) {
+    <#
+    .SYNOPSIS
+        Custom Assertion function to check status on a resource deployment.
 
-<#
-  .SYNOPSIS
-    Custom Assertion function to check status on a resource deployment.
+    .DESCRIPTION
+        BeDeployed is a custom assertion that checks the provided ConfirmResult Object for deployment success.
+        It can be used when writing Pester tests.
 
-  .DESCRIPTION
-    BeDeployed is a custom assertion that checks the provided ConfirmResult Object for deployment success.
-    It can be used when writing Pester tests.
+    .EXAMPLE
+        $result = Confirm-AzBPResourceGroup -ResourceGroupName $rgName
 
-  .EXAMPLE
-    $result = Confirm-AzBPResourceGroup -ResourceGroupName $rgName
+        $result | Should -BeDeployed
 
-    $result | Should -BeDeployed
+    .EXAMPLE
+        $result = Confirm-AzBPResourceGroup -ResourceGroupName $rgName
 
-  .EXAMPLE
-    $result = Confirm-AzBPResourceGroup -ResourceGroupName $rgName
+        $result | Should -Not -BeDeployed
 
-    $result | Should -Not -BeDeployed
+    .INPUTS
+        ConfirmResult
+        System.Switch
+        System.String
 
-  .INPUTS
-    ConfirmResult
-    System.Switch
-    System.String
-
-  .OUTPUTS
-    PSCustomObject
-#>
-
-function BeDeployed ($ActualValue, [switch] $Negate, [string] $Because) {
-    [bool] $succeeded = $ActualValue.Success
-    if ($Negate) { $succeeded = -not $succeeded }
-
-    if (-not $succeeded) {
-        if ($Negate) {
-            $failureMessage = "Resource not available. This was supposed to fail."
-        }
-        else {
-            $failureMessage = "Resource not deployed or there was an error when confirming resource."
-            if ($Because) { $failureMessage = "Resource not available $Because." }
+    .OUTPUTS
+        PSCustomObject
+    #>
+    if ($null -eq $ActualValue){
+        [bool] $succeeded = $false
+        if ($Negate) { $succeeded = -not $succeeded }
+        $failureMessage = "Confirm result is null or empty."
+    }
+    else {
+        [bool] $succeeded = $ActualValue.Success
+        if ($Negate) { $succeeded = -not $succeeded }
+    
+        if (-not $succeeded) {
+            if ($Negate) {
+                $failureMessage = "Resource not available. This was supposed to fail."
+            }
+            else {
+                $failureMessage = "Resource not deployed or there was an error when confirming resource."
+                if ($Because) { $failureMessage = "Resource not available $Because." }
+            }
         }
     }
 
@@ -48,6 +52,6 @@ function BeDeployed ($ActualValue, [switch] $Negate, [string] $Because) {
 }
 
 Add-ShouldOperator -Name BeDeployed `
-    -InternalName 'BeDeployed' `
-    -Test ${function:BeDeployed} `
-    -Alias 'BD'
+    -InternalName 'ShouldBeDeployed' `
+    -Test ${function:ShouldBeDeployed} `
+    -Alias 'SBD'
