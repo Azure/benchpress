@@ -82,7 +82,9 @@ function Confirm-Resource {
   [CmdletBinding()]
   param (
     [Parameter(Mandatory = $true)]
-    [ResourceType]$ResourceType,
+    [ValidateSet("ActionGroup", "AksCluster", "AppServicePlan", "ContainerRegistry", "KeyVault", "ResourceGroup",
+      "SqlDatabase", "SqlServer", "VirtualMachine", "WebApp")]
+    [string]$ResourceType,
 
     [Parameter(Mandatory = $true)]
     [string]$ResourceName,

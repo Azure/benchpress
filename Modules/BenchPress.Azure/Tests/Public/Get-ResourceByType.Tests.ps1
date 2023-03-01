@@ -21,13 +21,13 @@ Describe "Get-ResourceByType" {
       Mock Confirm-WebApp{}
     }
 
-    It "Calls <expected> when [ResourceType]::<resourceType> is used" -TestCases @(
-      @{ ResourceType = [ResourceType]::ResourceGroup; Expected = "Confirm-ResourceGroup"}
-      @{ ResourceType = [ResourceType]::AppServicePlan; Expected = "Confirm-AppServicePlan"}
-      @{ ResourceType = [ResourceType]::SqlDatabase; Expected = "Confirm-SqlDatabase"}
-      @{ ResourceType = [ResourceType]::SqlServer; Expected = "Confirm-SqlServer"}
-      @{ ResourceType = [ResourceType]::VirtualMachine; Expected = "Confirm-VirtualMachine"}
-      @{ ResourceType = [ResourceType]::WebApp; Expected = "Confirm-WebApp"}
+    It "Calls <expected> when <resourceType> is used" -TestCases @(
+      @{ ResourceType = ResourceGroup; Expected = "Confirm-ResourceGroup"}
+      @{ ResourceType = AppServicePlan; Expected = "Confirm-AppServicePlan"}
+      @{ ResourceType = SqlDatabase; Expected = "Confirm-SqlDatabase"}
+      @{ ResourceType = SqlServer; Expected = "Confirm-SqlServer"}
+      @{ ResourceType = VirtualMachine; Expected = "Confirm-VirtualMachine"}
+      @{ ResourceType = WebApp; Expected = "Confirm-WebApp"}
     ) {
       Get-ResourceByType -ResourceName resource -ResourceGroupName group -ResourceType $ResourceType -ServerName server
       Should -Invoke -CommandName $Expected -Times 1
