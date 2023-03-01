@@ -55,3 +55,5 @@ required environment variables.
    Tests completed in 952ms
    Tests Passed: 2, Failed: 0, Skipped: 0 NotRun: 0
    ```
+
+1. Don't forget to delete any deployed resources that are no longer needed.

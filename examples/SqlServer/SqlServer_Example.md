@@ -1,6 +1,6 @@
-# How To Run ActionGroup.Tests.ps1
+# How To Run SqlServer.Tests.ps1
 
-`ActionGroup.Tests.ps1` contains examples of using the `Confirm-AzBPActionGroup` cmdlet.
+`SqlServer.Tests.ps1` contains examples of using the `Confirm-AzBPSqlServer` cmdlet.
 
 ## Pre-Requisites
 
@@ -15,31 +15,37 @@ that has contributor access on the Azure subscription
 Gallery or from a local copy.
 1. Follow the Setting Up section in the [getting started guide](../../docs/getting_started.md) to configure the
 required environment variables.
-1. Navigate to ActionGroup directory:
+1. Navigate to SqlServer directory:
 
    ```Powershell
-   cd examples\ActionGroup\
+   cd examples\SqlServer\
    ```
 
-1. Deploy the action group to your resource group:
+1. Replace the `administratorLoginPassword` in `sqlServer.bicep` with your own password:
+
+   ```bicep
+   administratorLoginPassword: '<sample-password>'
+   ```
+
+1. Deploy the SQL Database to your resource group:
 
    ```Powershell
     New-AzResourceGroupDeployment -ResourceGroupName "<your-resource-group-name>"`
-    -TemplateFile ".\actionGroup.bicep"
+    -TemplateFile ".\sqlServer.bicep"
    ```
 
-1. Update `ActionGroup.Tests.ps1` variables to point to your expected resources:
+1. Update `SqlServer.Tests.ps1` variables to point to your expected resources:
 
-   - `test-rg` -> `your-resource-group-name`
-   - `sampleaction` -> `your-action-group-name`
+   - `rg-test` -> `your-resource-group-name`
+   - `samplesqlserver` -> `your-sql-server-name`
 
 1. If using a local copy of `Az-InfrastructureTest`, replace `Import-Module Az-InfrastructureTest` with
 `Import-Module "../../bin/BenchPress.Azure.psd1"`.
 
-1. Run `ActionGroup.Tests.ps1`:
+1. Run `SqlServer.Tests.ps1`:
 
    ```Powershell
-   Invoke-Pester -Path .\ActionGroup.Tests.ps1
+   Invoke-Pester -Path .\SqlServer.Tests.ps1
    ```
 
 1. Success!
