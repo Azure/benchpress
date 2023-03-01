@@ -13,10 +13,10 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: benchpress-gallery-module
-          path: ./bin
+          path: ./BenchPress.Azure
       - name: Publish BenchPress to Gallery
         env:
           NUGET_KEY: ${{ secrets.NUGET_KEY }}
         shell: pwsh
         run: |
-          Publish-Module -Path ./bin -NugetAPIKey $env:NUGET_KEY -Verbose
+          Publish-Module -Path ./BenchPress.Azure -NugetAPIKey $env:NUGET_KEY -Verbose
