@@ -41,18 +41,9 @@ function Confirm-AppServicePlan {
     $ConnectResults = Connect-Account
   }
   Process {
-    [ConfirmResult]$Results = $null
+    $Resource = Get-AzAppServicePlan -ResourceGroupName $ResourceGroupName -Name $AppServicePlanName
 
-    try {
-      $Resource = Get-AzAppServicePlan -ResourceGroupName $ResourceGroupName -Name $AppServicePlanName
-
-      $Results = [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
-    } catch {
-      $ErrorRecord = $_
-      $Results = [ConfirmResult]::new($ErrorRecord, $ConnectResults.AuthenticationData)
-    }
-
-    $Results
+    [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
   }
   End { }
 }

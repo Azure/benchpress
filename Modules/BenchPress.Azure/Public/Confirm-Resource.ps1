@@ -2,9 +2,6 @@
 using module ./../Classes/ConfirmResult.psm1
 
 . $PSScriptRoot/Get-ResourceByType.ps1
-. $PSScriptRoot/../Private/Format-ErrorRecord.ps1
-. $PSScriptRoot/../Private/Format-IncorrectValueError.ps1
-. $PSScriptRoot/../Private/Format-PropertyDoesNotExistError.ps1
 # end INLINE_SKIP
 
 function Confirm-Resource {
@@ -17,8 +14,6 @@ function Confirm-Resource {
       on a resource exist and are configured to the correct value. The cmdlet will return a ConfirmResult object
       which contains the following properties:
       - Success: True if the resource exists and/or the property is set to the expected value. Otherwise, false.
-      - Error: System.Management.Automation.ErrorRecord containing an ErrorRecord with a message explaining
-                that a resource did not exist or property was not set to the expected value.
       - ResourceDetails: System.Object that contains the details of the Azure Resource that is being confirmed.
 
     .PARAMETER ResourceName
@@ -79,6 +74,7 @@ function Confirm-Resource {
       ConfirmResult
   #>
   [CmdletBinding()]
+  [OutputType([ConfirmResult])]
   param (
     [Parameter(Mandatory = $true)]
     [ValidateSet("ActionGroup", "AksCluster", "AppServicePlan", "ContainerRegistry", "KeyVault", "ResourceGroup",
@@ -100,56 +96,65 @@ function Confirm-Resource {
     [Parameter(Mandatory = $false)]
     [string]$PropertyValue
   )
+  Begin { }
+  Process {
+    $ResourceParams = @{
+      ResourceGroupName = $ResourceGroupName
+      ResourceName      = $ResourceName
+      ResourceType      = $ResourceType
+      ServerName        = $ServerName
+    }
 
-  $ResourceParams = @{
-    ResourceGroupName = $ResourceGroupName
-    ResourceName      = $ResourceName
-    ResourceType      = $ResourceType
-    ServerName        = $ServerName
-  }
+    $ConfirmResult = Get-ResourceByType @ResourceParams
 
-  $ConfirmResult = Get-ResourceByType @ResourceParams
-
-  if ($null -eq $ConfirmResult) {
-    $ErrorRecord = Format-ErrorRecord -Message "ResourceType is invalid" -ErrorID "InvalidResourceType"
-    $ConfirmResult = [ConfirmResult]::new($ErrorRecord, $null)
-  }
-  elseif ($ConfirmResult.Success) {
-    if ($PropertyKey) {
+    if ($null -eq $ConfirmResult) {
+      Write-Error "Resource not found" -Category InvalidResult -ErrorId "InvalidResource"
+      $ConfirmResult = [ConfirmResult]::new($null)
+    } elseif ($ConfirmResult.Success -and -not [string]::IsNullOrWhiteSpace($PropertyKey)) {
       $ActualValue = $ConfirmResult.ResourceDetails
+
       # Split property path on open and close square brackets and periods. Remove empty items from array.
       $Keys = ($PropertyKey -split '[\[\]\.]').Where({ $_ -ne "" })
       foreach ($Key in $Keys) {
-        # If key is a numerical value, index into array
-        if ($Key -match "^\d+$") {
-          try {
+        try {
+          # If key is a numerical value, index into array
+          if ($Key -match "^\d+$") {
             $ActualValue = $ActualValue[$Key]
+          } else {
+            $ActualValue = $ActualValue.$Key
           }
-          catch {
-            $ErrorRecord = $_
-            $ConfirmResult = [ConfirmResult]::new($ErrorRecord, $null)
-            break
-          }
-        }
-        else {
-          $ActualValue = $ActualValue.$Key
+        } catch {
+          $thrownError = $_
+          $ConfirmResult = [ConfirmResult]::new($null)
+          Write-Error $thrownError
         }
       }
-      if ($ActualValue -ne $PropertyValue -and $ConfirmResult.Success -ne $false) {
-        if ($ActualValue) {
-          $ErrorRecord = `
-            Format-IncorrectValueError -ExpectedKey $PropertyKey `
-            -ExpectedValue $PropertyValue `
-            -ActualValue $ActualValue
-          $ConfirmResult = [ConfirmResult]::new($ErrorRecord, $null)
-        }
-        else {
-          $ErrorRecord = Format-PropertyDoesNotExistError -PropertyKey $PropertyKey
-          $ConfirmResult = [ConfirmResult]::new($ErrorRecord, $null)
+
+      if ($ActualValue -ne $PropertyValue) {
+        $ConfirmResult.Success = $false
+
+        if ($null -eq $ActualValue) {
+          $errorParams = @{
+            Message  = "A value for the property key: ${$PropertyKey}, was not found."
+            Category = [System.Management.Automation.ErrorCategory]::InvalidArgument
+            ErrorId  = "InvalidKey"
+          }
+
+          Write-Error @errorParams
+        } else {
+          $errorParams = @{
+            Message = "The value provided: ${$PropertyValue}, does not match the actual value: ${ActualValue} for " +
+              "property key: ${$PropertyKey}"
+            Category = [System.Management.Automation.ErrorCategory]::InvalidResult
+            ErrorId = "InvalidPropertyValue"
+          }
+
+          Write-Error @errorParams
         }
       }
     }
-  }
 
-  $ConfirmResult
+    $ConfirmResult
+  }
+  End { }
 }

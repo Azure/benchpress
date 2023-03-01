@@ -50,20 +50,15 @@ function Confirm-SqlDatabase {
     $ConnectResults = Connect-Account
   }
   Process {
-    [ConfirmResult]$Results = $null
-
-    try {
-      [Microsoft.Azure.Commands.Sql.Database.Model.AzureSqlDatabaseModel]$Resource = $null
-
-      $Resource = Get-AzSqlDatabase -ResourceGroupName $ResourceGroupName -ServerName $ServerName -DatabaseName $DatabaseName
-
-      $Results = [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
-    } catch {
-      $ErrorRecord = $_
-      $Results = [ConfirmResult]::new($ErrorRecord, $ConnectResults.AuthenticationData)
+    $requestParams = @{
+      ResourceGroupName = $ResourceGroupName
+      ServerName = $ServerName
+      DatabaseName = $DatabaseName
     }
 
-    $Results
+    $Resource = Get-AzSqlDatabase @requestParams
+
+    [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
   }
   End { }
 }

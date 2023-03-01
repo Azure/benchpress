@@ -15,12 +15,6 @@ Describe "Confirm-SqlServer" {
       Confirm-SqlServer -ServerName "sn" -ResourceGroupName "rgn"
       Should -Invoke -CommandName "Get-AzSqlServer" -Times 1
     }
-
-    It "Sets the ErrorRecord when an exception is thrown" {
-      Mock Get-AzSqlServer{ throw [Exception]::new("Exception") }
-      $Results = Confirm-SqlServer -ServerName "sn" -ResourceGroupName "rgn"
-      $Results.ErrorRecord | Should -Not -Be $null
-    }
   }
 }
 

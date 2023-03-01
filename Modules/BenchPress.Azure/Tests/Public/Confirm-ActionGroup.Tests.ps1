@@ -15,12 +15,6 @@ Describe "Confirm-ActionGroup" {
       Confirm-ActionGroup -ActionGroupName "agn" -ResourceGroupName "rgn"
       Should -Invoke -CommandName "Get-AzActionGroup" -Times 1
     }
-
-    It "Sets the ErrorRecord when an exception is thrown" {
-      Mock Get-AzActionGroup{ throw [Exception]::new("Exception") }
-      $Results = Confirm-ActionGroup -ActionGroupName "agn" -ResourceGroupName "rgn"
-      $Results.ErrorRecord | Should -Not -Be $null
-    }
   }
 }
 

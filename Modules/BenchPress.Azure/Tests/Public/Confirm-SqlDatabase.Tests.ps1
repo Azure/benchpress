@@ -23,12 +23,6 @@ Describe "Confirm-SqlDatabase" {
       Should -Invoke -CommandName "Get-AzSqlDatabase" -Times 1 `
         -ParameterFilter { $databaseName -eq "dbn"; $serverName -eq "sn"; $resourceGroupName -eq "rgn" }
     }
-
-    It "Sets the ErrorRecord when an exception is thrown" {
-      Mock Get-AzSqlDatabase{ throw [Exception]::new("Exception") }
-      $Results = Confirm-SqlDatabase -DatabaseName "dbn" -ServerName "sn" -ResourceGroupName "rgn"
-      $Results.ErrorRecord | Should -Not -Be $null
-    }
   }
 }
 

@@ -41,17 +41,9 @@ function Confirm-SqlServer {
     $ConnectResults = Connect-Account
   }
   Process {
-    [ConfirmResult]$Results = $null
-
-    try {
       $Resource = Get-AzSqlServer -ResourceGroupName $ResourceGroupName -ServerName $ServerName
 
-      $Results = [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
-    } catch {
-      $ErrorRecord = $_
-      $Results = [ConfirmResult]::new($ErrorRecord, $ConnectResults.AuthenticationData)
-    }
-
-    $Results
+      [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
   }
+  End { }
 }

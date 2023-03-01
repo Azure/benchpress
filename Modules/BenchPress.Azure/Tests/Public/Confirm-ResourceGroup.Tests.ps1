@@ -15,12 +15,6 @@ Describe "Confirm-ResourceGroup" {
       Confirm-ResourceGroup -ResourceGroupName "rgn"
       Should -Invoke -CommandName "Get-AzResourceGroup" -Times 1
     }
-
-    It "Sets the ErrorRecord when an exception is thrown" {
-      Mock Get-AzResourceGroup{ throw [Exception]::new("Exception") }
-      $Results = Confirm-ResourceGroup -ResourceGroupName "rgn"
-      $Results.ErrorRecord | Should -Not -Be $null
-    }
   }
 }
 

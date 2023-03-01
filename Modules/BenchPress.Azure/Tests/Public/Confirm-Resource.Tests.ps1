@@ -1,11 +1,6 @@
 ﻿using module ./../../Classes/ConfirmResult.psm1
 
 BeforeAll {
-  . $PSScriptRoot/../../Private/Format-ErrorRecord.ps1
-  . $PSScriptRoot/../../Private/Format-IncorrectValueError.ps1
-  . $PSScriptRoot/../../Private/Format-NotExistError.ps1
-  . $PSScriptRoot/../../Private/Format-PropertyDoesNotExistError.ps1
-
   . $PSScriptRoot/../../Public/Confirm-Resource.ps1
   . $PSScriptRoot/../../Public/Get-ResourceByType.ps1
 }
@@ -13,10 +8,7 @@ BeforeAll {
 Describe "Confirm-Resource" {
   Context "unit tests" -Tag "Unit" {
     BeforeEach {
-      Mock Format-NotExistError{}
-      Mock Format-ErrorRecord{}
-      Mock Format-IncorrectValueError{}
-      Mock Format-PropertyDoesNotExistError{}
+      Mock Write-Error{ }
       $script:ConfirmResult = [ConfirmResult]::new(
         @{
           TestKey = "TestValue"
@@ -30,8 +22,7 @@ Describe "Confirm-Resource" {
       $result = Confirm-Resource -ResourceType "ResourceGroup" -ResourceName "mockResourceName"
 
       Should -InvokeVerifiable
-      Should -Invoke -CommandName "Format-NotExistError" -Times 0
-      Should -Invoke -CommandName "Format-IncorrectValueError" -Times 0
+      Should -Invoke -CommandName "Write-Error" -Times 0
       $result.Success | Should -Be $true
     }
 
@@ -42,8 +33,7 @@ Describe "Confirm-Resource" {
         -PropertyKey "TestKey" -PropertyValue "TestValue"
 
       Should -InvokeVerifiable
-      Should -Invoke -CommandName "Format-NotExistError" -Times 0
-      Should -Invoke -CommandName "Format-IncorrectValueError" -Times 0
+      Should -Not -Invoke -CommandName "Write-Error"
 
       $result.Success | Should -Be $true
     }
@@ -55,8 +45,7 @@ Describe "Confirm-Resource" {
         -PropertyKey "TestArray[0].AnotherKey" -PropertyValue "AnotherValue"
 
       Should -InvokeVerifiable
-      Should -Invoke -CommandName "Format-NotExistError" -Times 0
-      Should -Invoke -CommandName "Format-IncorrectValueError" -Times 0
+      Should -Not -Invoke -CommandName "Write-Error"
 
       $result.Success | Should -Be $true
     }
@@ -67,8 +56,7 @@ Describe "Confirm-Resource" {
       $result = Confirm-Resource -ResourceType "ResourceGroup" -ResourceName "mockResourceName"
 
       Should -InvokeVerifiable
-      Should -Invoke -CommandName "Format-ErrorRecord" -Times 1
-      Should -Invoke -CommandName "Format-IncorrectValueError" -Times 0
+      Should -Invoke -CommandName "Write-Error" -Times 1
       $result.Success | Should -Be $false
     }
 
@@ -79,8 +67,7 @@ Describe "Confirm-Resource" {
         -PropertyKey "TestKey" -PropertyValue "WrongValue"
 
       Should -InvokeVerifiable
-      Should -Invoke -CommandName "Format-NotExistError" -Times 0
-      Should -Invoke -CommandName "Format-IncorrectValueError" -Times 1
+      Should -Invoke -CommandName "Write-Error" -Times 1
 
       $result.Success | Should -Be $false
     }
@@ -94,7 +81,6 @@ Describe "Confirm-Resource" {
       Should -InvokeVerifiable
 
       $result.Success | Should -Be $false
-      $result.ErrorRecord | Should -Not -Be $null
     }
 
     It "Calls Get-ResourceByType and Format-PropertyDoesNotExistError; returns false when property does not exist." {
@@ -104,8 +90,7 @@ Describe "Confirm-Resource" {
         -PropertyKey "WrongKey" -PropertyValue "TestValue"
 
       Should -InvokeVerifiable
-      Should -Invoke -CommandName "Format-NotExistError" -Times 0
-      Should -Invoke -CommandName "Format-PropertyDoesNotExistError" -Times 1
+      Should -Invoke -CommandName "Write-Error" -Times 1
 
       $result.Success | Should -Be $false
     }

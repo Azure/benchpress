@@ -73,21 +73,49 @@ function Get-ResourceByType {
     [Parameter(Mandatory = $false)]
     [string]$ServerName
   )
-
-  switch ($ResourceType) {
-    ActionGroup { return Confirm-ActionGroup -ActionGroupName $ResourceName -ResourceGroupName $ResourceGroupName }
-    AksCluster { return Confirm-AksCluster -AKSName $ResourceName -ResourceGroupName $ResourceGroupName }
-    AppServicePlan { return Confirm-AppServicePlan -AppServicePlanName $ResourceName -ResourceGroupName $ResourceGroupName }
-    ContainerRegistry { return Confirm-ContainerRegistry -Name $ResourceName -ResourceGroupName $ResourceGroupName }
-    KeyVault { return Confirm-KeyVault -Name $ResourceName -ResourceGroupName $ResourceGroupName }
-    ResourceGroup { return Confirm-ResourceGroup -ResourceGroupName $ResourceName }
-    SqlDatabase { return Confirm-SqlDatabase -ServerName $ServerName -DatabaseName $ResourceName -ResourceGroupName $ResourceGroupName }
-    SqlServer { return Confirm-SqlServer -ServerName $ResourceName -ResourceGroupName $ResourceGroupName }
-    VirtualMachine { return Confirm-VirtualMachine -VirtualMachineName $ResourceName -ResourceGroupName $ResourceGroupName }
-    WebApp { return Confirm-WebApp -WebAppName $ResourceName -ResourceGroupName $ResourceGroupName }
-    default {
-      Write-Information "Not implemented yet"
-      return $null
+  Begin { }
+  Process {
+    switch ($ResourceType) {
+      "ActionGroup" {
+        return Confirm-ActionGroup -ActionGroupName $ResourceName -ResourceGroupName $ResourceGroupName
+      }
+      "AksCluster" {
+        return Confirm-AksCluster -AKSName $ResourceName -ResourceGroupName $0ResourceGroupName
+      }
+      "AppServicePlan" {
+        return Confirm-AppServicePlan -AppServicePlanName $ResourceName -ResourceGroupName $ResourceGroupName
+      }
+      "ContainerRegistry" {
+        return Confirm-ContainerRegistry -Name $ResourceName -ResourceGroupName $ResourceGroupName
+      }
+      "KeyVault" {
+        return Confirm-KeyVault -Name $ResourceName -ResourceGroupName $ResourceGroupName
+      }
+      "ResourceGroup" {
+        return Confirm-ResourceGroup -ResourceGroupName $ResourceName
+      }
+      "SqlDatabase" {
+        $params = @{
+          ServerName        = $ServerName
+          DatabaseName      = $ResourceName
+          ResourceGroupName = $ResourceGroupName
+        }
+        return Confirm-SqlDatabase @params
+      }
+      "SqlServer" {
+        return Confirm-SqlServer -ServerName $ResourceName -ResourceGroupName $ResourceGroupName
+      }
+      "VirtualMachine" {
+        return Confirm-VirtualMachine -VirtualMachineName $ResourceName -ResourceGroupName $ResourceGroupName
+      }
+      "WebApp" {
+        return Confirm-WebApp -WebAppName $ResourceName -ResourceGroupName $ResourceGroupName
+      }
+      default {
+        Write-Information "Not implemented yet"
+        return $null
+      }
     }
   }
+  End { }
 }
