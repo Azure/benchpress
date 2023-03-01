@@ -19,7 +19,7 @@ jobs:
         # This will create a version tag with a leading "v" followed by the ModuleVersion value inside the quotes
         # e.g., "v0.1" for ModuleVersion = "0.1"
         run: |
-          cd ./BenchPress/Helpers/BenchPress.Azure
+          cd ./Modules/BenchPress.Azure
           version=v$(sed -n 's/ModuleVersion = "\([^"]*\)"/\1/p' ./BenchPress.Azure.psd1 \
             | sed -n 's/\s*//p')
           git tag "$version"

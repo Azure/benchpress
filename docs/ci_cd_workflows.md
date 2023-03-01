@@ -44,20 +44,18 @@ CI/CD process. This stage consists of the following steps:
   for code styling and formatting.
 - [`pr-dotnet.yml`](../.github/workflows/pr-dotnet.yml) and [`pr-powershell`](../.github/workflows/pr-powershell.yml) -
    Unit tests (for .NET Solution and PowerShell code) for code quality and testing.
-- [`pr-psgallery.yml`](../.github/workflows/pr-powershell.yml) - PowerShell module publishing to a local "PowerShell
-  Gallery"
-  - The local "PowerShell Gallery" uses the workflow runner's local filesystem to simulate PowerShell Gallery. We then
-    push and pull from this filesystem using the same PowerShell cmdlets that are used to interact with PowerShell
-    Gallery.
 
 ### Continuous Integration
 
 After pull requests are merged to the `main` branch, they will automatically trigger the CI stage of the CI/CD process.
 This stage consists of the following steps:
 
-- [`ci.yml`](../.github/workflows/ci.yml) - building the .NET solution.
-- [`ci-publish-docs-branch.yml`](../.github/workflows/ci-publish-docs-branch.yml) - generates documentation using help
-  comments for PowerShell cmdlets and saves documentation to a branch named `docs`.
+- [`ci.yml`](../.github/workflows/ci.yml) - builds the .NET solution and the final module file for BenchPress. It also
+tests the module for deployability to a local PS Repo. Lastly, it generates documentation using help comments for
+PowerShell cmdlets and saves documentation to a branch named `docs`.
+  - The local "PowerShell Gallery" uses the workflow runner's local filesystem to simulate PowerShell Gallery. We then
+    push and pull from this filesystem using the same PowerShell cmdlets that are used to interact with PowerShell
+    Gallery.
 - [`ci-module-versioning.yml`](../.github/workflows/ci-module-versioning.yml) - calculating the version for the
   PowerShell module using GitVersion and writing it to the module manifest on a branch named `version`.
 

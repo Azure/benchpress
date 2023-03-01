@@ -5,7 +5,7 @@ on: # yamllint disable-line rule:truthy
   push:
     branches: [main]
     paths:
-      - "./BenchPress/Helpers/BenchPress.Azure/*"
+      - "./Modules/BenchPress.Azure/*"
 
 jobs:
   get-tags:
@@ -39,9 +39,9 @@ jobs:
       - name: Update manifest file
         run: |
           sed -i 's/ModuleVersion = "[^"]*"/ModuleVersion = "${{ needs.get-tags.outputs.Version }}"/' \
-            ./BenchPress/Helpers/BenchPress.Azure/BenchPress.Azure.psd1
+            ./Modules/BenchPress.Azure/BenchPress.Azure.psd1
       - name: Commit changes
         run: |
-          git add ./BenchPress/Helpers/BenchPress.Azure/BenchPress.Azure.psd1
+          git add ./Modules/BenchPress.Azure/BenchPress.Azure.psd1
           git commit -m "version: updating version"
           git push origin version

@@ -9,10 +9,14 @@ jobs:
     name: Publish to the PowerShell Gallery
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Checkout repository and submodules
+      - name: Download module artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: benchpress-gallery-module
+          path: ./bin
+      - name: Publish BenchPress to Gallery
         env:
           NUGET_KEY: ${{ secrets.NUGET_KEY }}
         shell: pwsh
         run: |
-          Publish-Module -Path ./BenchPress/Helpers/Azure -NugetAPIKey $env:NUGET_KEY -Verbose
+          Publish-Module -Path ./bin -NugetAPIKey $env:NUGET_KEY -Verbose
