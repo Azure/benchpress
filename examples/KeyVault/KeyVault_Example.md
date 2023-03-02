@@ -7,8 +7,8 @@ and `Confirm-AzBPKeyVaultSecret` cmdlets.
 
 - An Azure subscription to deploy resources to
 - A resource group deployed to the Azure subscription
-- A [service principal](https://learn.microsoft.com/en-us/cli/azurecreate-an-azure-service-principal-azure-cli#password-based-authentication)
-that has contributor access on the Azure subscription
+- A [service principal](https://learn.microsoft.com/en-us/cli/azurecreate-an-azure-service-principal-azure-cli)
+with a client secret created that has contributor access on the Azure subscription
 
 ## Steps
 

@@ -1,13 +1,14 @@
 # How To Run Common.Tests.ps1
 
-`Common.Tests.ps1` contains examples of using the `Get-AzBPResourceByType`, `Get-AzBPResource`, and `Confirm-AzBPResource` cmdlets.
+`Common.Tests.ps1` contains examples of using the `Get-AzBPResourceByType`, `Get-AzBPResource`, and
+`Confirm-AzBPResource` cmdlets.
 
 ## Pre-Requisites
 
 - An Azure subscription to deploy resources to
 - A resource group deployed to the Azure subscription
-- A [service principal](https://learn.microsoft.com/en-us/cli/azurecreate-an-azure-service-principal-azure-cli#password-based-authentication)
-that has contributor access on the Azure subscription
+- A [service principal](https://learn.microsoft.com/en-us/cli/azurecreate-an-azure-service-principal-azure-cli)
+with a client secret created that has contributor access on the Azure subscription
 
 ## Steps
 
@@ -30,7 +31,8 @@ required environment variables.
 
 1. When prompted in your terminal, set the `svcPrincipalObjectId` parameter with your service principal's object ID.
 
-1. When prompted in your terminal, set the `vmAdminPasswordOrKey` and `sqlAdminPassword` parameters with your own passwords.
+1. When prompted in your terminal, set the `vmAdminPasswordOrKey` and `sqlAdminPassword` parameters with your own
+passwords.
 
 1. Update `Common.Tests.ps1` variables to point to your expected resources:
 
