@@ -76,9 +76,9 @@ function Connect-Account {
         $Results.AuthenticationData = [AuthenticationData]::new()
         $Results.AuthenticationData.SubscriptionId = $Connection.Context.Subscription.Id
       } catch {
-        $Exception = $_
-        $Results.Error = $Exception
+        $thrownError = $_
         $Results.Success = $false
+        Write-Error $thrownError
       }
 
       $Results

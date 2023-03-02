@@ -40,7 +40,7 @@ function Get-RequiredEnvironmentVariable {
     $Value = [System.Environment]::GetEnvironmentVariable($VariableName)
 
     if ([string]::IsNullOrWhiteSpace($Value)) {
-      Write-Error("Missing Required Environment Variable $VariableName")
+      Write-Error "Missing Required Environment Variable $VariableName"
       exit 1
     }
   }
