@@ -48,14 +48,14 @@ your resource group.
 1. Don't forget to delete any deployed resources that are no longer needed.
 
 1. (Optional) You can also run checks on your bicep file prior to deploying using `Confirm-AzBPBicepFile`. Force a
-linting error in `actionGroup.bicep` by hardcoding the location on line 8:
+linting error in `../ActionGroup/actionGroup.bicep` by hardcoding the location on line 8:
 
    ```bicep
    location: "global"
    ```
 
-   - Execute `Confirm-AzBPBicepFile -BicepFilePath "./actionGroup.bicep"` in your terminal and receive the following
-   errors:
+   - Execute `Confirm-AzBPBicepFile -BicepFilePath "../ActionGroup/actionGroup.bicep"` in your terminal and receive
+     the following errors:
 
      ```Powershell
      Error no-unused-params: Parameter "location" is declared but never used.

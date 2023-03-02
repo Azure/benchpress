@@ -5,7 +5,7 @@ Describe 'Spin up , Tear down Action Group' {
   it 'Should deploy a bicep file.' {
     #arrange
     $resourceGroupName = "rg-test"
-    $bicepPath = "./actionGroup.bicep"
+    $bicepPath = "../ActionGroup/actionGroup.bicep"
     $params = @{
       actionGroupName = "sampleaction"
       location    = "swedencentral"
