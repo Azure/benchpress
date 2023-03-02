@@ -57,4 +57,3 @@ Add-ShouldOperator -Name BeInLocation `
     -InternalName 'ShouldBeInLocation' `
     -Test ${function:ShouldBeInLocation} `
     -Alias 'SBIL'
-  
