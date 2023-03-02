@@ -127,6 +127,7 @@ function Confirm-Resource {
           $thrownError = $_
           $ConfirmResult = [ConfirmResult]::new($null)
           Write-Error $thrownError
+          break
         }
       }
 
