@@ -21,18 +21,14 @@ required environment variables.
    cd examples\SqlDatabase\
    ```
 
-1. Replace the `administratorLoginPassword` in `sqlDatabase.bicep` with your own password:
-
-   ```bicep
-   administratorLoginPassword: '<sample-password>'
-   ```
-
 1. Deploy the SQL Database to your resource group:
 
    ```Powershell
     New-AzResourceGroupDeployment -ResourceGroupName "<your-resource-group-name>"`
     -TemplateFile ".\sqlDatabase.bicep"
    ```
+
+1. When prompted in your terminal, set the `adminPassword` parameter with your own password.
 
 1. Update `SqlDatabase.Tests.ps1` variables to point to your expected resources:
 

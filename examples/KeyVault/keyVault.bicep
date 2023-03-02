@@ -1,5 +1,6 @@
 param name string = 'kv${take(uniqueString(resourceGroup().id), 5)}'
 param location string = resourceGroup().location
+param svcPrincipalObjectId string
 
 resource vault 'Microsoft.KeyVault/vaults@2022-07-01' = {
   name: name
@@ -8,7 +9,7 @@ resource vault 'Microsoft.KeyVault/vaults@2022-07-01' = {
     accessPolicies:[
       {
         tenantId: subscription().tenantId
-        objectId: 'your-service-principal-oid'
+        objectId: svcPrincipalObjectId
         permissions: {
           secrets: ['get', 'list']
           certificates: ['get', 'list']
