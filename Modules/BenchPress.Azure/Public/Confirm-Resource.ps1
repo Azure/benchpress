@@ -131,7 +131,7 @@ function Confirm-Resource {
         }
       }
 
-      if ($ActualValue -ne $PropertyValue) {
+      if ($ConfirmResult.Success -and $ActualValue -ne $PropertyValue) {
         $ConfirmResult.Success = $false
 
         if ($null -eq $ActualValue) {
