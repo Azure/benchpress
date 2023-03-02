@@ -9,7 +9,7 @@ Describe "Remove-BicepFeature" {
   Context "unit-test" -Tag "Unit" {
     BeforeEach {
       Mock Connect-Account{}
-      Mock Get-AzResourceGroup { "Resource" }
+      Mock Get-AzResourceGroup { @{ResourceGroupName = "rgName"} }
       Mock Remove-AzResourceGroup {}
     }
 

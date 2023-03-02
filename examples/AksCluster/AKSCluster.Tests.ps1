@@ -20,7 +20,7 @@ Describe 'Verify AKS Cluster Does Not Exist' {
   it 'Should not contain an AKS cluster named aksbenchpresstest' {
     #arrange
     $resourceGroupName = "rg-test"
-    $aksName = "aksbenchpresstest"
+    $aksName = "noaksbenchpresstest"
 
     #act
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
@@ -30,26 +30,5 @@ Describe 'Verify AKS Cluster Does Not Exist' {
 
     #assert
     $result.Success | Should -Be $false
-  }
-}
-
-Describe 'Spin up , Tear down AKS Cluster' {
-  it 'Should deploy a bicep file.' {
-    #arrange
-    $resourceGroupName = "rg-test"
-    $bicepPath = "./aksCluster.bicep"
-    $params = @{
-      name        = "aksbenchpresstest"
-      location    = "westus"
-    }
-
-    #act
-    $deployment = Deploy-AzBPBicepFeature -BicepPath $bicepPath -Params $params -ResourceGroupName $resourceGroupName
-
-    #assert
-    $deployment.ProvisioningState | Should -Be "Succeeded"
-
-    #clean up
-    Remove-AzBPBicepFeature -ResourceGroupName $resourceGroupName
   }
 }

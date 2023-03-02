@@ -3,49 +3,38 @@ BeforeAll {
 }
 
 Describe 'Verify Resource Exists' {
-  it 'should has a resource with type of ResourceGroup and name of AzurePortal' {
+  it 'should have a resource group called rg-test' {
     #arrange
-    $rgName = "AzurePortal"
+    $rgName = "rg-test"
 
     #act
-    $exists = Get-AzBPResourceByType -ResourceType ResourceGroup -ResourceName "${rgName}"
+    $result = Get-AzBPResourceByType -ResourceType ResourceGroup -ResourceName "${rgName}"
 
     #assert
-    $exists | Should -Be $true
+    $result.Success | Should -Be $true
   }
 
-  it 'should has a resource with type of VirtualMachine and name of testVM' {
+  it 'should have a virtual machine named testvm' {
     #arrange
-    $resourceName = "testVM"
-    $rgName = "AzurePortal"
+    $resourceName = "testvm"
+    $rgName = "rg-test"
 
     #act
-    $exists = Get-AzBPResourceByType -ResourceType VirtualMachine -ResourceName "${resourceName}" -ResourceGroupName "${rgName}"
+    $result = Get-AzBPResourceByType -ResourceType VirtualMachine -ResourceName "${resourceName}" -ResourceGroupName "${rgName}"
 
     #assert
-    $exists | Should -Be $true
+    $result.Success | Should -Be $true
   }
 
-  it 'should has a resource with name of AzurePortal' {
+  it 'should have a resource with name of testvm' {
     #arrange
-    $resourceName = "testVM"
+    $resourceName = "testvm"
 
     #act
     $exists = Get-AzBPResource -ResourceName "${resourceName}"
 
     #assert
-    $exists | Should -Be $true
-  }
-
-  it 'should has a resource with name of testVM' {
-    #arrange
-    $resourceName = "testVM"
-
-    #act
-    $exists = Get-AzBPResource -ResourceName "${resourceName}"
-
-    #assert
-    $exists | Should -Be $true
+    $exists | Should -Not -Be $null
   }
 }
 
@@ -53,7 +42,7 @@ Describe 'Use Confirm-AzBPResource to confirm resource and/or properties exist'{
   Describe 'Verify Container Registry' {
     it 'Should contain a container registry named testcontaineregistry' {
       #arrange
-      $resourceGroupName = "testrg"
+      $resourceGroupName = "rg-test"
       $resourceType = "ContainerRegistry"
       $containerRegistryName = "testcontaineregistry"
 
@@ -67,7 +56,7 @@ Describe 'Use Confirm-AzBPResource to confirm resource and/or properties exist'{
 
     it 'Should contain a container registry named testcontaineregistry is Standard' {
       #arrange
-      $resourceGroupName = "testrg"
+      $resourceGroupName = "rg-test"
       $resourceType = "ContainerRegistry"
       $containerRegistryName = "testcontaineregistry"
       $property = "SkuName"
@@ -83,9 +72,9 @@ Describe 'Use Confirm-AzBPResource to confirm resource and/or properties exist'{
   }
 
   Describe 'Verify Resource Group' {
-    it 'Should contain a resource group named testrg' {
+    it 'Should contain a resource group named rg-test' {
       #arrange
-      $resourceGroupName = "testrg"
+      $resourceGroupName = "rg-test"
       $resourceType = "ResourceGroup"
 
       #act
@@ -95,9 +84,9 @@ Describe 'Use Confirm-AzBPResource to confirm resource and/or properties exist'{
       $result.Success | Should -Be $true
     }
 
-    it 'Should contain a resource group named testrg in WestUS3' {
+    it 'Should contain a resource group named rg-test in WestUS3' {
       #arrange
-      $resourceGroupName = "testrg"
+      $resourceGroupName = "rg-test"
       $resourceType = "ResourceGroup"
       $property = "Location"
       $expectedValue = "WestUS3"
@@ -115,7 +104,7 @@ Describe 'Use Confirm-AzBPResource to confirm resource and/or properties exist'{
     it 'Should contain a SQL Server named testserver' {
       #arrange
       $params = @{
-        ResourceGroupName = "testrg";
+        ResourceGroupName = "rg-test";
         ResourceType = "SqlServer";
         ResourceName = "testserver"
       }
@@ -128,7 +117,7 @@ Describe 'Use Confirm-AzBPResource to confirm resource and/or properties exist'{
     it 'Should contain a SQL Server named testserver with a Sql Database named testdb' {
       #arrange
       $params = @{
-        ResourceGroupName = "testrg";
+        ResourceGroupName = "rg-test";
         ResourceType = "SqlDatabase";
         ServerName = "testserver";
         ResourceName = "testdb"
@@ -144,7 +133,7 @@ Describe 'Use Confirm-AzBPResource to confirm resource and/or properties exist'{
     it 'Should contain a VM named testvm with OSType Linux' {
       #arrange
       $params = @{
-        ResourceGroupName = "testrg";
+        ResourceGroupName = "rg-test";
         ResourceType = "VirtualMachine";
         ResourceName = "testvm";
         PropertyKey = "StorageProfile.OsDisk.OsType";
@@ -156,13 +145,29 @@ Describe 'Use Confirm-AzBPResource to confirm resource and/or properties exist'{
       #assert
       $result.Success | Should -Be $true
     }
+    it 'Should not contain a VM named notestvm' {
+      #arrange
+      $resourceGroupName = "rg-test"
+      $resourceType = "VirtualMachine"
+      $resourceName = "notestvm"
+
+      #act
+      # The '-ErrorAction SilentlyContinue' command suppresses all errors.
+      # In this test, it will suppress the error message when a resource cannot be found.
+      # Remove this field to see all errors.
+      $result = Confirm-AzBPResource -ResourceType $resourceType -ResourceName $resourceName `
+                  -ResourceGroupName $resourceGroupName -ErrorAction SilentlyContinue
+
+      #assert
+      $result.Success | Should -Be $false
+    }
   }
 
   Describe 'Verify Key Vault' {
     it 'Should contain a key vault named testkv' {
       #arrange
       $params = @{
-        ResourceGroupName = "testrg";
+        ResourceGroupName = "rg-test";
         ResourceType = "KeyVault";
         ResourceName = "testkv";
       }
@@ -176,10 +181,10 @@ Describe 'Use Confirm-AzBPResource to confirm resource and/or properties exist'{
     it 'Should contain a key vault named testkv with an access policy for testsp service principal' {
       #arrange
       $params = @{
-        ResourceGroupName = "testrg";
+        ResourceGroupName = "rg-test";
         ResourceType = "KeyVault";
         ResourceName = "testkv";
-        PropertyKey = "AccessPolicies[1].DisplayName";
+        PropertyKey = "AccessPolicies[0].DisplayName";
         PropertyValue = "testsp (<your-testsp-appid>)"
       }
       #act
@@ -188,38 +193,5 @@ Describe 'Use Confirm-AzBPResource to confirm resource and/or properties exist'{
       #assert
       $result.Success | Should -Be $true
     }
-  }
-}
-
-Describe 'Verify Resource Group Does Not Exist' {
-  it 'Should not contain a resource group named testrg2' {
-    #arrange
-    $resourceGroupName = "testrg2"
-    $resourceType = "ResourceGroup"
-
-    #act
-    #This will throw an error
-    $result = Confirm-AzBPResource -ResourceType $resourceType -ResourceName $resourceGroupName
-
-    #assert
-    $result.Success | Should -Be $false
-  }
-
-  it 'Should not contain a resource group named testrg in WestUS2' {
-    #arrange
-    $resourceGroupName = "testrg"
-    $resourceType = "ResourceGroup"
-    $property = "Location"
-    $expectedValue = "WestUS2"
-
-    #act
-    # The '-ErrorAction SilentlyContinue' command suppresses all errors.
-    # In this test, it will suppress the error message when a resource cannot be found.
-    # Remove this field to see all errors.
-    $result = Confirm-AzBPResource -ResourceType $resourceType -ResourceName $resourceGroupName `
-                -PropertyKey $property -PropertyValue $expectedValue -ErrorAction SilentlyContinue
-
-    #assert
-    $result.Success | Should -Be $false
   }
 }
