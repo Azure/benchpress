@@ -73,8 +73,7 @@ function Connect-Account {
         $Connection = Connect-AzAccount -ServicePrincipal @ConnectionParams
 
         $Results.Success = $true
-        $Results.AuthenticationData = [AuthenticationData]::new()
-        $Results.AuthenticationData.SubscriptionId = $Connection.Context.Subscription.Id
+        $Results.AuthenticationData = [AuthenticationData]::new($Connection.Context.Subscription.Id)
       } catch {
         $thrownError = $_
         $Results.Success = $false
