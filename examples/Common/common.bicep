@@ -20,7 +20,7 @@ module containerregistry '../ContainerRegistry/containerRegistry.bicep' = {
   }
 }
 
-module azuresql '../SqlDatabase/sqldatabase.bicep' = {
+module azuresql '../SqlDatabase/sqlDatabase.bicep' = {
   name: 'azure_sql'
   params: {
     location: location

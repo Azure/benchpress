@@ -5,8 +5,9 @@
 ## Pre-Requisites
 
 - An Azure subscription to deploy resources to
-- A [service principal](https://learn.microsoft.com/en-us/cli/azurecreate-an-azure-service-principal-azure-cli)
-with a client secret created that has contributor access on the Azure subscription
+- A [service principal][1] with a client secret created that has contributor access on the Azure subscription
+
+[1]: <https://learn.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal>
 
 ## Steps
 
