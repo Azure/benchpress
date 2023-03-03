@@ -28,6 +28,8 @@ function Confirm-AppInsights {
     .OUTPUTS
       ConfirmResult
   #>
+  [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseSingularNouns', '',
+  Justification='App Insights is a name of an Azure resource and is not a plural noun')]
   [CmdletBinding()]
   [OutputType([ConfirmResult])]
   param (
