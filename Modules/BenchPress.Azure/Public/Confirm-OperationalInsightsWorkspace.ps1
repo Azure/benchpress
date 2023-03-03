@@ -7,11 +7,11 @@ using module ./../Classes/ConfirmResult.psm1
 function Confirm-OperationalInsightsWorkspace {
   <#
     .SYNOPSIS
-      Confirms that an App Insights Workspace exists.
+      Confirms that an Operational Insights Workspace exists.
 
     .DESCRIPTION
-      The Confirm-AzBPOperationalInsightsWorkspace cmdlet gets an action group using the specified Action Group and
-      Resource Group name.
+      The Confirm-AzBPOperationalInsightsWorkspace cmdlet gets an Operational Insights Workspace using the specified
+      Workspace Name and Resource Group name.
 
     .PARAMETER Name
       Specifies the workspace name.
