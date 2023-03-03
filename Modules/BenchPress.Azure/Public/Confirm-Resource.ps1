@@ -26,6 +26,7 @@ function Confirm-Resource {
       The type of the Resource (currently supports the following:
       ActionGroup
       AksCluster
+      AppInsights
       AppServicePlan
       ContainerRegistry
       KeyVault
@@ -77,8 +78,8 @@ function Confirm-Resource {
   [OutputType([ConfirmResult])]
   param (
     [Parameter(Mandatory = $true)]
-    [ValidateSet("ActionGroup", "AksCluster", "AppServicePlan", "ContainerRegistry", "KeyVault", "ResourceGroup",
-      "SqlDatabase", "SqlServer", "VirtualMachine", "WebApp")]
+    [ValidateSet("ActionGroup", "AksCluster", "AppInsights", "AppServicePlan", "ContainerRegistry", "KeyVault",
+      "ResourceGroup", "SqlDatabase", "SqlServer", "VirtualMachine", "WebApp")]
     [string]$ResourceType,
 
     [Parameter(Mandatory = $true)]
