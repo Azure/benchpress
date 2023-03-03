@@ -23,6 +23,7 @@
     "Confirm-KeyVaultCertificate",
     "Confirm-KeyVaultKey",
     "Confirm-KeyVaultSecret",
+    "Confirm-OperationalInsightsWorkspace",
     "Confirm-Resource",
     "Confirm-ResourceGroup",
     "Confirm-SqlDatabase",
