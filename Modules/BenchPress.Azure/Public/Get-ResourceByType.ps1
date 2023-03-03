@@ -3,6 +3,7 @@ using module ./../Classes/ConfirmResult.psm1
 
 . $PSScriptRoot/Confirm-ActionGroup.ps1
 . $PSScriptRoot/Confirm-AksCluster.ps1
+. $PSScriptRoot/Confirm-AppInsights.ps1
 . $PSScriptRoot/Confirm-AppServicePlan.ps1
 . $PSScriptRoot/Confirm-ContainerRegistry.ps1
 . $PSScriptRoot/Confirm-KeyVault.ps1
@@ -33,6 +34,7 @@ function Get-ResourceByType {
       The type of the Resource (currently support the following:
       ActionGroup
       AksCluster
+      AppInsights
       AppServicePlan
       ContainerRegistry
       KeyVault
@@ -67,8 +69,8 @@ function Get-ResourceByType {
     [string]$ResourceGroupName,
 
     [Parameter(Mandatory = $true)]
-    [ValidateSet("ActionGroup", "AksCluster", "AppServicePlan", "ContainerRegistry", "KeyVault", "ResourceGroup",
-      "OperationalInsightsWorkspace", "SqlDatabase", "SqlServer", "VirtualMachine", "WebApp")]
+    [ValidateSet("ActionGroup", "AksCluster", "AppInsights", "AppServicePlan", "ContainerRegistry", "KeyVault",
+      "ResourceGroup", "OperationalInsightsWorkspace", "SqlDatabase", "SqlServer", "VirtualMachine", "WebApp")]
     [string]$ResourceType,
 
     [Parameter(Mandatory = $false)]
@@ -81,7 +83,10 @@ function Get-ResourceByType {
         return Confirm-ActionGroup -ActionGroupName $ResourceName -ResourceGroupName $ResourceGroupName
       }
       "AksCluster" {
-        return Confirm-AksCluster -AKSName $ResourceName -ResourceGroupName $0ResourceGroupName
+        return Confirm-AksCluster -AKSName $ResourceName -ResourceGroupName $ResourceGroupName
+      }
+      "AppInsights" {
+        return Confirm-AppInsights -ResourceGroupName $ResourceGroupName -Name $ResourceName
       }
       "AppServicePlan" {
         return Confirm-AppServicePlan -AppServicePlanName $ResourceName -ResourceGroupName $ResourceGroupName
