@@ -41,17 +41,9 @@ function Confirm-VirtualMachine {
     $ConnectResults = Connect-Account
   }
   Process {
-    [ConfirmResult]$Results = $null
-
-    try {
       $Resource = Get-AzVM -ResourceGroupName $ResourceGroupName -Name $VirtualMachineName
 
-      $Results = [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
-    } catch {
-      $ErrorRecord = $_
-      $Results = [ConfirmResult]::new($ErrorRecord, $ConnectResults.AuthenticationData)
-    }
-
-    $Results
+      [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
   }
+  End { }
 }
