@@ -1,5 +1,9 @@
 using module ./../../../Classes/ConfirmResult.psm1
 
+BeforeAll {
+  . $PSScriptRoot/../../../Public/CustomAssertions/BeDeployed.ps1
+}
+
 Describe "ShouldBeDeployed" {
   Context "unit tests" -Tag "Unit" {
     It "Should be deployed with a ConfirmResult object" {

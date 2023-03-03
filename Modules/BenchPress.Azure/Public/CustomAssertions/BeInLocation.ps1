@@ -29,16 +29,19 @@ function ShouldBeInLocation ($ActualValue, [string]$ExpectedValue, [switch] $Neg
     [bool] $succeeded = $false
 
     if ($Negate) { $succeeded = -not $succeeded }
-    $failureMessage = "Confirm result is null or empty."
+    $failureMessage = "ConfirmResult is null or empty."
   }
   else {
-    $resourceLocation = $ActualValue.ResourceDetails.Location
+    # Location needs to be normalized to all lower cases and no spaces
+    $rawResourceLocation = $ActualValue.ResourceDetails.Location.ToLower()
+    $resourceLocation = $rawResourceLocation -replace " ",""
+
     [bool] $succeeded = $resourceLocation -eq $ExpectedValue
     if ($Negate) { $succeeded = -not $succeeded }
 
     if (-not $succeeded) {
       if ($Negate) {
-        $failureMessage = "Resource not in location: This is expected for $ExpectedValue"
+        $failureMessage = "Resource is deployed, incorrectly, in $resourceLocation."
       }
       else {
         $failureMessage = "Resource not in location or there was an error when confirming resource.

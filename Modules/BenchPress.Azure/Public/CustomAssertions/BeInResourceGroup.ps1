@@ -29,16 +29,17 @@ function ShouldBeInResourceGroup ($ActualValue, [string]$ExpectedValue, [switch]
     [bool] $succeeded = $false
 
     if ($Negate) { $succeeded = -not $succeeded }
-    $failureMessage = "Confirm result is null or empty."
+    $failureMessage = "ConfirmResult is null or empty."
   }
   else {
     $resourceGroupName = $ActualValue.ResourceDetails.ResourceGroupName
+
     [bool] $succeeded = $resourceGroupName -eq $ExpectedValue
     if ($Negate) { $succeeded = -not $succeeded }
 
     if (-not $succeeded) {
         if ($Negate) {
-          $failureMessage = "Resource not in resource group. This is expected for $ExpectedValue"
+          $failureMessage = "Resource is deployed, incorrectly, in $resourceGroupName."
         }
         else {
           $failureMessage = "Resource not in resource group or there was an error when confirming resource.

@@ -1,5 +1,9 @@
 using module ./../../../Classes/ConfirmResult.psm1
 
+BeforeAll {
+  . $PSScriptRoot/../../../Public/CustomAssertions/BeInResourceGroup.ps1
+}
+
 Describe "ShouldBeInResourceGroup" {
   Context "unit tests" -Tag "Unit" {
     It "Should be in resource group testrg" {

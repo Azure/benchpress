@@ -29,7 +29,7 @@ function ShouldBeDeployed ($ActualValue, [switch] $Negate, [string] $Because) {
     [bool] $succeeded = $false
 
     if ($Negate) { $succeeded = -not $succeeded }
-    $failureMessage = "Confirm result is null or empty."
+    $failureMessage = "ConfirmResult is null or empty."
   }
   else {
     [bool] $succeeded = $ActualValue.Success
@@ -37,7 +37,7 @@ function ShouldBeDeployed ($ActualValue, [switch] $Negate, [string] $Because) {
 
     if (-not $succeeded) {
       if ($Negate) {
-        $failureMessage = "Resource not available. This was supposed to fail."
+        $failureMessage = "Resource is currently deployed, but should not be."
       }
       else {
         $failureMessage = "Resource not deployed or there was an error when confirming resource."
