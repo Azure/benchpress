@@ -22,6 +22,14 @@ Describe "ShouldBeInLocation" {
       $result | Should -BeInLocation 'westus3'
     }
 
+    It "Should be in location westus3 despite uppercase" {
+      $mockResource = [PSCustomObject]@{
+        Location = ' EAST US '
+      }
+      $result = [ConfirmResult]::new($mockResource, $null)
+      $result | Should -BeInLocation 'eastus'
+    }
+
     It "Should not be in location eastus" {
       $mockResource = [PSCustomObject]@{
         Location = 'westus3'

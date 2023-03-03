@@ -105,7 +105,7 @@ Describe 'Verify Key Vault Key Exists in Resource Group' {
     #arrange
     $kvName = "KVtestBP"
     $kvKeyName = "testkey"
-    
+
     #act
     $result = Confirm-AzBPKeyVaultKey -KeyVaultName $kvName -Name $kvKeyName
 
