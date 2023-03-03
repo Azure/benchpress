@@ -15,12 +15,6 @@ Describe "Confirm-KeyVaultCertificate" {
       Confirm-KeyVaultCertificate -Name "n" -KeyVaultName "kvn"
       Should -Invoke -CommandName "Get-AzKeyVaultCertificate" -Times 1
     }
-
-    It "Sets the ErrorRecord when an exception is thrown" {
-      Mock Get-AzKeyVaultCertificate{ throw [Exception]::new("Exception") }
-      $Results = Confirm-KeyVaultCertificate -Name "n" -KeyVaultName "kvn"
-      $Results.ErrorRecord | Should -Not -Be $null
-    }
   }
 }
 

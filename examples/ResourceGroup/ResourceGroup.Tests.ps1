@@ -5,7 +5,7 @@ BeforeAll {
 Describe 'Verify Resource Group Exists' {
   it 'Should contain a resource group named tflintrules' {
     #arrange
-    $rgName = "tflintrules"
+    $rgName = "rgtest"
 
     #act
     $result = Confirm-AzBPResourceGroup -ResourceGroupName $rgName
@@ -18,7 +18,7 @@ Describe 'Verify Resource Group Exists' {
 Describe 'Verify Resource Group Does Not Exist' {
   it 'Should not contain a resource group named tflintrules' {
     #arrange
-    $rgName = "tflintrules"
+    $rgName = "rgtest"
 
     #act
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
@@ -28,25 +28,5 @@ Describe 'Verify Resource Group Does Not Exist' {
 
     #assert
     $result.Success | Should -Be $false
-  }
-}
-
-Describe 'Spin up , Tear down Resource Group' {
-  it 'Should deploy a bicep file.' {
-    #arrange
-    $resourceGroupName = "rg-test"
-    $bicepPath = "./resourceGroup.bicep"
-    $params = @{
-      name        = $resourceGroupName
-      location    = "westus"
-      environment = "ocwtest"
-    }
-    #act
-    $deployment = Deploy-AzBPBicepFeature -BicepPath $bicepPath -Params $params -ResourceGroupName $resourceGroupName
-    #assert
-    $deployment.ProvisioningState | Should -Be "Succeeded"
-
-    #clean up
-    Remove-AzBPBicepFeature -ResourceGroupName $resourceGroupName
   }
 }

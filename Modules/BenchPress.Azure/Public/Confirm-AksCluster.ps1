@@ -40,18 +40,9 @@ function Confirm-AksCluster {
     $ConnectResults = Connect-Account
   }
   Process {
-    [ConfirmResult]$Results = $null
+    $Resource = Get-AzAksCluster -ResourceGroupName $ResourceGroupName -Name $AksName
 
-    try {
-      $Resource = Get-AzAksCluster -ResourceGroupName $ResourceGroupName -Name $AksName
-
-      $Results = [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
-    } catch {
-      $ErrorRecord = $_
-      $Results = [ConfirmResult]::new($ErrorRecord, $ConnectResults.AuthenticationData)
-    }
-
-    $Results
+    [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
   }
   End { }
 }

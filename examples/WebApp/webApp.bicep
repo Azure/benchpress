@@ -1,7 +1,7 @@
 
 param location string = resourceGroup().location
-param appserviceplanName string = 'appservicetest1'
-param webappName string = 'azbpwebapptest1'
+param appserviceplanName string = 'asp${take(uniqueString(resourceGroup().id), 5)}'
+param webappName string = 'webapp${take(uniqueString(resourceGroup().id), 5)}'
 
 resource appserviceplan 'Microsoft.Web/serverfarms@2022-03-01' = {
   name: appserviceplanName

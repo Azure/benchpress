@@ -40,18 +40,9 @@ function Confirm-ActionGroup {
     $ConnectResults = Connect-Account
   }
   Process {
-    [ConfirmResult]$Results = $null
+    $Resource = Get-AzActionGroup -ResourceGroupName $ResourceGroupName -Name $ActionGroupName
 
-    try {
-      $Resource = Get-AzActionGroup -ResourceGroupName $ResourceGroupName -Name $ActionGroupName
-
-      $Results = [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
-    } catch {
-      $ErrorRecord = $_
-      $Results = [ConfirmResult]::new($ErrorRecord, $ConnectResults.AuthenticationData)
-    }
-
-    $Results
+    [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
   }
   End { }
 }

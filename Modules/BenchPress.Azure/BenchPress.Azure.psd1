@@ -47,6 +47,9 @@
       ReleaseNotes = ""
       Prerelease = ""
       RequireLicenseAcceptance = $false
+      ExternalModuleDependencies = @(
+        "Az"
+      )
     }
   }
   HelpInfoURI = "https://github.com/Azure/benchpress/"

@@ -1,4 +1,4 @@
-param vmName string = 'simpleLinuxVM1'
+param vmName string = 'vm${take(uniqueString(resourceGroup().id), 5)}'
 param adminUsername string = 'adminUserName'
 param authenticationType string = 'password'
 

@@ -1,5 +1,5 @@
-param actionGroupName string = 'sample action group'
-param location string = resourceGroup().location
+param actionGroupName string = 'ag${take(uniqueString(resourceGroup().id), 5)}'
+param location string = 'global'
 
 var actionGroupEmail = 'sampleactiongroup@contoso.com'
 

@@ -3,10 +3,9 @@ using module ./AuthenticationData.psm1
 # end INLINE_SKIP
 
 class ConfirmResult {
-  [boolean]$Success
+  [boolean]$Success = $false
   [System.Object]$ResourceDetails
   [AuthenticationData]$AuthenticationData
-  [System.Management.Automation.ErrorRecord]$ErrorRecord
 
   ConfirmResult([System.Object]$Resource, [AuthenticationData]$AuthenticationData) {
     $this.Success = -not $null -eq $Resource
@@ -14,9 +13,7 @@ class ConfirmResult {
     $this.AuthenticationData = $AuthenticationData
   }
 
-  ConfirmResult([System.Management.Automation.ErrorRecord]$ErrorRecord, [AuthenticationData]$AuthenticationData) {
-    $this.Success = $false
-    $this.ErrorRecord = $ErrorRecord
+  ConfirmResult([AuthenticationData]$AuthenticationData) {
     $this.AuthenticationData = $AuthenticationData
   }
 }

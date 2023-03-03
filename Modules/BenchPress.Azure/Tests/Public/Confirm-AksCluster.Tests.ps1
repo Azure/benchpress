@@ -15,12 +15,6 @@ Describe "Confirm-AksCluster" {
       Confirm-AksCluster -AksName "acn" -ResourceGroupName "rgn"
       Should -Invoke  -CommandName "Get-AzAksCluster" -Times 1
     }
-
-    It "Sets the ErrorRecord when an exception is thrown" {
-      Mock Get-AzAksCluster{ throw [Exception]::new("Exception") }
-      $Results = Confirm-AksCluster -AksName "acn" -ResourceGroupName "rgn"
-      $Results.ErrorRecord | Should -Not -Be $null
-    }
   }
 }
 

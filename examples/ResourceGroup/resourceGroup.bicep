@@ -1,16 +1,12 @@
 targetScope = 'subscription'
 
-param name string
-param location string
-param environment string
+param name string = 'rg${take(uniqueString(subscription().id), 5)}'
+param location string = deployment().location
 
 // https://docs.microsoft.com/en-us/azure/templates/microsoft.resources/resourcegroups?tabs=bicep
 resource resourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   name: name
   location: location
-  tags: {
-    EnvironmentName: environment
-  }
 }
 
 output name string = resourceGroup.name

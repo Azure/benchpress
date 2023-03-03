@@ -38,13 +38,16 @@ function Get-Resource {
     [Parameter(Mandatory = $false)]
     [string]$ResourceGroupName
   )
-
-  Connect-Account
-
-  if ([string]::IsNullOrEmpty($ResourceGroupName)) {
-    return Get-AzResource -Name "${ResourceName}"
+  Begin {
+    Connect-Account
   }
-  else {
-    return Get-AzResource -Name "${ResourceName}" -ResourceGroupName "${ResourceGroupName}"
+  Process {
+    if ([string]::IsNullOrEmpty($ResourceGroupName)) {
+      return Get-AzResource -Name $ResourceName
+    }
+    else {
+      return Get-AzResource -Name $ResourceName -ResourceGroupName $ResourceGroupName
+    }
   }
+  End { }
 }
