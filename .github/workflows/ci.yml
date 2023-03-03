@@ -80,11 +80,6 @@ jobs:
         with:
           name: benchpress-gallery-module
           path: ./BenchPress.Azure
-      - name: Install Platyps
-        shell: pwsh
-        run: |
-          Install-Module -Name platyPS -Scope CurrentUser -Force
-          Import-Module platyPS
       - name: Create and checkout new docs branch
         run: |
           git config --global user.name "github-actions[bot]"
@@ -93,6 +88,8 @@ jobs:
       - name: Generate docs
         shell: pwsh
         run: |
+          Install-Module -Name platyPS -Scope CurrentUser -Force
+          Import-Module platyPS
           Install-Module -Name Az -Scope CurrentUser -Repository PSGallery -Force
           Import-Module ./BenchPress.Azure/BenchPress.Azure.psd1
           New-MarkdownHelp -Module BenchPress.Azure -OutputFolder ./docs
