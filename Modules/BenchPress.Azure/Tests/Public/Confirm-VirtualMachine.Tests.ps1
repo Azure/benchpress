@@ -15,12 +15,6 @@ Describe "Confirm-VirtualMachine" {
       Confirm-VirtualMachine -VirtualMachineName "vmn" -ResourceGroupName "rgn"
       Should -Invoke -CommandName "Get-AzVM" -Times 1
     }
-
-    It "Sets the ErrorRecord when an exception is thrown" {
-      Mock Get-AzVM{ throw [Exception]::new("Exception") }
-      $Results = Confirm-VirtualMachine -VirtualMachineName "vmn" -ResourceGroupName "rgn"
-      $Results.ErrorRecord | Should -Not -Be $null
-    }
   }
 }
 

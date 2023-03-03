@@ -15,12 +15,6 @@ Describe "Confirm-ContainerRegistry" {
       Confirm-ContainerRegistry -Name "cr" -ResourceGroupName "rgn"
       Should -Invoke -CommandName "Get-AzContainerRegistry" -Times 1
     }
-
-    It "Sets the ErrorRecord when an exception is thrown" {
-      Mock Get-AzContainerRegistry{ throw [Exception]::new("Exception") }
-      $Results = Confirm-ContainerRegistry -Name "cr" -ResourceGroupName "rgn"
-      $Results.ErrorRecord | Should -Not -Be $null
-    }
   }
 }
 

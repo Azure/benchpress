@@ -41,18 +41,9 @@ function Confirm-KeyVaultKey {
     $ConnectResults = Connect-Account
   }
   Process {
-    [ConfirmResult]$Results = $null
+    $Resource = Get-AzKeyVaultKey -Name $Name -VaultName $KeyVaultName
 
-    try {
-      $Resource = Get-AzKeyVaultKey -Name $Name -VaultName $KeyVaultName
-
-      $Results = [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
-    } catch {
-      $ErrorRecord = $_
-      $Results = [ConfirmResult]::new($ErrorRecord, $ConnectResults.AuthenticationData)
-    }
-
-    $Results
+    [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
   }
   End { }
 }

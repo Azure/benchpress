@@ -9,7 +9,7 @@ function Confirm-BicepFile {
 
     .DESCRIPTION
       Confirm-AzBPBicepFile executes `bicep build` and returns an object that has an array field Errors. Each element
-      ofthis array is an object that contains the bicep file path that had errors and a collection of
+      of this array is an object that contains the bicep file path that had errors and a collection of
       System.Object.ErrorRecord that correspond to the file at that path:
 
       {Errors: [
@@ -118,6 +118,6 @@ function Confirm-BicepFile {
     }
   }
   End {
-    return $out
+    $out
   }
 }

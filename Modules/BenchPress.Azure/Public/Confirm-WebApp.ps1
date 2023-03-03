@@ -41,17 +41,9 @@ function Confirm-WebApp {
     $ConnectResults = Connect-Account
   }
   Process {
-    [ConfirmResult]$Results = $null
-
-    try {
       $Resource = Get-AzWebApp -ResourceGroupName $ResourceGroupName -Name $WebAppName
 
-      $Results = [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
-    } catch {
-      $ErrorRecord = $_
-      $Results = [ConfirmResult]::new($ErrorRecord, $ConnectResults.AuthenticationData)
-    }
-
-    $Results
+      [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
   }
+  End { }
 }

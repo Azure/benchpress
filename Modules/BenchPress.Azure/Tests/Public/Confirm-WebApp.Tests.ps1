@@ -15,12 +15,6 @@ Describe "Confirm-WebApp" {
       Confirm-WebApp -WebAppName "wan" -ResourceGroupName "rgn"
       Should -Invoke -CommandName "Get-AzWebApp" -Times 1
     }
-
-    It "Sets the ErrorRecord when an exception is thrown" {
-      Mock Get-AzWebApp{ throw [Exception]::new("Exception") }
-      $Results = Confirm-WebApp -WebAppName "wan" -ResourceGroupName "rgn"
-      $Results.ErrorRecord | Should -Not -Be $null
-    }
   }
 }
 

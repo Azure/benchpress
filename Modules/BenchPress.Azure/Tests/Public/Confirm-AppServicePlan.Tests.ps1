@@ -16,12 +16,6 @@ Describe "Confirm-AppServicePlan" {
       Confirm-AppServicePlan -AppServicePlanName "aspn" -ResourceGroupName "rgn"
       Should -Invoke -CommandName "Get-AzAppServicePlan" -Times 1
     }
-
-    It "Sets the ErrorRecord when an exception is thrown" {
-      Mock Get-AzAppServicePlan{ throw [Exception]::new("Exception") }
-      $Results = Confirm-AppServicePlan -AppServicePlanName "aspn" -ResourceGroupName "rgn"
-      $Results.ErrorRecord | Should -Not -Be $null
-    }
   }
 }
 
