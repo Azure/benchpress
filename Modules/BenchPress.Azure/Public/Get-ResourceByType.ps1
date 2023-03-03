@@ -70,7 +70,7 @@ function Get-ResourceByType {
 
     [Parameter(Mandatory = $true)]
     [ValidateSet("ActionGroup", "AksCluster", "AppInsights", "AppServicePlan", "ContainerRegistry", "KeyVault",
-      "ResourceGroup", "OperationalInsightsWorkspace", "SqlDatabase", "SqlServer", "VirtualMachine", "WebApp")]
+      "OperationalInsightsWorkspace", "ResourceGroup", "SqlDatabase", "SqlServer", "VirtualMachine", "WebApp")]
     [string]$ResourceType,
 
     [Parameter(Mandatory = $false)]
