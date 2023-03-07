@@ -24,6 +24,7 @@
     "Confirm-KeyVaultCertificate",
     "Confirm-KeyVaultKey",
     "Confirm-KeyVaultSecret",
+    "Confirm-OperationalInsightsWorkspace",
     "Confirm-Resource",
     "Confirm-ResourceGroup",
     "Confirm-SqlDatabase",
@@ -37,7 +38,10 @@
     "Get-Resource",
     "Get-ResourceByType",
     "Invoke-AzCli",
-    "Remove-BicepFeature"
+    "Remove-BicepFeature",
+    "ShouldBeDeployed",
+    "ShouldBeInLocation",
+    "ShouldBeInResourceGroup"
   )
   PrivateData = @{
     PSData = @{
