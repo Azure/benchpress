@@ -89,9 +89,7 @@ jobs:
         shell: pwsh
         run: |
           Install-Module -Name platyPS -Scope CurrentUser -Force
-          Import-Module platyPS
-          Install-Module -Name Az -Scope CurrentUser -Repository PSGallery -Force
-          Import-Module ./BenchPress.Azure/BenchPress.Azure.psd1
+          Import-Module platyPS -Force
           New-MarkdownHelp -Module BenchPress.Azure -OutputFolder ./docs
       - name: If there are changes push the branch
         run: |
