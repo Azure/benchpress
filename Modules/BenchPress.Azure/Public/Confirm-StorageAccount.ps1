@@ -32,7 +32,7 @@ function Confirm-StorageAccount {
   [OutputType([ConfirmResult])]
   param (
     [Parameter(Mandatory=$true)]
-    [string]$ServerName,
+    [string]$Name,
 
     [Parameter(Mandatory=$true)]
     [string]$ResourceGroupName
