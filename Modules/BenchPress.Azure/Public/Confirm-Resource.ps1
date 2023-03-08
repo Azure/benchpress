@@ -80,7 +80,8 @@ function Confirm-Resource {
   param (
     [Parameter(Mandatory = $true)]
     [ValidateSet("ActionGroup", "AksCluster", "AppInsights", "AppServicePlan", "ContainerRegistry", "KeyVault",
-      "ResourceGroup", "SqlDatabase", "SqlServer", "StorageAccount", "VirtualMachine", "WebApp")]
+    "OperationalInsightsWorkspace", "ResourceGroup", "SqlDatabase", "SqlServer",
+    "StorageAccount", "VirtualMachine", "WebApp")]
     [string]$ResourceType,
 
     [Parameter(Mandatory = $true)]
