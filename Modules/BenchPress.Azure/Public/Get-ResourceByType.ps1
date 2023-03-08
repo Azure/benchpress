@@ -84,7 +84,7 @@ function Get-ResourceByType {
     [string]$ServerName,
 
     [Parameter(Mandatory = $false)]
-    [string]$SynapseWorkspaceName
+    [string]$WorkspaceName
   )
   Begin { }
   Process {
@@ -127,7 +127,7 @@ function Get-ResourceByType {
       "SynapseSparkPool" {
         $params = @{
           SynapseSparkPoolName = $ResourceName
-          SynapseWorkspaceName = $SynapseWorkspaceName
+          SynapseWorkspaceName = $WorkspaceName
           ResourceGroupName    = $ResourceGroupName
         }
         return Confirm-SynapseSparkPool @params
@@ -135,7 +135,7 @@ function Get-ResourceByType {
       "SynapseSqlPool" {
         $params = @{
           SynapseSqlPoolName   = $ResourceName
-          SynapseWorkspaceName = $SynapseWorkspaceName
+          SynapseWorkspaceName = $WorkspaceName
           ResourceGroupName    = $ResourceGroupName
         }
         return Confirm-SynapseSqlPool @params

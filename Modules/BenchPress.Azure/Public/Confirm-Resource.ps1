@@ -82,8 +82,8 @@ function Confirm-Resource {
   param (
     [Parameter(Mandatory = $true)]
     [ValidateSet("ActionGroup", "AksCluster", "AppInsights", "AppServicePlan", "ContainerRegistry", "KeyVault",
-    "OperationalInsightsWorkspace", "ResourceGroup", "SqlDatabase", "SqlServer", "SynapseSparkPool", "SynapseSqlPool",
-    "SynapseWorkspace", "VirtualMachine", "WebApp")]
+      "OperationalInsightsWorkspace", "ResourceGroup", "SqlDatabase", "SqlServer", "SynapseSparkPool", "SynapseSqlPool",
+      "SynapseWorkspace", "VirtualMachine", "WebApp")]
     [string]$ResourceType,
 
     [Parameter(Mandatory = $true)]
@@ -96,7 +96,7 @@ function Confirm-Resource {
     [string]$ServerName,
 
     [Parameter(Mandatory = $false)]
-    [string]$SynapseWorkspaceName,
+    [string]$WorkspaceName,
 
     [Parameter(Mandatory = $false)]
     [string]$PropertyKey,
@@ -107,11 +107,11 @@ function Confirm-Resource {
   Begin { }
   Process {
     $ResourceParams = @{
-      ResourceGroupName    = $ResourceGroupName
-      ResourceName         = $ResourceName
-      ResourceType         = $ResourceType
-      ServerName           = $ServerName
-      SynapseWorkspaceName = $SynapseWorkspaceName
+      ResourceGroupName = $ResourceGroupName
+      ResourceName      = $ResourceName
+      ResourceType      = $ResourceType
+      ServerName        = $ServerName
+      WorkspaceName     = $WorkspaceName
     }
 
     $ConfirmResult = Get-ResourceByType @ResourceParams
@@ -119,8 +119,7 @@ function Confirm-Resource {
     if ($null -eq $ConfirmResult) {
       Write-Error "Resource not found" -Category InvalidResult -ErrorId "InvalidResource"
       $ConfirmResult = [ConfirmResult]::new($null)
-    }
-    elseif ($ConfirmResult.Success -and -not [string]::IsNullOrWhiteSpace($PropertyKey)) {
+    } elseif ($ConfirmResult.Success -and -not [string]::IsNullOrWhiteSpace($PropertyKey)) {
       $ActualValue = $ConfirmResult.ResourceDetails
 
       # Split property path on open and close square brackets and periods. Remove empty items from array.
@@ -130,12 +129,10 @@ function Confirm-Resource {
           # If key is a numerical value, index into array
           if ($Key -match "^\d+$") {
             $ActualValue = $ActualValue[$Key]
-          }
-          else {
+          } else {
             $ActualValue = $ActualValue.$Key
           }
-        }
-        catch {
+        } catch {
           $thrownError = $_
           $ConfirmResult = [ConfirmResult]::new($null)
           Write-Error $thrownError
@@ -154,8 +151,7 @@ function Confirm-Resource {
           }
 
           Write-Error @errorParams
-        }
-        else {
+        } else {
           $errorParams = @{
             Message  = "The value provided: ${$PropertyValue}, does not match the actual value: ${ActualValue} for " +
             "property key: ${$PropertyKey}"
