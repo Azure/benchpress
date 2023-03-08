@@ -30,12 +30,10 @@ function ShouldBeInResourceGroup ($ActualValue, [string]$ExpectedValue, [switch]
 
     if ($Negate) { $succeeded = -not $succeeded }
     $failureMessage = "ConfirmResult is null or empty."
-  }
-  else {
+  } else {
     if ($ActualValue.ResourceDetails.ResourceGroupName){
       $resourceGroupName = $ActualValue.ResourceDetails.ResourceGroupName
-    }
-    elseif ($ActualValue.ResourceDetails.ResourceGroup){
+    } elseif ($ActualValue.ResourceDetails.ResourceGroup){
       $resourceGroupName = $ActualValue.ResourceDetails.ResourceGroup
     }
 
@@ -44,25 +42,22 @@ function ShouldBeInResourceGroup ($ActualValue, [string]$ExpectedValue, [switch]
       [bool] $succeeded = $false
 
       if ($Negate) { $succeeded = -not $succeeded }
-      $failureMessage = "Resource does not have a resource group property."
+      $failureMessage = "Resource does not have a resource group property. It is null or empty."
+    } else {
+        [bool] $succeeded = $resourceGroupName -eq $ExpectedValue
+        if ($Negate) { $succeeded = -not $succeeded }
+
+        if (-not $succeeded) {
+            if ($Negate) {
+              $failureMessage = "Resource is deployed, incorrectly, in $resourceGroupName."
+            } else {
+              $failureMessage = "Resource not in resource group or there was an error when confirming resource.
+              Expected $ExpectedValue but got $resourceGroupName."
+              if ($Because) { $failureMessage = "Resource not in resource group. This failed $Because." }
+            }
+        }
     }
-
-    else {
-      [bool] $succeeded = $resourceGroupName -eq $ExpectedValue
-      if ($Negate) { $succeeded = -not $succeeded }
-
-      if (-not $succeeded) {
-          if ($Negate) {
-            $failureMessage = "Resource is deployed, incorrectly, in $resourceGroupName."
-          }
-          else {
-            $failureMessage = "Resource not in resource group or there was an error when confirming resource.
-            Expected $ExpectedValue but got $resourceGroupName."
-            if ($Because) { $failureMessage = "Resource not in resource group. This failed $Because." }
-          }
-      }
-   }
-}
+  }
 
   return [pscustomobject]@{
       Succeeded      = $succeeded

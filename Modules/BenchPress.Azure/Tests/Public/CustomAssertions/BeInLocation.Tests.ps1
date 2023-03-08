@@ -49,5 +49,13 @@ Describe "ShouldBeInLocation" {
     It "Should be false if ConfirmResult is null" {
       $null | Should -Not -BeInLocation 'eastus'
     }
+
+    It "Should fail if location empty" {
+      $mockResource = [PSCustomObject]@{
+        Location = ''
+      }
+      $result = [ConfirmResult]::new($mockResource, $null)
+      $result | Should -Not -BeInLocation 'eastus'
+    }
   }
 }

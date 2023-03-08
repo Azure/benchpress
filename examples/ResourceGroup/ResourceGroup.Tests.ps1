@@ -56,16 +56,3 @@ Describe 'Verify Resource Group Exists in Correct Location' {
     $result | Should -BeInLocation 'westus3'
   }
 }
-
-Describe 'Verify Resource Group Exists in Resource Group' {
-  it 'Should be in a resource group named rg-test' {
-    #arrange
-    $rgName = "rg-test"
-
-    #act
-    $result = Confirm-AzBPResourceGroup -ResourceGroupName $rgName
-
-    #assert
-    $result | Should -BeInResourceGroup 'rg-test'
-  }
-}

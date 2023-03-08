@@ -22,6 +22,6 @@ required environment variables.
 ## Troubleshooting
 
 If the common assertions are failing because of duplicate imports, you might have to run
-`remove-Module -Name Pester -Force` first.
+`Remove-Module -Name Pester -Force` first.
 
 Then re-import the project.

@@ -33,5 +33,13 @@ Describe "ShouldBeInResourceGroup" {
     It "Should be false if ConfirmResult is null" {
       $null | Should -Not -BeInResourceGroup 'testrg'
     }
+
+    It "Should be false if ResourceGroupName property is empty" {
+      $mockResource = [PSCustomObject]@{
+        ResourceGroupName = ''
+      }
+      $result = [ConfirmResult]::new($mockResource, $null)
+      $result | Should -Not -BeInResourceGroup 'fakerg'
+    }
   }
 }
