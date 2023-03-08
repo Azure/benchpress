@@ -18,3 +18,10 @@ examples.
 Gallery or from a local copy.
 1. Follow the Setting Up section in the [getting started guide](../docs/getting_started.md) to configure the
 required environment variables.
+
+## Troubleshooting
+
+If the common assertions are failing because of duplicate imports, you might have to run
+`remove-Module -Name Pester -Force` first.
+
+Then re-import the project.
