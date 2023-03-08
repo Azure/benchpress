@@ -9,9 +9,6 @@
   CompanyName = "Microsoft"
   Copyright = "(c) Microsoft. All rights reserved."
   Description = "Benchpress Test Framework for Azure Deployment Scenarios"
-  RequiredModules = @(
-    "Az"
-  )
   NestedModules = @()
   FunctionsToExport = @(
     "Confirm-ActionGroup",
@@ -49,9 +46,6 @@
       ReleaseNotes = ""
       Prerelease = ""
       RequireLicenseAcceptance = $false
-      ExternalModuleDependencies = @(
-        "Az"
-      )
     }
   }
   HelpInfoURI = "https://github.com/Azure/benchpress/"
