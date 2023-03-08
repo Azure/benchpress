@@ -9,10 +9,6 @@ and cmdlet.
 
 ## Steps
 
-1. Follow the [installation guide](../../docs/installation.md) to install `Az-InfrastructureTest` from the PowerShell
-Gallery or from a local copy.
-1. Follow the Setting Up section in the [getting started guide](../../docs/getting_started.md) to configure the
-required environment variables.
 1. Navigate to Synapse directory:
 
    ```Powershell
@@ -31,6 +27,7 @@ required environment variables.
 1. Update `Synapse.Tests.ps1` variables to point to your expected resources:
 
    - `rg-test` -> `your-resource-group-name`
+   - `westus3` -> `your-synapse-location`
    - `samplesynws` -> `your-synapse-workspace-name`
    - `samplespark` -> `your-spark-pool-name`
    - `samplesql` -> `your-sql-pool-name`
