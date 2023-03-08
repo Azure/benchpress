@@ -76,8 +76,8 @@ function Get-ResourceByType {
 
     [Parameter(Mandatory = $true)]
     [ValidateSet("ActionGroup", "AksCluster", "AppInsights", "AppServicePlan", "ContainerRegistry", "KeyVault",
-    "OperationalInsightsWorkspace", "ResourceGroup", "SqlDatabase", "SqlServer", "SynapseSparkPool", "SynapseSqlPool",
-    "SynapseWorkspace", "VirtualMachine", "WebApp")]
+      "OperationalInsightsWorkspace", "ResourceGroup", "SqlDatabase", "SqlServer", "SynapseSparkPool", "SynapseSqlPool",
+      "SynapseWorkspace", "VirtualMachine", "WebApp")]
     [string]$ResourceType,
 
     [Parameter(Mandatory = $false)]
@@ -127,16 +127,16 @@ function Get-ResourceByType {
       "SynapseSparkPool" {
         $params = @{
           SynapseSparkPoolName = $ResourceName
-          WorkspaceName = $WorkspaceName
+          WorkspaceName        = $WorkspaceName
           ResourceGroupName    = $ResourceGroupName
         }
         return Confirm-SynapseSparkPool @params
       }
       "SynapseSqlPool" {
         $params = @{
-          SynapseSqlPoolName   = $ResourceName
-          WorkspaceName = $WorkspaceName
-          ResourceGroupName    = $ResourceGroupName
+          SynapseSqlPoolName = $ResourceName
+          WorkspaceName      = $WorkspaceName
+          ResourceGroupName  = $ResourceGroupName
         }
         return Confirm-SynapseSqlPool @params
       }
