@@ -10,6 +10,7 @@ using module ./../Classes/ConfirmResult.psm1
 . $PSScriptRoot/Confirm-ResourceGroup.ps1
 . $PSScriptRoot/Confirm-SqlDatabase.ps1
 . $PSScriptRoot/Confirm-SqlServer.ps1
+. $PSScriptRoot/Confirm-StorageAccount.ps1
 . $PSScriptRoot/Confirm-VirtualMachine.ps1
 . $PSScriptRoot/Confirm-WebApp.ps1
 # end INLINE_SKIP
@@ -40,6 +41,7 @@ function Get-ResourceByType {
       ResourceGroup
       SqlDatabase
       SqlServer
+      StorageAccount
       VirtualMachine
       WebApp)
 
@@ -69,7 +71,7 @@ function Get-ResourceByType {
 
     [Parameter(Mandatory = $true)]
     [ValidateSet("ActionGroup", "AksCluster", "AppInsights", "AppServicePlan", "ContainerRegistry", "KeyVault",
-      "ResourceGroup", "SqlDatabase", "SqlServer", "VirtualMachine", "WebApp")]
+      "ResourceGroup", "SqlDatabase", "SqlServer", "StorageAccount", "VirtualMachine", "WebApp")]
     [string]$ResourceType,
 
     [Parameter(Mandatory = $false)]
@@ -109,6 +111,9 @@ function Get-ResourceByType {
       }
       "SqlServer" {
         return Confirm-SqlServer -ServerName $ResourceName -ResourceGroupName $ResourceGroupName
+      }
+      "StorageAccount" {
+        return Confirm-StorageAccount -Name $ResourceName -ResourceGroupName $ResourceGroupName
       }
       "VirtualMachine" {
         return Confirm-VirtualMachine -VirtualMachineName $ResourceName -ResourceGroupName $ResourceGroupName
