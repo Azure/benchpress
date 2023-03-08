@@ -25,16 +25,18 @@ function ShouldBeInResourceGroup ($ActualValue, [string]$ExpectedValue, [switch]
     .OUTPUTS
       PSCustomObject
   #>
+  $rgProperty = 'ResourceGroup'
+  $rgNameProperty = 'ResourceGroupName'
   if ($null -eq $ActualValue){
     [bool] $succeeded = $false
 
     if ($Negate) { $succeeded = -not $succeeded }
     $failureMessage = "ConfirmResult is null or empty."
   } else {
-    if ($ActualValue.ResourceDetails.ResourceGroupName){
-      $resourceGroupName = $ActualValue.ResourceDetails.ResourceGroupName
-    } elseif ($ActualValue.ResourceDetails.ResourceGroup){
+    if ([bool]$ActualValue.ResourceDetails.PSObject.Properties[$rgProperty]){
       $resourceGroupName = $ActualValue.ResourceDetails.ResourceGroup
+    } elseif ([bool]$ActualValue.ResourceDetails.PSObject.Properties[$rgNameProperty]){
+      $resourceGroupName = $ActualValue.ResourceDetails.ResourceGroupName
     }
 
     # Some resources don't have a resource group property
