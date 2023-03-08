@@ -33,6 +33,7 @@ function Confirm-Resource {
       ResourceGroup
       SqlDatabase
       SqlServer
+      StorageAccount
       SynapseSparkPool
       SynapseSqlPool
       SynapseWorkspace
@@ -82,8 +83,8 @@ function Confirm-Resource {
   param (
     [Parameter(Mandatory = $true)]
     [ValidateSet("ActionGroup", "AksCluster", "AppInsights", "AppServicePlan", "ContainerRegistry", "KeyVault",
-      "OperationalInsightsWorkspace", "ResourceGroup", "SqlDatabase", "SqlServer", "SynapseSparkPool", "SynapseSqlPool",
-      "SynapseWorkspace", "VirtualMachine", "WebApp")]
+      "OperationalInsightsWorkspace", "ResourceGroup", "SqlDatabase", "SqlServer", "StorageAccount",
+      "SynapseSparkPool", "SynapseSqlPool", "SynapseWorkspace", "VirtualMachine", "WebApp")]
     [string]$ResourceType,
 
     [Parameter(Mandatory = $true)]

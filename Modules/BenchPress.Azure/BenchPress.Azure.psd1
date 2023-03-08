@@ -9,9 +9,6 @@
   CompanyName = "Microsoft"
   Copyright = "(c) Microsoft. All rights reserved."
   Description = "Benchpress Test Framework for Azure Deployment Scenarios"
-  RequiredModules = @(
-    "Az"
-  )
   NestedModules = @()
   FunctionsToExport = @(
     "Confirm-ActionGroup",
@@ -29,6 +26,7 @@
     "Confirm-ResourceGroup",
     "Confirm-SqlDatabase",
     "Confirm-SqlServer",
+    "Confirm-StorageAccount",
     "Confirm-SynapseSparkPool",
     "Confirm-SynapseSqlPool",
     "Confirm-SynapseWorkspace",
@@ -45,16 +43,13 @@
   )
   PrivateData = @{
     PSData = @{
-      Tags = @("Azure", "BenchPress", "Bicep", "ARM", "Test", "ActionGroup", "AKS", "AksCluster", "ContainerRegistry", "KeyVault", "ResourceGroup", "ServicePlan", "SqlDatabase", "SqlServer", "VirtualMachine", "WebApp")
+      Tags = @("Azure", "BenchPress", "Bicep", "ARM", "Test", "ActionGroup", "AKS", "AksCluster", "ContainerRegistry", "KeyVault", "ResourceGroup", "ServicePlan", "SqlDatabase", "SqlServer", "StorageAccount", "VirtualMachine", "WebApp")
       LicenseUri = ""
       ProjectUri = "https://github.com/Azure/benchpress/"
       IconUri = ""
       ReleaseNotes = ""
       Prerelease = ""
       RequireLicenseAcceptance = $false
-      ExternalModuleDependencies = @(
-        "Az"
-      )
     }
   }
   HelpInfoURI = "https://github.com/Azure/benchpress/"

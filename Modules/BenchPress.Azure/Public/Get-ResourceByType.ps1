@@ -11,6 +11,7 @@ using module ./../Classes/ConfirmResult.psm1
 . $PSScriptRoot/Confirm-ResourceGroup.ps1
 . $PSScriptRoot/Confirm-SqlDatabase.ps1
 . $PSScriptRoot/Confirm-SqlServer.ps1
+. $PSScriptRoot/Confirm-StorageAccount.ps1
 . $PSScriptRoot/Confirm-SynapseSparkPool.ps1
 . $PSScriptRoot/Confirm-SynapseSqlPool.ps1
 . $PSScriptRoot/Confirm-SynapseWorkspace.ps1
@@ -44,6 +45,7 @@ function Get-ResourceByType {
       ResourceGroup
       SqlDatabase
       SqlServer
+      StorageAccount
       SynapseSparkPool
       SynapseSqlPool
       SynapseWorkspace
@@ -76,8 +78,8 @@ function Get-ResourceByType {
 
     [Parameter(Mandatory = $true)]
     [ValidateSet("ActionGroup", "AksCluster", "AppInsights", "AppServicePlan", "ContainerRegistry", "KeyVault",
-      "OperationalInsightsWorkspace", "ResourceGroup", "SqlDatabase", "SqlServer", "SynapseSparkPool", "SynapseSqlPool",
-      "SynapseWorkspace", "VirtualMachine", "WebApp")]
+    "OperationalInsightsWorkspace", "ResourceGroup", "SqlDatabase", "SqlServer", "StorageAccount",
+    "SynapseSparkPool", "SynapseSqlPool", "SynapseWorkspace", "VirtualMachine", "WebApp")]
     [string]$ResourceType,
 
     [Parameter(Mandatory = $false)]
@@ -123,6 +125,9 @@ function Get-ResourceByType {
       }
       "SqlServer" {
         return Confirm-SqlServer -ServerName $ResourceName -ResourceGroupName $ResourceGroupName
+      }
+      "StorageAccount" {
+        return Confirm-StorageAccount -Name $ResourceName -ResourceGroupName $ResourceGroupName
       }
       "SynapseSparkPool" {
         $params = @{
