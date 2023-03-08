@@ -9,7 +9,7 @@ Describe 'Verify Synapse' {
     $workspaceName = 'samplesynws'
 
     #act
-    $result = Confirm-AzBPSynapseWorkspace -ResourceGroupName $rgName -SynapseWorkspaceName $workspaceName
+    $result = Confirm-AzBPSynapseWorkspace -ResourceGroupName $rgName -WorkspaceName $workspaceName
 
     #assert
     $result.Success | Should -Be $true
@@ -19,7 +19,7 @@ Describe 'Verify Synapse' {
     #arrange
     $params = @{
       ResourceGroupName    = 'rg-test'
-      SynapseWorkspaceName = 'samplesynws'
+      WorkspaceName        = 'samplesynws'
       SynapseSparkPoolName = 'samplespark'
     }
 
@@ -33,9 +33,9 @@ Describe 'Verify Synapse' {
   it 'Should contain a synapse workspace with a sql pool named samplesql' {
     #arrange
     $params = @{
-      ResourceGroupName    = 'rg-test'
-      SynapseWorkspaceName = 'samplesynws'
-      SynapseSqlPoolName   = 'samplesql'
+      ResourceGroupName  = 'rg-test'
+      WorkspaceName      = 'samplesynws'
+      SynapseSqlPoolName = 'samplesql'
     }
 
     #act
@@ -54,7 +54,7 @@ Describe 'Verify Synapse' {
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
-    $result = Confirm-AzBPSynapseWorkspace -ResourceGroupName $rgName -SynapseWorkspaceName $workspaceName `
+    $result = Confirm-AzBPSynapseWorkspace -ResourceGroupName $rgName -WorkspaceName $workspaceName `
       -ErrorAction SilentlyContinue
 
     #assert

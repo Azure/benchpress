@@ -12,7 +12,7 @@ Describe "Confirm-SynapseSqlPool" {
 
     It "Calls Get-AzSynapseSqlPool" {
       Mock Get-AzSynapseSqlPool{}
-      Confirm-SynapseSqlPool -SynapseSqlPoolName "sql" -SynapseWorkspaceName "syn" -ResourceGroupName "rgn"
+      Confirm-SynapseSqlPool -SynapseSqlPoolName "sql" -WorkspaceName "syn" -ResourceGroupName "rgn"
       Should -Invoke -CommandName "Get-AzSynapseSqlPool" -Times 1
     }
   }

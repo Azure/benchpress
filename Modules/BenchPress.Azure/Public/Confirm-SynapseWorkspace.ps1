@@ -13,14 +13,14 @@ function Confirm-SynapseWorkspace {
       The Confirm-AzBPSynapseWorkspace cmdlet gets a synapse workspace using the specified Synapse Workspace and
       Resource Group name.
 
-    .PARAMETER SynapseWorkspaceName
+    .PARAMETER WorkspaceName
       The name of the Synapse Workspace
 
     .PARAMETER ResourceGroupName
       The name of the Resource Group
 
     .EXAMPLE
-      Confirm-AzBPSynapseWorkspace -SynapseWorkspaceName "benchpresstest" -ResourceGroupName "rgbenchpresstest"
+      Confirm-AzBPSynapseWorkspace -WorkspaceName "benchpresstest" -ResourceGroupName "rgbenchpresstest"
 
     .INPUTS
       System.String
@@ -32,7 +32,7 @@ function Confirm-SynapseWorkspace {
   [OutputType([ConfirmResult])]
   param (
     [Parameter(Mandatory=$true)]
-    [string]$SynapseWorkspaceName,
+    [string]$WorkspaceName,
 
     [Parameter(Mandatory=$true)]
     [string]$ResourceGroupName
@@ -41,7 +41,7 @@ function Confirm-SynapseWorkspace {
     $ConnectResults = Connect-Account
   }
   Process {
-    $Resource = Get-AzSynapseWorkspace -ResourceGroupName $ResourceGroupName -Name $SynapseWorkspaceName
+    $Resource = Get-AzSynapseWorkspace -ResourceGroupName $ResourceGroupName -Name $WorkspaceName
 
     [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
   }

@@ -16,14 +16,14 @@ function Confirm-SynapseSparkPool {
     .PARAMETER SynapseSparkPoolName
       The name of the Spark pool
 
-    .PARAMETER SynapseWorkspaceName
+    .PARAMETER WorkspaceName
       The name of the Synapse Workspace
 
     .PARAMETER ResourceGroupName
       The name of the Resource Group
 
     .EXAMPLE
-      Confirm-AzBPSynapseSparkPool -SynapseSparkPoolName "benchpresstest" -SynapseWorkspaceName "wstest" `
+      Confirm-AzBPSynapseSparkPool -SynapseSparkPoolName "benchpresstest" -WorkspaceName "wstest" `
         -ResourceGroupName "rgbenchpresstest"
 
     .INPUTS
@@ -39,7 +39,7 @@ function Confirm-SynapseSparkPool {
     [string]$SynapseSparkPoolName,
 
     [Parameter(Mandatory=$true)]
-    [string]$SynapseWorkspaceName,
+    [string]$WorkspaceName,
 
     [Parameter(Mandatory=$true)]
     [string]$ResourceGroupName
@@ -48,7 +48,7 @@ function Confirm-SynapseSparkPool {
     $ConnectResults = Connect-Account
   }
   Process {
-    $Resource = Get-AzSynapseSparkPool -ResourceGroupName $ResourceGroupName -WorkspaceName $SynapseWorkspaceName -Name $SynapseSparkPoolName
+    $Resource = Get-AzSynapseSparkPool -ResourceGroupName $ResourceGroupName -WorkspaceName $WorkspaceName -Name $SynapseSparkPoolName
 
     [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
   }

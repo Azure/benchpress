@@ -16,14 +16,14 @@ function Confirm-SynapseSqlPool {
     .PARAMETER SynapseSqlPoolName
       The name of the SQL pool
 
-    .PARAMETER SynapseWorkspaceName
+    .PARAMETER WorkspaceName
       The name of the Synapse Workspace
 
     .PARAMETER ResourceGroupName
       The name of the Resource Group
 
     .EXAMPLE
-      Confirm-AzBPSynapseSqlPool -SynapseSqlPoolName "benchpresstest" -SynapseWorkspaceName "wstest" `
+      Confirm-AzBPSynapseSqlPool -SynapseSqlPoolName "benchpresstest" -WorkspaceName "wstest" `
         -ResourceGroupName "rgbenchpresstest"
 
     .INPUTS
@@ -39,7 +39,7 @@ function Confirm-SynapseSqlPool {
     [string]$SynapseSqlPoolName,
 
     [Parameter(Mandatory=$true)]
-    [string]$SynapseWorkspaceName,
+    [string]$WorkspaceName,
 
     [Parameter(Mandatory=$true)]
     [string]$ResourceGroupName
@@ -48,7 +48,7 @@ function Confirm-SynapseSqlPool {
     $ConnectResults = Connect-Account
   }
   Process {
-    $Resource = Get-AzSynapseSqlPool -ResourceGroupName $ResourceGroupName -WorkspaceName $SynapseWorkspaceName -Name $SynapseSqlPoolName
+    $Resource = Get-AzSynapseSqlPool -ResourceGroupName $ResourceGroupName -WorkspaceName $WorkspaceName -Name $SynapseSqlPoolName
 
     [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
   }

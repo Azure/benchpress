@@ -12,7 +12,7 @@ Describe "Confirm-SynapseWorkspace" {
 
     It "Calls Get-AzSynapseWorkspace" {
       Mock Get-AzSynapseWorkspace{}
-      Confirm-SynapseWorkspace -SynapseWorkspaceName "syn" -ResourceGroupName "rgn"
+      Confirm-SynapseWorkspace -WorkspaceName "syn" -ResourceGroupName "rgn"
       Should -Invoke -CommandName "Get-AzSynapseWorkspace" -Times 1
     }
   }
