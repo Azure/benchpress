@@ -6,6 +6,8 @@ using module ./../Classes/ConfirmResult.psm1
 . $PSScriptRoot/Confirm-AppInsights.ps1
 . $PSScriptRoot/Confirm-AppServicePlan.ps1
 . $PSScriptRoot/Confirm-ContainerRegistry.ps1
+. $PSScriptRoot/Confirm-DataFactory.ps1
+. $PSScriptRoot/Confirm-DataFactoryLinkedService.ps1
 . $PSScriptRoot/Confirm-KeyVault.ps1
 . $PSScriptRoot/Confirm-OperationalInsightsWorkspace
 . $PSScriptRoot/Confirm-ResourceGroup.ps1
@@ -38,6 +40,8 @@ function Get-ResourceByType {
       AppInsights
       AppServicePlan
       ContainerRegistry
+      DataFactory
+      DataFactoryLinkedService
       KeyVault
       ResourceGroup
       SqlDatabase
@@ -48,6 +52,10 @@ function Get-ResourceByType {
 
     .PARAMETER ServerName
       If testing an Azure SQL Database resource, the name of the server to which the database is assigned.
+
+    .PARAMETER DataFactoryName
+      If testing an Azure Data Factory Linked Service resource, the name of the data factory to which the linked
+      service is assigned.
 
     .EXAMPLE
       Get-AzBPResourceByType -ResourceType ActionGroup -ResourceName "bpactiongroup" -ResourceGroupName "rgbenchpresstest"
@@ -71,13 +79,16 @@ function Get-ResourceByType {
     [string]$ResourceGroupName,
 
     [Parameter(Mandatory = $true)]
-    [ValidateSet("ActionGroup", "AksCluster", "AppInsights", "AppServicePlan", "ContainerRegistry", "KeyVault",
-      "OperationalInsightsWorkspace", "ResourceGroup", "SqlDatabase", "SqlServer",
-      "StorageAccount", "VirtualMachine", "WebApp")]
+    [ValidateSet("ActionGroup", "AksCluster", "AppInsights", "AppServicePlan", "ContainerRegistry", "DataFactory",
+      "DataFactoryLinkedService", "KeyVault", "OperationalInsightsWorkspace", "ResourceGroup", "SqlDatabase",
+      "SqlServer", "StorageAccount", "VirtualMachine", "WebApp")]
     [string]$ResourceType,
 
     [Parameter(Mandatory = $false)]
-    [string]$ServerName
+    [string]$ServerName,
+
+    [Parameter(Mandatory = $false)]
+    [string]$DataFactoryName
   )
   Begin { }
   Process {
@@ -96,6 +107,17 @@ function Get-ResourceByType {
       }
       "ContainerRegistry" {
         return Confirm-ContainerRegistry -Name $ResourceName -ResourceGroupName $ResourceGroupName
+      }
+      "DataFactory" {
+        return Confirm-DataFactory -Name $ResourceName -ResourceGroupName $ResourceGroupName
+      }
+      "DataFactoryLinkedService" {
+        $params = @{
+          Name              = $ResourceName
+          DataFactoryName   = $DataFactoryName
+          ResourceGroupName = $ResourceGroupName
+        }
+        return Confirm-DataFactoryLinkedService @params
       }
       "KeyVault" {
         return Confirm-KeyVault -Name $ResourceName -ResourceGroupName $ResourceGroupName

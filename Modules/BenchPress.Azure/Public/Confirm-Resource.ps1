@@ -29,6 +29,8 @@ function Confirm-Resource {
       AppInsights
       AppServicePlan
       ContainerRegistry
+      DataFactory
+      DataFactoryLinkedService
       KeyVault
       ResourceGroup
       SqlDatabase
@@ -39,6 +41,10 @@ function Confirm-Resource {
 
     .PARAMETER ServerName
       If testing an Azure SQL Database resource, the name of the server to which the database is assigned.
+
+    .PARAMETER DataFactoryName
+      If testing an Azure Data Factory Linked Service resource, the name of the data factory to which the linked
+      service is assigned.
 
     .PARAMETER PropertyKey
       The name of the property to check on the resource
@@ -79,9 +85,9 @@ function Confirm-Resource {
   [OutputType([ConfirmResult])]
   param (
     [Parameter(Mandatory = $true)]
-    [ValidateSet("ActionGroup", "AksCluster", "AppInsights", "AppServicePlan", "ContainerRegistry", "KeyVault",
-    "OperationalInsightsWorkspace", "ResourceGroup", "SqlDatabase", "SqlServer",
-    "StorageAccount", "VirtualMachine", "WebApp")]
+    [ValidateSet("ActionGroup", "AksCluster", "AppInsights", "AppServicePlan", "ContainerRegistry", "DataFactory",
+    "DataFactoryLinkedService", "KeyVault", "OperationalInsightsWorkspace", "ResourceGroup", "SqlDatabase",
+    "SqlServer", "StorageAccount", "VirtualMachine", "WebApp")]
     [string]$ResourceType,
 
     [Parameter(Mandatory = $true)]
@@ -92,6 +98,9 @@ function Confirm-Resource {
 
     [Parameter(Mandatory = $false)]
     [string]$ServerName,
+
+    [Parameter(Mandatory = $false)]
+    [string]$DataFactoryName,
 
     [Parameter(Mandatory = $false)]
     [string]$PropertyKey,
@@ -106,6 +115,7 @@ function Confirm-Resource {
       ResourceName      = $ResourceName
       ResourceType      = $ResourceType
       ServerName        = $ServerName
+      DataFactoryName   = $DataFactoryName
     }
 
     $ConfirmResult = Get-ResourceByType @ResourceParams

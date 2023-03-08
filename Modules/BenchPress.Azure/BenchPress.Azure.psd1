@@ -17,6 +17,8 @@
     "Confirm-AppServicePlan",
     "Confirm-BicepFile",
     "Confirm-ContainerRegistry",
+    "Confirm-DataFactory",
+    "Confirm-DataFactoryLinkedService",
     "Confirm-KeyVault",
     "Confirm-KeyVaultCertificate",
     "Confirm-KeyVaultKey",
