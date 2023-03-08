@@ -73,6 +73,21 @@ Describe 'Verify Synapse Spark/SQL Pool' {
     $result.Success | Should -Be $true
   }
 
+  it 'Should contain a synapse workspace with a spark pool named samplespark' {
+    # Using custom assertion to check if the workspace with spark pool is deployed
+    $params = @{
+      ResourceGroupName    = 'rg-test'
+      WorkspaceName        = 'samplesynws'
+      SynapseSparkPoolName = 'samplespark'
+    }
+
+    #act
+    $result = Confirm-AzBPSynapseSparkPool @params
+
+    #assert
+    $result | Should -BeDeployed
+  }
+
   it 'Should contain a spark pool in westus3' {
     # Using custom assertion to check if the spark pool is in the correct location
     $params = @{
@@ -102,6 +117,21 @@ Describe 'Verify Synapse Spark/SQL Pool' {
 
     #assert
     $result.Success | Should -Be $true
+  }
+
+  it 'Should contain a synapse workspace with a spark pool named samplespark' {
+    # Using custom assertion to check if the workspace with sql pool is deployed
+    $params = @{
+      ResourceGroupName  = 'rg-test'
+      WorkspaceName      = 'samplesynws'
+      SynapseSqlPoolName = 'samplesql'
+    }
+
+    #act
+    $result = Confirm-AzBPSynapseSqlPool @params
+
+    #assert
+    $result | Should -BeDeployed
   }
 
   it 'Should contain a sql pool in westus3' {
