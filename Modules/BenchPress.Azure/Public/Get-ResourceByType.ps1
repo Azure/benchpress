@@ -7,6 +7,7 @@ using module ./../Classes/ConfirmResult.psm1
 . $PSScriptRoot/Confirm-AppServicePlan.ps1
 . $PSScriptRoot/Confirm-ContainerRegistry.ps1
 . $PSScriptRoot/Confirm-KeyVault.ps1
+. $PSScriptRoot/Confirm-OperationalInsightsWorkspace
 . $PSScriptRoot/Confirm-ResourceGroup.ps1
 . $PSScriptRoot/Confirm-SqlDatabase.ps1
 . $PSScriptRoot/Confirm-SqlServer.ps1
@@ -69,7 +70,7 @@ function Get-ResourceByType {
 
     [Parameter(Mandatory = $true)]
     [ValidateSet("ActionGroup", "AksCluster", "AppInsights", "AppServicePlan", "ContainerRegistry", "KeyVault",
-      "ResourceGroup", "SqlDatabase", "SqlServer", "VirtualMachine", "WebApp")]
+      "OperationalInsightsWorkspace", "ResourceGroup", "SqlDatabase", "SqlServer", "VirtualMachine", "WebApp")]
     [string]$ResourceType,
 
     [Parameter(Mandatory = $false)]
@@ -95,6 +96,9 @@ function Get-ResourceByType {
       }
       "KeyVault" {
         return Confirm-KeyVault -Name $ResourceName -ResourceGroupName $ResourceGroupName
+      }
+      "OperationalInsightsWorkspace" {
+        return Confirm-OperationalInsightsWorkspace -Name $ResourceName -ResourceGroupName $ResourceGroupName
       }
       "ResourceGroup" {
         return Confirm-ResourceGroup -ResourceGroupName $ResourceName

@@ -1,5 +1,5 @@
 {
-  "threshold": 10,
+  "minLines": 15,
   "ignore": [
     "**/node_modules/**",
     "**/.git/**",
