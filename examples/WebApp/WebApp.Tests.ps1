@@ -46,7 +46,7 @@ Describe 'Verify Web App Exists with Custom Assertion' {
     $result | Should -BeDeployed
   }
 }
-  
+
 Describe 'Verify Web App Exists in Correct Location' {
   it 'Should contain a Web App named azbpwebapptest in westus3' {
     #arrange
@@ -60,7 +60,7 @@ Describe 'Verify Web App Exists in Correct Location' {
     $result | Should -BeInLocation 'westus3'
   }
 }
-  
+
 Describe 'Verify Web App Exists in Resource Group' {
   it 'Should be a Web App in a resource group named rg-test' {
     #arrange

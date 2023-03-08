@@ -42,11 +42,11 @@ function ShouldBeInResourceGroup ($ActualValue, [string]$ExpectedValue, [switch]
     # Some resources don't have a resource group property
     if ($null -eq $resourceGroupName){
       [bool] $succeeded = $false
-  
+
       if ($Negate) { $succeeded = -not $succeeded }
       $failureMessage = "Resource does not have a resource group property."
     }
-    
+
     else {
       [bool] $succeeded = $resourceGroupName -eq $ExpectedValue
       if ($Negate) { $succeeded = -not $succeeded }
