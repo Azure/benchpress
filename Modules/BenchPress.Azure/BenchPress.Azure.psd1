@@ -26,6 +26,7 @@
     "Confirm-ResourceGroup",
     "Confirm-SqlDatabase",
     "Confirm-SqlServer",
+    "Confirm-StorageAccount",
     "Confirm-VirtualMachine",
     "Confirm-WebApp",
     "Deploy-BicepFeature",
@@ -39,7 +40,7 @@
   )
   PrivateData = @{
     PSData = @{
-      Tags = @("Azure", "BenchPress", "Bicep", "ARM", "Test", "ActionGroup", "AKS", "AksCluster", "ContainerRegistry", "KeyVault", "ResourceGroup", "ServicePlan", "SqlDatabase", "SqlServer", "VirtualMachine", "WebApp")
+      Tags = @("Azure", "BenchPress", "Bicep", "ARM", "Test", "ActionGroup", "AKS", "AksCluster", "ContainerRegistry", "KeyVault", "ResourceGroup", "ServicePlan", "SqlDatabase", "SqlServer", "StorageAccount", "VirtualMachine", "WebApp")
       LicenseUri = ""
       ProjectUri = "https://github.com/Azure/benchpress/"
       IconUri = ""
