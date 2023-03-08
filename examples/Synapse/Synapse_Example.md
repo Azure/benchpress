@@ -1,14 +1,11 @@
 # How To Run Synapse.Tests.ps1
 
-`Synapse.Tests.ps1` contains examples of using the `Confirm-AzBPSynapse` cmdlet.
+`Synapse.Tests.ps1` contains examples of using the `Confirm-AzBPSynapseWorkspace`, `Confirm-AzBPSynapseSparkPool`, `Confirm-AzBPSynapseSqlPool`
+and cmdlet.
 
 ## Pre-Requisites
 
-- An Azure subscription to deploy resources to
-- A resource group deployed to the Azure subscription
-- A [service principal][1] with a client secret created that has contributor access on the Azure subscription
-
-[1]: <https://learn.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal>
+- Follow the [setup instructions](../README.md)
 
 ## Steps
 
