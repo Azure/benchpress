@@ -31,12 +31,21 @@ function ShouldBeInLocation ($ActualValue, [string]$ExpectedValue, [switch] $Neg
     if ($Negate) { $succeeded = -not $succeeded }
     $failureMessage = "ConfirmResult is null or empty."
   }
+  elseif (-not $ActualValue.ResourceDetails.Location) {
+    [bool] $succeeded = $false
+
+    if ($Negate) { $succeeded = -not $succeeded }
+    $failureMessage = "Resource does not have a location property."
+  }
   else {
     # Location needs to be normalized to all lower cases and no spaces
+    # For both expected value and actual value
     $rawResourceLocation = $ActualValue.ResourceDetails.Location.ToLower()
     $resourceLocation = $rawResourceLocation -replace " ",""
 
-    [bool] $succeeded = $resourceLocation -eq $ExpectedValue
+    $expectedLocation = $ExpectedValue.ToLower() -replace " ",""
+
+    [bool] $succeeded = $resourceLocation -eq $expectedLocation
     if ($Negate) { $succeeded = -not $succeeded }
 
     if (-not $succeeded) {

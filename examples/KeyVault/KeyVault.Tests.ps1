@@ -60,3 +60,87 @@ Describe 'Verify KeyVault Does Not Exist' {
     $result.Success | Should -Be $false
   }
 }
+
+Describe 'Verify KeyVault Exists with Custom Assertion' {
+  it 'Should contain a KeyVault named kvbenchpresstest' {
+    #arrange
+    $rgName = "rg-test"
+    $kvName = "kvbenchpresstest"
+
+    #act
+    $result = Confirm-AzBPKeyVault -ResourceGroupName $rgName -Name $kvName
+
+    #assert
+    $result | Should -BeDeployed
+  }
+}
+
+Describe 'Verify KeyVault Exists in Correct Location' {
+  it 'Should contain a KeyVault named rg-test in westus3' {
+    #arrange
+    $rgName = "rg-test"
+    $kvName = "kvbenchpresstest"
+
+    #act
+    $result = Confirm-AzBPKeyVault -ResourceGroupName $rgName -Name $kvName
+
+    #assert
+    $result | Should -BeInLocation 'westus3'
+  }
+}
+
+Describe 'Verify KeyVault Exists in Resource Group' {
+  it 'Should be a KeyVault in a resource group named rg-test' {
+    #arrange
+    $rgName = "rg-test"
+    $kvName = "kvbenchpresstest"
+
+    #act
+    $result = Confirm-AzBPKeyVault -ResourceGroupName $rgName -Name $kvName
+
+    #assert
+    $result | Should -BeInResourceGroup 'rg-test'
+  }
+}
+
+Describe 'Verify KeyVault Key Exists with Custom Assertion' {
+  it 'Should contain a KeyVault Key named samplekey' {
+    #arrange
+    $kvName = "kvbenchpresstest"
+    $kvKeyName = "samplekey"
+
+    #act
+    $result = Confirm-AzBPKeyVaultKey -KeyVaultName $kvName -Name $kvKeyName
+
+    #assert
+    $result | Should -BeDeployed
+  }
+}
+
+Describe 'Verify KeyVault Secret Exists with Custom Assertion' {
+  it 'Should contain a KeyVault Secret named kvbenchpresstest' {
+    #arrange
+    $kvName = "kvbenchpresstest"
+    $kvSecretName = "samplesecret"
+
+    #act
+    $result = Confirm-AzBPKeyVaultSecret -KeyVaultName $kvName -Name $kvSecretName
+
+    #assert
+    $result | Should -BeDeployed
+  }
+}
+
+Describe 'Verify KeyVault Certificate Exists with Custom Assertion' {
+  it 'Should contain a KeyVault Certificate named samplecertificate' {
+    #arrange
+    $kvName = "kvbenchpresstest"
+    $kvCertName = "samplecertificate"
+
+    #act
+    $result = Confirm-AzBPKeyVaultCertificate -KeyVaultName $kvName -Name $kvCertName
+
+    #assert
+    $result | Should -BeDeployed
+  }
+}

@@ -6,9 +6,17 @@ BeforeAll {
 
 Describe "ShouldBeInResourceGroup" {
   Context "unit tests" -Tag "Unit" {
-    It "Should be in resource group testrg" {
+    It "Should be in resource group testrg with 'ResourceGroupName' property" {
       $mockResource = [PSCustomObject]@{
         ResourceGroupName = 'testrg'
+      }
+      $result = [ConfirmResult]::new($mockResource, $null)
+      $result | Should -BeInResourceGroup 'testrg'
+    }
+
+    It "Should be in resource group testrg with 'ResourceGroup' property" {
+      $mockResource = [PSCustomObject]@{
+        ResourceGroup = 'testrg'
       }
       $result = [ConfirmResult]::new($mockResource, $null)
       $result | Should -BeInResourceGroup 'testrg'

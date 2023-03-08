@@ -3,9 +3,9 @@ BeforeAll {
 }
 
 Describe 'Verify Resource Group Exists' {
-  it 'Should contain a resource group named tflintrules' {
+  it 'Should contain a resource group named rg-test' {
     #arrange
-    $rgName = "rgtest"
+    $rgName = "rg-test"
 
     #act
     $result = Confirm-AzBPResourceGroup -ResourceGroupName $rgName
@@ -16,9 +16,9 @@ Describe 'Verify Resource Group Exists' {
 }
 
 Describe 'Verify Resource Group Does Not Exist' {
-  it 'Should not contain a resource group named tflintrules' {
+  it 'Should not contain a resource group named rg-test' {
     #arrange
-    $rgName = "rgtest"
+    $rgName = "rg-test"
 
     #act
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
@@ -28,5 +28,44 @@ Describe 'Verify Resource Group Does Not Exist' {
 
     #assert
     $result.Success | Should -Be $false
+  }
+}
+
+Describe 'Verify Resource Group Exists with Custom Assertion' {
+  it 'Should contain an Resource Group named rg-test' {
+    #arrange
+    $rgName = "rg-test"
+
+    #act
+    $result = Confirm-AzBPResourceGroup -ResourceGroupName $rgName
+
+    #assert
+    $result | Should -BeDeployed
+  }
+}
+
+Describe 'Verify Resource Group Exists in Correct Location' {
+  it 'Should contain an Resource Group named rg-test in westus3' {
+    #arrange
+    $rgName = "rg-test"
+
+    #act
+    $result = Confirm-AzBPResourceGroup -ResourceGroupName $rgName
+
+    #assert
+    $result | Should -BeInLocation 'westus3'
+  }
+}
+
+Describe 'Verify Resource Group Exists in Resource Group' {
+  it 'Should be in a resource group named rg-test' {
+    #arrange
+    $rgName = "rg-test"
+
+    #act
+    $result = Confirm-AzBPResourceGroup -ResourceGroupName $rgName
+
+    #assert
+    $result | Should -BeInResourceGroup 'rg-test'
   }
 }
