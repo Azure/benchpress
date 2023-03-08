@@ -16,3 +16,87 @@ jobs:
       - name: Build Benchpress Solution
         working-directory: BenchPress
         run: dotnet build
+
+  build-modules:
+    name: Build the PS Gallery Modules
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository and submodules
+        uses: actions/checkout@v3
+      - name: Build Module Files
+        shell: pwsh
+        run: |
+          ./build.ps1 -InLine
+      - name: Archive Module artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: benchpress-gallery-module
+          path: |
+            ./bin/BenchPress.Azure.psd1
+            ./bin/BenchPress.Azure.psm1
+
+  local-psgallery:
+    name: Publish and import from/to local PSGallery
+    needs: build-modules
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create the local PSGallery folder
+        shell: pwsh
+        run: |
+          $path = New-Item -Path ./packages -ItemType Directory
+          Register-PSRepository -Name LocalFeedPSRepo -SourceLocation $path.ToString() `
+            -PublishLocation $path.ToString() -InstallationPolicy Trusted
+      - name: Download module artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: benchpress-gallery-module
+          path: ./BenchPress.Azure
+      - name: Publish AzBP Module locally
+        shell: pwsh
+        run: |
+          Install-Module -Name Az -Scope CurrentUser -Repository PSGallery -Force
+          Publish-Module -Path ./BenchPress.Azure -Repository LocalFeedPSRepo -Verbose
+      - name: Install AzBP Module from the repository
+        shell: pwsh
+        run: |
+          Install-Module BenchPress.Azure
+      - name: Verify module exposes cmdlets (smoke test)
+        shell: pwsh
+        run: |
+          if ($(Get-Module -Name BenchPress.Azure -ListAvailable).ExportedCommands.Count -eq 0)
+          {
+            throw "No commands are available in the BenchPress.Azure Module."
+          }
+
+  build-docs-branch:
+    name: Build Generated Docs
+    needs: build-modules
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository and submodules
+        uses: actions/checkout@v3
+      - name: Download module artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: benchpress-gallery-module
+          path: ./BenchPress.Azure
+      - name: Create and checkout new docs branch
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b docs
+      - name: Generate docs
+        shell: pwsh
+        run: |
+          Install-Module -Name platyPS -Scope CurrentUser -Force
+          Import-Module platyPS
+          Import-Module ./BenchPress.Azure/BenchPress.Azure.psd1
+          New-MarkdownHelp -Module BenchPress.Azure -OutputFolder ./docs
+      - name: If there are changes push the branch
+        run: |
+          if [ "$(git ls-files --deleted --modified --others --exclude-standard -- ./docs | wc -l)" -gt 0 ]
+          then
+            git add docs
+            git commit -m "docs: updating generated documentation"
+            git push origin docs
+          fi

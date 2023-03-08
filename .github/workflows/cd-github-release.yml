@@ -16,7 +16,7 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           artifactErrorsFailBuild: true
-          artifacts: "./BenchPress/Helpers/Azure/*"
+          artifacts: "./BenchPress/Generators/**,./Modules/**"
           generateReleaseNotes: true
           makeLatest: true
           prerelease: true
