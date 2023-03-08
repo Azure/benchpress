@@ -12,6 +12,9 @@ using module ./../Classes/ConfirmResult.psm1
 . $PSScriptRoot/Confirm-SqlDatabase.ps1
 . $PSScriptRoot/Confirm-SqlServer.ps1
 . $PSScriptRoot/Confirm-StorageAccount.ps1
+. $PSScriptRoot/Confirm-SynapseSparkPool.ps1
+. $PSScriptRoot/Confirm-SynapseSqlPool.ps1
+. $PSScriptRoot/Confirm-SynapseWorkspace.ps1
 . $PSScriptRoot/Confirm-VirtualMachine.ps1
 . $PSScriptRoot/Confirm-WebApp.ps1
 # end INLINE_SKIP
@@ -43,11 +46,18 @@ function Get-ResourceByType {
       SqlDatabase
       SqlServer
       StorageAccount
+      SynapseSparkPool
+      SynapseSqlPool
+      SynapseWorkspace
       VirtualMachine
       WebApp)
 
     .PARAMETER ServerName
       If testing an Azure SQL Database resource, the name of the server to which the database is assigned.
+
+    .PARAMETER WorkspaceName
+      If testing a resource that belongs to some sort of Azure workspace (i.e. SQL pool in a Synapse workspace),
+      the name of the workspace to which the resource is assigned.
 
     .EXAMPLE
       Get-AzBPResourceByType -ResourceType ActionGroup -ResourceName "bpactiongroup" -ResourceGroupName "rgbenchpresstest"
@@ -72,12 +82,15 @@ function Get-ResourceByType {
 
     [Parameter(Mandatory = $true)]
     [ValidateSet("ActionGroup", "AksCluster", "AppInsights", "AppServicePlan", "ContainerRegistry", "KeyVault",
-      "OperationalInsightsWorkspace", "ResourceGroup", "SqlDatabase", "SqlServer",
-      "StorageAccount", "VirtualMachine", "WebApp")]
+    "OperationalInsightsWorkspace", "ResourceGroup", "SqlDatabase", "SqlServer", "StorageAccount",
+    "SynapseSparkPool", "SynapseSqlPool", "SynapseWorkspace", "VirtualMachine", "WebApp")]
     [string]$ResourceType,
 
     [Parameter(Mandatory = $false)]
-    [string]$ServerName
+    [string]$ServerName,
+
+    [Parameter(Mandatory = $false)]
+    [string]$WorkspaceName
   )
   Begin { }
   Process {
@@ -119,6 +132,25 @@ function Get-ResourceByType {
       }
       "StorageAccount" {
         return Confirm-StorageAccount -Name $ResourceName -ResourceGroupName $ResourceGroupName
+      }
+      "SynapseSparkPool" {
+        $params = @{
+          SynapseSparkPoolName = $ResourceName
+          WorkspaceName        = $WorkspaceName
+          ResourceGroupName    = $ResourceGroupName
+        }
+        return Confirm-SynapseSparkPool @params
+      }
+      "SynapseSqlPool" {
+        $params = @{
+          SynapseSqlPoolName = $ResourceName
+          WorkspaceName      = $WorkspaceName
+          ResourceGroupName  = $ResourceGroupName
+        }
+        return Confirm-SynapseSqlPool @params
+      }
+      "SynapseWorkspace" {
+        return Confirm-SynapseWorkspace -WorkspaceName $ResourceName -ResourceGroupName $ResourceGroupName
       }
       "VirtualMachine" {
         return Confirm-VirtualMachine -VirtualMachineName $ResourceName -ResourceGroupName $ResourceGroupName

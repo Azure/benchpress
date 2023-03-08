@@ -34,11 +34,18 @@ function Confirm-Resource {
       SqlDatabase
       SqlServer
       StorageAccount
+      SynapseSparkPool
+      SynapseSqlPool
+      SynapseWorkspace
       VirtualMachine
       WebApp)
 
     .PARAMETER ServerName
       If testing an Azure SQL Database resource, the name of the server to which the database is assigned.
+
+    .PARAMETER WorkspaceName
+      If testing a resource that belongs to some sort of Azure workspace (i.e. SQL pool in a Synapse workspace),
+      the name of the workspace to which the resource is assigned.
 
     .PARAMETER PropertyKey
       The name of the property to check on the resource
@@ -80,8 +87,8 @@ function Confirm-Resource {
   param (
     [Parameter(Mandatory = $true)]
     [ValidateSet("ActionGroup", "AksCluster", "AppInsights", "AppServicePlan", "ContainerRegistry", "KeyVault",
-    "OperationalInsightsWorkspace", "ResourceGroup", "SqlDatabase", "SqlServer",
-    "StorageAccount", "VirtualMachine", "WebApp")]
+      "OperationalInsightsWorkspace", "ResourceGroup", "SqlDatabase", "SqlServer", "StorageAccount",
+      "SynapseSparkPool", "SynapseSqlPool", "SynapseWorkspace", "VirtualMachine", "WebApp")]
     [string]$ResourceType,
 
     [Parameter(Mandatory = $true)]
@@ -92,6 +99,9 @@ function Confirm-Resource {
 
     [Parameter(Mandatory = $false)]
     [string]$ServerName,
+
+    [Parameter(Mandatory = $false)]
+    [string]$WorkspaceName,
 
     [Parameter(Mandatory = $false)]
     [string]$PropertyKey,
@@ -106,6 +116,7 @@ function Confirm-Resource {
       ResourceName      = $ResourceName
       ResourceType      = $ResourceType
       ServerName        = $ServerName
+      WorkspaceName     = $WorkspaceName
     }
 
     $ConfirmResult = Get-ResourceByType @ResourceParams
@@ -147,10 +158,10 @@ function Confirm-Resource {
           Write-Error @errorParams
         } else {
           $errorParams = @{
-            Message = "The value provided: ${$PropertyValue}, does not match the actual value: ${ActualValue} for " +
-              "property key: ${$PropertyKey}"
+            Message  = "The value provided: ${$PropertyValue}, does not match the actual value: ${ActualValue} for " +
+            "property key: ${$PropertyKey}"
             Category = [System.Management.Automation.ErrorCategory]::InvalidResult
-            ErrorId = "InvalidPropertyValue"
+            ErrorId  = "InvalidPropertyValue"
           }
 
           Write-Error @errorParams
