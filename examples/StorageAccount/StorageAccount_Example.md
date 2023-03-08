@@ -32,7 +32,7 @@ required environment variables.
 1. Update `StorageAccount.Tests.ps1` variables to point to your expected resources:
 
    - `rg-test` -> `your-resource-group-name`
-   - `sampleStorageAccount` -> `your-storage-account-name`
+   - `azbenchpressstorage` -> `your-storage-account-name`
 
 1. If using a local copy of `Az-InfrastructureTest`, replace `Import-Module Az-InfrastructureTest` with
 `Import-Module "../../bin/BenchPress.Azure.psd1"`.

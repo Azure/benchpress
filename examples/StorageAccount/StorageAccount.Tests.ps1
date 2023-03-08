@@ -6,10 +6,10 @@ Describe 'Verify Storage Account Exists' {
     it 'Should contain a Storage Account with the given name' {
         #arrange
         $rgName = 'rg-test'
-        $serverName = 'azbenchpressstorage'
+        $name = 'azbenchpressstorage'
 
         #act
-        $result = Confirm-AzBPStorageAccount -ResourceGroupName $rgName -Name $serverName
+        $result = Confirm-AzBPStorageAccount -ResourceGroupName $rgName -Name $name
 
         #assert
         $result.Success | Should -Be $true

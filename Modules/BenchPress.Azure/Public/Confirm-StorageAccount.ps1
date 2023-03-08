@@ -41,7 +41,7 @@ function Confirm-StorageAccount {
     $ConnectResults = Connect-Account
   }
   Process {
-      $Resource = Get-AzStorageAccount -ResourceGroupName $ResourceGroupName -Name $ServerName
+      $Resource = Get-AzStorageAccount -ResourceGroupName $ResourceGroupName -Name $Name
 
       [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
   }
