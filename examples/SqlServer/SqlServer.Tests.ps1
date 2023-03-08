@@ -46,7 +46,7 @@ Describe 'Verify Sql Server Exists with Custom Assertion' {
     $result | Should -BeDeployed
   }
 }
- 
+
 Describe 'Verify Sql Server Exists in Correct Location' {
   it 'Should contain a Sql Server named samplesqlserver in westus3' {
     #arrange

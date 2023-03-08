@@ -64,7 +64,7 @@ Describe 'Verify Sql Database Exists in Correct Location' {
     $result | Should -BeInLocation 'westus3'
   }
 }
- 
+
 Describe 'Verify Sql Database Exists in Resource Group' {
   it 'Should be a Sql Database in a resource group named rg-test' {
     #arrange

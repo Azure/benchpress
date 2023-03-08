@@ -18,7 +18,7 @@ cmdlet.
 1. Deploy the Operational Insights Workspace to your subscription:
 
    ```Powershell
-    New-AzSubscriptionDeployment -TemplateFile "./operationalInsightsWorkspace.bicep" `
+    New-AzResourceGroupDeployment -TemplateFile "./operationalInsightsWorkspace.bicep" `
     -Location "WestUS3"
    ```
 
