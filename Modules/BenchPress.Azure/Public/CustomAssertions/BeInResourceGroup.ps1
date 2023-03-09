@@ -27,6 +27,7 @@ function ShouldBeInResourceGroup ($ActualValue, [string]$ExpectedValue, [switch]
   #>
   $rgProperty = 'ResourceGroup'
   $rgNameProperty = 'ResourceGroupName'
+
   if ($null -eq $ActualValue){
     [bool] $succeeded = $false
 

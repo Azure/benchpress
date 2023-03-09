@@ -26,6 +26,7 @@ function ShouldBeInLocation ($ActualValue, [string]$ExpectedValue, [switch] $Neg
       PSCustomObject
   #>
   $propertyName = 'Location'
+
   if ($null -eq $ActualValue){
     [bool] $succeeded = $false
 
