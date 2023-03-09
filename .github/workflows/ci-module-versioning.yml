@@ -5,7 +5,7 @@ on: # yamllint disable-line rule:truthy
   push:
     branches: [main]
     paths:
-      - "./Modules/BenchPress.Azure/**"
+      - "Modules/BenchPress.Azure/**"
 
 jobs:
   get-tags:
