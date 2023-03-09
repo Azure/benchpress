@@ -48,7 +48,7 @@ function Confirm-DataFactoryLinkedService {
     $ConnectResults = Connect-Account
   }
   Process {
-    $Resource = Get-AzDataFactoryLinkedService -ResourceGroupName $ResourceGroupName `
+    $Resource = Get-AzDataFactoryV2LinkedService -ResourceGroupName $ResourceGroupName `
       -DataFactoryName $DataFactoryName -Name $Name
 
     [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)

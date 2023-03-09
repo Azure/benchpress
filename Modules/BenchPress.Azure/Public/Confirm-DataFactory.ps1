@@ -41,7 +41,7 @@ function Confirm-DataFactory {
     $ConnectResults = Connect-Account
   }
   Process {
-    $Resource = Get-AzDataFactory -ResourceGroupName $ResourceGroupName -Name $Name
+    $Resource = Get-AzDataFactoryV2 -ResourceGroupName $ResourceGroupName -Name $Name
 
     [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
   }
