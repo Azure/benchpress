@@ -52,7 +52,6 @@ function Connect-Account {
 
     # If the current context matches the subscription, tenant, and service principal, then we're already properly
     # logged in.
-    # More comments
     if ($null -ne $CurrentConnection `
       -and ($CurrentConnection).Account.Type -eq 'ServicePrincipal' `
       -and ($CurrentConnection).Account.Id -eq $ApplicationId `
