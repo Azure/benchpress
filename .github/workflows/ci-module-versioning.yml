@@ -8,6 +8,8 @@ on: # yamllint disable-line rule:truthy
       - "Modules/BenchPress.Azure/**"
 
 jobs:
+  ## add this check to make sure it ignores version
+  ## if: ${{ github.event_name == 'push' && github.event.pull_request.head.ref != 'refs/heads/version' }}
   get-tags:
     runs-on: ubuntu-latest
     outputs:

@@ -2,14 +2,13 @@
 name: cd-create-version-tag
 
 on: #  yamllint disable-line rule:truthy
-  push:
-    branches: [main]
   pull_request:
+    types: [closed]
     branches: [main]
 
 jobs:
   create-version-tag:
-    if: ${{ github.event_name == 'push' && github.event.pull_request.head.ref == 'refs/heads/version' }}
+    if: startsWith(github.head_ref, 'version') #${{ github.event.pull_request.head.ref == 'refs/heads/version' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -24,9 +23,3 @@ jobs:
             | sed -n 's/\s*//p')
           git tag "$version"
           git push origin "$version"
-      - name: Create Pull Request
-        run: |
-          gh pr create -B main -H "$version" --title 'Merge updated version into main.' \
-            --body 'Created by Github action'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
