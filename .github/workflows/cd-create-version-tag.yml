@@ -24,3 +24,9 @@ jobs:
             | sed -n 's/\s*//p')
           git tag "$version"
           git push origin "$version"
+      - name: Create Pull Request
+        run: |
+          gh pr create -B main -H "$version" --title 'Merge updated version into main.' \
+            --body 'Created by Github action'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

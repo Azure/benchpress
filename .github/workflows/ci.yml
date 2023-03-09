@@ -100,3 +100,8 @@ jobs:
             git commit -m "docs: updating generated documentation"
             git push origin docs
           fi
+      - name: Create pull request
+        run: |
+          gh pr create -B main -H docs --title 'Merge updated docs into main.' --body 'Created by Github action'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
