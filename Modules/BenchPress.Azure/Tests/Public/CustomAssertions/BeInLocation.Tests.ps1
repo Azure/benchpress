@@ -22,7 +22,7 @@ Describe "ShouldBeInLocation" {
       $result | Should -BeInLocation 'westus3'
     }
 
-    It "Should be in location eastus despite uppercase" {
+    It "Should be in location eastus despite uppercase and space" {
       $mockResource = [PSCustomObject]@{
         Location = ' EAST US '
       }
@@ -46,16 +46,34 @@ Describe "ShouldBeInLocation" {
       $result | Should -Not -BeInLocation 'eastus'
     }
 
-    It "Should be false if ConfirmResult is null" {
-      $null | Should -Not -BeInLocation 'eastus'
-    }
-
-    It "Should fail if location empty" {
+    It "Should mismatch if location empty" {
       $mockResource = [PSCustomObject]@{
         Location = ''
       }
       $result = [ConfirmResult]::new($mockResource, $null)
       $result | Should -Not -BeInLocation 'eastus'
+    }
+
+    It "Should fail if ConfirmResult is null" {
+      { $null | Should -BeInLocation 'eastus' } | Should -Throw -ErrorId 'PesterAssertionFailed'
+    }
+
+    It "Should fail if ConfirmResult is null with '-Not'" {
+      { $null | Should -Not -BeInLocation 'eastus' } | Should -Throw -ErrorId 'PesterAssertionFailed'
+    }
+
+    It "Should fail if location empty" {
+      $mockResource = [PSCustomObject]@{
+      }
+      $result = [ConfirmResult]::new($mockResource, $null)
+      { $result | Should -BeInLocation 'eastus' }  | Should -Throw -ErrorId 'PesterAssertionFailed'
+    }
+
+    It "Should fail if location empty with '-Not'" {
+      $mockResource = [PSCustomObject]@{
+      }
+      $result = [ConfirmResult]::new($mockResource, $null)
+      { $result | Should -Not -BeInLocation 'eastus' }  | Should -Throw -ErrorId 'PesterAssertionFailed'
     }
   }
 }

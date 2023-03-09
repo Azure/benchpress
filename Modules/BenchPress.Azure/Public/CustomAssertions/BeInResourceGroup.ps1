@@ -30,8 +30,6 @@ function ShouldBeInResourceGroup ($ActualValue, [string]$ExpectedValue, [switch]
 
   if ($null -eq $ActualValue){
     [bool] $succeeded = $false
-
-    if ($Negate) { $succeeded = -not $succeeded }
     $failureMessage = "ConfirmResult is null or empty."
   } else {
     if ([bool]$ActualValue.ResourceDetails.PSObject.Properties[$rgProperty]){
@@ -43,8 +41,6 @@ function ShouldBeInResourceGroup ($ActualValue, [string]$ExpectedValue, [switch]
     # Some resources don't have a resource group property
     if ($null -eq $resourceGroupName){
       [bool] $succeeded = $false
-
-      if ($Negate) { $succeeded = -not $succeeded }
       $failureMessage = "Resource does not have a resource group property. It is null or empty."
     } else {
         [bool] $succeeded = $resourceGroupName -eq $ExpectedValue

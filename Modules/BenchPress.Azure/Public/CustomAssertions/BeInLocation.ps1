@@ -29,13 +29,9 @@ function ShouldBeInLocation ($ActualValue, [string]$ExpectedValue, [switch] $Neg
 
   if ($null -eq $ActualValue){
     [bool] $succeeded = $false
-
-    if ($Negate) { $succeeded = -not $succeeded }
     $failureMessage = "ConfirmResult is null or empty."
   } elseif (-not [bool]$ActualValue.ResourceDetails.PSObject.Properties[$propertyName]) {
     [bool] $succeeded = $false
-
-    if ($Negate) { $succeeded = -not $succeeded }
     $failureMessage = "Resource does not have a location property. It is null or empty."
   } else {
     # Both expected and actual locations should be normalized with no spaces

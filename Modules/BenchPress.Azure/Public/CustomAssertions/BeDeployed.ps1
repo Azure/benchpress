@@ -27,8 +27,6 @@ function ShouldBeDeployed ($ActualValue, [switch] $Negate, [string] $Because) {
   #>
   if ($null -eq $ActualValue){
     [bool] $succeeded = $false
-
-    if ($Negate) { $succeeded = -not $succeeded }
     $failureMessage = "ConfirmResult is null or empty."
   } else {
     [bool] $succeeded = $ActualValue.Success
