@@ -11,9 +11,9 @@ Describe "Confirm-DataFactoryLinkedService" {
     }
 
     It "Calls Get-AzDataFactoryLinkedService" {
-      Mock Get-AzDataFactoryLinkedService{}
+      Mock Get-AzDataFactoryV2LinkedService{}
       Confirm-DataFactoryLinkedService -Name "ls" -DataFactoryName "adf" -ResourceGroupName "rgn"
-      Should -Invoke -CommandName "Get-AzDataFactoryLinkedService" -Times 1
+      Should -Invoke -CommandName "Get-AzDataFactoryV2LinkedService" -Times 1
     }
   }
 }

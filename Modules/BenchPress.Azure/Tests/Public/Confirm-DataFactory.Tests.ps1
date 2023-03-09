@@ -11,9 +11,9 @@ Describe "Confirm-DataFactory" {
     }
 
     It "Calls Get-AzDataFactory" {
-      Mock Get-AzDataFactory{}
+      Mock Get-AzDataFactoryV2{}
       Confirm-DataFactory -Name "adf" -ResourceGroupName "rgn"
-      Should -Invoke -CommandName "Get-AzDataFactory" -Times 1
+      Should -Invoke -CommandName "Get-AzDataFactoryV2" -Times 1
     }
   }
 }
