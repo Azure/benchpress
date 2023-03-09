@@ -31,6 +31,8 @@ jobs:
     if: needs.get-tags.outputs.CommitsSinceVersionSource > 0
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository and submodules
+        uses: actions/checkout@v3
       - name: Create and checkout new version branch
         run: |
           git config --global user.name "github-actions"
