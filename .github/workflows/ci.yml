@@ -92,16 +92,14 @@ jobs:
           Import-Module platyPS
           Import-Module ./BenchPress.Azure/BenchPress.Azure.psd1
           New-MarkdownHelp -Module BenchPress.Azure -OutputFolder ./docs
-      - name: If there are changes push the branch
+      - name: If there are changes push the branch and create pull request
         run: |
           if [ "$(git ls-files --deleted --modified --others --exclude-standard -- ./docs | wc -l)" -gt 0 ]
           then
             git add docs
             git commit -m "docs: updating generated documentation"
             git push origin docs
+            gh pr create -B main -H docs --title 'Merge updated docs into main.' --body 'Created by Github action'
           fi
-      - name: Create pull request
-        run: |
-          gh pr create -B main -H docs --title 'Merge updated docs into main.' --body 'Created by Github action'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
