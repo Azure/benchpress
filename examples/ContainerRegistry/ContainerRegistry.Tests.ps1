@@ -32,3 +32,45 @@ Describe 'Verify Container Registry Does Not Exist' {
     $result.Success | Should -Be $false
   }
 }
+
+Describe 'Verify Container Registry Exists with Custom Assertion' {
+  it 'Should contain a Container Registry named acrbenchpresstest' {
+    #arrange
+    $rgName = "rg-test"
+    $acrName = "acrbenchpresstest"
+
+    #act
+    $result = Confirm-AzBPContainerRegistry -ResourceGroupName $rgName -Name $acrName
+
+    #assert
+    $result | Should -BeDeployed
+  }
+}
+
+Describe 'Verify Container Registry Exists in Correct Location' {
+  it 'Should contain a Container Registry named acrbenchpresstest in westus3' {
+    #arrange
+    $rgName = "rg-test"
+    $acrName = "acrbenchpresstest"
+
+    #act
+    $result = Confirm-AzBPContainerRegistry -ResourceGroupName $rgName -Name $acrName
+
+    #assert
+    $result | Should -BeInLocation 'westus3'
+  }
+}
+
+Describe 'Verify Container Registry Exists in Resource Group' {
+  it 'Should be in a resource group named rg-test' {
+    #arrange
+    $rgName = "rg-test"
+    $acrName = "acrbenchpresstest"
+
+    #act
+    $result = Confirm-AzBPContainerRegistry -ResourceGroupName $rgName -Name $acrName
+
+    #assert
+    $result | Should -BeInResourceGroup 'rg-test'
+  }
+}

@@ -32,3 +32,45 @@ Describe 'Verify AKS Cluster Does Not Exist' {
     $result.Success | Should -Be $false
   }
 }
+
+Describe 'Verify AKS Cluster Exists with Custom Assertion' {
+  it 'Should contain an AKS Cluster named aksbenchpresstest' {
+    #arrange
+    $resourceGroupName = "rg-test"
+    $aksName = "aksbenchpresstest"
+
+    #act
+    $result = Confirm-AzBPAksCluster -ResourceGroupName $resourceGroupName -AKSName $aksName
+
+    #assert
+    $result | Should -BeDeployed
+  }
+}
+
+Describe 'Verify AKS Cluster Exists in Correct Location' {
+  it 'Should contain an AKS Cluster named aksbenchpresstest in westus3' {
+    #arrange
+    $resourceGroupName = "rg-test"
+    $aksName = "aksbenchpresstest"
+
+    #act
+    $result = Confirm-AzBPAksCluster -ResourceGroupName $resourceGroupName -AKSName $aksName
+
+    #assert
+    $result | Should -BeInLocation 'westus3'
+  }
+}
+
+Describe 'Verify AKS Cluster Exists in Resource Group' {
+  it 'Should be in a resource group named rg-test' {
+    #arrange
+    $resourceGroupName = "rg-test"
+    $aksName = "aksbenchpresstest"
+
+    #act
+    $result = Confirm-AzBPAksCluster -ResourceGroupName $resourceGroupName -AKSName $aksName
+
+    #assert
+    $result | Should -BeInResourceGroup 'rg-test'
+  }
+}

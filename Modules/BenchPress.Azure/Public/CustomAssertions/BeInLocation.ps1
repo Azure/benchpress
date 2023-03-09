@@ -25,31 +25,33 @@ function ShouldBeInLocation ($ActualValue, [string]$ExpectedValue, [switch] $Neg
     .OUTPUTS
       PSCustomObject
   #>
+  $propertyName = 'Location'
+
   if ($null -eq $ActualValue){
     [bool] $succeeded = $false
-
-    if ($Negate) { $succeeded = -not $succeeded }
     $failureMessage = "ConfirmResult is null or empty."
-  }
-  else {
-    # Location needs to be normalized to all lower cases and no spaces
-    $rawResourceLocation = $ActualValue.ResourceDetails.Location.ToLower()
-    $resourceLocation = $rawResourceLocation -replace " ",""
+  } elseif (-not [bool]$ActualValue.ResourceDetails.PSObject.Properties[$propertyName]) {
+    [bool] $succeeded = $false
+    $failureMessage = "Resource does not have a location property. It is null or empty."
+  } else {
+    # Both expected and actual locations should be normalized with no spaces
+    $resourceLocation = $ActualValue.ResourceDetails.Location -replace " ",""
+    $expectedLocation = $ExpectedValue -replace " ",""
 
-    [bool] $succeeded = $resourceLocation -eq $ExpectedValue
+    [bool] $succeeded = $resourceLocation -ieq $expectedLocation
     if ($Negate) { $succeeded = -not $succeeded }
 
     if (-not $succeeded) {
       if ($Negate) {
         $failureMessage = "Resource is deployed, incorrectly, in $resourceLocation."
-      }
-      else {
+      } else {
         $failureMessage = "Resource not in location or there was an error when confirming resource.
         Expected $ExpectedValue but got $resourceLocation."
         if ($Because) { $failureMessage = "Resource not in location $Because." }
       }
     }
   }
+
   return [pscustomobject]@{
       Succeeded      = $succeeded
       FailureMessage = $failureMessage
