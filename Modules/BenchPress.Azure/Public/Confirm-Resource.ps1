@@ -23,11 +23,13 @@ function Confirm-Resource {
       The name of the Resource Group
 
     .PARAMETER ResourceType
-      The type of the Resource (currently supports the following:
+      The type of the Resource. Currently Supported:
       ActionGroup
       AksCluster
       AppInsights
       AppServicePlan
+      CosmosDBAccount
+      CosmosDBSqlDatabase
       ContainerRegistry
       KeyVault
       ResourceGroup
@@ -38,7 +40,7 @@ function Confirm-Resource {
       SynapseSqlPool
       SynapseWorkspace
       VirtualMachine
-      WebApp)
+      WebApp
 
     .PARAMETER ServerName
       If testing an Azure SQL Database resource, the name of the server to which the database is assigned.
@@ -86,9 +88,10 @@ function Confirm-Resource {
   [OutputType([ConfirmResult])]
   param (
     [Parameter(Mandatory = $true)]
-    [ValidateSet("ActionGroup", "AksCluster", "AppInsights", "AppServicePlan", "ContainerRegistry", "KeyVault",
-      "OperationalInsightsWorkspace", "ResourceGroup", "SqlDatabase", "SqlServer", "StorageAccount",
-      "SynapseSparkPool", "SynapseSqlPool", "SynapseWorkspace", "VirtualMachine", "WebApp")]
+    [ValidateSet("ActionGroup", "AksCluster", "AppInsights", "AppServicePlan", "ContainerRegistry", "CosmosDBAccount",
+    "CosmosDBGremlinDatabase", "CosmosDBMongoDBDatabase", "CosmosDBSqlDatabase", "KeyVault",
+    "OperationalInsightsWorkspace", "ResourceGroup", "SqlDatabase", "SqlServer", "StorageAccount", "SynapseSparkPool",
+    "SynapseSqlPool", "SynapseWorkspace", "VirtualMachine", "WebApp")]
     [string]$ResourceType,
 
     [Parameter(Mandatory = $true)]
@@ -104,6 +107,9 @@ function Confirm-Resource {
     [string]$WorkspaceName,
 
     [Parameter(Mandatory = $false)]
+    [string]$AccountName,
+
+    [Parameter(Mandatory = $false)]
     [string]$PropertyKey,
 
     [Parameter(Mandatory = $false)]
@@ -112,11 +118,12 @@ function Confirm-Resource {
   Begin { }
   Process {
     $ResourceParams = @{
-      ResourceGroupName = $ResourceGroupName
-      ResourceName      = $ResourceName
       ResourceType      = $ResourceType
+      ResourceName      = $ResourceName
+      ResourceGroupName = $ResourceGroupName
       ServerName        = $ServerName
       WorkspaceName     = $WorkspaceName
+      AccountName       = $AccountName
     }
 
     $ConfirmResult = Get-ResourceByType @ResourceParams
