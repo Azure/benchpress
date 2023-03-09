@@ -9,7 +9,7 @@ on: # yamllint disable-line rule:truthy
 
 jobs:
   get-tags:
-    if: ${{ !startsWith(github.base_ref, 'version') }}
+    if: github.event.base_ref == 'refs/heads/version'
     runs-on: ubuntu-latest
     outputs:
       Version: ${{ steps.gitversion.outputs.majorMinorPatch }}
