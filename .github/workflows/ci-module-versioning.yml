@@ -45,3 +45,9 @@ jobs:
           git add ./Modules/BenchPress.Azure/BenchPress.Azure.psd1
           git commit -m "version: updating version"
           git push origin version
+      - name: Create Pull Request
+        run: |
+          gh pr create -B main -H version --title 'Merge updated version for manifest file into main.' \
+            --body 'Created by Github action'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
