@@ -14,7 +14,13 @@ param primaryRegion string = 'eastus'
 param secondaryRegion string = 'eastus2'
 
 @description('The name for the database')
-param databaseName string = 'your-sql-db-name'
+param gremlinDatabaseName string = 'your-gremlin-db-name'
+
+@description('The name for the database')
+param mongoDBDatabaseName string = 'your-mongodb-db-name'
+
+@description('The name for the database')
+param sqlDatabaseName string = 'your-sql-db-name'
 
 var locations = [
   {
@@ -44,19 +50,19 @@ resource doc_account 'Microsoft.DocumentDB/databaseAccounts@2022-05-15' = {
 }
 
 resource sql_database 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2022-05-15' = {
-  name: '${doc_account.name}/${databaseName}'
+  name: '${doc_account.name}/${sqlDatabaseName}'
   properties: {
     resource: {
-      id: databaseName
+      id: sqlDatabaseName
     }
   }
 }
 
 resource gremlin_database 'Microsoft.DocumentDB/databaseAccounts/gremlinDatabases@2022-05-15' = {
-  name: '${doc_account.name}/${databaseName}'
+  name: '${doc_account.name}/${gremlinDatabaseName}'
   properties: {
     resource: {
-      id: databaseName
+      id: gremlinDatabaseName
     }
   }
 }
@@ -85,10 +91,10 @@ resource mongo_account 'Microsoft.DocumentDB/databaseAccounts@2022-05-15' = {
 
 resource database 'Microsoft.DocumentDB/databaseAccounts/mongodbDatabases@2022-05-15' = {
   parent: mongo_account
-  name: databaseName
+  name: mongoDBDatabaseName
   properties: {
     resource: {
-      id: databaseName
+      id: mongoDBDatabaseName
     }
     options: {
       autoscaleSettings: {
