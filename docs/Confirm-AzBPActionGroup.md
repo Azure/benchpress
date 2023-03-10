@@ -11,6 +11,7 @@ schema: 2.0.0
 Confirms that an Action Group exists.
 Hello World!
 I'm changing!
+Nevermind, this is a better change!
 
 ## SYNTAX
 
