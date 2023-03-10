@@ -5,7 +5,7 @@ BeforeAll {
 Describe 'Verify Action Group Exists' {
   it 'Should contain a action group named sampleaction' {
     #arrange
-    $resourceGroupName = "test-rg"
+    $resourceGroupName = "rg-test"
     $actionGroupName = "sampleaction"
 
     #act
@@ -19,7 +19,7 @@ Describe 'Verify Action Group Exists' {
 Describe 'Verify Action Group Does Not Exist' {
   it 'Should not contain a action group named sampleActionGroup' {
     #arrange
-    $resourceGroupName = "test-rg"
+    $resourceGroupName = "rg-test"
     $actionGroupName = "nosampleaction"
 
     #act
@@ -30,5 +30,44 @@ Describe 'Verify Action Group Does Not Exist' {
 
     #assert
     $result.Success | Should -Be $false
+  }
+}
+
+Describe 'Verify Action Group Exists with Custom Assertion' {
+  it 'Should contain an action group named sampleaction' {
+    $resourceGroupName = "rg-test"
+    $actionGroupName = "sampleaction"
+
+    #act
+    $result = Confirm-AzBPActionGroup -ResourceGroupName $resourceGroupName -ActionGroupName $actionGroupName
+
+    #assert
+    $result | Should -BeDeployed
+  }
+}
+
+Describe 'Verify Action Group Exists in Correct Location' {
+  it 'Should contain an action group named sampleaction in global' {
+    $resourceGroupName = "rg-test"
+    $actionGroupName = "sampleaction"
+
+    #act
+    $result = Confirm-AzBPActionGroup -ResourceGroupName $resourceGroupName -ActionGroupName $actionGroupName
+
+    #assert
+    $result | Should -BeInLocation 'global'
+  }
+}
+
+Describe 'Verify Action Group Exists in Resource Group' {
+  it 'Should be in a resource group named rg-test' {
+    $resourceGroupName = "rg-test"
+    $actionGroupName = "sampleaction"
+
+    #act
+    $result = Confirm-AzBPActionGroup -ResourceGroupName $resourceGroupName -ActionGroupName $actionGroupName
+
+    #assert
+    $result | Should -BeInResourceGroup 'rg-test'
   }
 }

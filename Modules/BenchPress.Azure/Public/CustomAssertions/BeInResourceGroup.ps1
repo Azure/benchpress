@@ -25,26 +25,35 @@ function ShouldBeInResourceGroup ($ActualValue, [string]$ExpectedValue, [switch]
     .OUTPUTS
       PSCustomObject
   #>
+  $rgProperty = 'ResourceGroup'
+  $rgNameProperty = 'ResourceGroupName'
+
   if ($null -eq $ActualValue){
     [bool] $succeeded = $false
-
-    if ($Negate) { $succeeded = -not $succeeded }
     $failureMessage = "ConfirmResult is null or empty."
-  }
-  else {
-    $resourceGroupName = $ActualValue.ResourceDetails.ResourceGroupName
+  } else {
+    if ([bool]$ActualValue.ResourceDetails.PSObject.Properties[$rgProperty]){
+      $resourceGroupName = $ActualValue.ResourceDetails.ResourceGroup
+    } elseif ([bool]$ActualValue.ResourceDetails.PSObject.Properties[$rgNameProperty]){
+      $resourceGroupName = $ActualValue.ResourceDetails.ResourceGroupName
+    }
 
-    [bool] $succeeded = $resourceGroupName -eq $ExpectedValue
-    if ($Negate) { $succeeded = -not $succeeded }
+    # Some resources don't have a resource group property
+    if ($null -eq $resourceGroupName){
+      [bool] $succeeded = $false
+      $failureMessage = "Resource does not have a resource group property. It is null or empty."
+    } else {
+        [bool] $succeeded = $resourceGroupName -eq $ExpectedValue
+        if ($Negate) { $succeeded = -not $succeeded }
 
-    if (-not $succeeded) {
-        if ($Negate) {
-          $failureMessage = "Resource is deployed, incorrectly, in $resourceGroupName."
-        }
-        else {
-          $failureMessage = "Resource not in resource group or there was an error when confirming resource.
-          Expected $ExpectedValue but got $resourceGroupName."
-          if ($Because) { $failureMessage = "Resource not in resource group. This failed $Because." }
+        if (-not $succeeded) {
+            if ($Negate) {
+              $failureMessage = "Resource is deployed, incorrectly, in $resourceGroupName."
+            } else {
+              $failureMessage = "Resource not in resource group or there was an error when confirming resource.
+              Expected $ExpectedValue but got $resourceGroupName."
+              if ($Because) { $failureMessage = "Resource not in resource group. This failed $Because." }
+            }
         }
     }
   }

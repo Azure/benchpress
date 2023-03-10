@@ -32,3 +32,45 @@ Describe 'Verify App Insights Does Not Exist' {
     $result.Success | Should -Be $false
   }
 }
+
+Describe 'Verify App Insights Exists with Custom Assertion' {
+  it 'Should contain an App Insights named appinsightstest' {
+    #arrange
+    $rgName = "rg-test"
+    $appInsightsName = "appinsightstest"
+
+    #act
+    $result = Confirm-AzBPAppInsights -ResourceGroupName $rgName -Name $appInsightsName
+
+    #assert
+    $result | Should -BeDeployed
+  }
+}
+
+Describe 'Verify App Insights Exists in Correct Location' {
+  it 'Should contain an App Insights named appinsightstest in westus3' {
+    #arrange
+    $rgName = "rg-test"
+    $appInsightsName = "appinsightstest"
+
+    #act
+    $result = Confirm-AzBPAppInsights -ResourceGroupName $rgName -Name $appInsightsName
+
+    #assert
+    $result | Should -BeInLocation 'westus3'
+  }
+}
+
+Describe 'Verify App Insights Exists in Resource Group' {
+  it 'Should be in a resource group named rg-test' {
+    #arrange
+    $rgName = "rg-test"
+    $appInsightsName = "appinsightstest"
+
+    #act
+    $result = Confirm-AzBPAppInsights -ResourceGroupName $rgName -Name $appInsightsName
+
+    #assert
+    $result | Should -BeInResourceGroup 'rg-test'
+  }
+}
