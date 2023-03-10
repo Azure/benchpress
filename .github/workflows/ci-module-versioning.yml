@@ -58,6 +58,7 @@ jobs:
             git commit -m "version: updating version"
             git push origin version
             if [ "$(gh pr list -H version -s open | wc -l)" -gt 0 ]
+            then
               gh pr create -B main -H version --title 'Merge updated version for manifest file into main.' \
                 --body 'Created by Github action'
             fi
