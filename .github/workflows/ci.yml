@@ -86,6 +86,7 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           if [ "$(git ls-remote --exit-code --heads origin docs | wc -l)" -gt 0 ]
           then
+            git fetch origin
             git checkout docs
           else
             git checkout -b docs
