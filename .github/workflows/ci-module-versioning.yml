@@ -40,17 +40,26 @@ jobs:
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@users.noreply.github.com"
-          git checkout -b version
+          if [ "$(git ls-remote --exit-code --heads origin version | wc -l)" -gt 0 ]
+          then
+            git checkout version
+          else
+            git checkout -b version
+          fi
       - name: Update manifest file
         run: |
           sed -i 's/ModuleVersion = "[^"]*"/ModuleVersion = "${{ needs.get-tags.outputs.Version }}"/' \
             ./Modules/BenchPress.Azure/BenchPress.Azure.psd1
       - name: Commit changes and create pull request
         run: |
-          git add ./Modules/BenchPress.Azure/BenchPress.Azure.psd1
-          git commit -m "version: updating version"
-          git push origin version
-          gh pr create -B main -H version --title 'Merge updated version for manifest file into main.' \
-            --body 'Created by Github action'
+          if [ "$(git diff --exit-code ./Modules/BenchPress.Azure/BenchPress.Azure.psd1 | wc -l)" -gt 0 ]
+          then
+            git add ./Modules/BenchPress.Azure/BenchPress.Azure.psd1
+            git commit -m "version: updating version"
+            git push origin version
+            if [ "$(gh pr list -H version -s open | wc -l)" -gt 0 ]
+            gh pr create -B main -H version --title 'Merge updated version for manifest file into main.' \
+              --body 'Created by Github action'
+          fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

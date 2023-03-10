@@ -84,7 +84,12 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git checkout -b docs
+          if [ "$(git ls-remote --exit-code --heads origin docs | wc -l)" -gt 0 ]
+          then
+            git checkout docs
+          else
+            git checkout -b docs
+          fi
       - name: Generate docs
         shell: pwsh
         run: |
@@ -99,6 +104,7 @@ jobs:
             git add docs
             git commit -m "docs: updating generated documentation"
             git push origin docs
+            if [ "$(gh pr list -H docs -s open | wc -l)" -gt 0 ]
             gh pr create -B main -H docs --title 'Merge updated docs into main.' --body 'Created by Github action'
           fi
         env:
