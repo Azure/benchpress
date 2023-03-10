@@ -87,7 +87,7 @@ jobs:
           if [ "$(git ls-remote --exit-code --heads origin docs | wc -l)" -gt 0 ]
           then
             git fetch origin
-            git checkout docs
+            git switch docs
           else
             git checkout -b docs
           fi

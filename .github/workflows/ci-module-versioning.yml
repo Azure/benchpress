@@ -43,7 +43,7 @@ jobs:
           if [ "$(git ls-remote --exit-code --heads origin version | wc -l)" -gt 0 ]
           then
             git fetch origin
-            git checkout version
+            git switch version
           else
             git checkout -b version
           fi
