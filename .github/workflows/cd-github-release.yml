@@ -20,4 +20,4 @@ jobs:
           generateReleaseNotes: true
           makeLatest: true
           prerelease: true
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.TESTPATTOKEN }}
