@@ -51,7 +51,7 @@ function Connect-Account {
     $Results = [AuthenticationResult]::new()
 
     # If the current context matches the subscription, tenant, and service principal, then we're already properly
-    # logged in. This is me again!!! Please! Another! Hello!
+    # logged in. This is me again!!! Please! Another! Goodbye!
     if ($null -ne $CurrentConnection `
       -and ($CurrentConnection).Account.Type -eq 'ServicePrincipal' `
       -and ($CurrentConnection).Account.Id -eq $ApplicationId `
