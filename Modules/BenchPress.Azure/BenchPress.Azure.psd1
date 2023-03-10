@@ -3,7 +3,7 @@
 # Generated on: 12/1/2022
 @{
   RootModule = "BenchPress.Azure.psm1"
-  ModuleVersion = "0.2.12"
+  ModuleVersion = "0.2.13"
   GUID = "3db0c6b2-7453-4972-a9de-402be1277ac9"
   Author = "CSEDevOps"
   CompanyName = "Microsoft"
