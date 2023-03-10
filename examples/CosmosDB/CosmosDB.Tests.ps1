@@ -49,7 +49,7 @@ Describe 'Cosmos DB Account' {
     $result | Should -BeDeployed
   }
 
-  It 'Should contian a Cosmos DB Account named `account-name` in the `global` location' {
+  It 'Should contain a Cosmos DB Account named `account-name` in the `global` location' {
     #arrange
     $params = @{
       ResourceGroupName = "rg-name"
@@ -128,7 +128,7 @@ Describe 'Comsos DB Gremlin Database' {
     $result | Should -BeDeployed
   }
 
-  It 'Should contian a Cosmos DB Gremlin Database named `gremlin-db-name` in the `global` location' {
+  It 'Should contain a Cosmos DB Gremlin Database named `gremlin-db-name` in the `global` location' {
     #arrange
     $params = @{
       ResourceGroupName = "rg-name"
@@ -209,7 +209,7 @@ Describe 'Comsos DB Mongo DB Database' {
     $result | Should -BeDeployed
   }
 
-  It 'Should contian a Cosmos DB Mongo DB Database named `mongodb-db-name` in the `global` location' {
+  It 'Should contain a Cosmos DB Mongo DB Database named `mongodb-db-name` in the `global` location' {
     #arrange
     $params = @{
       ResourceGroupName = "rg-name"
@@ -286,7 +286,7 @@ Describe 'Comsos DB SQL Database' {
     $result | Should -BeDeployed
   }
 
-  It 'Should contian a Cosmos DB SQL Database named `sql-db-name` in the `global` location' {
+  It 'Should contain a Cosmos DB SQL Database named `sql-db-name` in the `global` location' {
     #arrange
     $params = @{
       ResourceGroupName = "rg-name"
