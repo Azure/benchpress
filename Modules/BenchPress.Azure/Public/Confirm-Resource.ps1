@@ -51,6 +51,9 @@ function Confirm-Resource {
       If testing a resource that belongs to some sort of Azure workspace (i.e. SQL pool in a Synapse workspace),
       the name of the workspace to which the resource is assigned.
 
+    .PARAMETER AccountName
+      If the Azure resource has an associated account name (e.g., Cosmos DB SQL Database),
+
     .PARAMETER PropertyKey
       The name of the property to check on the resource
 
