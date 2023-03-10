@@ -34,7 +34,7 @@ jobs:
     steps:
       - name: Checkout repository and submodules
         uses: actions/checkout@v3
-      - name: Create and checkout new version branch
+      - name: Create and checkout version branch
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@users.noreply.github.com"
@@ -49,7 +49,7 @@ jobs:
         run: |
           sed -i 's/ModuleVersion = "[^"]*"/ModuleVersion = "${{ needs.get-tags.outputs.Version }}"/' \
             ./Modules/BenchPress.Azure/BenchPress.Azure.psd1
-      - name: Commit changes and create pull request
+      - name: Commit changes and create or update pull request
         run: |
           if [ "$(git diff --exit-code ./Modules/BenchPress.Azure/BenchPress.Azure.psd1 | wc -l)" -gt 0 ]
           then

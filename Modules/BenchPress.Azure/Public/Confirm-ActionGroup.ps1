@@ -7,7 +7,7 @@ using module ./../Classes/ConfirmResult.psm1
 function Confirm-ActionGroup {
   <#
     .SYNOPSIS
-      Confirms that an Action Group exists. Hello again! And goodbye!
+      Confirms that an Action Group exists.
 
     .DESCRIPTION
       The Confirm-AzBPActionGroup cmdlet gets an action group using the specified Action Group and Resource Group name.

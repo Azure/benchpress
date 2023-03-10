@@ -80,7 +80,7 @@ jobs:
         with:
           name: benchpress-gallery-module
           path: ./BenchPress.Azure
-      - name: Create and checkout new docs branch
+      - name: Create and checkout docs branch
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
@@ -98,7 +98,7 @@ jobs:
           Import-Module platyPS
           Import-Module ./BenchPress.Azure/BenchPress.Azure.psd1
           New-MarkdownHelp -Module BenchPress.Azure -OutputFolder ./docs -Force
-      - name: If there are changes push the branch and create pull request
+      - name: If there are changes push them and create or update pull request
         run: |
           if [ "$(git ls-files --deleted --modified --others --exclude-standard -- ./docs | wc -l)" -gt 0 ]
           then
