@@ -11,11 +11,11 @@ jobs:
     if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'version')
     runs-on: ubuntu-latest
     outputs:
-      version: ${{ steps.version-tag.outputs.version }}
+      version: ${{ steps.versiontag.outputs.version }}
     steps:
       - uses: actions/checkout@v2
       - name: Retrieve Version and Create Version Tag
-        id: version-tag
+        id: versiontag
         # I don't know why, but the first sed command adds a space to the beginning of the string so the second sed
         # command removes that space.
         # This will create a version tag with a leading "v" followed by the ModuleVersion value inside the quotes
@@ -26,16 +26,16 @@ jobs:
             | sed -n 's/\s*//p')
           git tag "$version"
           git push origin "$version"
-          echo "version=$version" >> $env:GITHUB_OUTPUT
+          echo "version=$version" >> "$GITHUB_OUTPUT"
   create-release:
-    needs: [create-version-tag]
+    needs: create-version-tag
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Create GitHub Release for BenchPress Module
         uses: ncipollo/release-action@v1
         with:
-          tag: ${{ needs.create-version-tag.outputs.version}}
+          tag: ${{needs.create-version-tag.outputs.version}}
           generateReleaseNotes: true
           makeLatest: true
           prerelease: true
