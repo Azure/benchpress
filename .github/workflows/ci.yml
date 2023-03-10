@@ -96,7 +96,7 @@ jobs:
           Install-Module -Name platyPS -Scope CurrentUser -Force
           Import-Module platyPS
           Import-Module ./BenchPress.Azure/BenchPress.Azure.psd1
-          New-MarkdownHelp -Module BenchPress.Azure -OutputFolder ./docs
+          New-MarkdownHelp -Module BenchPress.Azure -OutputFolder ./docs -Force
       - name: If there are changes push the branch and create pull request
         run: |
           if [ "$(git ls-files --deleted --modified --others --exclude-standard -- ./docs | wc -l)" -gt 0 ]
