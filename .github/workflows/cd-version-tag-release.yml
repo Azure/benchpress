@@ -12,8 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.TESTPATTOKEN }}
       - name: Retrieve Version and Create Version Tag
         # I don't know why, but the first sed command adds a space to the beginning of the string so the second sed
         # command removes that space.
@@ -25,3 +23,15 @@ jobs:
             | sed -n 's/\s*//p')
           git tag "$version"
           git push origin "$version"
+  create-release:
+    needs: [create-version-tag]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Create GitHub Release for BenchPress Module
+        uses: ncipollo/release-action@v1
+        with:
+          generateReleaseNotes: true
+          makeLatest: true
+          prerelease: true
+          token: ${{ secrets.GITHUB_TOKEN }}
