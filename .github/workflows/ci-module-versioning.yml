@@ -42,6 +42,7 @@ jobs:
           git config --global user.email "github-actions@users.noreply.github.com"
           if [ "$(git ls-remote --exit-code --heads origin version | wc -l)" -gt 0 ]
           then
+            git fetch origin
             git checkout version
           else
             git checkout -b version
