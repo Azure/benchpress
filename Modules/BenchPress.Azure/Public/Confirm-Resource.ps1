@@ -29,6 +29,8 @@ function Confirm-Resource {
       AppInsights
       AppServicePlan
       CosmosDBAccount
+      CosmosDBGremlinDatabase
+      CosmosDBMongoDBDatabase
       CosmosDBSqlDatabase
       ContainerRegistry
       KeyVault
