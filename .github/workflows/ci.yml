@@ -104,7 +104,7 @@ jobs:
             git add docs
             git commit -m "docs: updating generated documentation"
             git push origin docs
-            if [ "$(gh pr list -H docs -s open | wc -l)" -gt 0 ]
+            if [ "$(gh pr list -H docs -s open | wc -l)" -eq 0 ]
             then
               gh pr create -B main -H docs --title 'Merge updated docs into main.' --body 'Created by Github action'
             fi
