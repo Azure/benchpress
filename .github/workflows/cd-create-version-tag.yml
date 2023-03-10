@@ -12,13 +12,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.TESTPATTOKEN }}
       - name: Retrieve Version and Create Version Tag
         # I don't know why, but the first sed command adds a space to the beginning of the string so the second sed
         # command removes that space.
         # This will create a version tag with a leading "v" followed by the ModuleVersion value inside the quotes
         # e.g., "v0.1" for ModuleVersion = "0.1"
-        env:
-          GITHUB_TOKEN: ${{ secrets.TESTPATTOKEN }}
         run: |
           cd ./Modules/BenchPress.Azure
           version=v$(sed -n 's/ModuleVersion = "\([^"]*\)"/\1/p' ./BenchPress.Azure.psd1 \
