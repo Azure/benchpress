@@ -11,6 +11,8 @@ jobs:
     if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'version')
     runs-on: ubuntu-latest
     steps:
+      - env:
+          GITHUB_TOKEN: ${{ secrets.TESTPATTOKEN }}
       - uses: actions/checkout@v2
       - name: Retrieve Version and Create Version Tag
         # I don't know why, but the first sed command adds a space to the beginning of the string so the second sed
