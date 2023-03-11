@@ -68,6 +68,6 @@ are not automatically triggered. This stage consists of the following steps:
 
 - [`cd-psgallery.yml`](../.github/workflows/cd-psgallery.yml) - manually triggered to handle deploying the PowerShell
   module to the public PowerShell Gallery.
-- [`cd-version-tag-release.yml`](../.github/workflows/cd-create-version-tag.yml) - triggered if a PR was merged from
+- [`cd-version-tag-release.yml`](../.github/workflows/cd-version-tag-release.yml) - triggered if a PR was merged from
   `version` branch into the `main` branch. It will handle tagging the `main` branch and creating a GitHub release with
   that version tag.
