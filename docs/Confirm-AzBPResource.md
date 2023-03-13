@@ -14,7 +14,8 @@ Confirms whether a resource exists or properties on a resource are configured co
 
 ```
 Confirm-AzBPResource [-ResourceType] <String> [-ResourceName] <String> [[-ResourceGroupName] <String>]
- [[-ServerName] <String>] [[-PropertyKey] <String>] [[-PropertyValue] <String>] [<CommonParameters>]
+ [[-ServerName] <String>] [[-DataFactoryName] <String>] [[-WorkspaceName] <String>] [[-PropertyKey] <String>]
+ [[-PropertyValue] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -65,10 +66,16 @@ AksCluster
 AppInsights
 AppServicePlan
 ContainerRegistry
+DataFactory
+DataFactoryLinkedService
 KeyVault
 ResourceGroup
 SqlDatabase
 SqlServer
+StorageAccount
+SynapseSparkPool
+SynapseSqlPool
+SynapseWorkspace
 VirtualMachine
 WebApp)
 
@@ -129,6 +136,39 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -DataFactoryName
+If testing an Azure Data Factory Linked Service resource, the name of the data factory to which the linked
+service is assigned.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 5
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -WorkspaceName
+If testing a resource that belongs to some sort of Azure workspace (i.e.
+SQL pool in a Synapse workspace),
+the name of the workspace to which the resource is assigned.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 6
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -PropertyKey
 The name of the property to check on the resource
 
@@ -138,7 +178,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 5
+Position: 7
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -153,7 +193,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 6
+Position: 8
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

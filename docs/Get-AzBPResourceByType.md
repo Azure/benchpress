@@ -14,7 +14,7 @@ Gets an Azure Resource.
 
 ```
 Get-AzBPResourceByType [-ResourceName] <String> [[-ResourceGroupName] <String>] [-ResourceType] <String>
- [[-ServerName] <String>] [<CommonParameters>]
+ [[-ServerName] <String>] [[-DataFactoryName] <String>] [[-WorkspaceName] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -73,10 +73,16 @@ AksCluster
 AppInsights
 AppServicePlan
 ContainerRegistry
+DataFactory
+DataFactoryLinkedService
 KeyVault
 ResourceGroup
 SqlDatabase
 SqlServer
+StorageAccount
+SynapseSparkPool
+SynapseSqlPool
+SynapseWorkspace
 VirtualMachine
 WebApp)
 
@@ -102,6 +108,39 @@ Aliases:
 
 Required: False
 Position: 4
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DataFactoryName
+If testing an Azure Data Factory Linked Service resource, the name of the data factory to which the linked
+service is assigned.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 5
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -WorkspaceName
+If testing a resource that belongs to some sort of Azure workspace (i.e.
+SQL pool in a Synapse workspace),
+the name of the workspace to which the resource is assigned.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 6
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
