@@ -5,7 +5,7 @@ on: # yamllint disable-line rule:truthy
   push:
     branches: [main]
     paths:
-      - "./Modules/BenchPress.Azure/*"
+      - "Modules/BenchPress.Azure/**"
 
 jobs:
   get-tags:
@@ -31,17 +31,35 @@ jobs:
     if: needs.get-tags.outputs.CommitsSinceVersionSource > 0
     runs-on: ubuntu-latest
     steps:
-      - name: Create and checkout new version branch
+      - name: Checkout repository and submodules
+        uses: actions/checkout@v3
+      - name: Create and checkout version branch
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@users.noreply.github.com"
-          git checkout -b version
+          if [ "$(git ls-remote --exit-code --heads origin version | wc -l)" -gt 0 ]
+          then
+            git fetch origin
+            git switch version
+          else
+            git checkout -b version
+          fi
       - name: Update manifest file
         run: |
           sed -i 's/ModuleVersion = "[^"]*"/ModuleVersion = "${{ needs.get-tags.outputs.Version }}"/' \
             ./Modules/BenchPress.Azure/BenchPress.Azure.psd1
-      - name: Commit changes
+      - name: Commit changes and create or update pull request
         run: |
-          git add ./Modules/BenchPress.Azure/BenchPress.Azure.psd1
-          git commit -m "version: updating version"
-          git push origin version
+          if [ "$(git diff --exit-code ./Modules/BenchPress.Azure/BenchPress.Azure.psd1 | wc -l)" -gt 0 ]
+          then
+            git add ./Modules/BenchPress.Azure/BenchPress.Azure.psd1
+            git commit -m "version: updating version"
+            git push origin version
+            if [ "$(gh pr list -H version -s open | wc -l)" -eq 0 ]
+            then
+              gh pr create -B main -H version --title 'Merge updated version for manifest file into main.' \
+                --body 'Created by Github action'
+            fi
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

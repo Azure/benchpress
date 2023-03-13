@@ -80,23 +80,35 @@ jobs:
         with:
           name: benchpress-gallery-module
           path: ./BenchPress.Azure
-      - name: Create and checkout new docs branch
+      - name: Create and checkout docs branch
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git checkout -b docs
+          if [ "$(git ls-remote --exit-code --heads origin docs | wc -l)" -gt 0 ]
+          then
+            git fetch origin
+            git switch docs
+          else
+            git checkout -b docs
+          fi
       - name: Generate docs
         shell: pwsh
         run: |
           Install-Module -Name platyPS -Scope CurrentUser -Force
           Import-Module platyPS
           Import-Module ./BenchPress.Azure/BenchPress.Azure.psd1
-          New-MarkdownHelp -Module BenchPress.Azure -OutputFolder ./docs
-      - name: If there are changes push the branch
+          New-MarkdownHelp -Module BenchPress.Azure -OutputFolder ./docs -Force
+      - name: If there are changes push them and create or update pull request
         run: |
           if [ "$(git ls-files --deleted --modified --others --exclude-standard -- ./docs | wc -l)" -gt 0 ]
           then
             git add docs
             git commit -m "docs: updating generated documentation"
             git push origin docs
+            if [ "$(gh pr list -H docs -s open | wc -l)" -eq 0 ]
+            then
+              gh pr create -B main -H docs --title 'Merge updated docs into main.' --body 'Created by Github action'
+            fi
           fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
