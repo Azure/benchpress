@@ -36,11 +36,11 @@ jobs:
       - uses: actions/checkout@v2
       - name: Create Release Artifacts
         run: |
-          zip -r $ARTIFACT_FILENAME BenchPress Modules
+          zip -r "$ARTIFACT_FILENAME" BenchPress Modules
       - name: Create GitHub Release for BenchPress Module
         uses: ncipollo/release-action@v1
         with:
-          tag: ${{needs.create-version-tag.outputs.version}}
+          tag: ${{ needs.create-version-tag.outputs.version }}
           artifactErrorsFailBuild: true
           artifacts: ${{ format('{0}{1}', env.ARTIFACT_FILENAME, '.zip') }}
           generateReleaseNotes: true
