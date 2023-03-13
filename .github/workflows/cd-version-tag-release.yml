@@ -36,6 +36,8 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           tag: ${{needs.create-version-tag.outputs.version}}
+          artifactErrorsFailBuild: true
+          artifacts: "./BenchPress/Generators/*,./Modules/*"
           generateReleaseNotes: true
           makeLatest: true
           prerelease: true
