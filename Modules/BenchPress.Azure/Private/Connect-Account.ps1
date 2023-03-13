@@ -11,7 +11,7 @@ function Connect-Account {
   <#
     .SYNOPSIS
       Connect-Account uses environment variable values to log into an Azure context. This is an internal function and
-      should not be used outside of the BenchPress module.
+      should not be used outside of the BenchPress module. Force a change to test version increment.
 
     .DESCRIPTION
       Connect-Account is designed to login to an Azure context using environment variables to login as a
@@ -51,7 +51,7 @@ function Connect-Account {
     $Results = [AuthenticationResult]::new()
 
     # If the current context matches the subscription, tenant, and service principal, then we're already properly
-    # logged in. This is me again!!! Please! Another! Goodbye!
+    # logged in.
     if ($null -ne $CurrentConnection `
       -and ($CurrentConnection).Account.Type -eq 'ServicePrincipal' `
       -and ($CurrentConnection).Account.Id -eq $ApplicationId `

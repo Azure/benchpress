@@ -52,12 +52,14 @@ This stage consists of the following steps:
 
 - [`ci.yml`](../.github/workflows/ci.yml) - builds the .NET solution and the final module file for BenchPress. It also
 tests the module for deployability to a local PS Repo. Lastly, it generates documentation using help comments for
-PowerShell cmdlets and saves documentation to a branch named `docs`.
+PowerShell cmdlets and saves documentation to a branch named `docs`. A PR will be created with any changes pushed
+to the `docs` branch.
   - The local "PowerShell Gallery" uses the workflow runner's local filesystem to simulate PowerShell Gallery. We then
     push and pull from this filesystem using the same PowerShell cmdlets that are used to interact with PowerShell
     Gallery.
 - [`ci-module-versioning.yml`](../.github/workflows/ci-module-versioning.yml) - calculating the version for the
-  PowerShell module using GitVersion and writing it to the module manifest on a branch named `version`.
+  PowerShell module using GitVersion and writing it to the module manifest on a branch named `version`. A PR will
+  be created with any changes pushed to the `version` branch.
 
 ### Continuous Deployment
 
@@ -66,14 +68,6 @@ are not automatically triggered. This stage consists of the following steps:
 
 - [`cd-psgallery.yml`](../.github/workflows/cd-psgallery.yml) - manually triggered to handle deploying the PowerShell
   module to the public PowerShell Gallery.
-- [`cd-create-version-tag.yml`](../.github/workflows/cd-create-version-tag.yml) - triggered if a PR was merged from
-  `version` branch into the `main` branch and will handle tagging the `main` branch.
-- [`cd-github-release.yml`](../.github/workflows/cd-github-release.yml) - triggered if `main` is tagged with a version
-  and will create a GitHub release with that version.
-
-### Workflows Outside of CI/CD Process
-
-There is one workflow to callout that is a little bit outside of this typical CI/CD process. During the CI stage, there
-were two steps described that generated changes and pushed those changes to new branches (`docs` and `version`). We
-have created a workflow [`create-automated-prs.yml`](../.github/workflows/create-automated-prs.yml) which will be
-triggered when new changes are pushed to those branches and open a PR if so.
+- [`cd-version-tag-release.yml`](../.github/workflows/cd-version-tag-release.yml) - triggered if a PR was merged from
+  `version` branch into the `main` branch. It will handle tagging the `main` branch and creating a GitHub release with
+  that version tag.
