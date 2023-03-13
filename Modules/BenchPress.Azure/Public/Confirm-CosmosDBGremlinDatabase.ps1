@@ -23,7 +23,7 @@ function Confirm-CosmosDBGremlinDatabase {
       The name of the Cosmos DB Gremlin Database
 
     .EXAMPLE
-      Confirm-AzBPCosmosDBGremlinDatabase -Name "benchpresstest" -ResourceGroupName "rgbenchpresstest" -DatabaseName "db"
+      Confirm-AzBPCosmosDBGremlinDatabase -ResourceGroupName "rgbenchpresstest" -AccountName "an" -Name "gremlindb"
 
     .INPUTS
       System.String

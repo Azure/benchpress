@@ -23,7 +23,7 @@ function Confirm-CosmosDBMongoDBDatabase {
       The name of the Cosmos DB Mongo DB Database
 
     .EXAMPLE
-      Confirm-AzBPCosmosDBMongoDBDatabase -Name "benchpresstest" -ResourceGroupName "rgbenchpresstest" -DatabaseName "db"
+      Confirm-AzBPCosmosDBMongoDBDatabase  -ResourceGroupName "rgbenchpresstest" -AccountName "an" -Name "mongodbdb"
 
     .INPUTS
       System.String
