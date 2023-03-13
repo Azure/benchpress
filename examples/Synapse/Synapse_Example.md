@@ -1,7 +1,7 @@
 # How To Run Synapse.Tests.ps1
 
-`Synapse.Tests.ps1` contains examples of using the `Confirm-AzBPSynapseWorkspace`, `Confirm-AzBPSynapseSparkPool`, `Confirm-AzBPSynapseSqlPool`
-and cmdlet.
+`Synapse.Tests.ps1` contains examples of using the `Confirm-AzBPSynapseWorkspace`, `Confirm-AzBPSynapseSparkPool`,
+and `Confirm-AzBPSynapseSqlPool` cmdlet.
 
 ## Pre-Requisites
 

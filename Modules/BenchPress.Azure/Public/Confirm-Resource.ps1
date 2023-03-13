@@ -29,6 +29,8 @@ function Confirm-Resource {
       AppInsights
       AppServicePlan
       ContainerRegistry
+      DataFactory
+      DataFactoryLinkedService
       KeyVault
       ResourceGroup
       SqlDatabase
@@ -42,6 +44,10 @@ function Confirm-Resource {
 
     .PARAMETER ServerName
       If testing an Azure SQL Database resource, the name of the server to which the database is assigned.
+
+    .PARAMETER DataFactoryName
+      If testing an Azure Data Factory Linked Service resource, the name of the data factory to which the linked
+      service is assigned.
 
     .PARAMETER WorkspaceName
       If testing a resource that belongs to some sort of Azure workspace (i.e. SQL pool in a Synapse workspace),
@@ -86,9 +92,10 @@ function Confirm-Resource {
   [OutputType([ConfirmResult])]
   param (
     [Parameter(Mandatory = $true)]
-    [ValidateSet("ActionGroup", "AksCluster", "AppInsights", "AppServicePlan", "ContainerRegistry", "KeyVault",
-      "OperationalInsightsWorkspace", "ResourceGroup", "SqlDatabase", "SqlServer", "StorageAccount",
-      "SynapseSparkPool", "SynapseSqlPool", "SynapseWorkspace", "VirtualMachine", "WebApp")]
+    [ValidateSet("ActionGroup", "AksCluster", "AppInsights", "AppServicePlan", "ContainerRegistry", "DataFactory",
+    "DataFactoryLinkedService", "KeyVault", "OperationalInsightsWorkspace", "ResourceGroup", "SqlDatabase",
+    "SqlServer", "StorageAccount", "SynapseSparkPool", "SynapseSqlPool", "SynapseWorkspace", "VirtualMachine",
+    "WebApp")]
     [string]$ResourceType,
 
     [Parameter(Mandatory = $true)]
@@ -99,6 +106,9 @@ function Confirm-Resource {
 
     [Parameter(Mandatory = $false)]
     [string]$ServerName,
+
+    [Parameter(Mandatory = $false)]
+    [string]$DataFactoryName,
 
     [Parameter(Mandatory = $false)]
     [string]$WorkspaceName,
@@ -116,6 +126,7 @@ function Confirm-Resource {
       ResourceName      = $ResourceName
       ResourceType      = $ResourceType
       ServerName        = $ServerName
+      DataFactoryName   = $DataFactoryName
       WorkspaceName     = $WorkspaceName
     }
 
