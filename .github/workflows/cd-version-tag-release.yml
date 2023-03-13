@@ -42,7 +42,7 @@ jobs:
         with:
           tag: ${{needs.create-version-tag.outputs.version}}
           artifactErrorsFailBuild: true
-          artifacts: ${{ format('{0}{1}, env.ARTIFACT_FILENAME, ".zip" }}
+          artifacts: ${{ format('{0}{1}, env.ARTIFACT_FILENAME, ".zip") }}
           generateReleaseNotes: true
           makeLatest: true
           prerelease: true
