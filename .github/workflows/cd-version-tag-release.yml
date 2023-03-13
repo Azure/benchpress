@@ -8,7 +8,7 @@ on: #  yamllint disable-line rule:truthy
 
 jobs:
   create-version-tag:
-    if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'version')
+    if: github.event.pull_request.merged == true && github.head_ref == 'version'
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.versiontag.outputs.version }}
