@@ -30,14 +30,19 @@ jobs:
   create-release:
     needs: create-version-tag
     runs-on: ubuntu-latest
+    env:
+      ARTIFACT_FILENAME: release-artifacts
     steps:
       - uses: actions/checkout@v2
+      - name: Create Release Artifacts
+        run: |
+          zip -r $ARTIFACT_FILENAME BenchPress Modules
       - name: Create GitHub Release for BenchPress Module
         uses: ncipollo/release-action@v1
         with:
           tag: ${{needs.create-version-tag.outputs.version}}
           artifactErrorsFailBuild: true
-          artifacts: "./BenchPress/Generators/*,./Modules/*"
+          artifacts: ${{ format('{0}{1}, env.ARTIFACT_FILENAME, ".zip" }}
           generateReleaseNotes: true
           makeLatest: true
           prerelease: true
