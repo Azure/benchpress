@@ -27,15 +27,22 @@ function ShouldBeInResourceGroup ($ActualValue, [string]$ExpectedValue, [switch]
   #>
   $rgProperty = 'ResourceGroup'
   $rgNameProperty = 'ResourceGroupName'
+  $idProperty = 'Id'
 
   if ($null -eq $ActualValue){
     [bool] $succeeded = $false
     $failureMessage = "ConfirmResult is null or empty."
   } else {
     if ([bool]$ActualValue.ResourceDetails.PSObject.Properties[$rgProperty]){
-      $resourceGroupName = $ActualValue.ResourceDetails.ResourceGroup
+      $resourceGroupName = $ActualValue.ResourceDetails.$rgProperty
     } elseif ([bool]$ActualValue.ResourceDetails.PSObject.Properties[$rgNameProperty]){
-      $resourceGroupName = $ActualValue.ResourceDetails.ResourceGroupName
+      $resourceGroupName = $ActualValue.ResourceDetails.$rgNameProperty
+    } elseif ([bool]$ActualValue.ResourceDetails.PSObject.Properties[$idProperty]){
+      # If it does not have a property for resource group but it has an Id,
+      # then we can get it from Id
+      $resourceId = $ActualValue.ResourceDetails.$idProperty
+      $resourceGroupPath = $resourceId -split 'resourceGroups' | Select-Object -Last 1
+      $resourceGroupName = @($resourceGroupPath -split '/')[1]
     }
 
     # Some resources don't have a resource group property
