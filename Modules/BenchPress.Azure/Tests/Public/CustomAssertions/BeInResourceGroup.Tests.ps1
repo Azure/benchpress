@@ -75,5 +75,21 @@ Describe "ShouldBeInResourceGroup" {
       $result = [ConfirmResult]::new($mockResource, $null)
       { $result | Should -Not -BeInResourceGroup 'fakerg' }  | Should -Throw -ErrorId 'PesterAssertionFailed'
     }
+
+    It "Should fail if Id is the wrong format" {
+      $mockResource = [PSCustomObject]@{
+        Id = 'https://myvault.vault.azure.net/keys/my-key/version'
+      }
+      $result = [ConfirmResult]::new($mockResource, $null)
+      { $result | Should -BeInResourceGroup 'fakerg' } | Should -Throw -ErrorId 'PesterAssertionFailed'
+    }
+
+    It "Should fail if Id is the wrong format with '-Not'" {
+      $mockResource = [PSCustomObject]@{
+        Id = 'https://myvault.vault.azure.net/keys/my-key/version'
+      }
+      $result = [ConfirmResult]::new($mockResource, $null)
+      { $result | Should -Not -BeInResourceGroup 'fakerg' } | Should -Throw -ErrorId 'PesterAssertionFailed'
+    }
   }
 }

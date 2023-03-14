@@ -44,12 +44,18 @@ function ShouldBeInResourceGroup ($ActualValue, [string]$ExpectedValue, [switch]
       $resourceId = $ActualValue.ResourceDetails.$idProperty
       $resourceGroupPath = $resourceId -split 'resourceGroups' | Select-Object -Last 1
       $resourceGroupName = @($resourceGroupPath -split '/')[1]
+
+      # If $resourceGroupName is empty, the Id is the wrong format
+      # so, set it to null
+      if ('' -eq $resourceGroupName) {
+        $resourceGroupName = $null
+      }
     }
 
-    # Some resources don't have a resource group property
+    # Some resources don't have any of the resource group properties
     if ($null -eq $resourceGroupName){
       [bool] $succeeded = $false
-      $failureMessage = "Resource does not have a resource group property. It is null or empty."
+      $failureMessage = "Resource does not have a ResourceGroup, a ResourceGroupName, or an Id (with a RG) property. They are null or empty."
     } else {
         [bool] $succeeded = $resourceGroupName -eq $ExpectedValue
         if ($Negate) { $succeeded = -not $succeeded }
