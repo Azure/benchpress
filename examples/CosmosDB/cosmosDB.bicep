@@ -2,19 +2,19 @@
 param gremlinAccountName string = 'gremlin-${uniqueString(resourceGroup().id)}'
 
 @description('The name for the database')
-param gremlinDatabaseName string = 'your-gremlin-db-name'
+param gremlinDatabaseName string = 'gremlin-db-name'
 
 @description('Azure Cosmos DB account name, max length 44 characters')
 param mongoAccountName string = 'mongo-${uniqueString(resourceGroup().id)}'
 
 @description('The name for the database')
-param mongoDBDatabaseName string = 'your-mongodb-db-name'
+param mongoDBDatabaseName string = 'mongodb-db-name'
 
 @description('Azure Cosmos DB account name, max length 44 characters')
 param sqlAccountName string = 'sql-${uniqueString(resourceGroup().id)}'
 
 @description('The name for the database')
-param sqlDatabaseName string = 'your-sql-db-name'
+param sqlDatabaseName string = 'sql-db-name'
 
 @description('Location for the Azure Cosmos DB account.')
 param location string = resourceGroup().location
