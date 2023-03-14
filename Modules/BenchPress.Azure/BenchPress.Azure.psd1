@@ -19,7 +19,7 @@
     "Confirm-ContainerRegistry",
     "Confirm-CosmosDBAccount",
     "Confirm-CosmosDBGremlinDatabase",
-    "Confirm-CosmosDBMongoDatabase",
+    "Confirm-CosmosDBMongoDBDatabase",
     "Confirm-CosmosDBSqlDatabase",
     "Confirm-KeyVault",
     "Confirm-KeyVaultCertificate",

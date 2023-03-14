@@ -52,7 +52,7 @@ function Confirm-Resource {
       the name of the workspace to which the resource is assigned.
 
     .PARAMETER AccountName
-      If the Azure resource has an associated account name (e.g., Cosmos DB SQL Database),
+      If the Azure resource has an associated account name (e.g., Cosmos DB SQL Database)
 
     .PARAMETER PropertyKey
       The name of the property to check on the resource

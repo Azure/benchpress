@@ -23,11 +23,13 @@ The `CosmosDB*.Tests.ps1` files contain examples of using the `Confirm-AzBPCosmo
 
 1. Update `CosmosDB.Tests.ps1` variables to point to your expected resources:
 
-   - `rg-name`         -> `your-resource-group-name`
-   - `account-name`    -> `your-cosmosdb-account-name`
-   - `gremlin-db-name` -> `your-gremlin-db-name`
-   - `mongodb-db-name` -> `your-mongodb-db-name`
-   - `sql-db-name`     -> `your-sql-db-name`
+   - `rg-name`                 -> `your-resource-group-name`
+   - `gremlin-account-name`    -> `your-gremlin-account-name`
+   - `gremlin-db-name`         -> `your-gremlin-db-name`
+   - `mongodb-account-name`    -> `your-mongodb-account-name`
+   - `mongodb-db-name`         -> `your-mongodb-db-name`
+   - `sql-account-name`        -> `your-sql-account-name`
+   - `sql-db-name`             -> `your-sql-db-name`
 
 1. If using a local copy of `Az-InfrastructureTest`, replace `Import-Module Az-InfrastructureTest` with
 `Import-Module "../../bin/BenchPress.Azure.psd1"`.

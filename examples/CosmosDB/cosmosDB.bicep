@@ -1,8 +1,20 @@
 @description('Azure Cosmos DB account name, max length 44 characters')
-param docAccountName string = 'doc-${uniqueString(resourceGroup().id)}'
+param gremlinAccountName string = 'gremlin-${uniqueString(resourceGroup().id)}'
+
+@description('The name for the database')
+param gremlinDatabaseName string = 'your-gremlin-db-name'
 
 @description('Azure Cosmos DB account name, max length 44 characters')
 param mongoAccountName string = 'mongo-${uniqueString(resourceGroup().id)}'
+
+@description('The name for the database')
+param mongoDBDatabaseName string = 'your-mongodb-db-name'
+
+@description('Azure Cosmos DB account name, max length 44 characters')
+param sqlAccountName string = 'sql-${uniqueString(resourceGroup().id)}'
+
+@description('The name for the database')
+param sqlDatabaseName string = 'your-sql-db-name'
 
 @description('Location for the Azure Cosmos DB account.')
 param location string = resourceGroup().location
@@ -12,15 +24,6 @@ param primaryRegion string = 'eastus'
 
 @description('The secondary region for the Azure Cosmos DB account.')
 param secondaryRegion string = 'eastus2'
-
-@description('The name for the database')
-param gremlinDatabaseName string = 'your-gremlin-db-name'
-
-@description('The name for the database')
-param mongoDBDatabaseName string = 'your-mongodb-db-name'
-
-@description('The name for the database')
-param sqlDatabaseName string = 'your-sql-db-name'
 
 var locations = [
   {
@@ -35,11 +38,16 @@ var locations = [
   }
 ]
 
-resource doc_account 'Microsoft.DocumentDB/databaseAccounts@2022-05-15' = {
-  name: toLower(docAccountName)
+resource gremlin_account 'Microsoft.DocumentDB/databaseAccounts@2022-05-15' = {
+  name: toLower(gremlinAccountName)
   location: location
   kind: 'GlobalDocumentDB'
   properties: {
+    capabilities: [
+      {
+        name: 'EnableGremlin'
+      }
+    ]
     consistencyPolicy: {
       defaultConsistencyLevel: 'Session'
     }
@@ -49,17 +57,8 @@ resource doc_account 'Microsoft.DocumentDB/databaseAccounts@2022-05-15' = {
   }
 }
 
-resource sql_database 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2022-05-15' = {
-  name: '${doc_account.name}/${sqlDatabaseName}'
-  properties: {
-    resource: {
-      id: sqlDatabaseName
-    }
-  }
-}
-
 resource gremlin_database 'Microsoft.DocumentDB/databaseAccounts/gremlinDatabases@2022-05-15' = {
-  name: '${doc_account.name}/${gremlinDatabaseName}'
+  name: '${gremlin_account.name}/${gremlinDatabaseName}'
   properties: {
     resource: {
       id: gremlinDatabaseName
@@ -100,6 +99,29 @@ resource database 'Microsoft.DocumentDB/databaseAccounts/mongodbDatabases@2022-0
       autoscaleSettings: {
         maxThroughput: 1000
       }
+    }
+  }
+}
+
+resource sql_account 'Microsoft.DocumentDB/databaseAccounts@2022-05-15' = {
+  name: toLower(sqlAccountName)
+  location: location
+  kind: 'GlobalDocumentDB'
+  properties: {
+    consistencyPolicy: {
+      defaultConsistencyLevel: 'Session'
+    }
+    locations: locations
+    databaseAccountOfferType: 'Standard'
+    enableAutomaticFailover: true
+  }
+}
+
+resource sql_database 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2022-05-15' = {
+  name: '${sql_account.name}/${sqlDatabaseName}'
+  properties: {
+    resource: {
+      id: sqlDatabaseName
     }
   }
 }
