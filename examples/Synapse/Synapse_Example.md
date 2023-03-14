@@ -49,3 +49,11 @@ and `Confirm-AzBPSynapseSqlPool` cmdlet.
    ```
 
 1. Don't forget to delete any deployed resources that are no longer needed.
+
+## Troubleshooting
+
+If you run into role assignment errors, you'll need to either:
+
+1. Make sure the Service Principal you use to deploy has a role assignment in the azure portal as an owner.
+
+1. Use `Connect-AzAccount` if you have credentials as an owner to the subscription.
