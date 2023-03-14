@@ -1,0 +1,49 @@
+---
+name: cd-create-version-tag
+
+on: #  yamllint disable-line rule:truthy
+  pull_request:
+    types: [closed]
+    branches: [main]
+
+jobs:
+  create-version-tag:
+    if: github.event.pull_request.merged == true && github.head_ref == 'version'
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.versiontag.outputs.version }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Retrieve Version and Create Version Tag
+        id: versiontag
+        # I don't know why, but the first sed command adds a space to the beginning of the string so the second sed
+        # command removes that space.
+        # This will create a version tag with a leading "v" followed by the ModuleVersion value inside the quotes
+        # e.g., "v0.1" for ModuleVersion = "0.1"
+        run: |
+          cd ./Modules/BenchPress.Azure
+          version=v$(sed -n 's/ModuleVersion = "\([^"]*\)"/\1/p' ./BenchPress.Azure.psd1 \
+            | sed -n 's/\s*//p')
+          git tag "$version"
+          git push origin "$version"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+  create-release:
+    needs: create-version-tag
+    runs-on: ubuntu-latest
+    env:
+      ARTIFACT_FILENAME: release-artifacts
+    steps:
+      - uses: actions/checkout@v2
+      - name: Create Release Artifacts
+        run: |
+          zip -r "$ARTIFACT_FILENAME" BenchPress Modules
+      - name: Create GitHub Release for BenchPress Module
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ needs.create-version-tag.outputs.version }}
+          artifactErrorsFailBuild: true
+          artifacts: ${{ format('{0}{1}', env.ARTIFACT_FILENAME, '.zip') }}
+          generateReleaseNotes: true
+          makeLatest: true
+          prerelease: true
+          token: ${{ secrets.GITHUB_TOKEN }}
