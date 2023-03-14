@@ -40,6 +40,7 @@ function ShouldBeInResourceGroup ($ActualValue, [string]$ExpectedValue, [switch]
     } elseif ([bool]$ActualValue.ResourceDetails.PSObject.Properties[$idProperty]){
       # If it does not have a property for resource group but it has an Id,
       # then we can get it from Id
+      # ex: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
       $resourceId = $ActualValue.ResourceDetails.$idProperty
       $resourceGroupPath = $resourceId -split 'resourceGroups' | Select-Object -Last 1
       $resourceGroupName = @($resourceGroupPath -split '/')[1]
