@@ -52,14 +52,14 @@ This stage consists of the following steps:
 
 - [`ci.yml`](../.github/workflows/ci.yml) - builds the .NET solution and the final module file for BenchPress. It also
 tests the module for deployability to a local PS Repo. Lastly, it generates documentation using help comments for
-PowerShell cmdlets and saves documentation to a branch named `docs`. A PR will be created with any changes pushed
-to the `docs` branch.
+PowerShell cmdlets and saves documentation to a branch named `docs`. A PR will need to be **manually** created with any
+changes pushed to the `docs` branch in order to merge them into `main`.
   - The local "PowerShell Gallery" uses the workflow runner's local filesystem to simulate PowerShell Gallery. We then
     push and pull from this filesystem using the same PowerShell cmdlets that are used to interact with PowerShell
     Gallery.
 - [`ci-module-versioning.yml`](../.github/workflows/ci-module-versioning.yml) - calculating the version for the
   PowerShell module using GitVersion and writing it to the module manifest on a branch named `version`. A PR will
-  be created with any changes pushed to the `version` branch.
+  need to be **manually** created with any changes pushed to the `version` branch in order to merge them into `main`.
 
 ### Continuous Deployment
 
