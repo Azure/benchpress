@@ -20,6 +20,8 @@
     "Confirm-DataFactory",
     "Confirm-DataFactoryLinkedService",
     "Confirm-EventHub",
+    "Confirm-EventHubConsumerGroup",
+    "Confirm-EventHubNamespace",
     "Confirm-KeyVault",
     "Confirm-KeyVaultCertificate",
     "Confirm-KeyVaultKey",

@@ -26,6 +26,7 @@
    - `rg-test` -> `your-resource-group-name`
    - `eventhubtest` -> `your-eventhub-name`
    - `samplenamespace` -> `your-eventhub-namespace-name`
+   - `eventhubconsumergrouptest` -> `your-eventhub-consumer-group-name`
 
 1. If using a local copy of `Az-InfrastructureTest`, replace `Import-Module Az-InfrastructureTest` with
 `Import-Module "../../bin/BenchPress.Azure.psd1"`.
