@@ -67,6 +67,9 @@ function Get-ResourceByType {
       If testing a resource that belongs to some sort of Azure workspace (i.e. SQL pool in a Synapse workspace),
       the name of the workspace to which the resource is assigned.
 
+    .PARAMETER AccountName
+      If the Azure resource has an associated account name (e.g., Cosmos DB SQL Database),
+
     .EXAMPLE
       Get-AzBPResourceByType -ResourceType ActionGroup -ResourceName "bpactiongroup" -ResourceGroupName "rgbenchpresstest"
 
@@ -89,7 +92,8 @@ function Get-ResourceByType {
     [string]$ResourceGroupName,
 
     [Parameter(Mandatory = $true)]
-    [ValidateSet("ActionGroup", "AksCluster", "AppInsights", "AppServicePlan", "ContainerRegistry", "DataFactory",
+    [ValidateSet("ActionGroup", "AksCluster", "AppInsights", "AppServicePlan", "ContainerRegistry", "CosmosDBAccount",
+    "CosmosDBGremlinDatabase", "CosmosDBMongoDBDatabase", "CosmosDBSqlDatabase", "DataFactory",
     "DataFactoryLinkedService", "KeyVault", "OperationalInsightsWorkspace", "ResourceGroup", "SqlDatabase",
     "SqlServer", "StorageAccount", "SynapseSparkPool", "SynapseSqlPool", "SynapseWorkspace", "VirtualMachine",
     "WebApp")]
@@ -102,7 +106,10 @@ function Get-ResourceByType {
     [string]$DataFactoryName,
 
     [Parameter(Mandatory = $false)]
-    [string]$WorkspaceName
+    [string]$WorkspaceName,
+
+    [Parameter(Mandatory = $false)]
+    [string]$AccountName
   )
   Begin { }
   Process {
@@ -121,6 +128,33 @@ function Get-ResourceByType {
       }
       "ContainerRegistry" {
         return Confirm-ContainerRegistry -Name $ResourceName -ResourceGroupName $ResourceGroupName
+      }
+      "CosmosDBAccount" {
+        return Confirm-CosmosDBAccount -ResourceGroupName $ResourceGroupName -Name $AccountName
+      }
+      "CosmosDBGremlinDatabase" {
+        $params = @{
+          ResourceGroupName = $ResourceGroupName
+          AccountName = $AccountName
+          Name = $ResourceName
+        }
+        return Confirm-CosmosDBGremlinDatabase @params
+      }
+      "CosmosDBMongoDBDatabase" {
+        $params = @{
+          ResourceGroupName = $ResourceGroupName
+          AccountName = $AccountName
+          Name = $ResourceName
+        }
+        return Confirm-CosmosDBMongoDBDatabase @params
+      }
+      "CosmosDBSqlDatabase" {
+        $params = @{
+          ResourceGroupName = $ResourceGroupName
+          AccountName = $AccountName
+          Name = $ResourceName
+        }
+        return Confirm-CosmosDBSqlDatabase @params
       }
       "DataFactory" {
         return Confirm-DataFactory -Name $ResourceName -ResourceGroupName $ResourceGroupName
