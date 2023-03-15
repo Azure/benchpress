@@ -14,8 +14,8 @@ Confirms whether a resource exists or properties on a resource are configured co
 
 ```
 Confirm-AzBPResource [-ResourceType] <String> [-ResourceName] <String> [[-ResourceGroupName] <String>]
- [[-ServerName] <String>] [[-DataFactoryName] <String>] [[-WorkspaceName] <String>] [[-PropertyKey] <String>]
- [[-PropertyValue] <String>] [<CommonParameters>]
+ [[-ServerName] <String>] [[-DataFactoryName] <String>] [[-WorkspaceName] <String>] [[-AccountName] <String>]
+ [[-PropertyKey] <String>] [[-PropertyValue] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -60,11 +60,16 @@ $result = Confirm-AzBPResource @params
 ## PARAMETERS
 
 ### -ResourceType
-The type of the Resource (currently supports the following:
+The type of the Resource.
+Currently Supported:
 ActionGroup
 AksCluster
 AppInsights
 AppServicePlan
+CosmosDBAccount
+CosmosDBGremlinDatabase
+CosmosDBMongoDBDatabase
+CosmosDBSqlDatabase
 ContainerRegistry
 DataFactory
 DataFactoryLinkedService
@@ -77,7 +82,7 @@ SynapseSparkPool
 SynapseSqlPool
 SynapseWorkspace
 VirtualMachine
-WebApp)
+WebApp
 
 ```yaml
 Type: String
@@ -169,6 +174,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -AccountName
+If the Azure resource has an associated account name (e.g., Cosmos DB SQL Database)
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 7
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -PropertyKey
 The name of the property to check on the resource
 
@@ -178,7 +198,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 7
+Position: 8
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -193,7 +213,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 8
+Position: 9
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

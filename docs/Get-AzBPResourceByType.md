@@ -14,7 +14,8 @@ Gets an Azure Resource.
 
 ```
 Get-AzBPResourceByType [-ResourceName] <String> [[-ResourceGroupName] <String>] [-ResourceType] <String>
- [[-ServerName] <String>] [[-DataFactoryName] <String>] [[-WorkspaceName] <String>] [<CommonParameters>]
+ [[-ServerName] <String>] [[-DataFactoryName] <String>] [[-WorkspaceName] <String>] [[-AccountName] <String>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -141,6 +142,21 @@ Aliases:
 
 Required: False
 Position: 6
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AccountName
+If the Azure resource has an associated account name (e.g., Cosmos DB SQL Database),
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 7
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
