@@ -12,13 +12,13 @@ function Confirm-EventHubConsumerGroup {
     .DESCRIPTION
       The Confirm-AzBPEventHubConsumerGroup cmdlet gets an EventHub ConsumerGroup using the specified EventHub ConsumerGroup name,
       EventHub Namespace name, Eventhub name and Resource Group name.
-    
+
     .PARAMETER Name
       The name of the EventHub ConsumerGroup
 
     .PARAMETER NamespaceName
       The name of the EventHub Namespace
-    
+
     .PARAMETER EventHubName
       The name of the EventHub
 
