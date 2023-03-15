@@ -23,11 +23,15 @@ function Confirm-Resource {
       The name of the Resource Group
 
     .PARAMETER ResourceType
-      The type of the Resource (currently supports the following:
+      The type of the Resource. Currently Supported:
       ActionGroup
       AksCluster
       AppInsights
       AppServicePlan
+      CosmosDBAccount
+      CosmosDBGremlinDatabase
+      CosmosDBMongoDBDatabase
+      CosmosDBSqlDatabase
       ContainerRegistry
       DataFactory
       DataFactoryLinkedService
@@ -43,7 +47,7 @@ function Confirm-Resource {
       SynapseSqlPool
       SynapseWorkspace
       VirtualMachine
-      WebApp)
+      WebApp
 
     .PARAMETER ServerName
       If testing an Azure SQL Database resource, the name of the server to which the database is assigned.
@@ -55,6 +59,9 @@ function Confirm-Resource {
     .PARAMETER WorkspaceName
       If testing a resource that belongs to some sort of Azure workspace (i.e. SQL pool in a Synapse workspace),
       the name of the workspace to which the resource is assigned.
+
+    .PARAMETER AccountName
+      If the Azure resource has an associated account name (e.g., Cosmos DB SQL Database)
 
     .PARAMETER PropertyKey
       The name of the property to check on the resource
@@ -95,7 +102,8 @@ function Confirm-Resource {
   [OutputType([ConfirmResult])]
   param (
     [Parameter(Mandatory = $true)]
-    [ValidateSet("ActionGroup", "AksCluster", "AppInsights", "AppServicePlan", "ContainerRegistry", "DataFactory",
+    [ValidateSet("ActionGroup", "AksCluster", "AppInsights", "AppServicePlan", "ContainerRegistry", "CosmosDBAccount",
+    "CosmosDBGremlinDatabase", "CosmosDBMongoDBDatabase", "CosmosDBSqlDatabase", "DataFactory",
     "DataFactoryLinkedService", "EventHub", "EventHubConsumerGroup", "EventHubNamespace", "KeyVault", "OperationalInsightsWorkspace", "ResourceGroup", "SqlDatabase",
     "SqlServer", "StorageAccount", "SynapseSparkPool", "SynapseSqlPool", "SynapseWorkspace", "VirtualMachine",
     "WebApp")]
@@ -123,6 +131,9 @@ function Confirm-Resource {
     [string]$WorkspaceName,
 
     [Parameter(Mandatory = $false)]
+    [string]$AccountName,
+
+    [Parameter(Mandatory = $false)]
     [string]$PropertyKey,
 
     [Parameter(Mandatory = $false)]
@@ -131,14 +142,15 @@ function Confirm-Resource {
   Begin { }
   Process {
     $ResourceParams = @{
-      ResourceGroupName = $ResourceGroupName
-      ResourceName      = $ResourceName
       ResourceType      = $ResourceType
       NamespaceName     = $NamespaceName
       EventHubName      = $EventHubName
+      ResourceName      = $ResourceName
+      ResourceGroupName = $ResourceGroupName
       ServerName        = $ServerName
       DataFactoryName   = $DataFactoryName
       WorkspaceName     = $WorkspaceName
+      AccountName       = $AccountName
     }
 
     $ConfirmResult = Get-ResourceByType @ResourceParams

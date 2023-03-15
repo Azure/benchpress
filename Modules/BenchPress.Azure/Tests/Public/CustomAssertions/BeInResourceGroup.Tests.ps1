@@ -46,6 +46,14 @@ Describe "ShouldBeInResourceGroup" {
       $result | Should -Not -BeInResourceGroup 'fakerg'
     }
 
+    It "Should be true if Id exists" {
+      $mockResource = [PSCustomObject]@{
+        Id = '/subscriptions/8274ddsad-12318/resourceGroups/fakerg/providers/Microsoft.Synapse/workspaces/fakerg'
+      }
+      $result = [ConfirmResult]::new($mockResource, $null)
+      $result | Should -BeInResourceGroup 'fakerg'
+    }
+
     It "Should fail if ConfirmResult is null " {
       { $null | Should -BeInResourceGroup 'testrg' } | Should -Throw -ErrorId 'PesterAssertionFailed'
     }
@@ -61,11 +69,27 @@ Describe "ShouldBeInResourceGroup" {
       { $result | Should -BeInResourceGroup 'fakerg' }  | Should -Throw -ErrorId 'PesterAssertionFailed'
     }
 
-    It "Should fail if if ResourceGroupName or ResourceGroup empty with '-Not'" {
+    It "Should fail if ResourceGroupName or ResourceGroup empty with '-Not'" {
       $mockResource = [PSCustomObject]@{
       }
       $result = [ConfirmResult]::new($mockResource, $null)
       { $result | Should -Not -BeInResourceGroup 'fakerg' }  | Should -Throw -ErrorId 'PesterAssertionFailed'
+    }
+
+    It "Should fail if Id is the wrong format" {
+      $mockResource = [PSCustomObject]@{
+        Id = 'https://myvault.vault.azure.net/keys/my-key/version'
+      }
+      $result = [ConfirmResult]::new($mockResource, $null)
+      { $result | Should -BeInResourceGroup 'fakerg' } | Should -Throw -ErrorId 'PesterAssertionFailed'
+    }
+
+    It "Should fail if Id is the wrong format with '-Not'" {
+      $mockResource = [PSCustomObject]@{
+        Id = 'https://myvault.vault.azure.net/keys/my-key/version'
+      }
+      $result = [ConfirmResult]::new($mockResource, $null)
+      { $result | Should -Not -BeInResourceGroup 'fakerg' } | Should -Throw -ErrorId 'PesterAssertionFailed'
     }
   }
 }
