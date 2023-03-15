@@ -9,6 +9,7 @@ using module ./../Classes/ConfirmResult.psm1
 . $PSScriptRoot/Confirm-DataFactory.ps1
 . $PSScriptRoot/Confirm-DataFactoryLinkedService.ps1
 . $PSScriptRoot/Confirm-EventHub.ps1
+. $PSScriptRoot/Confirm-EventHubConsumerGroup.ps1
 . $PSScriptRoot/Confirm-EventHubNamespace.ps1
 . $PSScriptRoot/Confirm-KeyVault.ps1
 . $PSScriptRoot/Confirm-OperationalInsightsWorkspace.ps1
