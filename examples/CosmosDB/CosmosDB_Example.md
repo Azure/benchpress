@@ -23,7 +23,7 @@ The `CosmosDB*.Tests.ps1` files contain examples of using the `Confirm-AzBPCosmo
 
 1. Update `CosmosDB.Tests.ps1` variables to point to your expected resources:
 
-   - `rg-name`                 -> `your-resource-group-name`
+   - `rg-test`                 -> `your-resource-group-name`
    - `gremlin-account-name`    -> `your-gremlin-account-name`
    - `gremlin-db-name`         -> `your-gremlin-db-name`
    - `mongodb-account-name`    -> `your-mongodb-account-name`
