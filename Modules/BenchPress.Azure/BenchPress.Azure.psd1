@@ -19,6 +19,7 @@
     "Confirm-ContainerRegistry",
     "Confirm-DataFactory",
     "Confirm-DataFactoryLinkedService",
+    "Confirm-EventHub",
     "Confirm-KeyVault",
     "Confirm-KeyVaultCertificate",
     "Confirm-KeyVaultKey",
