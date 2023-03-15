@@ -40,6 +40,18 @@ Describe 'Verify Synapse Workspace' {
     $result | Should -BeInLocation $location
   }
 
+  it 'Should contain a synapse workspace named samplesynws in rg-test' {
+    # Using custom assertion to check if the workspace is in the correct resource group
+    $rgName = 'rg-test'
+    $workspaceName = 'samplesynws'
+
+    #act
+    $result = Confirm-AzBPSynapseWorkspace -ResourceGroupName $rgName -WorkspaceName $workspaceName
+
+    #assert
+    $result | Should -BeInResourceGroup 'rg-test'
+  }
+
   it 'Should not contain a synapse workspace named nosamplesynws' {
     #arrange
     $rgName = 'rg-test'
@@ -57,7 +69,7 @@ Describe 'Verify Synapse Workspace' {
   }
 }
 
-Describe 'Verify Synapse Spark/SQL Pool' {
+ Describe 'Verify Synapse Spark/SQL Pool' {
   it 'Should contain a synapse workspace with a spark pool named samplespark' {
     #arrange
     $params = @{
@@ -104,6 +116,20 @@ Describe 'Verify Synapse Spark/SQL Pool' {
     $result | Should -BeInLocation $location
   }
 
+  it 'Should contain a spark pool in rg-test' {
+    # Using custom assertion to check if the spark pool is in the correct resource group
+    $params = @{
+      ResourceGroupName    = 'rg-test'
+      WorkspaceName        = 'samplesynws'
+      SynapseSparkPoolName = 'samplespark'
+    }
+    #act
+    $result = Confirm-AzBPSynapseSparkPool @params
+
+    #assert
+    $result | Should -BeInResourceGroup 'rg-test'
+  }
+
   it 'Should contain a synapse workspace with a sql pool named samplesql' {
     #arrange
     $params = @{
@@ -148,5 +174,20 @@ Describe 'Verify Synapse Spark/SQL Pool' {
 
     #assert
     $result | Should -BeInLocation $location
+  }
+
+  it 'Should contain a sql pool in rg-test' {
+    # Using custom assertion to check if the sql pool is in the correct resource group
+    $params = @{
+      ResourceGroupName  = 'rg-test'
+      WorkspaceName      = 'samplesynws'
+      SynapseSqlPoolName = 'samplesql'
+    }
+
+    #act
+    $result = Confirm-AzBPSynapseSqlPool @params
+
+    #assert
+    $result | Should -BeInResourceGroup 'rg-test'
   }
 }
