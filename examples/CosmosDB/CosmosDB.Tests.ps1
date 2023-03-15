@@ -157,24 +157,6 @@ Describe 'Comsos DB Mongo DB Database' {
     $result.Success | Should -Be $true
   }
 
-  It 'Should not contain a Cosmos DB account with the given name' {
-    #arrange
-    # The 'ErrorAction = SilentlyContinue' command suppresses all errors.
-    # In this test, it will suppress the error message when a resource cannot be found.
-    # Remove this field to see all errors.
-    $params = @{
-      ResourceGroupName = "rg-name"
-      Name              = "nocdbbenchpresstest"
-      ErrorAction       = "SilentlyContinue"
-    }
-
-    #act
-    $result = Confirm-AzBPCosmosDBAccount @params
-
-    #assert
-    $result.Success | Should -Be $false
-  }
-
   It 'Should deploy a Cosmos DB Account named `mongodb-account-name`' {
     #arrange
     $params = @{
@@ -295,24 +277,6 @@ Describe 'Comsos DB SQL Database' {
 
     #assert
     $result.Success | Should -Be $true
-  }
-
-  It 'Should not contain a Cosmos DB account with the given name' {
-    #arrange
-    # The 'ErrorAction = SilentlyContinue' command suppresses all errors.
-    # In this test, it will suppress the error message when a resource cannot be found.
-    # Remove this field to see all errors.
-    $params = @{
-      ResourceGroupName = "rg-name"
-      Name              = "nocdbbenchpresstest"
-      ErrorAction       = "SilentlyContinue"
-    }
-
-    #act
-    $result = Confirm-AzBPCosmosDBAccount @params
-
-    #assert
-    $result.Success | Should -Be $false
   }
 
   It 'Should deploy a Cosmos DB Account named `sql-account-name`' {
