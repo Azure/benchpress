@@ -1,5 +1,6 @@
 # INLINE_SKIP
 using module ./../Classes/ConfirmResult.psm1
+using module ./../Classes/ResourceTypeEnum.psm1
 
 . $PSScriptRoot/Confirm-ActionGroup.ps1
 . $PSScriptRoot/Confirm-AksCluster.ps1
@@ -100,12 +101,7 @@ function Get-ResourceByType {
     [string]$ResourceGroupName,
 
     [Parameter(Mandatory = $true)]
-    [ValidateSet("ActionGroup", "AksCluster", "AppInsights", "AppServicePlan", "ContainerRegistry", "CosmosDBAccount",
-    "CosmosDBGremlinDatabase", "CosmosDBMongoDBDatabase", "CosmosDBSqlDatabase", "DataFactory",
-    "DataFactoryLinkedService", "EventHub", "EventHubConsumerGroup", "EventHubNamespace",
-    "KeyVault", "OperationalInsightsWorkspace", "ResourceGroup", "SqlDatabase",
-    "SqlServer", "StorageAccount", "StorageContainer", "SynapseSparkPool", "SynapseSqlPool", "SynapseWorkspace",
-    "VirtualMachine", "WebApp")]
+    [ValidateSet(ResourceType)]
     [string]$ResourceType,
 
     [Parameter(Mandatory = $false)]

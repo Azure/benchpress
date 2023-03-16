@@ -1,0 +1,19 @@
+enum ResourceType{
+  ActionGroup
+  AksCluster
+  AppInsights
+  AppServicePlan
+  ContainerRegistry
+  DataFactory
+  DataFactoryLinkedService
+  KeyVault
+  ResourceGroup
+  SqlDatabase
+  SqlServer
+  StorageAccount
+  SynapseSparkPool
+  SynapseSqlPool
+  SynapseWorkspace
+  VirtualMachine
+  WebApp
+}
