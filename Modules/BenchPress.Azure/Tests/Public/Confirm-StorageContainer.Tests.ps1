@@ -12,8 +12,8 @@ Describe "Confirm-StorageContainer" {
 
     It "Calls Get-AzStorageContainer" {
       Mock Get-AzStorageAccount{
-        $stgAcct = [Microsoft.Azure.Management.Storage.Models.StorageAccount]::new()
-        return [Microsoft.Azure.Commands.Management.Storage.Models.PSStorageAccount]::new($stgAcct)}
+        return New-MockObject -Type Microsoft.Azure.Commands.Management.Storage.Models.PSStorageAccount
+      }
       Mock Get-AzStorageContainer{}
       Confirm-StorageContainer -Name "cn" -AccountName "sn" -ResourceGroupName "rgn"
       Should -Invoke -CommandName "Get-AzStorageAccount" -Times 1

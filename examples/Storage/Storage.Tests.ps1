@@ -88,6 +88,7 @@ Describe 'Verify Storage Container' {
       ResourceGroupName = 'rg-test'
       AccountName       = 'azbenchpressstorage'
       Name              = 'noazbenchpresscontainer'
+      ErrorAction       = 'SilentlyContinue'
     }
 
     #act

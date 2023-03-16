@@ -47,7 +47,8 @@ function Confirm-StorageContainer {
     $ConnectResults = Connect-Account
   }
   Process {
-      $Resource = Get-AzStorageAccount -ResourceGroupName $ResourceGroupName -AccountName $AccountName | Get-AzStorageContainer -Name $Name
+      $Resource = Get-AzStorageAccount -ResourceGroupName $ResourceGroupName -AccountName $AccountName `
+       | Get-AzStorageContainer -Name $Name
 
       [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
   }
