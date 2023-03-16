@@ -35,6 +35,9 @@ function Confirm-Resource {
       ContainerRegistry
       DataFactory
       DataFactoryLinkedService
+      EventHub
+      EventHubConsumerGroup
+      EventHubNamespace
       KeyVault
       ResourceGroup
       SqlDatabase
@@ -102,7 +105,8 @@ function Confirm-Resource {
     [Parameter(Mandatory = $true)]
     [ValidateSet("ActionGroup", "AksCluster", "AppInsights", "AppServicePlan", "ContainerRegistry", "CosmosDBAccount",
     "CosmosDBGremlinDatabase", "CosmosDBMongoDBDatabase", "CosmosDBSqlDatabase", "DataFactory",
-    "DataFactoryLinkedService", "KeyVault", "OperationalInsightsWorkspace", "ResourceGroup", "SqlDatabase",
+    "DataFactoryLinkedService", "EventHub", "EventHubConsumerGroup", "EventHubNamespace",
+    "KeyVault", "OperationalInsightsWorkspace", "ResourceGroup", "SqlDatabase",
     "SqlServer", "StorageAccount", "StorageContainer", "SynapseSparkPool", "SynapseSqlPool", "SynapseWorkspace",
     "VirtualMachine", "WebApp")]
     [string]$ResourceType,
@@ -112,6 +116,12 @@ function Confirm-Resource {
 
     [Parameter(Mandatory = $false)]
     [string]$ResourceGroupName,
+
+    [Parameter(Mandatory = $false)]
+    [string]$NamespaceName,
+
+    [Parameter(Mandatory = $false)]
+    [string]$EventHubName,
 
     [Parameter(Mandatory = $false)]
     [string]$ServerName,
@@ -135,6 +145,8 @@ function Confirm-Resource {
   Process {
     $ResourceParams = @{
       ResourceType      = $ResourceType
+      NamespaceName     = $NamespaceName
+      EventHubName      = $EventHubName
       ResourceName      = $ResourceName
       ResourceGroupName = $ResourceGroupName
       ServerName        = $ServerName
