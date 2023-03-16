@@ -116,7 +116,7 @@ public class TestGenerator
         public string ExpectedValue { get; set; }
     }
 
-    private IEnumerable<KeyValuePair<string, string>> GetParameters (TestDefinition definition)
+    private IEnumerable<KeyValuePair<string, string>> GetParameters(TestDefinition definition)
     {
         return definition.Metadata.ResourceType
             .GetResourceParameters(definition.Metadata)
