@@ -1,6 +1,7 @@
 # How To Run EventHub.Tests.ps1
 
-`EventHub.Tests.ps1` contains examples of using the `Confirm-AzBPEventHub` cmdlet.
+`EventHub.Tests.ps1` contains examples of using the `Confirm-AzBPEventHub`, `Confirm-AzBPEventHubConsumerGroup`,
+and `Confirm-AzBPEventHubNamespace` cmdlet.
 
 ## Pre-Requisites
 

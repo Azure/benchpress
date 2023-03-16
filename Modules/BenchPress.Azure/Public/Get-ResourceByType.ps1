@@ -100,7 +100,8 @@ function Get-ResourceByType {
     [Parameter(Mandatory = $true)]
     [ValidateSet("ActionGroup", "AksCluster", "AppInsights", "AppServicePlan", "ContainerRegistry", "CosmosDBAccount",
     "CosmosDBGremlinDatabase", "CosmosDBMongoDBDatabase", "CosmosDBSqlDatabase", "DataFactory",
-    "DataFactoryLinkedService", "EventHub", "EventHubConsumerGroup", "EventHubNamespace", "KeyVault", "OperationalInsightsWorkspace", "ResourceGroup", "SqlDatabase",
+    "DataFactoryLinkedService", "EventHub", "EventHubConsumerGroup", "EventHubNamespace",
+    "KeyVault", "OperationalInsightsWorkspace", "ResourceGroup", "SqlDatabase",
     "SqlServer", "StorageAccount", "SynapseSparkPool", "SynapseSqlPool", "SynapseWorkspace", "VirtualMachine",
     "WebApp")]
     [string]$ResourceType,

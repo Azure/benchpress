@@ -12,7 +12,13 @@ Describe "Confirm-EventHubConsumerGroup" {
 
     It "Calls Get-AzEventHubConsumerGroup" {
       Mock Get-AzEventHubConsumerGroup{}
-      Confirm-EventHubConsumerGroup -Name "consumergroup" -NamespaceName "namespace" -EventHubName "eventhub" -ResourceGroupName "rgn"
+      $params = @{
+        Name              = "consumergroup"
+        NamespaceName     = "namespace"
+        EventHubName      = "eventhub"
+        ResourceGroupName = "rgn"
+      }
+      Confirm-EventHubConsumerGroup @params
       Should -Invoke -CommandName "Get-AzEventHubConsumerGroup" -Times 1
     }
   }

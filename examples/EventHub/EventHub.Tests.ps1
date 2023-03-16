@@ -17,9 +17,7 @@ Describe 'Verify EventHub' {
     #assert
     $result.Success | Should -Be $true
   }
-}
 
-Describe 'Verify EventHub Does Not Exist' {
   it 'Should not contain an eventhub with the given name' {
     #arrange
     $params = @{
@@ -37,9 +35,7 @@ Describe 'Verify EventHub Does Not Exist' {
     #assert
     $result.Success | Should -Be $false
   }
-}
 
-Describe 'Verify EventHub Exists with Custom Assertion' {
   it 'Should contain an EventHub named eventhubtest' {
     #arrange
     $params = @{
@@ -54,9 +50,7 @@ Describe 'Verify EventHub Exists with Custom Assertion' {
     #assert
     $result | Should -BeDeployed
   }
-}
 
-Describe 'Verify EventHub Exists in Correct Location' {
   it 'Should contain an EventHub named eventhubtest in westus3' {
     #arrange
     $params = @{
@@ -71,9 +65,7 @@ Describe 'Verify EventHub Exists in Correct Location' {
     #assert
     $result | Should -BeInLocation 'westus3'
   }
-}
 
-Describe 'Verify EventHub Exists in Resource Group' {
   it 'Should be in a resource group named rg-test' {
     #arrange
     $params = @{
@@ -102,9 +94,7 @@ Describe 'Verify EventHub Namespace' {
     #assert
     $result.Success | Should -Be $true
   }
-}
 
-Describe 'Verify EventHub Namespace Does Not Exist' {
   it 'Should not contain an eventhub namespace with the given name' {
     #arrange
     $rgName = 'rg-test'
@@ -119,9 +109,7 @@ Describe 'Verify EventHub Namespace Does Not Exist' {
     #assert
     $result.Success | Should -Be $false
   }
-}
 
-Describe 'Verify EventHub Namespace Exists with Custom Assertion' {
   it 'Should contain an EventHub Namespace named samplenamespace' {
     #arrange
     $rgName = 'rg-test'
@@ -133,9 +121,7 @@ Describe 'Verify EventHub Namespace Exists with Custom Assertion' {
     #assert
     $result | Should -BeDeployed
   }
-}
 
-Describe 'Verify EventHub Namespace Exists in Correct Location' {
   it 'Should contain an EventHub Namespace named samplenamespace in westus3' {
     #arrange
     $rgName = 'rg-test'
@@ -147,9 +133,7 @@ Describe 'Verify EventHub Namespace Exists in Correct Location' {
     #assert
     $result | Should -BeInLocation 'westus3'
   }
-}
 
-Describe 'Verify EventHub Namespace Exists in Resource Group' {
   it 'Should be in a resource group named rg-test' {
     #arrange
     $rgName = 'rg-test'
@@ -179,9 +163,7 @@ Describe 'Verify EventHub Consumer Group' {
     #assert
     $result.Success | Should -Be $true
   }
-}
 
-Describe 'Verify EventHub Consumer Group Does Not Exist' {
   it 'Should not contain an eventhub consumer group with the given name' {
     #arrange
     $params = @{
@@ -200,9 +182,7 @@ Describe 'Verify EventHub Consumer Group Does Not Exist' {
     #assert
     $result.Success | Should -Be $false
   }
-}
 
-Describe 'Verify EventHub Consumer Group Exists with Custom Assertion' {
   it 'Should contain an EventHub consumer group named consumergrouptest' {
     #arrange
     $params = @{
@@ -218,9 +198,7 @@ Describe 'Verify EventHub Consumer Group Exists with Custom Assertion' {
     #assert
     $result | Should -BeDeployed
   }
-}
 
-Describe 'Verify EventHub Consumer Group Exists in Correct Location' {
   it 'Should contain an EventHub consumer group named consumergrouptest in westus3' {
     #arrange
     $params = @{
@@ -236,9 +214,7 @@ Describe 'Verify EventHub Consumer Group Exists in Correct Location' {
     #assert
     $result | Should -BeInLocation 'westus3'
   }
-}
 
-Describe 'Verify EventHub Consumer Group Exists in Resource Group' {
   it 'Should be in a resource group named rg-test' {
     #arrange
     $params = @{

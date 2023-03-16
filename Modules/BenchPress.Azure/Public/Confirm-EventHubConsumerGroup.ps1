@@ -53,7 +53,14 @@ function Confirm-EventHubConsumerGroup {
     $ConnectResults = Connect-Account
   }
   Process {
-    $Resource = Get-AzEventHubConsumerGroup -Name $Name -NamespaceName $NamespaceName -EventHubName $EventHubName -ResourceGroupName $ResourceGroupName
+    $params = @{
+      Name              = $Name
+      NamespaceName     = $NamespaceName
+      EventHubName      = $EventHubName
+      ResourceGroupName = $ResourceGroupName
+    }
+
+    $Resource = Get-AzEventHubConsumerGroup @params
 
     [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
   }
