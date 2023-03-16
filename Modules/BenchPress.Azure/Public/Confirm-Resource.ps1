@@ -43,6 +43,7 @@ function Confirm-Resource {
       SqlDatabase
       SqlServer
       StorageAccount
+      StorageContainer
       SynapseSparkPool
       SynapseSqlPool
       SynapseWorkspace
@@ -61,7 +62,7 @@ function Confirm-Resource {
       the name of the workspace to which the resource is assigned.
 
     .PARAMETER AccountName
-      If the Azure resource has an associated account name (e.g., Cosmos DB SQL Database)
+      If the Azure resource has an associated account name (e.g., Cosmos DB SQL Database, Storage Container)
 
     .PARAMETER PropertyKey
       The name of the property to check on the resource
@@ -106,8 +107,8 @@ function Confirm-Resource {
     "CosmosDBGremlinDatabase", "CosmosDBMongoDBDatabase", "CosmosDBSqlDatabase", "DataFactory",
     "DataFactoryLinkedService", "EventHub", "EventHubConsumerGroup", "EventHubNamespace",
     "KeyVault", "OperationalInsightsWorkspace", "ResourceGroup", "SqlDatabase",
-    "SqlServer", "StorageAccount", "SynapseSparkPool", "SynapseSqlPool", "SynapseWorkspace", "VirtualMachine",
-    "WebApp")]
+    "SqlServer", "StorageAccount", "StorageContainer", "SynapseSparkPool", "SynapseSqlPool", "SynapseWorkspace",
+    "VirtualMachine", "WebApp")]
     [string]$ResourceType,
 
     [Parameter(Mandatory = $true)]

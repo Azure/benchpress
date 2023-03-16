@@ -17,6 +17,7 @@ using module ./../Classes/ConfirmResult.psm1
 . $PSScriptRoot/Confirm-SqlDatabase.ps1
 . $PSScriptRoot/Confirm-SqlServer.ps1
 . $PSScriptRoot/Confirm-StorageAccount.ps1
+. $PSScriptRoot/Confirm-StorageContainer.ps1
 . $PSScriptRoot/Confirm-SynapseSparkPool.ps1
 . $PSScriptRoot/Confirm-SynapseSqlPool.ps1
 . $PSScriptRoot/Confirm-SynapseWorkspace.ps1
@@ -56,6 +57,7 @@ function Get-ResourceByType {
       SqlDatabase
       SqlServer
       StorageAccount
+      StorageContainer
       SynapseSparkPool
       SynapseSqlPool
       SynapseWorkspace
@@ -74,7 +76,7 @@ function Get-ResourceByType {
       the name of the workspace to which the resource is assigned.
 
     .PARAMETER AccountName
-      If the Azure resource has an associated account name (e.g., Cosmos DB SQL Database),
+      If the Azure resource has an associated account name (e.g., Cosmos DB SQL Database, Storage Container),
 
     .EXAMPLE
       Get-AzBPResourceByType -ResourceType ActionGroup -ResourceName "bpactiongroup" -ResourceGroupName "rgbenchpresstest"
@@ -102,8 +104,8 @@ function Get-ResourceByType {
     "CosmosDBGremlinDatabase", "CosmosDBMongoDBDatabase", "CosmosDBSqlDatabase", "DataFactory",
     "DataFactoryLinkedService", "EventHub", "EventHubConsumerGroup", "EventHubNamespace",
     "KeyVault", "OperationalInsightsWorkspace", "ResourceGroup", "SqlDatabase",
-    "SqlServer", "StorageAccount", "SynapseSparkPool", "SynapseSqlPool", "SynapseWorkspace", "VirtualMachine",
-    "WebApp")]
+    "SqlServer", "StorageAccount", "StorageContainer", "SynapseSparkPool", "SynapseSqlPool", "SynapseWorkspace",
+    "VirtualMachine", "WebApp")]
     [string]$ResourceType,
 
     [Parameter(Mandatory = $false)]
@@ -148,24 +150,24 @@ function Get-ResourceByType {
       "CosmosDBGremlinDatabase" {
         $params = @{
           ResourceGroupName = $ResourceGroupName
-          AccountName = $AccountName
-          Name = $ResourceName
+          AccountName       = $AccountName
+          Name              = $ResourceName
         }
         return Confirm-CosmosDBGremlinDatabase @params
       }
       "CosmosDBMongoDBDatabase" {
         $params = @{
           ResourceGroupName = $ResourceGroupName
-          AccountName = $AccountName
-          Name = $ResourceName
+          AccountName       = $AccountName
+          Name              = $ResourceName
         }
         return Confirm-CosmosDBMongoDBDatabase @params
       }
       "CosmosDBSqlDatabase" {
         $params = @{
           ResourceGroupName = $ResourceGroupName
-          AccountName = $AccountName
-          Name = $ResourceName
+          AccountName       = $AccountName
+          Name              = $ResourceName
         }
         return Confirm-CosmosDBSqlDatabase @params
       }
@@ -222,6 +224,14 @@ function Get-ResourceByType {
       }
       "StorageAccount" {
         return Confirm-StorageAccount -Name $ResourceName -ResourceGroupName $ResourceGroupName
+      }
+      "StorageContainer" {
+        $params = @{
+          Name              = $ResourceName
+          AccountName       = $AccountName
+          ResourceGroupName = $ResourceGroupName
+        }
+        return Confirm-StorageContainer @params
       }
       "SynapseSparkPool" {
         $params = @{
