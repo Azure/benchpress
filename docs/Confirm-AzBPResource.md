@@ -14,8 +14,9 @@ Confirms whether a resource exists or properties on a resource are configured co
 
 ```
 Confirm-AzBPResource [-ResourceType] <String> [-ResourceName] <String> [[-ResourceGroupName] <String>]
- [[-ServerName] <String>] [[-DataFactoryName] <String>] [[-WorkspaceName] <String>] [[-AccountName] <String>]
- [[-PropertyKey] <String>] [[-PropertyValue] <String>] [<CommonParameters>]
+ [[-NamespaceName] <String>] [[-EventHubName] <String>] [[-ServerName] <String>] [[-DataFactoryName] <String>]
+ [[-WorkspaceName] <String>] [[-AccountName] <String>] [[-PropertyKey] <String>] [[-PropertyValue] <String>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -73,6 +74,9 @@ CosmosDBSqlDatabase
 ContainerRegistry
 DataFactory
 DataFactoryLinkedService
+EventHub
+EventHubConsumerGroup
+EventHubNamespace
 KeyVault
 ResourceGroup
 SqlDatabase
@@ -127,6 +131,36 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -NamespaceName
+{{ Fill NamespaceName Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 4
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -EventHubName
+{{ Fill EventHubName Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 5
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -ServerName
 If testing an Azure SQL Database resource, the name of the server to which the database is assigned.
 
@@ -136,7 +170,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 4
+Position: 6
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -152,7 +186,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 5
+Position: 7
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -169,7 +203,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 6
+Position: 8
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -184,7 +218,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 7
+Position: 9
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -199,7 +233,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 8
+Position: 10
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -214,7 +248,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 9
+Position: 11
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

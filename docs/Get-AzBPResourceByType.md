@@ -14,8 +14,8 @@ Gets an Azure Resource.
 
 ```
 Get-AzBPResourceByType [-ResourceName] <String> [[-ResourceGroupName] <String>] [-ResourceType] <String>
- [[-ServerName] <String>] [[-DataFactoryName] <String>] [[-WorkspaceName] <String>] [[-AccountName] <String>]
- [<CommonParameters>]
+ [[-ServerName] <String>] [[-DataFactoryName] <String>] [[-NamespaceName] <String>] [[-EventHubName] <String>]
+ [[-WorkspaceName] <String>] [[-AccountName] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -76,6 +76,9 @@ AppServicePlan
 ContainerRegistry
 DataFactory
 DataFactoryLinkedService
+EventHub
+EventHubConsumerGroup
+EventHubNamespace
 KeyVault
 ResourceGroup
 SqlDatabase
@@ -131,6 +134,36 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -NamespaceName
+{{ Fill NamespaceName Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 6
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -EventHubName
+{{ Fill EventHubName Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 7
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -WorkspaceName
 If testing a resource that belongs to some sort of Azure workspace (i.e.
 SQL pool in a Synapse workspace),
@@ -142,7 +175,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 6
+Position: 8
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -157,7 +190,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 7
+Position: 9
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
