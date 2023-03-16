@@ -9,3 +9,13 @@ resource storage 'Microsoft.Storage/storageAccounts@2022-09-01' = {
     name: 'Standard_LRS'
   }
 }
+
+resource blobService 'Microsoft.Storage/storageAccounts/blobServices@2021-04-01' = {
+  parent: storage
+  name: 'default'
+}
+
+resource container 'Microsoft.Storage/storageAccounts/blobServices/containers@2021-04-01' = {
+  parent: blobService
+  name: 'azbenchpresscontainer'
+}
