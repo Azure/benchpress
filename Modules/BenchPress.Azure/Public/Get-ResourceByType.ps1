@@ -1,6 +1,6 @@
 # INLINE_SKIP
 using module ./../Classes/ConfirmResult.psm1
-using module ./../Classes/ResourceTypeEnum.psm1
+using module ./../Classes/ResourceType.psm1
 
 . $PSScriptRoot/Confirm-ActionGroup.ps1
 . $PSScriptRoot/Confirm-AksCluster.ps1
@@ -101,8 +101,7 @@ function Get-ResourceByType {
     [string]$ResourceGroupName,
 
     [Parameter(Mandatory = $true)]
-    [ValidateSet(ResourceType)]
-    [string]$ResourceType,
+    [ResourceType]$ResourceType,
 
     [Parameter(Mandatory = $false)]
     [string]$ServerName,

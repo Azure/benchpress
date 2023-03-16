@@ -1,6 +1,6 @@
 # INLINE_SKIP
 using module ./../Classes/ConfirmResult.psm1
-using module ./../Classes/ResourceTypeEnum.psm1
+using module ./../Classes/ResourceType.psm1
 
 . $PSScriptRoot/Get-ResourceByType.ps1
 # end INLINE_SKIP
@@ -104,8 +104,7 @@ function Confirm-Resource {
   [OutputType([ConfirmResult])]
   param (
     [Parameter(Mandatory = $true)]
-    [ValidateSet(ResourceType)]
-    [string]$ResourceType,
+    [ResourceType]$ResourceType,
 
     [Parameter(Mandatory = $true)]
     [string]$ResourceName,
