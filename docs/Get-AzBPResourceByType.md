@@ -81,6 +81,7 @@ ResourceGroup
 SqlDatabase
 SqlServer
 StorageAccount
+StorageContainer
 SynapseSparkPool
 SynapseSqlPool
 SynapseWorkspace
@@ -148,7 +149,7 @@ Accept wildcard characters: False
 ```
 
 ### -AccountName
-If the Azure resource has an associated account name (e.g., Cosmos DB SQL Database),
+If the Azure resource has an associated account name (e.g., Cosmos DB SQL Database, Storage Container),
 
 ```yaml
 Type: String
