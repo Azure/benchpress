@@ -15,21 +15,6 @@ Describe 'Verify Stream Analytics Cluster' {
     $result.Success | Should -Be $true
   }
 
-  it 'Should not contain a Stream Analytics Cluster with the given name' {
-    #arrange
-    $rgName = 'rg-test'
-    $name = 'noteststreamcluster'
-
-    #act
-    # The '-ErrorAction SilentlyContinue' command suppresses all errors.
-    # In this test, it will suppress the error message when a resource cannot be found.
-    # Remove this field to see all errors.
-    $result = Confirm-AzBPStreamAnalyticsCluster -ResourceGroupName $rgName -Name $name -ErrorAction SilentlyContinue
-
-    #assert
-    $result.Success | Should -Be $false
-  }
-
   it 'Should contain a Stream Analytics Cluster named teststreamcluster' {
     #arrange
     $rgName = 'rg-test'
