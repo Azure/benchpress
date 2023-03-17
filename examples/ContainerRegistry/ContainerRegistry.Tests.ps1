@@ -2,7 +2,41 @@ BeforeAll {
   Import-Module Az.InfrastructureTesting
 }
 
-Describe 'Verify Container Registry' {
+Describe 'Verify Container Registry with Confirm-AzBPResource' {
+  it 'Should contain a container registry named testcontaineregistry' {
+    #arrange
+    $params = @{
+      ResourceType      = "ContainerRegistry"
+      ResourceName      = "testcontaineregistry"
+      ResourceGroupName = "rg-test"
+    }
+
+    #act
+    $result = Confirm-AzBPResource @params
+
+    #assert
+    $result.Success | Should -Be $true
+  }
+
+  it 'Should contain a container registry named testcontaineregistry is Standard' {
+    #arrange
+    $params = @{
+      ResourceType      = "ContainerRegistry"
+      ResourceName      = "testcontaineregistry"
+      ResourceGroupName = "rg-test"
+      PropertyKey       = "sku.name"
+      PropertyValue     = "Standard"
+    }
+
+    #act
+    $result = Confirm-AzBPResource @params
+
+    #assert
+    $result.Success | Should -Be $true
+  }
+}
+
+Describe 'Verify Container Registry with Confirm-AzBPContainerRegistry' {
   it 'Should contain a container registry with the given name' {
     #arrange
     $rgName = "rg-test"

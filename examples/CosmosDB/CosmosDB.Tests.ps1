@@ -2,6 +2,142 @@ BeforeAll {
   Import-Module Az.InfrastructureTesting
 }
 
+Describe 'Verify Cosmos DB Account with Confirm-AzBPResource' {
+  it 'Should contain a Cosmos DB Account named gremlin-account-name' {
+    #arrange
+    $params = @{
+      ResourceType      = "CosmosDBAccount"
+      ResourceName      = "gremlin-account-name"
+      ResourceGroupName = "rg-test"
+    }
+
+    #act
+    $result = Confirm-AzBPResource @params
+
+    #assert
+    $result.Success | Should -Be $true
+  }
+
+  it 'Should contain a Cosmos DB Account named gremlin-account-name with kind GlobalDocumentDB' {
+    #arrange
+    $params = @{
+      ResourceType      = "CosmosDBAccount"
+      ResourceName      = "gremlin-account-name"
+      ResourceGroupName = "rg-test"
+      PropertyKey       = "kind"
+      PropertyValue     = "GlobalDocumentDB"
+    }
+
+    #act
+    $result = Confirm-AzBPResource @params
+
+    #assert
+    $result.Success | Should -Be $true
+  }
+
+  it 'Should contain a Cosmos DB named gremlin-database-name' {
+    #arrange
+    $params = @{
+      ResourceType      = "CosmosDBGremlinDatabase"
+      ResourceName      = "grem-database-name"
+      ResourceGroupName = "rg-test"
+      AccountName       = "gremlin-account-name"
+    }
+
+    #act
+    $result = Confirm-AzBPResource @params
+
+    #assert
+    $result.Success | Should -Be $true
+  }
+
+  it 'Should contain a Cosmos DB named gremlin-database-name' {
+    #arrange
+    $params = @{
+      ResourceType      = "CosmosDBGremlinDatabase"
+      ResourceName      = "grem-database-name"
+      ResourceGroupName = "rg-test"
+      AccountName       = "gremlin-account-name"
+      PropertyKey       = "id"
+      PropertyValue     = "gremlin-db-name"
+    }
+
+    #act
+    $result = Confirm-AzBPResource @params
+
+    #assert
+    $result.Success | Should -Be $true
+  }
+
+  it 'Should contain a Cosmos DB named mongodb-db-name' {
+    #arrange
+    $params = @{
+      ResourceType      = "CosmosDBMongoDBDatabase"
+      ResourceName      = "mongodb-db-name"
+      ResourceGroupName = "rg-test"
+      AccountName       = "mongodb-account-name"
+    }
+
+    #act
+    $result = Confirm-AzBPResource @params
+
+    #assert
+    $result.Success | Should -Be $true
+  }
+
+  it 'Should contain a Cosmos DB named mongodb-db-name with id mongodb-db-name' {
+    #arrange
+    $params = @{
+      ResourceType      = "CosmosDBMongoDBDatabase"
+      ResourceName      = "mongodb-db-name"
+      ResourceGroupName = "rg-test"
+      AccountName       = "mongodb-account-name"
+      PropertyKey       = "id"
+      PropertyValue     = "mongodb-db-name"
+    }
+
+    #act
+    $result = Confirm-AzBPResource @params
+
+    #assert
+    $result.Success | Should -Be $true
+  }
+
+  it 'Should contain a Cosmos DB named sql-db-name' {
+    #arrange
+    $params = @{
+      ResourceType      = "CosmosDBSQLDatabase"
+      ResourceName      = "sql-db-name"
+      ResourceGroupName = "rg-test"
+      AccountName       = "sql-account-name"
+    }
+
+    #act
+    $result = Confirm-AzBPResource @params
+
+    #assert
+    $result.Success | Should -Be $true
+  }
+
+  it 'Should contain a Cosmos DB named sql-db-name with id sql-db-name' {
+    #arrange
+    $params = @{
+      ResourceType      = "CosmosDBSQLDatabase"
+      ResourceName      = "sql-db-name"
+      ResourceGroupName = "rg-test"
+      AccountName       = "sql-account-name"
+      PropertyKey       = "id"
+      PropertyValue     = "sql-db-name"
+    }
+
+    #act
+    $result = Confirm-AzBPResource @params
+
+    #assert
+    $result.Success | Should -Be $true
+  }
+}
+
 Describe 'Comsos DB Gremlin Database' {
   It 'Should contain a Cosmos DB account with the given name' {
     #arrange
@@ -143,6 +279,9 @@ Describe 'Comsos DB Gremlin Database' {
 }
 
 Describe 'Comsos DB Mongo DB Database' {
+  # DON'T Think we need to check accounts for Mongo or SQL if the
+  # Syntax is the same between all of them (Mongo, SQL and Gremlin)
+  # Would recommend deleting these Confirm-AzBPCosmosDBAccount tests
   It 'Should contain a Cosmos DB account with the given name' {
     #arrange
     $params = @{

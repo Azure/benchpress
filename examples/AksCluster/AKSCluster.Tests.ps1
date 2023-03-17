@@ -2,6 +2,40 @@ BeforeAll {
   Import-Module Az.InfrastructureTesting
 }
 
+Describe 'Verify AKS Cluster with Confirm-AzBPResource' {
+  it 'Should contain an AKS Cluster named aksbenchpresstest' {
+    #arrange
+    $params = @{
+      ResourceType      = "AksCluster"
+      ResourceName      = "aksbenchpresstest"
+      ResourceGroupName = "rg-test"
+    }
+
+    #act
+    $result = Confirm-AzBPResource @params
+
+    #assert
+    $result.Success | Should -Be $true
+  }
+
+  it 'Should contain an AKS Cluster named aksbenchpresstest with agent pool named agentpool' {
+    #arrange
+    $params = @{
+      ResourceType      = "AksCluster"
+      ResourceName      = "aksbenchpresstest"
+      ResourceGroupName = "rg-test"
+      PropertyKey       = "agentPoolProfiles[0].name"
+      PropertyValue     = "agentpool"
+    }
+
+    #act
+    $result = Confirm-AzBPResource @params
+
+    #assert
+    $result.Success | Should -Be $true
+  }
+}
+
 Describe 'Verify AKS Cluster Exists' {
   it 'Should contain an AKS cluster named aksbenchpresstest' {
     #arrange

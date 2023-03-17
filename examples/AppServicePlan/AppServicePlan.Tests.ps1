@@ -2,6 +2,39 @@ BeforeAll {
   Import-Module Az.InfrastructureTesting
 }
 
+Describe 'Verify App Service Plan with Confirm-AzBPResource' {
+  it 'Should contain an App Service Plan named appserviceplantest' {
+    #arrange
+    $params = @{
+      ResourceType      = "Appserviceplan"
+      ResourceName      = "appserviceplantest"
+      ResourceGroupName = "rg-test"
+    }
+
+    #act
+    $result = Confirm-AzBPResource @params
+
+    #assert
+    $result.Success | Should -Be $true
+  }
+
+  it 'Should contain an App Service Plan named appserviceplantest with sku tier of Free' {
+    #arrange
+    $params = @{
+      ResourceType      = "Appserviceplan"
+      ResourceName      = "appserviceplantest"
+      ResourceGroupName = "rg-test"
+      PropertyKey      = "sku.tier"
+      PropertyValue    = "Free"
+    }
+    #act
+    $result = Confirm-AzBPResource @params
+
+    #assert
+    $result.Success | Should -Be $true
+  }
+}
+
 Describe 'Verify App Service Plan Exists' {
   it 'Should contain an App Service Plan with the given name' {
       #arrange

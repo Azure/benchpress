@@ -2,8 +2,42 @@ BeforeAll {
   Import-Module Az.InfrastructureTesting
 }
 
+Describe 'Verify Action Group with Confirm-AzBPResource' {
+  it 'Should contain an actiongroup named sampleaction' {
+    #arrange
+    $params = @{
+      ResourceType      = "ActionGroup"
+      ResourceName      = "sampleaction"
+      ResourceGroupName = "rg-test"
+    }
+
+    #act
+    $result = Confirm-AzBPResource @params
+
+    #assert
+    $result.Success | Should -Be $true
+  }
+
+  it 'Should contain an actiongroup named sampleaction' {
+    #arrange
+    $params = @{
+      ResourceType      = "ActionGroup"
+      ResourceName      = "sampleaction"
+      ResourceGroupName = "rg-test"
+      PropertyKey       = "groupShortName"
+      PropertyValue     = "sampleaction"
+    }
+
+    #act
+    $result = Confirm-AzBPResource @params
+
+    #assert
+    $result.Success | Should -Be $true
+  }
+}
+
 Describe 'Verify Action Group Exists' {
-  it 'Should contain a action group named sampleaction' {
+  it 'Should contain an action group named sampleaction' {
     #arrange
     $resourceGroupName = "rg-test"
     $actionGroupName = "sampleaction"
@@ -17,7 +51,7 @@ Describe 'Verify Action Group Exists' {
 }
 
 Describe 'Verify Action Group Does Not Exist' {
-  it 'Should not contain a action group named sampleActionGroup' {
+  it 'Should not contain an action group named sampleActionGroup' {
     #arrange
     $resourceGroupName = "rg-test"
     $actionGroupName = "nosampleaction"

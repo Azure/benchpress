@@ -2,6 +2,40 @@ BeforeAll {
   Import-Module Az.InfrastructureTesting
 }
 
+Describe 'Verify App Insights with Confirm-AzBPResource' {
+  it 'Should contain an App Insights named aksbenchpresstest' {
+    #arrange
+    $params = @{
+      ResourceType      = "AppInsights"
+      ResourceName      = "appinsightstest"
+      ResourceGroupName = "rg-test"
+    }
+
+    #act
+    $result = Confirm-AzBPResource @params
+
+    #assert
+    $result.Success | Should -Be $true
+  }
+
+  it 'Should contain an App Insights named aksbenchpresstest with application type of web' {
+    #arrange
+    $params = @{
+      ResourceType      = "AppInsights"
+      ResourceName      = "appinsightstest"
+      ResourceGroupName = "rg-test"
+      PropertyKey       = "Application_Type"
+      PropertyValue     = "web"
+    }
+
+    #act
+    $result = Confirm-AzBPResource @params
+
+    #assert
+    $result.Success | Should -Be $true
+  }
+}
+
 Describe 'Verify App Insights' {
   it 'Should contain an application insights with the given name' {
     #arrange
