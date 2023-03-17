@@ -1,5 +1,5 @@
 BeforeAll {
-  Import-Module ../../bin/BenchPress.Azure.psd1
+  Import-Module Az-InfrastructureTesting
 }
 
 Describe 'Verify Stream Analytics Cluster' {

@@ -25,6 +25,7 @@
 
 1. Update `StreamAnalytics.Tests.ps1` variables to point to your expected resources:
 
+<<<<<<< HEAD
    - `rg-test`            -> `your-resource-group-name`
    - `teststreamcluster`  -> `your-stream-analytics-cluster-name`
    - `testjob`            -> `your-stream-analytics-job-name`
@@ -35,6 +36,13 @@
    - `westus3`            -> `your-location-of-your-cluster`
 
 1. If using a local copy of `Az-InfrastructureTesting`, replace `Import-Module Az-InfrastructureTesting` with
+=======
+   - `rg-test` -> `your-resource-group-name`
+   - `teststreamcluster` -> `your-stream-analytics-cluster-name`
+   - `westus3` -> `your-location-of-your-cluster`
+
+1. If using a local copy of `Az-InfrastructureTest`, replace `Import-Module Az-InfrastructureTest` with
+>>>>>>> origin
 `Import-Module "../../bin/BenchPress.Azure.psd1"`.
 
 1. Run `StreamAnalytics.Tests.ps1`:

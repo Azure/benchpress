@@ -1,7 +1,7 @@
 param location string = resourceGroup().location
 param name string = 'clstr${take(uniqueString(resourceGroup().id), 6)}'
 
-resource cluster 'Microsoft.StreamAnalytics/clusters@2020-03-01' = {
+resource streamAnalyticsCluster 'Microsoft.StreamAnalytics/clusters@2020-03-01' = {
   name: name
   location: location
   sku: {
@@ -19,7 +19,7 @@ resource streamingJob 'Microsoft.StreamAnalytics/streamingjobs@2020-03-01' = {
     sku: {
       name: 'Standard'
     }
-    cluster: cluster
+    cluster: streamAnalyticsCluster
   }
 }
 

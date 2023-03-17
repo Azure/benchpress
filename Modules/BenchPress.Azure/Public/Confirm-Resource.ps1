@@ -1,5 +1,6 @@
 # INLINE_SKIP
 using module ./../Classes/ConfirmResult.psm1
+using module ./../Classes/ResourceType.psm1
 
 . $PSScriptRoot/Get-ResourceByType.ps1
 # end INLINE_SKIP
@@ -23,35 +24,7 @@ function Confirm-Resource {
       The name of the Resource Group
 
     .PARAMETER ResourceType
-      The type of the Resource. Currently Supported:
-      ActionGroup
-      AksCluster
-      AppInsights
-      AppServicePlan
-      CosmosDBAccount
-      CosmosDBGremlinDatabase
-      CosmosDBMongoDBDatabase
-      CosmosDBSqlDatabase
-      ContainerRegistry
-      DataFactory
-      DataFactoryLinkedService
-      KeyVault
-      ResourceGroup
-      SqlDatabase
-      SqlServer
-      StorageAccount
-      StorageContainer
-      StreamAnalyticsCluster
-      StreamAnalyticsFunction
-      StreamAnalyticsInput
-      StreamAnalyticsJob
-      StreamAnalyticsOutput
-      StreamAnalyticsTransformation
-      SynapseSparkPool
-      SynapseSqlPool
-      SynapseWorkspace
-      VirtualMachine
-      WebApp
+      The type of the Resource as a [ResourceType]
 
     .PARAMETER ServerName
       If testing an Azure SQL Database resource, the name of the server to which the database is assigned.
@@ -106,19 +79,19 @@ function Confirm-Resource {
   [OutputType([ConfirmResult])]
   param (
     [Parameter(Mandatory = $true)]
-    [ValidateSet("ActionGroup", "AksCluster", "AppInsights", "AppServicePlan", "ContainerRegistry", "CosmosDBAccount",
-    "CosmosDBGremlinDatabase", "CosmosDBMongoDBDatabase", "CosmosDBSqlDatabase", "DataFactory",
-    "DataFactoryLinkedService", "KeyVault", "OperationalInsightsWorkspace", "ResourceGroup", "SqlDatabase",
-    "SqlServer", "StorageAccount", "StorageContainer", "StreamAnalyticsCluster", "StreamAnalyticsFunction",
-    "StreamAnalyticsInput", "StreamAnalyticsJob", "StreamAnalyticsOutput", "StreamAnalyticsTransformation",
-    "SynapseSparkPool", "SynapseSqlPool", "SynapseWorkspace", "VirtualMachine", "WebApp")]
-    [string]$ResourceType,
+    [ResourceType]$ResourceType,
 
     [Parameter(Mandatory = $true)]
     [string]$ResourceName,
 
     [Parameter(Mandatory = $false)]
     [string]$ResourceGroupName,
+
+    [Parameter(Mandatory = $false)]
+    [string]$NamespaceName,
+
+    [Parameter(Mandatory = $false)]
+    [string]$EventHubName,
 
     [Parameter(Mandatory = $false)]
     [string]$ServerName,
@@ -142,6 +115,8 @@ function Confirm-Resource {
   Process {
     $ResourceParams = @{
       ResourceType      = $ResourceType
+      NamespaceName     = $NamespaceName
+      EventHubName      = $EventHubName
       ResourceName      = $ResourceName
       ResourceGroupName = $ResourceGroupName
       ServerName        = $ServerName

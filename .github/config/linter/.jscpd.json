@@ -1,5 +1,4 @@
 {
-  "minLines": 15,
   "ignore": [
     "**/node_modules/**",
     "**/.git/**",
