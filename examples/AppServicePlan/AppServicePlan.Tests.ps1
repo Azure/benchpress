@@ -24,8 +24,8 @@ Describe 'Verify App Service Plan with Confirm-AzBPResource' {
       ResourceType      = "Appserviceplan"
       ResourceName      = "appserviceplantest"
       ResourceGroupName = "rg-test"
-      PropertyKey      = "sku.tier"
-      PropertyValue    = "Free"
+      PropertyKey       = "Sku.Tier"
+      PropertyValue     = "Free"
     }
     #act
     $result = Confirm-AzBPResource @params

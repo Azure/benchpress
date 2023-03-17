@@ -24,7 +24,7 @@ Describe 'Verify Cosmos DB Account with Confirm-AzBPResource' {
       ResourceType      = "CosmosDBAccount"
       ResourceName      = "gremlin-account-name"
       ResourceGroupName = "rg-test"
-      PropertyKey       = "kind"
+      PropertyKey       = "Kind"
       PropertyValue     = "GlobalDocumentDB"
     }
 
@@ -58,7 +58,7 @@ Describe 'Verify Cosmos DB Account with Confirm-AzBPResource' {
       ResourceName      = "grem-database-name"
       ResourceGroupName = "rg-test"
       AccountName       = "gremlin-account-name"
-      PropertyKey       = "id"
+      PropertyKey       = "Id"
       PropertyValue     = "gremlin-db-name"
     }
 
@@ -92,7 +92,7 @@ Describe 'Verify Cosmos DB Account with Confirm-AzBPResource' {
       ResourceName      = "mongodb-db-name"
       ResourceGroupName = "rg-test"
       AccountName       = "mongodb-account-name"
-      PropertyKey       = "id"
+      PropertyKey       = "Id"
       PropertyValue     = "mongodb-db-name"
     }
 
@@ -126,7 +126,7 @@ Describe 'Verify Cosmos DB Account with Confirm-AzBPResource' {
       ResourceName      = "sql-db-name"
       ResourceGroupName = "rg-test"
       AccountName       = "sql-account-name"
-      PropertyKey       = "id"
+      PropertyKey       = "Id"
       PropertyValue     = "sql-db-name"
     }
 

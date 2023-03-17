@@ -24,7 +24,7 @@ Describe 'Verify Action Group with Confirm-AzBPResource' {
       ResourceType      = "ActionGroup"
       ResourceName      = "sampleaction"
       ResourceGroupName = "rg-test"
-      PropertyKey       = "groupShortName"
+      PropertyKey       = "GroupShortName"
       PropertyValue     = "sampleaction"
     }
 

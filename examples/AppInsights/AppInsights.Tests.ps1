@@ -24,7 +24,7 @@ Describe 'Verify App Insights with Confirm-AzBPResource' {
       ResourceType      = "AppInsights"
       ResourceName      = "appinsightstest"
       ResourceGroupName = "rg-test"
-      PropertyKey       = "Application_Type"
+      PropertyKey       = "ApplicationType"
       PropertyValue     = "web"
     }
 

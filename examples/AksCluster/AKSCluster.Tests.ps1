@@ -24,7 +24,7 @@ Describe 'Verify AKS Cluster with Confirm-AzBPResource' {
       ResourceType      = "AksCluster"
       ResourceName      = "aksbenchpresstest"
       ResourceGroupName = "rg-test"
-      PropertyKey       = "agentPoolProfiles[0].name"
+      PropertyKey       = "AgentPoolProfiles[0].Name"
       PropertyValue     = "agentpool"
     }
 

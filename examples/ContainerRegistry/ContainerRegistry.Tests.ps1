@@ -24,7 +24,7 @@ Describe 'Verify Container Registry with Confirm-AzBPResource' {
       ResourceType      = "ContainerRegistry"
       ResourceName      = "testcontaineregistry"
       ResourceGroupName = "rg-test"
-      PropertyKey       = "sku.name"
+      PropertyKey       = "Sku.Name"
       PropertyValue     = "Standard"
     }
 
