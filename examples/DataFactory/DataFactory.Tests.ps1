@@ -1,5 +1,5 @@
 BeforeAll {
-  Import-Module Az-InfrastructureTest
+  Import-Module Az.InfrastructureTesting
 }
 
 Describe 'Verify Data Factory' {

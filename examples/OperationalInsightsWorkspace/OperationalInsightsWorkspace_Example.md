@@ -28,7 +28,7 @@ cmdlet.
    - `oiwName` -> `your-operational-insights-workspace-name`
    - `notOiwName` -> `not-your-operational-insights-workspace-name`
 
-1. If using a local copy of `Az-InfrastructureTest`, replace `Import-Module Az-InfrastructureTest` with
+1. If using a local copy of `Az.InfrastructureTesting`, replace `Import-Module Az.InfrastructureTesting` with
 `Import-Module "../../bin/BenchPress.Azure.psd1"`.
 
 1. Run `OperationalInsightsWorkspace.Tests.ps1`:
