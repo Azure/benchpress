@@ -3,14 +3,22 @@ enum ResourceType{
   AksCluster
   AppInsights
   AppServicePlan
+  CosmosDBAccount
+  CosmosDBGremlinDatabase
+  CosmosDBMongoDBDatabase
+  CosmosDBSqlDatabase
   ContainerRegistry
   DataFactory
   DataFactoryLinkedService
+  EventHub
+  EventHubConsumerGroup
+  EventHubNamespace
   KeyVault
   ResourceGroup
   SqlDatabase
   SqlServer
   StorageAccount
+  StorageContainer
   SynapseSparkPool
   SynapseSqlPool
   SynapseWorkspace
