@@ -1,5 +1,5 @@
 BeforeAll {
-  Import-Module Az-InfrastructureTesting
+  Import-Module Az.InfrastructureTesting
 }
 
 Describe 'Verify Stream Analytics Cluster' {

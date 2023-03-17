@@ -11,7 +11,7 @@ function Confirm-StreamAnalyticsFunction {
 
     .DESCRIPTION
       The Confirm-AzBPStreamAnalyticsFunction cmdlet gets a Stream Analytics Function using the specified Resource
-      Group, the name of the Job executging the Function, and the name of the Function.
+      Group, the name of the Job executing the Function, and the name of the Function.
 
     .PARAMETER ResourceGroupName
       The name of the resource group. The name is case insensitive.
