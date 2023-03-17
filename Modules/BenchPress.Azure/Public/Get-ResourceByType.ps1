@@ -247,7 +247,7 @@ function Get-ResourceByType {
           JobName = $JobName
           Name = $Name
         }
-        return Confirm-StreamAnalyticsFunction @params
+        return Confirm-StreamAnalyticsInput @params
       }
       "StreamAnalyticsJob" {
         return Confirm-StreamAnalyticsJob -ResourceGroupName $ResourceGroupName -Name $ResourceName
