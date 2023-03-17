@@ -42,6 +42,11 @@ function Confirm-Resource {
       StorageAccount
       StorageContainer
       StreamAnalyticsCluster
+      StreamAnalyticsFunction
+      StreamAnalyticsInput
+      StreamAnalyticsJob
+      StreamAnalyticsOutput
+      StreamAnalyticsTransformation
       SynapseSparkPool
       SynapseSqlPool
       SynapseWorkspace
@@ -104,8 +109,9 @@ function Confirm-Resource {
     [ValidateSet("ActionGroup", "AksCluster", "AppInsights", "AppServicePlan", "ContainerRegistry", "CosmosDBAccount",
     "CosmosDBGremlinDatabase", "CosmosDBMongoDBDatabase", "CosmosDBSqlDatabase", "DataFactory",
     "DataFactoryLinkedService", "KeyVault", "OperationalInsightsWorkspace", "ResourceGroup", "SqlDatabase",
-    "SqlServer", "StorageAccount", "StorageContainer", "StreamAnalyticsCluster", "SynapseSparkPool", "SynapseSqlPool",
-    "SynapseWorkspace", "VirtualMachine", "WebApp")]
+    "SqlServer", "StorageAccount", "StorageContainer", "StreamAnalyticsCluster", "StreamAnalyticsFunction",
+    "StreamAnalyticsInput", "StreamAnalyticsJob", "StreamAnalyticsOutput", "StreamAnalyticsTransformation",
+    "SynapseSparkPool", "SynapseSqlPool", "SynapseWorkspace", "VirtualMachine", "WebApp")]
     [string]$ResourceType,
 
     [Parameter(Mandatory = $true)]

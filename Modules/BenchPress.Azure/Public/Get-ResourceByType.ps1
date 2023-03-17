@@ -99,8 +99,9 @@ function Get-ResourceByType {
     [ValidateSet("ActionGroup", "AksCluster", "AppInsights", "AppServicePlan", "ContainerRegistry", "CosmosDBAccount",
     "CosmosDBGremlinDatabase", "CosmosDBMongoDBDatabase", "CosmosDBSqlDatabase", "DataFactory",
     "DataFactoryLinkedService", "KeyVault", "OperationalInsightsWorkspace", "ResourceGroup", "SqlDatabase",
-    "SqlServer", "StorageAccount", "StorageContainer", "StreamAnalyticsCluster", "SynapseSparkPool", "SynapseSqlPool",
-    "SynapseWorkspace", "VirtualMachine", "WebApp")]
+    "SqlServer", "StorageAccount", "StorageContainer", "StreamAnalyticsCluster", "StreamAnalyticsFunction",
+    "StreamAnalyticsInput", "StreamAnalyticsJob", "StreamAnalyticsOutput", "StreamAnalyticsTransformation",
+    "SynapseSparkPool", "SynapseSqlPool", "SynapseWorkspace", "VirtualMachine", "WebApp")]
     [string]$ResourceType,
 
     [Parameter(Mandatory = $false)]
@@ -204,6 +205,41 @@ function Get-ResourceByType {
       }
       "StreamAnalyticsCluster" {
         return Confirm-StreamAnalyticsCluster -Name $ResourceName -ResourceGroupName $ResourceGroupName
+      }
+      "StreamAnalyticsFunction" {
+        $params = @{
+          ResourceGroupName = $ResourceGroupName
+          JobName = $JobName
+          Name = $Name
+        }
+        return Confirm-StreamAnalyticsFunction @params
+      }
+      "StreamAnalyticsInput" {
+        $params = @{
+          ResourceGroupName = $ResourceGroupName
+          JobName = $JobName
+          Name = $Name
+        }
+        return Confirm-StreamAnalyticsFunction @params
+      }
+      "StreamAnalyticsJob" {
+        return Confirm-StreamAnalyticsJob -ResourceGroupName $ResourceGroupName -Name $ResourceName
+      }
+      "StreamAnalyticsOutput" {
+        $params = @{
+          ResourceGroupName = $ResourceGroupName
+          JobName = $JobName
+          Name = $Name
+        }
+        return Confirm-StreamAnalyticsOutput @params
+      }
+      "StreamAnalyticsTransformation" {
+        $params = @{
+          ResourceGroupName = $ResourceGroupName
+          JobName = $JobName
+          Name = $Name
+        }
+        return Confirm-StreamAnalyticsTransformation @params
       }
       "SynapseSparkPool" {
         $params = @{
