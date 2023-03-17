@@ -31,7 +31,7 @@ The `CosmosDB*.Tests.ps1` files contain examples of using the `Confirm-AzBPCosmo
    - `sql-account-name`        -> `your-sql-account-name`
    - `sql-db-name`             -> `your-sql-db-name`
 
-1. If using a local copy of `Az-InfrastructureTest`, replace `Import-Module Az-InfrastructureTest` with
+1. If using a local copy of `Az.InfrastructureTesting`, replace `Import-Module Az.InfrastructureTesting` with
 `Import-Module "../../bin/BenchPress.Azure.psd1"`.
 
 1. Run `CosmosDB.Tests.ps1`:
