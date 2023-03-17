@@ -13,7 +13,7 @@ Confirms whether a resource exists or properties on a resource are configured co
 ## SYNTAX
 
 ```
-Confirm-AzBPResource [-ResourceType] <String> [-ResourceName] <String> [[-ResourceGroupName] <String>]
+Confirm-AzBPResource [-ResourceType] <ResourceType> [-ResourceName] <String> [[-ResourceGroupName] <String>]
  [[-NamespaceName] <String>] [[-EventHubName] <String>] [[-ServerName] <String>] [[-DataFactoryName] <String>]
  [[-WorkspaceName] <String>] [[-AccountName] <String>] [[-PropertyKey] <String>] [[-PropertyValue] <String>]
  [<CommonParameters>]
@@ -90,9 +90,10 @@ VirtualMachine
 WebApp
 
 ```yaml
-Type: String
+Type: ResourceType
 Parameter Sets: (All)
 Aliases:
+Accepted values: ActionGroup, AksCluster, AppInsights, AppServicePlan, CosmosDBAccount, CosmosDBGremlinDatabase, CosmosDBMongoDBDatabase, CosmosDBSqlDatabase, ContainerRegistry, DataFactory, DataFactoryLinkedService, EventHub, EventHubConsumerGroup, EventHubNamespace, KeyVault, ResourceGroup, SqlDatabase, SqlServer, StorageAccount, StorageContainer, SynapseSparkPool, SynapseSqlPool, SynapseWorkspace, VirtualMachine, WebApp
 
 Required: True
 Position: 1

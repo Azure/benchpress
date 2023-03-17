@@ -13,7 +13,7 @@ Gets an Azure Resource.
 ## SYNTAX
 
 ```
-Get-AzBPResourceByType [-ResourceName] <String> [[-ResourceGroupName] <String>] [-ResourceType] <String>
+Get-AzBPResourceByType [-ResourceName] <String> [[-ResourceGroupName] <String>] [-ResourceType] <ResourceType>
  [[-ServerName] <String>] [[-DataFactoryName] <String>] [[-NamespaceName] <String>] [[-EventHubName] <String>]
  [[-WorkspaceName] <String>] [[-AccountName] <String>] [<CommonParameters>]
 ```
@@ -92,9 +92,10 @@ VirtualMachine
 WebApp)
 
 ```yaml
-Type: String
+Type: ResourceType
 Parameter Sets: (All)
 Aliases:
+Accepted values: ActionGroup, AksCluster, AppInsights, AppServicePlan, CosmosDBAccount, CosmosDBGremlinDatabase, CosmosDBMongoDBDatabase, CosmosDBSqlDatabase, ContainerRegistry, DataFactory, DataFactoryLinkedService, EventHub, EventHubConsumerGroup, EventHubNamespace, KeyVault, ResourceGroup, SqlDatabase, SqlServer, StorageAccount, StorageContainer, SynapseSparkPool, SynapseSqlPool, SynapseWorkspace, VirtualMachine, WebApp
 
 Required: True
 Position: 3
