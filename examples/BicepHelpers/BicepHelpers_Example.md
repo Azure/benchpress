@@ -18,7 +18,7 @@
 
    - `rg-test` -> `your-resource-group-name`
 
-1. If using a local copy of `Az-InfrastructureTest`, replace `Import-Module Az-InfrastructureTest` with
+1. If using a local copy of `Az.InfrastructureTesting`, replace `Import-Module Az.InfrastructureTesting` with
 `Import-Module "../../bin/BenchPress.Azure.psd1"`.
 
 1. (Optional) Uncomment the `Remove-AzBPBicepFeature` line in `BicepHelpers.Tests.ps1`. **Warning**: this will delete
