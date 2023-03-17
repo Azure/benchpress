@@ -1,5 +1,5 @@
 BeforeAll {
-  Import-Module BenchPress.Azure
+  Import-Module Az.InfrastructureTesting
 }
 
 Describe 'Comsos DB Gremlin Database' {

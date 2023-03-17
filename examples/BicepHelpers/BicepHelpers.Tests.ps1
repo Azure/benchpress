@@ -1,5 +1,5 @@
 BeforeAll {
-  Import-Module Az-InfrastructureTest
+  Import-Module Az.InfrastructureTesting
 }
 Describe 'Spin up , Tear down Action Group' {
   it 'Should deploy a bicep file.' {

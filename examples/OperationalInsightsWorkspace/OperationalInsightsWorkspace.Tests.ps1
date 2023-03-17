@@ -1,5 +1,5 @@
 ﻿BeforeAll {
-  Import-Module Az-InfrastructureTest
+  Import-Module Az.InfrastructureTesting
 }
 
 Describe 'Verify Operational Insights Workspace Exists' {
