@@ -19,6 +19,7 @@ enum ResourceType{
   SqlServer
   StorageAccount
   StorageContainer
+  StreamAnalyticsCluster
   SynapseSparkPool
   SynapseSqlPool
   SynapseWorkspace

@@ -19,6 +19,7 @@ using module ./../Classes/ResourceType.psm1
 . $PSScriptRoot/Confirm-SqlServer.ps1
 . $PSScriptRoot/Confirm-StorageAccount.ps1
 . $PSScriptRoot/Confirm-StorageContainer.ps1
+. $PSScriptRoot/Confirm-StreamAnalyticsCluster.ps1
 . $PSScriptRoot/Confirm-SynapseSparkPool.ps1
 . $PSScriptRoot/Confirm-SynapseSqlPool.ps1
 . $PSScriptRoot/Confirm-SynapseWorkspace.ps1
@@ -59,6 +60,7 @@ function Get-ResourceByType {
       SqlServer
       StorageAccount
       StorageContainer
+      StreamAnalyticsCluster
       SynapseSparkPool
       SynapseSqlPool
       SynapseWorkspace
@@ -227,6 +229,9 @@ function Get-ResourceByType {
           ResourceGroupName = $ResourceGroupName
         }
         return Confirm-StorageContainer @params
+      }
+      "StreamAnalyticsCluster" {
+        return Confirm-StreamAnalyticsCluster -Name $ResourceName -ResourceGroupName $ResourceGroupName
       }
       "SynapseSparkPool" {
         $params = @{
