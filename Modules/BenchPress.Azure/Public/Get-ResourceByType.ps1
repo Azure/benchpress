@@ -8,8 +8,11 @@ using module ./../Classes/ConfirmResult.psm1
 . $PSScriptRoot/Confirm-ContainerRegistry.ps1
 . $PSScriptRoot/Confirm-DataFactory.ps1
 . $PSScriptRoot/Confirm-DataFactoryLinkedService.ps1
+. $PSScriptRoot/Confirm-EventHub.ps1
+. $PSScriptRoot/Confirm-EventHubConsumerGroup.ps1
+. $PSScriptRoot/Confirm-EventHubNamespace.ps1
 . $PSScriptRoot/Confirm-KeyVault.ps1
-. $PSScriptRoot/Confirm-OperationalInsightsWorkspace
+. $PSScriptRoot/Confirm-OperationalInsightsWorkspace.ps1
 . $PSScriptRoot/Confirm-ResourceGroup.ps1
 . $PSScriptRoot/Confirm-SqlDatabase.ps1
 . $PSScriptRoot/Confirm-SqlServer.ps1
@@ -47,6 +50,9 @@ function Get-ResourceByType {
       ContainerRegistry
       DataFactory
       DataFactoryLinkedService
+      EventHub
+      EventHubConsumerGroup
+      EventHubNamespace
       KeyVault
       ResourceGroup
       SqlDatabase
@@ -98,7 +104,8 @@ function Get-ResourceByType {
     [Parameter(Mandatory = $true)]
     [ValidateSet("ActionGroup", "AksCluster", "AppInsights", "AppServicePlan", "ContainerRegistry", "CosmosDBAccount",
     "CosmosDBGremlinDatabase", "CosmosDBMongoDBDatabase", "CosmosDBSqlDatabase", "DataFactory",
-    "DataFactoryLinkedService", "KeyVault", "OperationalInsightsWorkspace", "ResourceGroup", "SqlDatabase",
+    "DataFactoryLinkedService", "EventHub", "EventHubConsumerGroup", "EventHubNamespace",
+    "KeyVault", "OperationalInsightsWorkspace", "ResourceGroup", "SqlDatabase",
     "SqlServer", "StorageAccount", "StorageContainer", "StreamAnalyticsCluster", "SynapseSparkPool", "SynapseSqlPool",
     "SynapseWorkspace", "VirtualMachine", "WebApp")]
     [string]$ResourceType,
@@ -108,6 +115,12 @@ function Get-ResourceByType {
 
     [Parameter(Mandatory = $false)]
     [string]$DataFactoryName,
+
+    [Parameter(Mandatory = $false)]
+    [string]$NamespaceName,
+
+    [Parameter(Mandatory = $false)]
+    [string]$EventHubName,
 
     [Parameter(Mandatory = $false)]
     [string]$WorkspaceName,
@@ -170,6 +183,26 @@ function Get-ResourceByType {
           ResourceGroupName = $ResourceGroupName
         }
         return Confirm-DataFactoryLinkedService @params
+      }
+      "EventHub" {
+        $params = @{
+          Name              = $ResourceName
+          NamespaceName     = $NamespaceName
+          ResourceGroupName = $ResourceGroupName
+        }
+        return Confirm-EventHub @params
+      }
+      "EventHubConsumerGroup" {
+        $params = @{
+          Name              = $ResourceName
+          EventHubName      = $EventHubName
+          NamespaceName     = $NamespaceName
+          ResourceGroupName = $ResourceGroupName
+        }
+        return Confirm-EventHubConsumerGroup @params
+      }
+      "EventHubNamespace" {
+        return Confirm-EventHubNamespace -NamespaceName $NamespaceName -ResourceGroupName $ResourceGroupName
       }
       "KeyVault" {
         return Confirm-KeyVault -Name $ResourceName -ResourceGroupName $ResourceGroupName
