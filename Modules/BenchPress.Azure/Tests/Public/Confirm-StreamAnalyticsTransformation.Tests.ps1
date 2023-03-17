@@ -12,7 +12,7 @@ Describe "Confirm-StreamAnalyticsTransformation" {
     }
 
     It "Calls Get-AzStreamAnalyticsTransformation" {
-      Confirm-StreamAnalyticsTransformation -ResourceGroupName "rgn" -JobName "saj" -Name "f"
+      Confirm-StreamAnalyticsTransformation -ResourceGroupName "rgn" -JobName "saj" -Name "t"
       Should -Invoke -CommandName "Get-AzStreamAnalyticsTransformation" -Times 1
     }
   }

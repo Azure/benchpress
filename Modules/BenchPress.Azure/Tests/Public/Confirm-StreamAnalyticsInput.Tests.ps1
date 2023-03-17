@@ -1,19 +1,19 @@
 BeforeAll {
-  . $PSScriptRoot/../../Public/Confirm-StreamAnalyticsFunction.ps1
+  . $PSScriptRoot/../../Public/Confirm-StreamAnalyticsInput.ps1
   . $PSScriptRoot/../../Private/Connect-Account.ps1
   Import-Module Az
 }
 
-Describe "Confirm-StreamAnalyticsFunction" {
+Describe "Confirm-StreamAnalyticsInput" {
   Context "unit tests" -Tag "Unit" {
     BeforeEach {
       Mock Connect-Account{}
-      Mock Get-AzStreamAnalyticsFunction{}
+      Mock Get-AzStreamAnalyticsInput{}
     }
 
-    It "Calls Get-AzStreamAnalyticsFunction" {
-      Confirm-StreamAnalyticsFunction -ResourceGroupName "rgn" -JobName "saj" -Name "f"
-      Should -Invoke -CommandName "Get-AzStreamAnalyticsFunction" -Times 1
+    It "Calls Get-AzStreamAnalyticsInput" {
+      Confirm-StreamAnalyticsInput -ResourceGroupName "rgn" -JobName "saj" -Name "i"
+      Should -Invoke -CommandName "Get-AzStreamAnalyticsInput" -Times 1
     }
   }
 }

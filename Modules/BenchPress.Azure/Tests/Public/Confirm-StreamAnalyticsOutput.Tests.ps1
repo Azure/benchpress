@@ -12,7 +12,7 @@ Describe "Confirm-StreamAnalyticsOutput" {
     }
 
     It "Calls Get-AzStreamAnalyticsOutput" {
-      Confirm-StreamAnalyticsOutput -ResourceGroupName "rgn" -JobName "saj" -Name "f"
+      Confirm-StreamAnalyticsOutput -ResourceGroupName "rgn" -JobName "saj" -Name "o"
       Should -Invoke -CommandName "Get-AzStreamAnalyticsOutput" -Times 1
     }
   }
