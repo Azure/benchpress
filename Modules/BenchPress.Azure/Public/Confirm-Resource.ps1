@@ -45,6 +45,7 @@ function Confirm-Resource {
       SqlServer
       StorageAccount
       StorageContainer
+      StreamAnalyticsCluster
       SynapseSparkPool
       SynapseSqlPool
       SynapseWorkspace

@@ -37,6 +37,7 @@
     "Confirm-SqlServer",
     "Confirm-StorageAccount",
     "Confirm-StorageContainer",
+    "Confirm-StreamAnalyticsCluster",
     "Confirm-SynapseSparkPool",
     "Confirm-SynapseSqlPool",
     "Confirm-SynapseWorkspace",
