@@ -8,7 +8,7 @@ Describe 'Verify Resource Exists' {
     $rgName = "rg-test"
 
     #act
-    $result = Get-AzBPResourceByType -ResourceType ResourceGroup -ResourceName "${rgName}"
+    $result = Get-AzBPResourceByType -ResourceType "ResourceGroup" -ResourceName "${rgName}"
 
     #assert
     $result.Success | Should -Be $true
@@ -20,7 +20,7 @@ Describe 'Verify Resource Exists' {
     $rgName = "rg-test"
 
     #act
-    $result = Get-AzBPResourceByType -ResourceType VirtualMachine -ResourceName "${resourceName}" -ResourceGroupName "${rgName}"
+    $result = Get-AzBPResourceByType -ResourceType "VirtualMachine" -ResourceName "${resourceName}" -ResourceGroupName "${rgName}"
 
     #assert
     $result.Success | Should -Be $true

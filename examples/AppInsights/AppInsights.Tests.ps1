@@ -2,13 +2,17 @@ BeforeAll {
   Import-Module Az.InfrastructureTesting
 }
 
+$resourceType = "AppInsights"
+$resourceName = "aksbenchpresstest"
+$rgName = "rg-test"
+
 Describe 'Verify App Insights with Confirm-AzBPResource' {
   it 'Should contain an App Insights named aksbenchpresstest' {
     #arrange
     $params = @{
-      ResourceType      = "AppInsights"
-      ResourceName      = "appinsightstest"
-      ResourceGroupName = "rg-test"
+      ResourceType      = $resourceType
+      ResourceName      = $resourceName
+      ResourceGroupName = $rgName
     }
 
     #act
@@ -21,9 +25,9 @@ Describe 'Verify App Insights with Confirm-AzBPResource' {
   it 'Should contain an App Insights named aksbenchpresstest with application type of web' {
     #arrange
     $params = @{
-      ResourceType      = "AppInsights"
-      ResourceName      = "appinsightstest"
-      ResourceGroupName = "rg-test"
+      ResourceType      = $resourceType
+      ResourceName      = $resourceName
+      ResourceGroupName = $rgName
       PropertyKey       = "ApplicationType"
       PropertyValue     = "web"
     }
@@ -39,8 +43,8 @@ Describe 'Verify App Insights with Confirm-AzBPResource' {
 Describe 'Verify App Insights' {
   it 'Should contain an application insights with the given name' {
     #arrange
-    $rgName = "rg-test"
-    $appInsightsName = "appinsightstest"
+    $rgName = $rgName
+    $appInsightsName = $resourceName
 
     #act
     $result = Confirm-AzBPAppInsights -ResourceGroupName $rgName -Name $appInsightsName
@@ -53,7 +57,7 @@ Describe 'Verify App Insights' {
 Describe 'Verify App Insights Does Not Exist' {
   it 'Should not contain an application insights with the given name' {
     #arrange
-    $rgName = "rg-test"
+    $rgName = $rgName
     $appInsightsName = "noappinsightstest"
 
     #act
@@ -70,8 +74,8 @@ Describe 'Verify App Insights Does Not Exist' {
 Describe 'Verify App Insights Exists with Custom Assertion' {
   it 'Should contain an App Insights named appinsightstest' {
     #arrange
-    $rgName = "rg-test"
-    $appInsightsName = "appinsightstest"
+    $rgName = $rgName
+    $appInsightsName = $resourceName
 
     #act
     $result = Confirm-AzBPAppInsights -ResourceGroupName $rgName -Name $appInsightsName
@@ -84,8 +88,8 @@ Describe 'Verify App Insights Exists with Custom Assertion' {
 Describe 'Verify App Insights Exists in Correct Location' {
   it 'Should contain an App Insights named appinsightstest in westus3' {
     #arrange
-    $rgName = "rg-test"
-    $appInsightsName = "appinsightstest"
+    $rgName = $rgName
+    $appInsightsName = $resourceName
 
     #act
     $result = Confirm-AzBPAppInsights -ResourceGroupName $rgName -Name $appInsightsName
@@ -98,13 +102,13 @@ Describe 'Verify App Insights Exists in Correct Location' {
 Describe 'Verify App Insights Exists in Resource Group' {
   it 'Should be in a resource group named rg-test' {
     #arrange
-    $rgName = "rg-test"
-    $appInsightsName = "appinsightstest"
+    $rgName = $rgName
+    $appInsightsName = $resourceName
 
     #act
     $result = Confirm-AzBPAppInsights -ResourceGroupName $rgName -Name $appInsightsName
 
     #assert
-    $result | Should -BeInResourceGroup 'rg-test'
+    $result | Should -BeInResourceGroup $rgName
   }
 }

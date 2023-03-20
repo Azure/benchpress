@@ -23,7 +23,7 @@
 
 1. Update `ActionGroup.Tests.ps1` variables to point to your expected resources:
 
-   - `test-rg` -> `your-resource-group-name`
+   - `rg-test` -> `your-resource-group-name`
    - `sampleaction` -> `your-action-group-name`
 
 1. If using a local copy of `Az.InfrastructureTesting`, replace `Import-Module Az.InfrastructureTesting` with

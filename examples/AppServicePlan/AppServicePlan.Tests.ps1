@@ -2,13 +2,17 @@ BeforeAll {
   Import-Module Az.InfrastructureTesting
 }
 
+$resourceType = "Appserviceplan"
+$resourceName = "appserviceplantest"
+$rgName = "rg-test"
+
 Describe 'Verify App Service Plan with Confirm-AzBPResource' {
   it 'Should contain an App Service Plan named appserviceplantest' {
     #arrange
     $params = @{
-      ResourceType      = "Appserviceplan"
-      ResourceName      = "appserviceplantest"
-      ResourceGroupName = "rg-test"
+      ResourceType      = $resourceType
+      ResourceName      = $resourceName
+      ResourceGroupName = $rgName
     }
 
     #act
@@ -21,9 +25,9 @@ Describe 'Verify App Service Plan with Confirm-AzBPResource' {
   it 'Should contain an App Service Plan named appserviceplantest with sku tier of Free' {
     #arrange
     $params = @{
-      ResourceType      = "Appserviceplan"
-      ResourceName      = "appserviceplantest"
-      ResourceGroupName = "rg-test"
+      ResourceType      = $resourceType
+      ResourceName      = $resourceName
+      ResourceGroupName = $rgName
       PropertyKey       = "Sku.Tier"
       PropertyValue     = "Free"
     }
@@ -38,8 +42,8 @@ Describe 'Verify App Service Plan with Confirm-AzBPResource' {
 Describe 'Verify App Service Plan Exists' {
   it 'Should contain an App Service Plan with the given name' {
       #arrange
-      $rgName = 'rg-test'
-      $appServicePlanName = 'appserviceplantest'
+      $rgName = $rgName
+      $appServicePlanName = $resourceName
 
       #act
       $result = Confirm-AzBPAppServicePlan -ResourceGroupName $rgName -AppServicePlanName $appServicePlanName
@@ -52,7 +56,7 @@ Describe 'Verify App Service Plan Exists' {
 Describe 'Verify App Service Plan Does Not Exist' {
   it 'Should not contain an App Service Plan with the given name' {
       #arrange
-      $rgName = 'rg-test'
+      $rgName = $rgName
       $appServicePlanName = 'noappserviceplantest'
 
       #act
@@ -69,8 +73,8 @@ Describe 'Verify App Service Plan Does Not Exist' {
 Describe 'Verify App Service Plan Exists with Custom Assertion' {
   it 'Should contain an App Service Plan named appserviceplantest' {
     #arrange
-    $rgName = 'rg-test'
-    $appServicePlanName = 'appserviceplantest'
+    $rgName = $rgName
+    $appServicePlanName = $resourceName
 
     #act
     $result = Confirm-AzBPAppServicePlan -ResourceGroupName $rgName -AppServicePlanName $appServicePlanName
@@ -83,8 +87,8 @@ Describe 'Verify App Service Plan Exists with Custom Assertion' {
 Describe 'Verify App Service Plan Exists in Correct Location' {
   it 'Should contain an App Service Plan named appserviceplantest in westus3' {
     #arrange
-    $rgName = 'rg-test'
-    $appServicePlanName = 'appserviceplantest'
+    $rgName = $rgName
+    $appServicePlanName = $resourceName
 
     #act
     $result = Confirm-AzBPAppServicePlan -ResourceGroupName $rgName -AppServicePlanName $appServicePlanName
@@ -97,13 +101,13 @@ Describe 'Verify App Service Plan Exists in Correct Location' {
 Describe 'Verify App Service Plan Exists in Resource Group' {
   it 'Should be in a resource group named rg-test' {
     #arrange
-    $rgName = 'rg-test'
-    $appServicePlanName = 'appserviceplantest'
+    $rgName = $rgName
+    $appServicePlanName = $resourceName
 
     #act
     $result = Confirm-AzBPAppServicePlan -ResourceGroupName $rgName -AppServicePlanName $appServicePlanName
 
     #assert
-    $result | Should -BeInResourceGroup 'rg-test'
+    $result | Should -BeInResourceGroup $rgName
   }
 }
