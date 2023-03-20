@@ -61,34 +61,7 @@ $result = Confirm-AzBPResource @params
 ## PARAMETERS
 
 ### -ResourceType
-The type of the Resource.
-Currently Supported:
-ActionGroup
-AksCluster
-AppInsights
-AppServicePlan
-CosmosDBAccount
-CosmosDBGremlinDatabase
-CosmosDBMongoDBDatabase
-CosmosDBSqlDatabase
-ContainerRegistry
-DataFactory
-DataFactoryLinkedService
-EventHub
-EventHubConsumerGroup
-EventHubNamespace
-KeyVault
-ResourceGroup
-SqlDatabase
-SqlServer
-StorageAccount
-StorageContainer
-StreamAnalyticsCluster
-SynapseSparkPool
-SynapseSqlPool
-SynapseWorkspace
-VirtualMachine
-WebApp
+The type of the Resource as a \[ResourceType\]
 
 ```yaml
 Type: ResourceType
