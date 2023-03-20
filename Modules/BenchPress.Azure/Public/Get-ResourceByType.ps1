@@ -233,6 +233,41 @@ function Get-ResourceByType {
       "StreamAnalyticsCluster" {
         return Confirm-StreamAnalyticsCluster -Name $ResourceName -ResourceGroupName $ResourceGroupName
       }
+      "StreamAnalyticsFunction" {
+        $params = @{
+          ResourceGroupName = $ResourceGroupName
+          JobName = $JobName
+          Name = $Name
+        }
+        return Confirm-StreamAnalyticsFunction @params
+      }
+      "StreamAnalyticsInput" {
+        $params = @{
+          ResourceGroupName = $ResourceGroupName
+          JobName = $JobName
+          Name = $Name
+        }
+        return Confirm-StreamAnalyticsInput @params
+      }
+      "StreamAnalyticsJob" {
+        return Confirm-StreamAnalyticsJob -ResourceGroupName $ResourceGroupName -Name $ResourceName
+      }
+      "StreamAnalyticsOutput" {
+        $params = @{
+          ResourceGroupName = $ResourceGroupName
+          JobName = $JobName
+          Name = $Name
+        }
+        return Confirm-StreamAnalyticsOutput @params
+      }
+      "StreamAnalyticsTransformation" {
+        $params = @{
+          ResourceGroupName = $ResourceGroupName
+          JobName = $JobName
+          Name = $Name
+        }
+        return Confirm-StreamAnalyticsTransformation @params
+      }
       "SynapseSparkPool" {
         $params = @{
           SynapseSparkPoolName = $ResourceName
