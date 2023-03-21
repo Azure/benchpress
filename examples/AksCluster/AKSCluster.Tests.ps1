@@ -3,15 +3,15 @@ BeforeAll {
 }
 
 $resourceType = "AksCluster"
-$resourceName = "aksbenchpresstest"
-$rgName = "rg-test"
+$aksName = "aksnqpog"
+$rgName = "testrg"
 
 Describe 'Verify AKS Cluster with Confirm-AzBPResource' {
   it 'Should contain an AKS Cluster named aksbenchpresstest' {
     #arrange
     $params = @{
       ResourceType      = $resourceType
-      ResourceName      = $resourceName
+      ResourceName      = $aksName
       ResourceGroupName = $rgName
     }
 
@@ -26,7 +26,7 @@ Describe 'Verify AKS Cluster with Confirm-AzBPResource' {
     #arrange
     $params = @{
       ResourceType      = $resourceType
-      ResourceName      = $resourceName
+      ResourceName      = $aksName
       ResourceGroupName = $rgName
       PropertyKey       = "AgentPoolProfiles[0].Name"
       PropertyValue     = "agentpool"
@@ -42,10 +42,6 @@ Describe 'Verify AKS Cluster with Confirm-AzBPResource' {
 
 Describe 'Verify AKS Cluster Exists' {
   it 'Should contain an AKS cluster named aksbenchpresstest' {
-    #arrange
-    $rgName = $rgName
-    $aksName = $resourceName
-
     #act
     $result = Confirm-AzBPAksCluster -ResourceGroupName $rgName -AKSName $aksName
 
@@ -57,7 +53,6 @@ Describe 'Verify AKS Cluster Exists' {
 Describe 'Verify AKS Cluster Does Not Exist' {
   it 'Should not contain an AKS cluster named aksbenchpresstest' {
     #arrange
-    $rgName = $rgName
     $aksName = 'noakscluster'
 
     #act
@@ -73,10 +68,6 @@ Describe 'Verify AKS Cluster Does Not Exist' {
 
 Describe 'Verify AKS Cluster Exists with Custom Assertion' {
   it 'Should contain an AKS Cluster named aksbenchpresstest' {
-    #arrange
-    $rgName = $rgName
-    $aksName = $resourceName
-
     #act
     $result = Confirm-AzBPAksCluster -ResourceGroupName $rgName -AKSName $aksName
 
@@ -87,10 +78,6 @@ Describe 'Verify AKS Cluster Exists with Custom Assertion' {
 
 Describe 'Verify AKS Cluster Exists in Correct Location' {
   it 'Should contain an AKS Cluster named aksbenchpresstest in westus3' {
-    #arrange
-    $rgName = $rgName
-    $aksName = $resourceName
-
     #act
     $result = Confirm-AzBPAksCluster -ResourceGroupName $rgName -AKSName $aksName
 
@@ -101,10 +88,6 @@ Describe 'Verify AKS Cluster Exists in Correct Location' {
 
 Describe 'Verify AKS Cluster Exists in Resource Group' {
   it 'Should be in a resource group named rg-test' {
-    #arrange
-    $rgName = $rgName
-    $aksName = $resourceName
-
     #act
     $result = Confirm-AzBPAksCluster -ResourceGroupName $rgName -AKSName $aksName
 

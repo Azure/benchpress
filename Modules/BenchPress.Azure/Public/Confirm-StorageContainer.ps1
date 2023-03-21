@@ -23,7 +23,7 @@ function Confirm-StorageContainer {
       The name of the Resource Group
 
     .EXAMPLE
-      Confirm-AzBPStorageContainer -Name "teststgcontainer" -AccountName "teststgacct" -ResourceGroupName "testrg"
+      Confirm-AzBPStorageContainer -Name "teststgcontainer" -AccountName "teststgacct" -ResourceGroupName "rg-test"
 
     .INPUTS
       System.String

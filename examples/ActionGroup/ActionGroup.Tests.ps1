@@ -3,7 +3,7 @@ BeforeAll {
 }
 
 $resourceType = "ActionGroup"
-$resourceName = "sampleaction"
+$actionGroupName = "sampleaction"
 $rgName = "rg-test"
 
 Describe 'Verify Action Group with Confirm-AzBPResource' {
@@ -11,7 +11,7 @@ Describe 'Verify Action Group with Confirm-AzBPResource' {
     #arrange
     $params = @{
       ResourceType      = $resourceType
-      ResourceName      = $resourceName
+      ResourceName      = $actionGroupName
       ResourceGroupName = $rgName
     }
 
@@ -26,10 +26,10 @@ Describe 'Verify Action Group with Confirm-AzBPResource' {
     #arrange
     $params = @{
       ResourceType      = $resourceType
-      ResourceName      = $resourceName
+      ResourceName      = $actionGroupName
       ResourceGroupName = $rgName
       PropertyKey       = "GroupShortName"
-      PropertyValue     = $resourceName
+      PropertyValue     = $actionGroupName
     }
 
     #act
@@ -42,10 +42,6 @@ Describe 'Verify Action Group with Confirm-AzBPResource' {
 
 Describe 'Verify Action Group Exists' {
   it 'Should contain an action group named sampleaction' {
-    #arrange
-    $rgName = $rgName
-    $actionGroupName = $resourceName
-
     #act
     $result = Confirm-AzBPActionGroup -ResourceGroupName $rgName -ActionGroupName $actionGroupName
 
@@ -57,7 +53,6 @@ Describe 'Verify Action Group Exists' {
 Describe 'Verify Action Group Does Not Exist' {
   it 'Should not contain an action group named sampleActionGroup' {
     #arrange
-    $rgName = $rgName
     $actionGroupName = "noActionGroup"
 
     #act
@@ -73,10 +68,6 @@ Describe 'Verify Action Group Does Not Exist' {
 
 Describe 'Verify Action Group Exists with Custom Assertion' {
   it 'Should contain an action group named sampleaction' {
-    #arrange
-    $rgName = $rgName
-    $actionGroupName = $resourceName
-
     #act
     $result = Confirm-AzBPActionGroup -ResourceGroupName $rgName -ActionGroupName $actionGroupName
 
@@ -87,10 +78,6 @@ Describe 'Verify Action Group Exists with Custom Assertion' {
 
 Describe 'Verify Action Group Exists in Correct Location' {
   it 'Should contain an action group named sampleaction in global' {
-    #arrange
-    $rgName = $rgName
-    $actionGroupName = $resourceName
-
     #act
     $result = Confirm-AzBPActionGroup -ResourceGroupName $rgName -ActionGroupName $actionGroupName
 
@@ -101,10 +88,6 @@ Describe 'Verify Action Group Exists in Correct Location' {
 
 Describe 'Verify Action Group Exists in Resource Group' {
   it 'Should be in a resource group named rg-test' {
-    #arrange
-    $rgName = $rgName
-    $actionGroupName = $resourceName
-
     #act
     $result = Confirm-AzBPActionGroup -ResourceGroupName $rgName -ActionGroupName $actionGroupName
 
