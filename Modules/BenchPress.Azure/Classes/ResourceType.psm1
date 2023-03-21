@@ -20,6 +20,11 @@ enum ResourceType{
   StorageAccount
   StorageContainer
   StreamAnalyticsCluster
+  StreamAnalyticsFunction
+  StreamAnalyticsInput
+  StreamAnalyticsJob
+  StreamAnalyticsOutput
+  StreamAnalyticsTransformation
   SynapseSparkPool
   SynapseSqlPool
   SynapseWorkspace

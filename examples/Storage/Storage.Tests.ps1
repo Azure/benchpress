@@ -1,78 +1,138 @@
 BeforeAll {
   Import-Module Az.InfrastructureTesting
+
+  $rgName = 'rg-test'
+  $accountName = 'azbenchpressstorage'
+  $location = 'westus3'
 }
 
 Describe 'Verify Storage Account' {
-  it 'Should contain a Storage Account with the given name' {
+  BeforeAll {
+    $noAccountName = 'noazbenchpressstorage'
+  }
+
+  It 'Should contain a Storage Account with the given name - Confirm-AzBPResource' {
     #arrange
-    $rgName = 'rg-test'
-    $name = 'azbenchpressstorage'
+    $params = @{
+      ResourceType = "StorageAccount"
+      ResourceGroupName = $rgName
+      ResourceName = $accountName
+    }
 
     #act
-    $result = Confirm-AzBPStorageAccount -ResourceGroupName $rgName -Name $name
+    $result = Confirm-AzBPResource @params
 
     #assert
     $result.Success | Should -Be $true
   }
 
-  it 'Should not contain a Storage Account with the given name' {
+  It "Should contain a Storage Account named $accountName - ConfirmAzBPResource" {
     #arrange
-    $rgName = 'rg-test'
-    $serverName = 'noazbenchpressstorage'
+    $params = @{
+      ResourceType = "StorageAccount"
+      ResourceGroupName = $rgName
+      ResourceName = $accountName
+      PropertyKey = 'StorageAccountName'
+      PropertyValue = $accountName
+    }
+
+    #act
+    $result = Confirm-AzBPResource @params
+
+    #assert
+    $result.Success | Should -Be $true
+  }
+
+  It 'Should contain a Storage Account with the given name' {
+    #act
+    $result = Confirm-AzBPStorageAccount -ResourceGroupName $rgName -Name $accountName
+
+    #assert
+    $result.Success | Should -Be $true
+  }
+
+  It 'Should not contain a Storage Account with the given name' {
 
     #act
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
-    # In this test, it will suppress the error message when a resource cannot be found.
+    # In this test, It will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
-    $result = Confirm-AzBPStorageAccount -ResourceGroupName $rgName -Name $serverName -ErrorAction SilentlyContinue
+    $result = Confirm-AzBPStorageAccount -ResourceGroupName $rgName -Name $noAccountName -ErrorAction SilentlyContinue
 
     #assert
     $result.Success | Should -Be $false
   }
 
-  it 'Should contain a Storage Account named azbenchpressstorage' {
-    #arrange
-    $rgName = 'rg-test'
-    $name = 'azbenchpressstorage'
-
+  It 'Should contain a Storage Account named $accountName' {
     #act
-    $result = Confirm-AzBPStorageAccount -ResourceGroupName $rgName -Name $name
+    $result = Confirm-AzBPStorageAccount -ResourceGroupName $rgName -Name $accountName
 
     #assert
     $result | Should -BeDeployed
   }
 
-  it 'Should contain a Storage Account named azbenchpressstorage in westus3' {
-    #arrange
-    $rgName = 'rg-test'
-    $name = 'azbenchpressstorage'
-
+  It "Should contain a Storage Account named $accountName in $location" {
     #act
-    $result = Confirm-AzBPStorageAccount -ResourceGroupName $rgName -Name $name
+    $result = Confirm-AzBPStorageAccount -ResourceGroupName $rgName -Name $accountName
     #assert
-    $result | Should -BeInLocation 'westus3'
+    $result | Should -BeInLocation $location
   }
 
-  it 'Should be a Storage Account in a resource group named rg-test' {
-    #arrange
-    $rgName = 'rg-test'
-    $name = 'azbenchpressstorage'
-
+  It 'Should be a Storage Account in a resource group named $rgName' {
     #act
-    $result = Confirm-AzBPStorageAccount -ResourceGroupName $rgName -Name $name
+    $result = Confirm-AzBPStorageAccount -ResourceGroupName $rgName -Name $accountName
 
     #assert
-    $result | Should -BeInResourceGroup 'rg-test'
+    $result | Should -BeInResourceGroup $rgName
   }
 }
 
 Describe 'Verify Storage Container' {
-  it 'Should contain a Storage Container with the given name' {
+  BeforeAll {
+    $containerName = 'azbenchpresscontainer'
+    $noContainerName = 'noazbenchpresscontainer'
+  }
+
+  It 'Should contain a Storage Container with the given name - Confirm-AzBPResource' {
     #arrange
     $params = @{
-      ResourceGroupName = 'rg-test'
-      AccountName       = 'azbenchpressstorage'
-      Name              = 'azbenchpresscontainer'
+      ResourceType = "StorageContainer"
+      ResourceGroupName = $rgName
+      AccountName = $accountName
+      ResourceName = $containerName
+    }
+
+    #act
+    $result = Confirm-AzBPResource @params
+
+    #assert
+    $result.Success | Should -Be $true
+  }
+
+  It "Should contain a Storage Container named $containerName - ConfirmAzBPResource" {
+    #arrange
+    $params = @{
+      ResourceType = "StorageContainer"
+      ResourceGroupName = $rgName
+      AccountName = $accountName
+      ResourceName = $containerName
+      PropertyKey = 'Name'
+      PropertyValue = $containerName
+    }
+
+    #act
+    $result = Confirm-AzBPResource @params
+
+    #assert
+    $result.Success | Should -Be $true
+  }
+
+  It 'Should contain a Storage Container with the given name' {
+    #arrange
+    $params = @{
+      ResourceGroupName = $rgName
+      AccountName       = $accountName
+      Name              = $containerName
     }
 
     #act
@@ -82,18 +142,18 @@ Describe 'Verify Storage Container' {
     $result.Success | Should -Be $true
   }
 
-  it 'Should not contain a Storage Container with the given name' {
+  It "Should not contain a Storage Container with the given name" {
     #arrange
     $params = @{
-      ResourceGroupName = 'rg-test'
-      AccountName       = 'azbenchpressstorage'
-      Name              = 'noazbenchpresscontainer'
-      ErrorAction       = 'SilentlyContinue'
+      ResourceGroupName = $rgName
+      AccountName       = $accountName
+      Name              = $noContainerName
+      ErrorAction       = "SilentlyContinue"
     }
 
     #act
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
-    # In this test, it will suppress the error message when a resource cannot be found.
+    # In this test, It will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
     $result = Confirm-AzBPStorageContainer @params
 
@@ -101,12 +161,12 @@ Describe 'Verify Storage Container' {
     $result.Success | Should -Be $false
   }
 
-  it 'Should contain a Storage Container named azbenchpresscontainer' {
+  It "Should contain a Storage Container named $containerName" {
     #arrange
     $params = @{
-      ResourceGroupName = 'rg-test'
-      AccountName       = 'azbenchpressstorage'
-      Name              = 'azbenchpresscontainer'
+      ResourceGroupName = $rgName
+      AccountName       = $accountName
+      Name              = $containerName
     }
 
     #act
@@ -115,4 +175,9 @@ Describe 'Verify Storage Container' {
     #assert
     $result | Should -BeDeployed
   }
+}
+
+AfterAll {
+  Get-Module Az-InfrastructureTesting | Remove-Module
+  Get-Module BenchPress.Azure | Remove-Module
 }
