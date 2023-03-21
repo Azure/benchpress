@@ -1,14 +1,14 @@
 BeforeAll {
   Import-Module Az.InfrastructureTesting
 
-  $rgName = 'rg-test'
-  $accountName = 'azbenchpressstorage'
-  $location = 'westus3'
+  $Script:rgName = 'rg-test'
+  $Script:accountName = 'azbenchpressstorage'
+  $Script:location = 'westus3'
 }
 
 Describe 'Verify Storage Account' {
   BeforeAll {
-    $noAccountName = 'noazbenchpressstorage'
+    $Script:noAccountName = 'noazbenchpressstorage'
   }
 
   It 'Should contain a Storage Account with the given name - Confirm-AzBPResource' {
@@ -89,8 +89,8 @@ Describe 'Verify Storage Account' {
 
 Describe 'Verify Storage Container' {
   BeforeAll {
-    $containerName = 'azbenchpresscontainer'
-    $noContainerName = 'noazbenchpresscontainer'
+    $Script:containerName = 'azbenchpresscontainer'
+    $Script:noContainerName = 'noazbenchpresscontainer'
   }
 
   It 'Should contain a Storage Container with the given name - Confirm-AzBPResource' {

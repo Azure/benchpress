@@ -26,11 +26,11 @@ and `Confirm-AzBPSynapseSqlPool` cmdlet.
 
 1. Update `Synapse.Tests.ps1` variables to point to your expected resources:
 
-   - `rg-test` -> `your-resource-group-name`
-   - `westus3` -> `your-synapse-location`
+   - `rg-test`     -> `your-resource-group-name`
+   - `westus3`     -> `your-resource-group-location`
    - `samplesynws` -> `your-synapse-workspace-name`
    - `samplespark` -> `your-spark-pool-name`
-   - `samplesql` -> `your-sql-pool-name`
+   - `samplesql`   -> `your-sql-pool-name`
 
 1. If using a local copy of `Az.InfrastructureTesting`, replace `Import-Module Az.InfrastructureTesting` with
 `Import-Module "../../bin/BenchPress.Azure.psd1"`.

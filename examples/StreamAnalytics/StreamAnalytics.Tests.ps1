@@ -1,13 +1,13 @@
 BeforeAll {
   Import-Module Az.InfrastructureTesting
 
-  $rgName = 'rg-test'
-  $location = 'westus3'
+  $Script:rgName = 'rg-test'
+  $Script:location = 'westus3'
 }
 
 Describe 'Verify Stream Analytics Cluster' {
   BeforeAll {
-    $clusterName = 'teststreamcluster'
+    $Script:clusterName = 'teststreamcluster'
   }
 
   It 'Should contain a Stream Analytics Cluster with the given name - Confirm-AzBPResource' {
@@ -76,11 +76,11 @@ Describe 'Verify Stream Analytics Cluster' {
 
 Describe 'Stream Analytics Jobs' {
   BeforeAll {
-    $jobName = 'testjob'
-    $functionName = 'testfunction'
-    $inputName = 'testinput'
-    $outputName = 'testoutput'
-    $transformationName = 'testtransformation'
+    $Script:jobName = 'testjob'
+    $Script:functionName = 'testfunction'
+    $Script:inputName = 'testinput'
+    $Script:outputName = 'testoutput'
+    $Script:transformationName = 'testtransformation'
   }
 
   It 'Should contain a Stream Analytics Job with the given name - Confirm-AzBPResource' {

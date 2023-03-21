@@ -1,9 +1,9 @@
 BeforeAll {
   Import-Module Az.InfrastructureTesting
 
-  $rgName = 'rg-test'
-  $webappName = 'azbpwebapptest'
-  $location = 'westus3'
+  $Script:rgName = 'rg-test'
+  $Script:webappName = 'azbpwebapptest'
+  $Script:location = 'westus3'
 }
 
 Describe 'Verify Web App Exists' {

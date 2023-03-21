@@ -25,7 +25,8 @@
 
 1. Update `VirtualMachine.Tests.ps1` variables to point to your expected resources:
 
-   - `rg-test` -> `your-resource-group-name`
+   - `rg-test`        -> `your-resource-group-name`
+   - `westus3`        -> `your-resource-group-location`
    - `simpleLinuxVM1` -> `your-virtual-machine-name`
 
 1. If using a local copy of `Az.InfrastructureTesting`, replace `Import-Module Az.InfrastructureTesting` with

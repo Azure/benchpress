@@ -1,9 +1,9 @@
 BeforeAll {
   Import-Module Az.InfrastructureTesting
 
-  $rgName = 'rg-test'
-  $workSpaceName = 'samplesynws'
-  $location = 'westus3'
+  $Script:rgName = 'rg-test'
+  $Script:workSpaceName = 'samplesynws'
+  $Script:location = 'westus3'
 }
 
 Describe 'Verify Synapse Workspace' {
@@ -89,8 +89,8 @@ Describe 'Verify Synapse Workspace' {
 
 Describe 'Verify Synapse Spark/SQL Pool' {
   BeforeAll {
-    $sparkPoolName = 'samplespark'
-    $sqlPoolName = 'samplesql'
+    $Script:sparkPoolName = 'samplespark'
+    $Script:sqlPoolName = 'samplesql'
   }
 
   It 'Should contain a Synapse Spark Pool with the given name - Confirm-AzBPResource' {

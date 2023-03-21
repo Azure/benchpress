@@ -24,7 +24,8 @@
 
 1. Update `Storage.Tests.ps1` variables to point to your expected resources:
 
-   - `rg-test` -> `your-resource-group-name`
+   - `rg-test`             -> `your-resource-group-name`
+   - `westus3`             -> `your-resource-group-location`
    - `azbenchpressstorage` -> `your-storage-account-name`
 
 1. If using a local copy of `Az.InfrastructureTesting`, replace `Import-Module Az.InfrastructureTesting` with

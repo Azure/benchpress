@@ -1,9 +1,9 @@
 BeforeAll {
   Import-Module Az.InfrastructureTesting
 
-  $rgName = 'rg-test'
-  $vmName = 'simpleLinuxVM1'
-  $location = 'westus3'
+  $Script:rgName = 'rg-test'
+  $Script:vmName = 'simpleLinuxVM1'
+  $Script:location = 'westus3'
 }
 
 Describe 'Verify Virtual Machine' {
