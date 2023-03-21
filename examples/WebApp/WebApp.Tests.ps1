@@ -53,7 +53,7 @@ Describe 'Verify Web App Exists' {
 
     #act
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
-    # In this test, It will suppress the error message when a resource cannot be found.
+    # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
     $result = Confirm-AzBPWebApp -ResourceGroupName $rgName -WebAppName $webappName -ErrorAction SilentlyContinue
 
