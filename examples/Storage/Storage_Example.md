@@ -24,11 +24,13 @@
 
 1. Update `Storage.Tests.ps1` variables to point to your expected resources:
 
-   - `rg-test` -> `your-resource-group-name`
+   - `rg-test`             -> `your-resource-group-name`
+   - `westus3`             -> `your-resource-group-location`
    - `azbenchpressstorage` -> `your-storage-account-name`
 
 1. If using a local copy of `Az.InfrastructureTesting`, replace `Import-Module Az.InfrastructureTesting` with
-`Import-Module "../../bin/BenchPress.Azure.psd1"`.
+`Import-Module "../../bin/BenchPress.Azure.psd1"`. Note that the final `AfterAll` step will properly remove the module
+regardless of which method is chosen to load the module.
 
 1. Run `Storage.Tests.ps1`:
 
