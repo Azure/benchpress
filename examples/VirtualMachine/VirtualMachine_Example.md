@@ -30,7 +30,9 @@
    - `simpleLinuxVM1` -> `your-virtual-machine-name`
 
 1. If using a local copy of `Az.InfrastructureTesting`, replace `Import-Module Az.InfrastructureTesting` with
-`Import-Module "../../bin/BenchPress.Azure.psd1"`.
+`Import-Module "../../bin/BenchPress.Azure.psd1"`. Note that the final step in each Pester test is to execute a
+`Remove-Module`. The test is setup so that regardless of which method is chosen to load the module it will be properly
+removed after the Pester tests have run.
 
 1. Run `VirtualMachine.Tests.ps1`:
 
