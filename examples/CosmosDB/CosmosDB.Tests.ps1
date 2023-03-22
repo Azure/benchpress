@@ -159,7 +159,7 @@ Describe 'Cosmos DB Gremlin Database' {
     $Script:noCosmosDBAccountName = 'nocdbbenchpresstest'
     $Script:noCosmosDBName = 'nocdatabasebenchpresstest'
   }
-  
+
   It 'Should contain a Cosmos DB account with the given name' {
     #act
     $result = Confirm-AzBPCosmosDBAccount -ResourceGroupName $rgName -Name $gremlinAccountName
