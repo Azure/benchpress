@@ -7,6 +7,10 @@ BeforeAll {
 }
 
 Describe 'Verify Virtual Machine' {
+  BeforeAll {
+    $Script:noVmName = 'noSimpleLinuxVM1'
+  }
+
   It 'Should contain a Virtual Machine with the given name - Confirm-AzBPResource' {
     #arrange
     $params = @{
@@ -51,7 +55,7 @@ Describe 'Verify Virtual Machine' {
     #arrange
     $params = @{
       ResourceGroupName = $rgName
-      VirtualMachineName = 'noSimpleLinuxVM1'
+      VirtualMachineName = $noVmName
       ErrorAction = "SilentlyContinue"
     }
 
@@ -65,7 +69,7 @@ Describe 'Verify Virtual Machine' {
     $result.Success | Should -Be $false
   }
 
-  It 'Should contain a Virtual Machine named simpleLinuxVM1' {
+  It "Should contain a Virtual Machine named $vmName" {
     #act
     $result = Confirm-AzBPVirtualMachine -ResourceGroupName $rgName -VirtualMachineName $vmName
 
@@ -73,7 +77,7 @@ Describe 'Verify Virtual Machine' {
     $result | Should -BeDeployed
   }
 
-  It "Should contain an Virtual Machine named simpleLinuxVM1 in $location" {
+  It "Should contain an Virtual Machine named $vmName in $location" {
     #act
     $result = Confirm-AzBPVirtualMachine -ResourceGroupName $rgName -VirtualMachineName $vmName
 
@@ -81,7 +85,7 @@ Describe 'Verify Virtual Machine' {
     $result | Should -BeInLocation $location
   }
 
-  It 'Should be a Virtual Machine in a resource group named rg-test' {
+  It "Should be a Virtual Machine in a resource group named $rgName" {
     #act
     $result = Confirm-AzBPVirtualMachine -ResourceGroupName $rgName -VirtualMachineName $vmName
 

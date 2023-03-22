@@ -7,6 +7,10 @@ BeforeAll {
 }
 
 Describe 'Verify Synapse Workspace' {
+  BeforeAll {
+    $Script:noWorkspaceName = 'nosamplesynws'
+  }
+
   It 'Should contain a Synapse Workspace with the given name - Confirm-AzBPResource' {
     #arrange
     $params = @{
@@ -74,12 +78,12 @@ Describe 'Verify Synapse Workspace' {
     $result | Should -BeInResourceGroup $rgName
   }
 
-  It 'Should not contain a synapse workspace named nosamplesynws' {
+  It "Should not contain a synapse workspace named $noWorkspaceName" {
     #act
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
-    $result = Confirm-AzBPSynapseWorkspace -ResourceGroupName $rgName -WorkspaceName $workspaceName `
+    $result = Confirm-AzBPSynapseWorkspace -ResourceGroupName $rgName -WorkspaceName $noWorkspaceName `
       -ErrorAction SilentlyContinue
 
     #assert
