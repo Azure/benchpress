@@ -67,7 +67,7 @@ The type of the Resource as a \[ResourceType\]
 Type: ResourceType
 Parameter Sets: (All)
 Aliases:
-Accepted values: ActionGroup, AksCluster, AppInsights, AppServicePlan, CosmosDBAccount, CosmosDBGremlinDatabase, CosmosDBMongoDBDatabase, CosmosDBSqlDatabase, ContainerRegistry, DataFactory, DataFactoryLinkedService, EventHub, EventHubConsumerGroup, EventHubNamespace, KeyVault, ResourceGroup, SqlDatabase, SqlServer, StorageAccount, StorageContainer, StreamAnalyticsCluster, SynapseSparkPool, SynapseSqlPool, SynapseWorkspace, VirtualMachine, WebApp
+Accepted values: ActionGroup, AksCluster, AppInsights, AppServicePlan, CosmosDBAccount, CosmosDBGremlinDatabase, CosmosDBMongoDBDatabase, CosmosDBSqlDatabase, ContainerRegistry, DataFactory, DataFactoryLinkedService, EventHub, EventHubConsumerGroup, EventHubNamespace, KeyVault, ResourceGroup, SqlDatabase, SqlServer, StorageAccount, StorageContainer, StreamAnalyticsCluster, StreamAnalyticsFunction, StreamAnalyticsInput, StreamAnalyticsJob, StreamAnalyticsOutput, StreamAnalyticsTransformation, SynapseSparkPool, SynapseSqlPool, SynapseWorkspace, VirtualMachine, WebApp
 
 Required: True
 Position: 1
