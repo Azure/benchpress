@@ -86,3 +86,8 @@ Describe 'Verify Web App Exists' {
     $result | Should -BeInResourceGroup $rgName
   }
 }
+
+AfterAll {
+  Get-Module Az-InfrastructureTesting | Remove-Module
+  Get-Module BenchPress.Azure | Remove-Module
+}

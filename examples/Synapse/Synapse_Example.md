@@ -33,9 +33,8 @@ and `Confirm-AzBPSynapseSqlPool` cmdlet.
    - `samplesql`   -> `your-sql-pool-name`
 
 1. If using a local copy of `Az.InfrastructureTesting`, replace `Import-Module Az.InfrastructureTesting` with
-`Import-Module "../../bin/BenchPress.Azure.psd1"`. Note that the final step in each Pester test is to execute a
-`Remove-Module`. The test is setup so that regardless of which method is chosen to load the module it will be properly
-removed after the Pester tests have run.
+`Import-Module "../../bin/BenchPress.Azure.psd1"`. Note that the final `AfterAll` step will properly remove the module
+regardless of which method is chosen to load the module.
 
 1. Run `Synapse.Tests.ps1`:
 
