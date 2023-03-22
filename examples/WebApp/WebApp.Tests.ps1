@@ -10,7 +10,7 @@ Describe 'Verify Web App Exists' {
   BeforeAll {
     $Script:noWebAppName = 'noazbpwebapptest'
   }
-  
+
   It 'Should contain a Web App with the given name - Confirm-AzBPResource' {
     #arrange
     $params = @{
