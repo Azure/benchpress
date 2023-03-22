@@ -7,6 +7,10 @@ BeforeAll {
 }
 
 Describe 'Verify Web App Exists' {
+  BeforeAll {
+    $Script:noWebAppName = 'noazbpwebapptest'
+  }
+  
   It 'Should contain a Web App with the given name - Confirm-AzBPResource' {
     #arrange
     $params = @{
@@ -48,14 +52,11 @@ Describe 'Verify Web App Exists' {
   }
 
   It 'Should not contain a Web App with the given name' {
-    #arrange
-    $webappName = 'noazbpwebapptest'
-
     #act
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
-    $result = Confirm-AzBPWebApp -ResourceGroupName $rgName -WebAppName $webappName -ErrorAction SilentlyContinue
+    $result = Confirm-AzBPWebApp -ResourceGroupName $rgName -WebAppName $noWebappName -ErrorAction SilentlyContinue
 
     #assert
     $result.Success | Should -Be $false
