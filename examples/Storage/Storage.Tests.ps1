@@ -63,7 +63,7 @@ Describe 'Verify Storage Account' {
     $result.Success | Should -Be $false
   }
 
-  It 'Should contain a Storage Account named $accountName' {
+  It "Should contain a Storage Account named $accountName" {
     #act
     $result = Confirm-AzBPStorageAccount -ResourceGroupName $rgName -Name $accountName
 
@@ -78,7 +78,7 @@ Describe 'Verify Storage Account' {
     $result | Should -BeInLocation $location
   }
 
-  It 'Should be a Storage Account in a resource group named $rgName' {
+  It "Should be a Storage Account in a resource group named $rgName" {
     #act
     $result = Confirm-AzBPStorageAccount -ResourceGroupName $rgName -Name $accountName
 
