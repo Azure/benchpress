@@ -1,17 +1,19 @@
 BeforeAll {
   Import-Module Az.InfrastructureTesting
+
+  $Script:rgName = 'rg-test'
+  $Script:location = 'westus3'
+  $Script:gremlinAccountName = "gremlin-account-name"
+  $Script:gremlinDatabaseName = "gremlin-db-name"
+  $Script:mongoAccountName = "mongodb-account-name"
+  $Script:mongoDatabaseName = "mongodb-db-name"
+  $Script:sqlAccountName = "sql-account-name"
+  $Script:sqlDatabaseName = "sql-db-name"
 }
 
-$gremlinAccountName = "gremlin-account-name"
-$gremlinDatabaseName = "gremlin-db-name"
-$mongoAccountName = "mongodb-account-name"
-$mongoDatabaseName = "mongodb-db-name"
-$sqlAccountName = "sql-account-name"
-$sqlDatabaseName = "sql-db-name"
-$rgName = "rg-test"
 
-Describe 'Verify Cosmos DB Account with Confirm-AzBPResource' {
-  it 'Should contain a Cosmos DB Account named gremlin-account-name' {
+Describe 'Verify Cosmos DB Account' {
+  it 'Should contain a Cosmos DB Account - Confirm-AzBPResource' {
     #arrange
     $params = @{
       ResourceType      = "CosmosDBAccount"
@@ -26,7 +28,7 @@ Describe 'Verify Cosmos DB Account with Confirm-AzBPResource' {
     $result.Success | Should -Be $true
   }
 
-  it 'Should contain a Cosmos DB Account named gremlin-account-name with kind GlobalDocumentDB' {
+  it 'Should contain a Cosmos DB Account - Confirm-AzBPResource' {
     #arrange
     $params = @{
       ResourceType      = "CosmosDBAccount"
@@ -45,7 +47,7 @@ Describe 'Verify Cosmos DB Account with Confirm-AzBPResource' {
 
 #######################################################################################################################
 
-  it 'Should contain a Cosmos DB named gremlin-database-name' {
+  it 'Should contain a Cosmos DB - Confirm-AzBPResource' {
     #arrange
     $params = @{
       ResourceType      = "CosmosDBGremlinDatabase"
@@ -61,7 +63,7 @@ Describe 'Verify Cosmos DB Account with Confirm-AzBPResource' {
     $result.Success | Should -Be $true
   }
 
-  it 'Should contain a Cosmos DB named gremlin-database-name' {
+  it 'Should contain a Cosmos DB - Confirm-AzBPResource' {
     #arrange
     $params = @{
       ResourceType      = "CosmosDBGremlinDatabase"
@@ -81,7 +83,7 @@ Describe 'Verify Cosmos DB Account with Confirm-AzBPResource' {
 
 #######################################################################################################################
 
-  it 'Should contain a Cosmos DB named mongodb-db-name' {
+  it 'Should contain a Cosmos DB - Confirm-AzBPResource' {
     #arrange
     $params = @{
       ResourceType      = "CosmosDBMongoDBDatabase"
@@ -97,7 +99,7 @@ Describe 'Verify Cosmos DB Account with Confirm-AzBPResource' {
     $result.Success | Should -Be $true
   }
 
-  it 'Should contain a Cosmos DB named mongodb-db-name with id mongodb-db-name' {
+  it 'Should contain a Cosmos DB - Confirm-AzBPResource' {
     #arrange
     $params = @{
       ResourceType      = "CosmosDBMongoDBDatabase"
@@ -117,7 +119,7 @@ Describe 'Verify Cosmos DB Account with Confirm-AzBPResource' {
 
 #######################################################################################################################
 
-  it 'Should contain a Cosmos DB named sql-db-name' {
+  it 'Should contain a Cosmos DB - Confirm-AzBPResource' {
     #arrange
     $params = @{
       ResourceType      = "CosmosDBSQLDatabase"
@@ -133,7 +135,7 @@ Describe 'Verify Cosmos DB Account with Confirm-AzBPResource' {
     $result.Success | Should -Be $true
   }
 
-  it 'Should contain a Cosmos DB named sql-db-name with id sql-db-name' {
+  it 'Should contain a Cosmos DB - Confirm-AzBPResource' {
     #arrange
     $params = @{
       ResourceType      = "CosmosDBSQLDatabase"
@@ -152,7 +154,12 @@ Describe 'Verify Cosmos DB Account with Confirm-AzBPResource' {
   }
 }
 
-Describe 'Comsos DB Gremlin Database' {
+Describe 'Cosmos DB Gremlin Database' {
+  BeforeAll {
+    $Script:noCosmosDBAccountName = 'nocdbbenchpresstest'
+    $Script:noCosmosDBName = 'nocdatabasebenchpresstest'
+  }
+  
   It 'Should contain a Cosmos DB account with the given name' {
     #act
     $result = Confirm-AzBPCosmosDBAccount -ResourceGroupName $rgName -Name $gremlinAccountName
@@ -168,7 +175,7 @@ Describe 'Comsos DB Gremlin Database' {
     # Remove this field to see all errors.
     $params = @{
       ResourceGroupName = $rgName
-      Name              = "nocdbbenchpresstest"
+      Name              = $noCosmosDBAccountName
       ErrorAction       = "SilentlyContinue"
     }
 
@@ -179,7 +186,7 @@ Describe 'Comsos DB Gremlin Database' {
     $result.Success | Should -Be $false
   }
 
-  It 'Should deploy a Cosmos DB Account named `gremlin-account-name`' {
+  It "Should deploy a Cosmos DB Account named $gremlinAccountName" {
     #act
     $result = Confirm-AzBPCosmosDBAccount -ResourceGroupName $rgName -Name $gremlinAccountName
 
@@ -187,15 +194,15 @@ Describe 'Comsos DB Gremlin Database' {
     $result | Should -BeDeployed
   }
 
-  It 'Should create a Cosmos DB Account named `gremlin-account-name` in the `eastus` location' {
+  It "Should contain a Cosmos DB Account named $gremlinAccountName in $location" {
     #act
     $result = Confirm-AzBPCosmosDBAccount -ResourceGroupName $rgName -Name $gremlinAccountName
 
     #assert
-    $result | Should -BeInLocation 'eastus'
+    $result | Should -BeInLocation $location
   }
 
-  It 'Should contain a Cosmos DB Account named `gremlin-account-name` in `rg-test` resource group' {
+  It "Should contain a Cosmos DB Account named $gremlinAccountName in $rgName" {
     #act
     $result = Confirm-AzBPCosmosDBAccount -ResourceGroupName $rgName -Name $gremlinAccountName
 
@@ -228,7 +235,7 @@ Describe 'Comsos DB Gremlin Database' {
     $params = @{
       ResourceGroupName = $rgName
       AccountName       = $gremlinAccountName
-      Name              = "nocdbgdatabase"
+      Name              = $noCosmosDBName
       ErrorAction       = "SilentlyContinue"
     }
 
@@ -239,7 +246,7 @@ Describe 'Comsos DB Gremlin Database' {
     $result.Success | Should -Be $false
   }
 
-  It 'Should deploy a Cosmos DB Gremlin Database named `gremlin-db-name`' {
+  It "Should deploy a Cosmos DB Gremlin Database named $gremlinDatabaseName" {
     #arrange
     $params = @{
       ResourceGroupName = $rgName
@@ -254,7 +261,22 @@ Describe 'Comsos DB Gremlin Database' {
     $result | Should -BeDeployed
   }
 
-  It 'Should contain a Cosmos DB Gremlin Database named `gremlin-db-name` in `rg-test` resource group' {
+  It "Should contain a Cosmos DB Gremlin Database named $gremlinDatabaseName in $location" {
+    #arrange
+    $params = @{
+      ResourceGroupName = $rgName
+      AccountName       = $gremlinAccountName
+      Name              = $gremlinDatabaseName
+    }
+
+    #act
+    $result = Confirm-AzBPCosmosDBGremlinDatabase @params
+
+    #assert
+    $result | Should -BeInLocation $location
+  }
+
+  It "Should contain a Cosmos DB Gremlin Database named $gremlinDatabaseName in $rgName" {
     #arrange
     $params = @{
       ResourceGroupName = $rgName
@@ -271,9 +293,11 @@ Describe 'Comsos DB Gremlin Database' {
 }
 
 Describe 'Comsos DB Mongo DB Database' {
-  # DON'T Think we need to check accounts for Mongo or SQL if the
-  # Syntax is the same between all of them (Mongo, SQL and Gremlin)
-  # Would recommend deleting these Confirm-AzBPCosmosDBAccount tests
+  BeforeAll {
+    $Script:noMongoDBAccountName = 'nomdbbenchpresstest'
+    $Script:noMongoDBName = 'nomdatabasebenchpresstest'
+  }
+
   It 'Should contain a Cosmos DB account with the given name' {
     #act
     $result = Confirm-AzBPCosmosDBAccount -ResourceGroupName $rgName -Name $mongoAccountName
@@ -282,7 +306,25 @@ Describe 'Comsos DB Mongo DB Database' {
     $result.Success | Should -Be $true
   }
 
-  It 'Should deploy a Cosmos DB Account named `mongodb-account-name`' {
+  It 'Should not contain a Cosmos DB Mongo account with the given name' {
+    #arrange
+    # The 'ErrorAction = SilentlyContinue' command suppresses all errors.
+    # In this test, it will suppress the error message when a resource cannot be found.
+    # Remove this field to see all errors.
+    $params = @{
+      ResourceGroupName = $rgName
+      Name              = $noMongoDBAccountName
+      ErrorAction       = "SilentlyContinue"
+    }
+
+    #act
+    $result = Confirm-AzBPCosmosDBAccount @params
+
+    #assert
+    $result.Success | Should -Be $false
+  }
+
+  It "Should deploy a Cosmos DB Account named $mongoAccountName" {
     #act
     $result = Confirm-AzBPCosmosDBAccount -ResourceGroupName $rgName -Name $mongoAccountName
 
@@ -290,15 +332,15 @@ Describe 'Comsos DB Mongo DB Database' {
     $result | Should -BeDeployed
   }
 
-  It 'Should contain a Cosmos DB Account named `mongodb-account-name` in the `eastus` location' {
+  It "Should contain a Cosmos DB Account named $mongoAccountName in $location" {
     #act
     $result = Confirm-AzBPCosmosDBAccount -ResourceGroupName $rgName -Name $mongoAccountName
 
     #assert
-    $result | Should -BeInLocation 'eastus'
+    $result | Should -BeInLocation $location
   }
 
-  It 'Should contain a Cosmos DB Account named `mongodb-account-name` in `rg-test` resource group' {
+  It "Should contain a Cosmos DB Account named $mongoAccountName in $rgName" {
     #act
     $result = Confirm-AzBPCosmosDBAccount -ResourceGroupName $rgName -Name $mongoAccountName
 
@@ -331,7 +373,7 @@ Describe 'Comsos DB Mongo DB Database' {
     $params = @{
       ResourceGroupName = $rgName
       AccountName       = $mongoAccountName
-      Name              = "nocdbmdbdatabase"
+      Name              = $noMongoDBName
       ErrorAction       = "SilentlyContinue"
     }
 
@@ -342,7 +384,7 @@ Describe 'Comsos DB Mongo DB Database' {
     $result.Success | Should -Be $false
   }
 
-  It 'Should deploy a Cosmos DB Mongo DB Database named `mongodb-db-name`' {
+  It "Should deploy a Cosmos DB Mongo DB Database named $mongoDatabaseName" {
     #arrange
     $params = @{
       ResourceGroupName = $rgName
@@ -357,7 +399,22 @@ Describe 'Comsos DB Mongo DB Database' {
     $result | Should -BeDeployed
   }
 
-  It 'Should contain a Cosmos DB Mongo DB Database named `mongodb-db-name` in `rg-test` resource group' {
+  It "Should contain a Cosmos DB Mongo DB Database named $mongoDatabaseName in $location" {
+    #arrange
+    $params = @{
+      ResourceGroupName = $rgName
+      AccountName       = $mongoAccountName
+      Name              = $mongoDatabaseName
+    }
+
+    #act
+    $result = Confirm-AzBPCosmosDBMongoDBDatabase @params
+
+    #assert
+    $result | Should -BeInLocation $location
+  }
+
+  It "Should contain a Cosmos DB Mongo DB Database named $mongoDatabaseName in $rgName" {
     #arrange
     $params = @{
       ResourceGroupName = $rgName
@@ -374,6 +431,11 @@ Describe 'Comsos DB Mongo DB Database' {
 }
 
 Describe 'Comsos DB SQL Database' {
+  BeforeAll {
+    $Script:noSqlAccountName = 'nosqlbenchpresstest'
+    $Script:noSqlDatabaseName = 'nosqldatabasebenchpresstest'
+  }
+
   It 'Should contain a Cosmos DB account with the given name' {
     #act
     $result = Confirm-AzBPCosmosDBAccount -ResourceGroupName $rgName -Name $sqlAccountName
@@ -382,7 +444,25 @@ Describe 'Comsos DB SQL Database' {
     $result.Success | Should -Be $true
   }
 
-  It 'Should deploy a Cosmos DB Account named `sql-account-name`' {
+  It 'Should not contain a Cosmos DB SQL account with the given name' {
+    #arrange
+    # The 'ErrorAction = SilentlyContinue' command suppresses all errors.
+    # In this test, it will suppress the error message when a resource cannot be found.
+    # Remove this field to see all errors.
+    $params = @{
+      ResourceGroupName = $rgName
+      Name              = $noSqlAccountName
+      ErrorAction       = "SilentlyContinue"
+    }
+
+    #act
+    $result = Confirm-AzBPCosmosDBAccount @params
+
+    #assert
+    $result.Success | Should -Be $false
+  }
+
+  It "Should deploy a Cosmos DB Account named $sqlAccountName" {
     #act
     $result = Confirm-AzBPCosmosDBAccount -ResourceGroupName $rgName -Name $sqlAccountName
 
@@ -390,15 +470,15 @@ Describe 'Comsos DB SQL Database' {
     $result | Should -BeDeployed
   }
 
-  It 'Should contain a Cosmos DB Account named `sql-account-name` in the `eastus` location' {
+  It "Should contain a Cosmos DB Account named $sqlAccountName in $location" {
     #act
     $result = Confirm-AzBPCosmosDBAccount -ResourceGroupName $rgName -Name $sqlAccountName
 
     #assert
-    $result | Should -BeInLocation 'eastus'
+    $result | Should -BeInLocation $location
   }
 
-  It 'Should contain a Cosmos DB Account named `sql-account-name` in `rg-test` resource group' {
+  It "Should contain a Cosmos DB Account named $sqlAccountName in $rgName" {
     #act
     $result = Confirm-AzBPCosmosDBAccount -ResourceGroupName $rgName -Name $sqlAccountName
 
@@ -431,7 +511,7 @@ Describe 'Comsos DB SQL Database' {
     $params = @{
       ResourceGroupName = $rgName
       AccountName       = $sqlAccountName
-      Name              = "nocdbsqldatabase"
+      Name              = $noSqlDBName
       ErrorAction       = "SilentlyContinue"
     }
 
@@ -442,7 +522,7 @@ Describe 'Comsos DB SQL Database' {
     $result.Success | Should -Be $false
   }
 
-  It 'Should deploy a Cosmos DB SQL Database named `sql-db-name`' {
+  It "Should deploy a Cosmos DB SQL Database named $sqlDatabaseName" {
     #arrange
     $params = @{
       ResourceGroupName = $rgName
@@ -457,7 +537,22 @@ Describe 'Comsos DB SQL Database' {
     $result | Should -BeDeployed
   }
 
-  It 'Should contain a Cosmos DB SQL Database named `sql-db-name` in `rg-test` resource group' {
+  It "Should contain a Cosmos DB SQL Database named $sqlDatabaseName in $location" {
+    #arrange
+    $params = @{
+      ResourceGroupName = $rgName
+      AccountName       = $sqlAccountName
+      Name              = $sqlDatabaseName
+    }
+
+    #act
+    $result = Confirm-AzBPCosmosDBSqlDatabase @params
+
+    #assert
+    $result | Should -BeInLocation $location
+  }
+
+  It "Should contain a Cosmos DB SQL Database named $sqlDatabaseName in $rgName" {
     #arrange
     $params = @{
       ResourceGroupName = $rgName

@@ -1,37 +1,30 @@
 BeforeAll {
   Import-Module Az.InfrastructureTesting
+
+  $Script:rgName = 'rg-test'
+  $Script:resourceName = 'testvm'
 }
 
 Describe 'Verify Resource Exists' {
-  it 'Should have a resource group called rg-test' {
-    #arrange
-    $rgName = "rg-test"
-
+  it 'Should have a resource group called $rgName' {
     #act
-    $result = Get-AzBPResourceByType -ResourceType "ResourceGroup" -ResourceName "${rgName}"
+    $result = Get-AzBPResourceByType -ResourceType "ResourceGroup" -ResourceName $rgName
 
     #assert
     $result.Success | Should -Be $true
   }
 
-  it 'Should have a virtual machine named testvm' {
-    #arrange
-    $resourceName = "testvm"
-    $rgName = "rg-test"
-
+  it "Should have a virtual machine named $resourceName" {
     #act
-    $result = Get-AzBPResourceByType -ResourceType "VirtualMachine" -ResourceName "${resourceName}" -ResourceGroupName "${rgName}"
+    $result = Get-AzBPResourceByType -ResourceType "VirtualMachine" -ResourceName $resourceName -ResourceGroupName $rgName
 
     #assert
     $result.Success | Should -Be $true
   }
 
-  it 'Should have a resource with name of testvm' {
-    #arrange
-    $resourceName = "testvm"
-
+  it "Should have a resource with name of $resourceName" {
     #act
-    $exists = Get-AzBPResource -ResourceName "${resourceName}"
+    $exists = Get-AzBPResource -ResourceName $resourceName
 
     #assert
     $exists | Should -Not -Be $null

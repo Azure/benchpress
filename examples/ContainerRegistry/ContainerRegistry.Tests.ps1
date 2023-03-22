@@ -1,17 +1,21 @@
 BeforeAll {
   Import-Module Az.InfrastructureTesting
+
+  $Script:rgName = 'rg-test'
+  $Script:acrName = 'acrbenchpresstest'
+  $Script:location = 'westus3'
 }
 
-$resourceType = "ContainerRegistry"
-$resourceName = "testcontaineregistry"
-$rgName = "rg-test"
+Describe 'Verify Container Registry' {
+  BeforeAll {
+    $Script:noContainerRegistryName = 'nocontainerregistry'
+  }
 
-Describe 'Verify Container Registry with Confirm-AzBPResource' {
-  it 'Should contain a container registry named testcontaineregistry' {
+  it 'Should contain a container registry - Confirm-AzBPResource' {
     #arrange
     $params = @{
-      ResourceType      = $resourceType
-      ResourceName      = $resourceName
+      ResourceType      = "ContainerRegistry"
+      ResourceName      = $acrName
       ResourceGroupName = $rgName
     }
 
@@ -22,11 +26,11 @@ Describe 'Verify Container Registry with Confirm-AzBPResource' {
     $result.Success | Should -Be $true
   }
 
-  it 'Should contain a container registry named testcontaineregistry is Standard' {
+  it 'Should contain a container registry - Confirm-AzBPResource' {
     #arrange
     $params = @{
-      ResourceType      = $resourceType
-      ResourceName      = $resourceName
+      ResourceType      = "ContainerRegistry"
+      ResourceName      = $acrName
       ResourceGroupName = $rgName
       PropertyKey       = "SkuName"
       PropertyValue     = "Standard"
@@ -38,73 +42,43 @@ Describe 'Verify Container Registry with Confirm-AzBPResource' {
     #assert
     $result.Success | Should -Be $true
   }
-}
 
-Describe 'Verify Container Registry with Confirm-AzBPContainerRegistry' {
   it 'Should contain a container registry with the given name' {
-    #arrange
-    $rgName = $rgName
-    $acrName = $resourceName
-
     #act
     $result = Confirm-AzBPContainerRegistry -ResourceGroupName $rgName -Name $acrName
 
     #assert
     $result.Success | Should -Be $true
   }
-}
 
-Describe 'Verify Container Registry Does Not Exist' {
   it 'Should not contain a container registry with the given name' {
-    #arrange
-    $rgName = $rgName
-    $acrName = "noacrbenchpresstest"
-
     #act
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
-    $result = Confirm-AzBPContainerRegistry -ResourceGroupName $rgName -Name $acrName -ErrorAction SilentlyContinue
+    $result = Confirm-AzBPContainerRegistry -ResourceGroupName $rgName -Name $noContainerRegistryName -ErrorAction SilentlyContinue
 
     #assert
     $result.Success | Should -Be $false
   }
-}
 
-Describe 'Verify Container Registry Exists with Custom Assertion' {
-  it 'Should contain a Container Registry named acrbenchpresstest' {
-    #arrange
-    $rgName = $rgName
-    $acrName = $resourceName
-
+  it "Should contain a Container Registry named $acrName" {
     #act
     $result = Confirm-AzBPContainerRegistry -ResourceGroupName $rgName -Name $acrName
 
     #assert
     $result | Should -BeDeployed
   }
-}
 
-Describe 'Verify Container Registry Exists in Correct Location' {
-  it 'Should contain a Container Registry named acrbenchpresstest in westus3' {
-    #arrange
-    $rgName = $rgName
-    $acrName = $resourceName
-
+  it "Should contain a Container Registry named $acrName in $location" {
     #act
     $result = Confirm-AzBPContainerRegistry -ResourceGroupName $rgName -Name $acrName
 
     #assert
-    $result | Should -BeInLocation 'westus3'
+    $result | Should -BeInLocation $location
   }
-}
 
-Describe 'Verify Container Registry Exists in Resource Group' {
-  it 'Should be in a resource group named rg-test' {
-    #arrange
-    $rgName = $rgName
-    $acrName = $resourceName
-
+  it "Should contain a Container Registry named $acrName in a resource group named $rgName" {
     #act
     $result = Confirm-AzBPContainerRegistry -ResourceGroupName $rgName -Name $acrName
 
