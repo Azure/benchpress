@@ -71,9 +71,6 @@ public class TestGenerator
             Description = LanguageProvider.Escape(
                 $"Check that {definition.Metadata.ResourceType.FriendlyName} is in the right location"
             ),
-            GetValueFunctionParameterList = LanguageProvider.ParameterList(
-                parameters.Select(p => p.Key).ToArray()
-            ),
             ActualValueVariable = LanguageProvider.Variable($"check"),
             GetValueFunctionName = LanguageProvider.SDK(new SDKFunction(definition)),
             ExpectedValue = LanguageProvider.Value(true)
@@ -96,9 +93,6 @@ public class TestGenerator
             Description = LanguageProvider.Escape(
                 $"It should contain a {definition.Metadata.ResourceType.FriendlyName} named {definition.Metadata.ResourceName}"
             ),
-            GetValueFunctionParameterList = LanguageProvider.ParameterList(
-                parameters.Select(p => p.Key).ToArray()
-            ),
             ActualValueVariable = LanguageProvider.Variable($"exists"),
             GetValueFunctionName = LanguageProvider.SDK(new SDKFunction(definition)),
             ExpectedValue = LanguageProvider.Value(true)
@@ -110,7 +104,6 @@ public class TestGenerator
         public IEnumerable<KeyValuePair<string, string>> Parameters { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public string GetValueFunctionParameterList { get; set; }
         public string ActualValueVariable { get; set; }
         public string GetValueFunctionName { get; set; }
         public string ExpectedValue { get; set; }

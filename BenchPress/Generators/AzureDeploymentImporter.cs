@@ -120,6 +120,7 @@ public class AzureDeploymentImporter
 
             var extraProperties = new Dictionary<string, object>();
 
+            var dependsOn = resource["dependsOn"]?.ToString()?.Trim();
             var location = resource["location"]?.ToString()?.Trim();
 
             // todo: do actual stuff
@@ -128,8 +129,14 @@ public class AzureDeploymentImporter
                 location = "FAKE-LOCATION";
             }
 
+            if (dependsOn == null)
+            {
+                dependsOn = "FAKE-PARENT-RESOURCE";
+            }
+
             extraProperties.Add("location", location);
             extraProperties.Add("resourceGroup", "FAKE-RESOURCE-GROUP");
+            extraProperties.Add("dependsOn", dependsOn);
 
             try
             {

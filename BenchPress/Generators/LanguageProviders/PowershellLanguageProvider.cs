@@ -49,7 +49,7 @@ public class PowershellLanguageProvider : ILanguageProvider
         switch (sdkFunction.Kind)
         {
             case TestType.ResourceExists:
-                return $"Get-{sdkFunction.ResourceType.FunctionPrefix}Exists";
+                return $"Confirm-AzBPResource";
             case TestType.Location:
                 return $"Check-{sdkFunction.ResourceType.FunctionPrefix}Location";
             default:
