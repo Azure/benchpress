@@ -25,7 +25,7 @@ and Resource Group name.
 
 ### EXAMPLE 1
 ```
-Confirm-AzBPStorageContainer -Name "teststgcontainer" -AccountName "teststgacct" -ResourceGroupName "testrg"
+Confirm-AzBPStorageContainer -Name "teststgcontainer" -AccountName "teststgacct" -ResourceGroupName "rg-test"
 ```
 
 ## PARAMETERS

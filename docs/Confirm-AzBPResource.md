@@ -49,7 +49,7 @@ Checking whether a nested property on a resource is configured correctly (i.e. O
 ```
 
 $params = @{
-  ResourceGroupName = "testrg";
+  ResourceGroupName = "rg-test";
   ResourceType = "VirtualMachine";
   ResourceName = "testvm";
   PropertyKey = "StorageProfile.OsDisk.OsType";
