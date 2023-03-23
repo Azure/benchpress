@@ -11,7 +11,7 @@ Describe 'Verify AKS Cluster' {
     $Script:noAksClusterName = 'noakscluster'
   }
 
-  it 'Should contain an AKS Cluster - Confirm-AzBPResource' {
+  It "Should contain an AKS Cluster named $aksName - Confirm-AzBPResource" {
     #arrange
     $params = @{
       ResourceType      = "AksCluster"
@@ -26,7 +26,7 @@ Describe 'Verify AKS Cluster' {
     $result.Success | Should -Be $true
   }
 
-  it 'Should contain an AKS Cluster - Confirm-AzBPResource' {
+  It "Should contain an AKS Cluster named $aksName - Confirm-AzBPResource" {
     #arrange
     $params = @{
       ResourceType      = "AksCluster"
@@ -43,7 +43,7 @@ Describe 'Verify AKS Cluster' {
     $result.Success | Should -Be $true
   }
 
-  it 'Should contain an AKS cluster with given name' {
+  It 'Should contain an AKS cluster with given name' {
     #act
     $result = Confirm-AzBPAksCluster -ResourceGroupName $rgName -AKSName $aksName
 
@@ -51,18 +51,18 @@ Describe 'Verify AKS Cluster' {
     $result.Success | Should -Be $true
   }
 
-  it 'Should not contain an AKS cluster with given name' {
+  It 'Should not contain an AKS cluster with given name' {
     #act
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
-    $result = Confirm-AzBPAksCluster -ResourceGroupName $rgName -AKSName 'no' -ErrorAction SilentlyContinue
+    $result = Confirm-AzBPAksCluster -ResourceGroupName $rgName -AKSName $noAksClusterName -ErrorAction SilentlyContinue
 
     #assert
     $result.Success | Should -Be $false
   }
 
-  it "Should contain an AKS Cluster named $aksName" {
+  It "Should contain an AKS Cluster named $aksName" {
     #act
     $result = Confirm-AzBPAksCluster -ResourceGroupName $rgName -AKSName $aksName
 
@@ -70,7 +70,7 @@ Describe 'Verify AKS Cluster' {
     $result | Should -BeDeployed
   }
 
-  it "Should contain an AKS Cluster named $aksName in $location" {
+  It "Should contain an AKS Cluster named $aksName in $location" {
     #act
     $result = Confirm-AzBPAksCluster -ResourceGroupName $rgName -AKSName $aksName
 
@@ -78,11 +78,16 @@ Describe 'Verify AKS Cluster' {
     $result | Should -BeInLocation $location
   }
 
-  it "Should be an AKS CLuster named $aksName in a resource group named $rgName" {
+  It "Should be an AKS CLuster named $aksName in a resource group named $rgName" {
     #act
     $result = Confirm-AzBPAksCluster -ResourceGroupName $rgName -AKSName $aksName
 
     #assert
     $result | Should -BeInResourceGroup $rgName
   }
+}
+
+AfterAll {
+  Get-Module Az-InfrastructureTesting | Remove-Module
+  Get-Module BenchPress.Azure | Remove-Module
 }

@@ -11,7 +11,7 @@ Describe 'Verify App Service Plan' {
     $Script:noAppServicePlanName = 'noappservicetestbp'
   }
 
-  it 'Should contain an App Service Plan - Confirm-AzBPResource' {
+  It "Should contain an App Service Plan named $appServicePlanName - Confirm-AzBPResource" {
     #arrange
     $params = @{
       ResourceType      = "Appserviceplan"
@@ -26,7 +26,7 @@ Describe 'Verify App Service Plan' {
     $result.Success | Should -Be $true
   }
 
-  it 'Should contain an App Service Plan - Confirm-AzBPResource' {
+  It "Should contain an App Service Plan named $appServicePlanName - Confirm-AzBPResource" {
     #arrange
     $params = @{
       ResourceType      = "Appserviceplan"
@@ -42,7 +42,7 @@ Describe 'Verify App Service Plan' {
     $result.Success | Should -Be $true
   }
 
-  it 'Should contain an App Service Plan with the given name' {
+  It 'Should contain an App Service Plan with the given name' {
     #act
     $result = Confirm-AzBPAppServicePlan -ResourceGroupName $rgName -AppServicePlanName $appServicePlanName
 
@@ -50,7 +50,7 @@ Describe 'Verify App Service Plan' {
     $result.Success | Should -Be $true
   }
 
-  it 'Should not contain an App Service Plan with the given name' {
+  It 'Should not contain an App Service Plan with the given name' {
     #act
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
@@ -61,7 +61,7 @@ Describe 'Verify App Service Plan' {
     $result.Success | Should -Be $false
   }
 
-  it "Should contain an App Service Plan named $appServicePlanName" {
+  It "Should contain an App Service Plan named $appServicePlanName" {
     #act
     $result = Confirm-AzBPAppServicePlan -ResourceGroupName $rgName -AppServicePlanName $appServicePlanName
 
@@ -69,7 +69,7 @@ Describe 'Verify App Service Plan' {
     $result | Should -BeDeployed
   }
 
-  it "Should contain an App Service Plan named $appServicePlanName in $location" {
+  It "Should contain an App Service Plan named $appServicePlanName in $location" {
     #act
     $result = Confirm-AzBPAppServicePlan -ResourceGroupName $rgName -AppServicePlanName $appServicePlanName
 
@@ -77,11 +77,16 @@ Describe 'Verify App Service Plan' {
     $result | Should -BeInLocation $location
   }
 
-  it "Should contain an App Service Plan named $appServicePlanName in a resource group named $rgName" {
+  It "Should contain an App Service Plan named $appServicePlanName in a resource group named $rgName" {
     #act
     $result = Confirm-AzBPAppServicePlan -ResourceGroupName $rgName -AppServicePlanName $appServicePlanName
 
     #assert
     $result | Should -BeInResourceGroup $rgName
   }
+}
+
+AfterAll {
+  Get-Module Az-InfrastructureTesting | Remove-Module
+  Get-Module BenchPress.Azure | Remove-Module
 }

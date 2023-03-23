@@ -6,7 +6,7 @@ BeforeAll {
 }
 
 Describe 'Verify Resource Exists' {
-  it 'Should have a resource group called $rgName' {
+  It "Should have a resource group called $rgName" {
     #act
     $result = Get-AzBPResourceByType -ResourceType "ResourceGroup" -ResourceName $rgName
 
@@ -14,7 +14,7 @@ Describe 'Verify Resource Exists' {
     $result.Success | Should -Be $true
   }
 
-  it "Should have a virtual machine named $resourceName" {
+  It "Should have a virtual machine named $resourceName" {
     #act
     $result = Get-AzBPResourceByType -ResourceType "VirtualMachine" -ResourceName $resourceName -ResourceGroupName $rgName
 
@@ -22,7 +22,7 @@ Describe 'Verify Resource Exists' {
     $result.Success | Should -Be $true
   }
 
-  it "Should have a resource with name of $resourceName" {
+  It "Should have a resource with name of $resourceName" {
     #act
     $exists = Get-AzBPResource -ResourceName $resourceName
 
@@ -30,3 +30,9 @@ Describe 'Verify Resource Exists' {
     $exists | Should -Not -Be $null
   }
 }
+
+AfterAll {
+  Get-Module Az-InfrastructureTesting | Remove-Module
+  Get-Module BenchPress.Azure | Remove-Module
+}
+

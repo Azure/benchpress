@@ -13,11 +13,11 @@ BeforeAll {
 
 
 Describe 'Verify Cosmos DB Account' {
-  it 'Should contain a Cosmos DB Account - Confirm-AzBPResource' {
+  It "Should contain a gremlin Cosmos DB Account named $gremlinAccountName - Confirm-AzBPResource" {
     #arrange
     $params = @{
       ResourceType      = "CosmosDBAccount"
-      ResourceName      = $gremlingAccountResourceName
+      ResourceName      = $gremlinAccountName
       ResourceGroupName = $rgName
     }
 
@@ -28,7 +28,7 @@ Describe 'Verify Cosmos DB Account' {
     $result.Success | Should -Be $true
   }
 
-  it 'Should contain a Cosmos DB Account - Confirm-AzBPResource' {
+  It "Should contain a gremlin Cosmos DB Account named $gremlinAccountName - Confirm-AzBPResource" {
     #arrange
     $params = @{
       ResourceType      = "CosmosDBAccount"
@@ -45,13 +45,11 @@ Describe 'Verify Cosmos DB Account' {
     $result.Success | Should -Be $true
   }
 
-#######################################################################################################################
-
-  it 'Should contain a Cosmos DB - Confirm-AzBPResource' {
+  It "Should contain a gremlin Cosmos DB named $gremlinDatabaseName - Confirm-AzBPResource" {
     #arrange
     $params = @{
       ResourceType      = "CosmosDBGremlinDatabase"
-      ResourceName      = gremlinDatabaseName
+      ResourceName      = $gremlinDatabaseName
       ResourceGroupName = $rgName
       AccountName       = $gremlinAccountName
     }
@@ -63,7 +61,7 @@ Describe 'Verify Cosmos DB Account' {
     $result.Success | Should -Be $true
   }
 
-  it 'Should contain a Cosmos DB - Confirm-AzBPResource' {
+  It "Should contain a gremlin Cosmos DB named $gremlinDatabaseName - Confirm-AzBPResource" {
     #arrange
     $params = @{
       ResourceType      = "CosmosDBGremlinDatabase"
@@ -83,7 +81,39 @@ Describe 'Verify Cosmos DB Account' {
 
 #######################################################################################################################
 
-  it 'Should contain a Cosmos DB - Confirm-AzBPResource' {
+  It "Should contain a mongo Cosmos DB Account named $mongoAccountName - Confirm-AzBPResource" {
+    #arrange
+    $params = @{
+      ResourceType      = "CosmosDBAccount"
+      ResourceName      = $mongoAccountName
+      ResourceGroupName = $rgName
+    }
+
+    #act
+    $result = Confirm-AzBPResource @params
+
+    #assert
+    $result.Success | Should -Be $true
+  }
+
+  It "Should contain a mongo Cosmos DB Account named $mongoAccountName - Confirm-AzBPResource" {
+    #arrange
+    $params = @{
+      ResourceType      = "CosmosDBAccount"
+      ResourceName      = $mongoAccountName
+      ResourceGroupName = $rgName
+      PropertyKey       = "Kind"
+      PropertyValue     = "GlobalDocumentDB"
+    }
+
+    #act
+    $result = Confirm-AzBPResource @params
+
+    #assert
+    $result.Success | Should -Be $true
+  }
+
+  It "Should contain a mongo Cosmos DB named $mongoDatabaseName - Confirm-AzBPResource" {
     #arrange
     $params = @{
       ResourceType      = "CosmosDBMongoDBDatabase"
@@ -99,7 +129,7 @@ Describe 'Verify Cosmos DB Account' {
     $result.Success | Should -Be $true
   }
 
-  it 'Should contain a Cosmos DB - Confirm-AzBPResource' {
+  It "Should contain a mongo Cosmos DB named $mongoDatabaseName- Confirm-AzBPResource" {
     #arrange
     $params = @{
       ResourceType      = "CosmosDBMongoDBDatabase"
@@ -119,7 +149,39 @@ Describe 'Verify Cosmos DB Account' {
 
 #######################################################################################################################
 
-  it 'Should contain a Cosmos DB - Confirm-AzBPResource' {
+  It "Should contain a sql Cosmos DB Account named $sqlAccountName - Confirm-AzBPResource" {
+    #arrange
+    $params = @{
+      ResourceType      = "CosmosDBAccount"
+      ResourceName      = $sqlAccountName
+      ResourceGroupName = $rgName
+    }
+
+    #act
+    $result = Confirm-AzBPResource @params
+
+    #assert
+    $result.Success | Should -Be $true
+  }
+
+  It "Should contain a sql Cosmos DB Account named $sqlAccountName - Confirm-AzBPResource" {
+    #arrange
+    $params = @{
+      ResourceType      = "CosmosDBAccount"
+      ResourceName      = $sqlAccountName
+      ResourceGroupName = $rgName
+      PropertyKey       = "Kind"
+      PropertyValue     = "GlobalDocumentDB"
+    }
+
+    #act
+    $result = Confirm-AzBPResource @params
+
+    #assert
+    $result.Success | Should -Be $true
+  }
+
+  It "Should contain a sql Cosmos DB named $sqlDatabaseName - Confirm-AzBPResource" {
     #arrange
     $params = @{
       ResourceType      = "CosmosDBSQLDatabase"
@@ -135,7 +197,7 @@ Describe 'Verify Cosmos DB Account' {
     $result.Success | Should -Be $true
   }
 
-  it 'Should contain a Cosmos DB - Confirm-AzBPResource' {
+  It "Should contain a sql Cosmos DB named $sqlDatabaseName - Confirm-AzBPResource" {
     #arrange
     $params = @{
       ResourceType      = "CosmosDBSQLDatabase"
@@ -156,8 +218,8 @@ Describe 'Verify Cosmos DB Account' {
 
 Describe 'Cosmos DB Gremlin Database' {
   BeforeAll {
-    $Script:noCosmosDBAccountName = 'nocdbbenchpresstest'
-    $Script:noCosmosDBName = 'nocdatabasebenchpresstest'
+    $Script:noGremlinDBAccountName = 'nocdbbenchpresstest'
+    $Script:noGremlinDBName = 'nocdatabasebenchpresstest'
   }
 
   It 'Should contain a Cosmos DB account with the given name' {
@@ -175,7 +237,7 @@ Describe 'Cosmos DB Gremlin Database' {
     # Remove this field to see all errors.
     $params = @{
       ResourceGroupName = $rgName
-      Name              = $noCosmosDBAccountName
+      Name              = $noGremlinDBAccountName
       ErrorAction       = "SilentlyContinue"
     }
 
@@ -235,7 +297,7 @@ Describe 'Cosmos DB Gremlin Database' {
     $params = @{
       ResourceGroupName = $rgName
       AccountName       = $gremlinAccountName
-      Name              = $noCosmosDBName
+      Name              = $noGremlinDBName
       ErrorAction       = "SilentlyContinue"
     }
 
@@ -569,5 +631,6 @@ Describe 'Comsos DB SQL Database' {
 }
 
 AfterAll {
-  Get-Module -Name BenchPress.Azure | Remove-Module
+  Get-Module Az-InfrastructureTesting | Remove-Module
+  Get-Module BenchPress.Azure | Remove-Module
 }
