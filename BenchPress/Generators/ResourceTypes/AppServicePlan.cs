@@ -1,25 +1,25 @@
 namespace Generators.ResourceTypes;
 
-public class ServicePlan : ResourceType
+public class AppServicePlan : ResourceType
 {
-    public ServicePlan() { }
+    public AppServicePlan() { }
 
     public override string Id => "Microsoft.Web/serverfarms";
 
     public override string FullName => Id;
 
-    public override string FriendlyName => "Service Plan";
+    public override string FriendlyName => "Application Service Plan";
 
     public override string Prefix => "svcp";
 
-    public override string FunctionPrefix => "ServicePlan";
+    public override string FunctionPrefix => "AppServicePlan";
 
     public override IEnumerable<KeyValuePair<string, object>> GetResourceParameters(TestMetadata m)
     {
         return new[]
         {
-            Param("name", m.ResourceName),
-            Param("resourceGroup", m.ExtraProperties["resourceGroup"])
+            Param("ResourceName", m.ResourceName),
+            Param("ResourceGroupName", m.ExtraProperties["resourceGroup"])
         };
     }
 }

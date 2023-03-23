@@ -16,6 +16,6 @@ public class ResourceGroup : ResourceType
 
     public override IEnumerable<KeyValuePair<string, object>> GetResourceParameters(TestMetadata m)
     {
-        return new[] { Param("name", m.ResourceName) };
+        return new[] { Param("ResourceName", m.ResourceName) };
     }
 }

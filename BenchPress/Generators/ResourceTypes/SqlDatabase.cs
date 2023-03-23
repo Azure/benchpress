@@ -18,9 +18,9 @@ public class SqlDatabase : ResourceType
     {
         return new[]
         {
-            Param("name", m.ResourceName),
-            Param("resourceGroup", m.ExtraProperties["resourceGroup"]),
-            Param("serverName", m.ExtraProperties["dependsOn"])
+            Param("ResourceName", m.ResourceName),
+            Param("ResourceGroupName", m.ExtraProperties["resourceGroup"]),
+            Param("ServerName", m.ExtraProperties["dependsOn"])
         };
     }
 }

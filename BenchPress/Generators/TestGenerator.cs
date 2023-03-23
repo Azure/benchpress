@@ -71,7 +71,8 @@ public class TestGenerator
             Description = LanguageProvider.Escape(
                 $"Check that {definition.Metadata.ResourceType.FriendlyName} is in the right location"
             ),
-            ActualValueVariable = LanguageProvider.Variable($"check"),
+            ResultVariable = LanguageProvider.Variable($"check"),
+            ActualValue = LanguageProvider.Variable($"check"),
             GetValueFunctionName = LanguageProvider.SDK(new SDKFunction(definition)),
             ExpectedValue = LanguageProvider.Value(true)
         };
@@ -93,7 +94,8 @@ public class TestGenerator
             Description = LanguageProvider.Escape(
                 $"It should contain a {definition.Metadata.ResourceType.FriendlyName} named {definition.Metadata.ResourceName}"
             ),
-            ActualValueVariable = LanguageProvider.Variable($"exists"),
+            ResultVariable = LanguageProvider.Variable($"result"),
+            ActualValue = LanguageProvider.Variable($"result") + ".Success",
             GetValueFunctionName = LanguageProvider.SDK(new SDKFunction(definition)),
             ExpectedValue = LanguageProvider.Value(true)
         };
@@ -104,8 +106,9 @@ public class TestGenerator
         public IEnumerable<KeyValuePair<string, string>> Parameters { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public string ActualValueVariable { get; set; }
+        public string ResultVariable { get; set; }
         public string GetValueFunctionName { get; set; }
+        public string ActualValue { get; set; }
         public string ExpectedValue { get; set; }
     }
 
@@ -116,7 +119,7 @@ public class TestGenerator
             .Select(
                 p =>
                     new KeyValuePair<string, string>(
-                        LanguageProvider.Variable(p.Key),
+                        LanguageProvider.Parameter(p.Key),
                         LanguageProvider.Value(p.Value)
                     )
             );

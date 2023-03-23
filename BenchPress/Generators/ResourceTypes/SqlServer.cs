@@ -18,8 +18,8 @@ public class SqlServer : ResourceType
     {
         return new[]
         {
-            Param("name", m.ResourceName),
-            Param("resourceGroup", m.ExtraProperties["resourceGroup"])
+            Param("ResourceName", m.ResourceName),
+            Param("ResourceGroupName", m.ExtraProperties["resourceGroup"])
         };
     }
 }

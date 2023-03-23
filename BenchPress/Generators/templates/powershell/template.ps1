@@ -21,10 +21,10 @@ Describe '{{ Name }}' {
     }
 
     #act
-    {{ ActualValueVariable }} = {{GetValueFunctionName}} @params
+    {{ ResultVariable }} = {{GetValueFunctionName}} @params
 
     #assert
-    {{ ActualValueVariable }} | Should -Be {{{ ExpectedValue }}}
+    {{ ActualValue }} | Should -Be {{{ ExpectedValue }}}
   }
 }
 
