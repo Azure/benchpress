@@ -10,12 +10,12 @@ function ShouldBeInResourceGroup ($ActualValue, [string]$ExpectedValue, [switch]
     .EXAMPLE
       $result = Confirm-AzBPContainerRegistry -ResourceGroupName $rgName
 
-      $result | Should -BeInResourceGroup 'testrg'
+      $result | Should -BeInResourceGroup 'rg-test'
 
     .EXAMPLE
       $result = Confirm-AzBPContainerRegistry -ResourceGroupName $rgName
 
-      $result | Should -Not -BeInResourceGroup 'testrg2'
+      $result | Should -Not -BeInResourceGroup 'rg-test2'
 
     .INPUTS
       ConfirmResult
