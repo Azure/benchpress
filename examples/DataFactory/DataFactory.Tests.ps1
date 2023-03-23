@@ -75,7 +75,7 @@ Describe 'Verify Data Factory' {
     $result | Should -BeInResourceGroup $rgName
   }
 
-  it 'Should not contain a data factory named nosampleadf' {
+  it 'Should not contain a data factory named $noDataFactoryName' {
     #act
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
@@ -127,7 +127,7 @@ Describe 'Verify Data Factory Linked Service' {
     $result.Success | Should -Be $true
   }
 
-  it 'Should contain a data factory with a linked service named BenchpressStorageLinkedService' {
+  it 'Should contain a data factory with a linked service named $linkedServiceName' {
     #arrange
     $params = @{
       ResourceGroupName = $rgName
@@ -142,7 +142,7 @@ Describe 'Verify Data Factory Linked Service' {
     $result.Success | Should -Be $true
   }
 
-  it 'Should contain a data factory with a linked service named BenchpressStorageLinkedService' {
+  it 'Should contain a data factory with a linked service named $linkedServiceName' {
     # Using custom assertion to check if the workspace with spark pool is deployed
     $params = @{
       ResourceGroupName = $rgName

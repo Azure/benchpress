@@ -2,7 +2,7 @@ BeforeAll {
   Import-Module Az.InfrastructureTesting
 
   $Script:rgName = 'rg-test'
-  $Script:nameSpace = 'eventhubnamespace'
+  $Script:nameSpaceName = 'eventhubnamespace'
   $Script:eventHubName = 'eventhub'
   $Script:location = 'westus3'
 }
@@ -18,7 +18,7 @@ Describe 'Verify EventHub' {
       ResourceType      = "EventHub"
       ResourceGroupName = $rgName
       ResourceName      = $eventHubName
-      NamespaceName     = $nameSpace
+      NamespaceName     = $nameSpaceName
     }
 
     #act
@@ -34,7 +34,7 @@ Describe 'Verify EventHub' {
       ResourceType      = "EventHub"
       ResourceGroupName = $rgName
       ResourceName      = $eventHubName
-      NamespaceName     = $nameSpace
+      NamespaceName     = $nameSpaceName
       PropertyKey       = 'Name'
       PropertyValue     = $eventHubName
     }
@@ -50,7 +50,7 @@ Describe 'Verify EventHub' {
     #arrange
     $params = @{
       ResourceGroupName = $rgName
-      NamespaceName     = $nameSpace
+      NamespaceName     = $nameSpaceName
       Name              = $eventHubName
     }
 
@@ -65,7 +65,7 @@ Describe 'Verify EventHub' {
     #arrange
     $params = @{
       ResourceGroupName = $rgName
-      NamespaceName     = $nameSpace
+      NamespaceName     = $nameSpaceName
       Name              = $noEventHub
     }
 
@@ -79,11 +79,11 @@ Describe 'Verify EventHub' {
     $result.Success | Should -Be $false
   }
 
-  it 'Should contain an EventHub named eventhubtest' {
+  it 'Should contain an EventHub named $eventHubName' {
     #arrange
     $params = @{
       ResourceGroupName = $rgName
-      NamespaceName     = $nameSpace
+      NamespaceName     = $nameSpaceName
       Name              = $eventHubName
     }
 
@@ -94,11 +94,11 @@ Describe 'Verify EventHub' {
     $result | Should -BeDeployed
   }
 
-  it 'Should contain an EventHub named eventhubtest in westus3' {
+  it 'Should contain an EventHub named $eventHubName in $location' {
     #arrange
     $params = @{
       ResourceGroupName = $rgName
-      NamespaceName     = $nameSpace
+      NamespaceName     = $nameSpaceName
       Name              = $eventHubName
     }
 
@@ -113,7 +113,7 @@ Describe 'Verify EventHub' {
     #arrange
     $params = @{
       ResourceGroupName = $rgName
-      NamespaceName     = $nameSpace
+      NamespaceName     = $nameSpaceName
       Name              = $eventHubName
     }
 
@@ -127,7 +127,7 @@ Describe 'Verify EventHub' {
 
 Describe 'Verify EventHub Namespace' {
   BeforeAll {
-    $Script:noNameSpace = 'nosamplenamespace'
+    $Script:nonameSpaceName = 'nosamplenamespace'
   }
 
   it 'Should contain an eventhub namespace with the given name - Confirm-AzBPResource' {
@@ -135,7 +135,7 @@ Describe 'Verify EventHub Namespace' {
     $params = @{
       ResourceType      = "EventHubNamespace"
       ResourceGroupName = $rgName
-      ResourceName      = $nameSpace
+      ResourceName      = $nameSpaceName
     }
 
     #act
@@ -150,9 +150,9 @@ Describe 'Verify EventHub Namespace' {
     $params = @{
       ResourceType      = "EventHubNamespace"
       ResourceGroupName = $rgName
-      ResourceName      = $nameSpace
+      ResourceName      = $nameSpaceName
       PropertyKey       = 'Name'
-      PropertyValue     = $nameSpace
+      PropertyValue     = $nameSpaceName
     }
 
     #act
@@ -163,10 +163,6 @@ Describe 'Verify EventHub Namespace' {
   }
 
   it 'Should contain an eventhub namespace with the given name' {
-    #arrange
-    $rgName = $rgName
-    $namespaceName = $nameSpace
-
     #act
     $result = Confirm-AzBPEventHubNamespace -NamespaceName $namespaceName -ResourceGroupName $rgName
 
@@ -175,10 +171,6 @@ Describe 'Verify EventHub Namespace' {
   }
 
   it 'Should not contain an eventhub namespace with the given name' {
-    #arrange
-    $rgName = $rgName
-    $namespaceName = $noNameSpace
-
     #act
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
@@ -189,11 +181,7 @@ Describe 'Verify EventHub Namespace' {
     $result.Success | Should -Be $false
   }
 
-  it 'Should contain an EventHub Namespace named samplenamespace' {
-    #arrange
-    $rgName = $rgName
-    $namespaceName = $nameSpace
-
+  it 'Should contain an EventHub Namespace named $nameSpaceName' {
     #act
     $result = Confirm-AzBPEventHubNamespace -NamespaceName $namespaceName -ResourceGroupName $rgName
 
@@ -201,11 +189,7 @@ Describe 'Verify EventHub Namespace' {
     $result | Should -BeDeployed
   }
 
-  it 'Should contain an EventHub Namespace named samplenamespace in westus3' {
-    #arrange
-    $rgName = $rgName
-    $namespaceName = $nameSpace
-
+  it 'Should contain an EventHub Namespace named $nameSpace in $location' {
     #act
     $result = Confirm-AzBPEventHubNamespace -NamespaceName $namespaceName -ResourceGroupName $rgName
 
@@ -214,10 +198,6 @@ Describe 'Verify EventHub Namespace' {
   }
 
   it 'Should be in a resource group named $rgName' {
-    #arrange
-    $rgName = $rgName
-    $namespaceName = $nameSpace
-
     #act
     $result = Confirm-AzBPEventHubNamespace -NamespaceName $namespaceName -ResourceGroupName $rgName
 
@@ -228,8 +208,8 @@ Describe 'Verify EventHub Namespace' {
 
 Describe 'Verify EventHub Consumer Group' {
   BeforeAll {
-    $Script:consumerGroup = 'eventhubconsumergroup'
-    $Script:noConsumerGroup = 'noeventhubconsumergroup'
+    $Script:consumerGroupName = 'eventhubconsumergroup'
+    $Script:noconsumerGroupName = 'noeventhubconsumergroup'
   }
 
   it 'Should contain an eventhub consumer group with the given name - Confirm-AzBPResource' {
@@ -237,8 +217,8 @@ Describe 'Verify EventHub Consumer Group' {
     $params = @{
       ResourceType      = "EventHubConsumerGroup"
       ResourceGroupName = $rgName
-      ResourceName      = $consumerGroup
-      NamespaceName     = $nameSpace
+      ResourceName      = $consumerGroupName
+      NamespaceName     = $nameSpaceName
       EventHubName      = $eventHubName
     }
 
@@ -254,11 +234,11 @@ Describe 'Verify EventHub Consumer Group' {
     $params = @{
       ResourceType      = "EventHubConsumerGroup"
       ResourceGroupName = $rgName
-      ResourceName      = $consumerGroup
-      NamespaceName     = $nameSpace
+      ResourceName      = $consumerGroupName
+      NamespaceName     = $nameSpaceName
       EventHubName      = $eventHubName
       PropertyKey       = 'Name'
-      PropertyValue     = $consumerGroup
+      PropertyValue     = $consumerGroupName
     }
 
     #act
@@ -272,9 +252,9 @@ Describe 'Verify EventHub Consumer Group' {
     #arrange
     $params = @{
       ResourceGroupName = $rgName
-      NamespaceName     = $nameSpace
+      NamespaceName     = $nameSpaceName
       EventHubName      = $eventHubName
-      Name              = $consumerGroup
+      Name              = $consumerGroupName
     }
 
     #act
@@ -288,9 +268,9 @@ Describe 'Verify EventHub Consumer Group' {
     #arrange
     $params = @{
       ResourceGroupName = $rgName
-      NamespaceName     = $nameSpace
+      NamespaceName     = $nameSpaceName
       EventHubName      = $eventHubName
-      Name              = $noConsumerGroup
+      Name              = $noconsumerGroupName
     }
 
     #act
@@ -303,13 +283,13 @@ Describe 'Verify EventHub Consumer Group' {
     $result.Success | Should -Be $false
   }
 
-  it 'Should contain an EventHub consumer group named consumergrouptest' {
+  it 'Should contain an EventHub consumer group named $consumerGroupName' {
     #arrange
     $params = @{
       ResourceGroupName = $rgName
-      NamespaceName     = $nameSpace
+      NamespaceName     = $nameSpaceName
       EventHubName      = $eventHubName
-      Name              = $consumerGroup
+      Name              = $consumerGroupName
     }
 
     #act
@@ -319,13 +299,13 @@ Describe 'Verify EventHub Consumer Group' {
     $result | Should -BeDeployed
   }
 
-  it 'Should contain an EventHub consumer group named consumergrouptest in westus3' {
+  it 'Should contain an EventHub consumer group named $consumerGroupName in $location' {
     #arrange
     $params = @{
       ResourceGroupName = $rgName
-      NamespaceName     = $nameSpace
+      NamespaceName     = $nameSpaceName
       EventHubName      = $eventHubName
-      Name              = $consumerGroup
+      Name              = $consumerGroupName
     }
 
     #act
@@ -339,9 +319,9 @@ Describe 'Verify EventHub Consumer Group' {
     #arrange
     $params = @{
       ResourceGroupName = $rgName
-      NamespaceName     = $nameSpace
+      NamespaceName     = $nameSpaceName
       EventHubName      = $eventHubName
-      Name              = $consumerGroup
+      Name              = $consumerGroupName
     }
 
     #act

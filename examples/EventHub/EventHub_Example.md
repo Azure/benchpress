@@ -28,6 +28,7 @@ and `Confirm-AzBPEventHubNamespace` cmdlet.
    - `eventhub` -> `your-eventhub-name`
    - `eventhubamespace` -> `your-eventhub-namespace-name`
    - `eventhubconsumergroup` -> `your-eventhub-consumer-group-name`
+   - `westus3` -> `your-eventhub-location`
 
 1. If using a local copy of `Az.InfrastructureTesting`, replace `Import-Module Az.InfrastructureTesting` with
 `Import-Module "../../bin/BenchPress.Azure.psd1"`.
