@@ -11,7 +11,7 @@ Describe 'Verify Operational Insights Workspace Exists' {
     $Script:notOiwName = 'notOiwName'
   }
 
-  it 'Should contain a Operational Insights Workspace with given name - Confirm-AzBPResource' {
+  It 'Should contain a Operational Insights Workspace with given name - Confirm-AzBPResource' {
     #arrange
     $params = @{
       ResourceType      = "OperationalInsightsWorkspace"
@@ -27,7 +27,7 @@ Describe 'Verify Operational Insights Workspace Exists' {
   }
 
 
-  it 'Should contain a Operational Insights Workspace with expected property name - Confirm-AzBPResource' {
+  It 'Should contain a Operational Insights Workspace with expected property name - Confirm-AzBPResource' {
     #arrange
     $params = @{
       ResourceType      = "OperationalInsightsWorkspace"
@@ -44,7 +44,7 @@ Describe 'Verify Operational Insights Workspace Exists' {
     $result.Success | Should -Be $true
   }
 
-  it 'Should contain a Operational Insights Workspace named $oiwName' {
+  It "Should contain a Operational Insights Workspace named $oiwName" {
     #act
     $result = Confirm-AzBPOperationalInsightsWorkspace -ResourceGroupName $rgName -Name $oiwName
 
@@ -52,7 +52,7 @@ Describe 'Verify Operational Insights Workspace Exists' {
     $result.Success | Should -Be $true
   }
 
-  it 'Should not contain an Operational Insights Workspace named not $oiwName' {
+  It "Should not contain an Operational Insights Workspace named not $oiwName" {
     #act
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
@@ -67,7 +67,7 @@ Describe 'Verify Operational Insights Workspace Exists' {
     $result.Success | Should -Be $false
   }
 
-  it 'Should contain a Operational Insights Workspace named $oiwName' {
+  It "Should contain a Operational Insights Workspace named $oiwName" {
     #act
     $result = Confirm-AzBPOperationalInsightsWorkspace -ResourceGroupName $rgName -Name $oiwName
 
@@ -75,7 +75,7 @@ Describe 'Verify Operational Insights Workspace Exists' {
     $result | Should -BeDeployed
   }
 
-  it 'Should contain a Operational Insights Workspace named $oiwName in $location' {
+  It "Should contain a Operational Insights Workspace named $oiwName in $location" {
     #act
     $result = Confirm-AzBPOperationalInsightsWorkspace -ResourceGroupName $rgName -Name $oiwName
 
@@ -83,7 +83,7 @@ Describe 'Verify Operational Insights Workspace Exists' {
     $result | Should -BeInLocation $location
   }
 
-  it 'Should be a Operational Insights Workspace in a resource group named $rgName' {
+  It "Should be a Operational Insights Workspace in a resource group named $rgName" {
     #act
     $result = Confirm-AzBPOperationalInsightsWorkspace -ResourceGroupName $rgName -Name $oiwName
 
