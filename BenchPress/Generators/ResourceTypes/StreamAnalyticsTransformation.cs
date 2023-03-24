@@ -5,13 +5,9 @@ public class StreamAnalyticsTransformation : ResourceType
     public StreamAnalyticsTransformation() { }
 
     public override string Id => "Microsoft.StreamAnalytics/streamingjobs/transformations";
-
     public override string FullName => Id;
-
     public override string FriendlyName => "Stream Analytics Transformation";
-
     public override string Prefix => "sat";
-
     public override string FunctionPrefix => "StreamAnalyticsTransformation";
 
     public override IEnumerable<KeyValuePair<string, object>> GetResourceParameters(TestMetadata m)

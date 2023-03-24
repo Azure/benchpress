@@ -120,15 +120,22 @@ public class AzureDeploymentImporter
 
             var extraProperties = new Dictionary<string, object>();
 
-            var dependsOn = resource["dependsOn"]?[0]?.ToString()?.Trim().Split(",");
+            var dependsOn = resource["dependsOn"]?[0]?.ToString().Trim().Split(",");
             var resourceIds = dependsOn?[0].Trim('\'').Split("/").Skip(1).ToArray();
             var resourceNames = dependsOn?.Skip(1).ToArray();
-            if(resourceIds != null &&  resourceNames != null && resourceIds.Length == resourceNames.Length)
+            if (
+                resourceIds != null
+                && resourceNames != null
+                && resourceIds.Length == resourceNames.Length
+            )
             {
-              foreach(var resourceId in resourceIds)
-              {
-                  extraProperties.Add(resourceId, resourceNames[Array.IndexOf(resourceIds, resourceId)]);
-              }
+                foreach (var resourceId in resourceIds)
+                {
+                    extraProperties.Add(
+                        resourceId,
+                        resourceNames[Array.IndexOf(resourceIds, resourceId)]
+                    );
+                }
             }
             var location = resource["location"]?.ToString()?.Trim();
 

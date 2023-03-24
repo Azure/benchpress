@@ -5,13 +5,9 @@ public class DataFactoryLinkedService : ResourceType
     public DataFactoryLinkedService() { }
 
     public override string Id => "Microsoft.DataFactory/factories/linkedservices";
-
     public override string FullName => Id;
-
     public override string FriendlyName => "Data Factory Linked Service";
-
     public override string Prefix => "adfls";
-
     public override string FunctionPrefix => "DataFactoryLinkedService";
 
     public override IEnumerable<KeyValuePair<string, object>> GetResourceParameters(TestMetadata m)

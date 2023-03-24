@@ -4,7 +4,6 @@ namespace Generators.LanguageProviders;
 
 public class PowershellLanguageProvider : ILanguageProvider
 {
-
     public string Parameter(string name)
     {
         return name;

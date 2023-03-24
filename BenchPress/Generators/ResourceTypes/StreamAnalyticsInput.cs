@@ -5,13 +5,9 @@ public class StreamAnalyticsInput : ResourceType
     public StreamAnalyticsInput() { }
 
     public override string Id => "Microsoft.StreamAnalytics/streamingjobs/inputs";
-
     public override string FullName => Id;
-
     public override string FriendlyName => "Stream Analytics Input";
-
     public override string Prefix => "sai";
-
     public override string FunctionPrefix => "StreamAnalyticsInput";
 
     public override IEnumerable<KeyValuePair<string, object>> GetResourceParameters(TestMetadata m)
