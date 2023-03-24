@@ -157,3 +157,8 @@ Describe 'Verify Data Factory Linked Service' {
     $result | Should -BeDeployed
   }
 }
+
+AfterAll {
+  Get-Module Az-InfrastructureTesting | Remove-Module
+  Get-Module BenchPress.Azure | Remove-Module
+}

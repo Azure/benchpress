@@ -76,3 +76,8 @@ Describe 'Verify Resource Group Exists' {
     $result | Should -BeInLocation $location
   }
 }
+
+AfterAll {
+  Get-Module Az-InfrastructureTesting | Remove-Module
+  Get-Module BenchPress.Azure | Remove-Module
+}

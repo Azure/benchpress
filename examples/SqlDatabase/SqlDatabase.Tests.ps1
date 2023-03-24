@@ -90,3 +90,8 @@ Describe 'Verify Sql Database' {
     $result | Should -BeInResourceGroup $rgName
   }
 }
+
+AfterAll {
+  Get-Module Az-InfrastructureTesting | Remove-Module
+  Get-Module BenchPress.Azure | Remove-Module
+}

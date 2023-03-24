@@ -31,7 +31,7 @@
    - `westus3` -> `your-sql-database-location`
 
 1. If using a local copy of `Az.InfrastructureTesting`, replace `Import-Module Az.InfrastructureTesting` with
-`Import-Module "../../bin/BenchPress.Azure.psd1"`.
+`Import-Module "../../bin/BenchPress.Azure.psd1"`. Note that the final `AfterAll` step will properly remove the moduleregardless of which method is chosen to load the module.
 
 1. Run `SqlDatabase.Tests.ps1`:
 
