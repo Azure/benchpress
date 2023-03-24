@@ -59,7 +59,7 @@ function Confirm-Resource {
       Checking whether a nested property on a resource is configured correctly (i.e. OS of VM is Linux)
 
       $params = @{
-        ResourceGroupName = "testrg";
+        ResourceGroupName = "rg-test";
         ResourceType = "VirtualMachine";
         ResourceName = "testvm";
         PropertyKey = "StorageProfile.OsDisk.OsType";
