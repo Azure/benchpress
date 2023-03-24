@@ -7,7 +7,7 @@ BeforeAll {
 
 Describe 'Verify Resource Group Exists' {
   BeforeAll {
-    $Script:notRgName = 'nottestrg'
+    $Script:noRgName = 'notestrg'
   }
 
   It 'Should contain a resource group with given name - Confirm-AzBPResource' {
@@ -49,12 +49,12 @@ Describe 'Verify Resource Group Exists' {
     $result.Success | Should -Be $true
   }
 
-  It "Should not contain a resource group named $notRgName" {
+  It "Should not contain a resource group named $noRgName" {
     #act
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
-    $result = Confirm-AzBPResourceGroup -ResourceGroupName $notRgName -ErrorAction SilentlyContinue
+    $result = Confirm-AzBPResourceGroup -ResourceGroupName $noRgName -ErrorAction SilentlyContinue
 
     #assert
     $result.Success | Should -Be $false

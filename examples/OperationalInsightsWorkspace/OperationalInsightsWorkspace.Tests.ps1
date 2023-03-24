@@ -8,7 +8,7 @@
 
 Describe 'Verify Operational Insights Workspace Exists' {
   BeforeAll {
-    $Script:notOiwName = 'notOiwName'
+    $Script:noOiwName = 'noOiwName'
   }
 
   It 'Should contain a Operational Insights Workspace with given name - Confirm-AzBPResource' {
@@ -52,14 +52,14 @@ Describe 'Verify Operational Insights Workspace Exists' {
     $result.Success | Should -Be $true
   }
 
-  It "Should not contain an Operational Insights Workspace named not $oiwName" {
+  It "Should not contain an Operational Insights Workspace named $noOiwName" {
     #act
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
     $params = @{
       ResourceGroupName = $rgName
-      Name = $notOiwName
+      Name = $noOiwName
     }
     $result = Confirm-AzBPOperationalInsightsWorkspace @params -ErrorAction SilentlyContinue
 

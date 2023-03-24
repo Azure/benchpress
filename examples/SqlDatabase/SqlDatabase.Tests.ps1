@@ -9,7 +9,7 @@ BeforeAll {
 
 Describe 'Verify Sql Database' {
   BeforeAll {
-    $Script:nodatabaseName = 'nosamplesqlserver'
+    $Script:noDatabaseName = 'nosamplesqlserver'
   }
 
   It 'Should contain a sql database with given name - Confirm-AzBPResource' {
@@ -60,7 +60,7 @@ Describe 'Verify Sql Database' {
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
-    $result =  Confirm-AzBPSqlDatabase -ResourceGroupName $rgName -DatabaseName $nodatabaseName -ServerName $serverName -ErrorAction SilentlyContinue
+    $result =  Confirm-AzBPSqlDatabase -ResourceGroupName $rgName -DatabaseName $noDatabaseName -ServerName $serverName -ErrorAction SilentlyContinue
 
     #assert
     $result.Success | Should -Be $false
@@ -74,7 +74,7 @@ Describe 'Verify Sql Database' {
     $result | Should -BeDeployed
   }
 
-  It "Should contain a Sql Database named SdatabaseName in $location" {
+  It "Should contain a Sql Database named $databaseName in $location" {
     #act
     $result =  Confirm-AzBPSqlDatabase -ResourceGroupName $rgName -DatabaseName $databaseName -ServerName $serverName
 

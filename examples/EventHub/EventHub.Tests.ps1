@@ -44,7 +44,7 @@ Describe 'Verify EventHub' {
 
     #assert
     $result.Success | Should -Be $true
-}
+  }
 
   It 'Should contain an eventhub with the given name' {
     #arrange
@@ -127,7 +127,7 @@ Describe 'Verify EventHub' {
 
 Describe 'Verify EventHub Namespace' {
   BeforeAll {
-    $Script:nonameSpaceName = 'nosamplenamespace'
+    $Script:noNameSpaceName = 'nosamplenamespace'
   }
 
   It 'Should contain an eventhub namespace with the given name - Confirm-AzBPResource' {
@@ -175,7 +175,7 @@ Describe 'Verify EventHub Namespace' {
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
-    $result = Confirm-AzBPEventHubNamespace -NamespaceName $namespaceName -ResourceGroupName $rgName
+    $result = Confirm-AzBPEventHubNamespace -NamespaceName $noNamespaceName -ResourceGroupName $rgName
 
     #assert
     $result.Success | Should -Be $false
@@ -209,7 +209,7 @@ Describe 'Verify EventHub Namespace' {
 Describe 'Verify EventHub Consumer Group' {
   BeforeAll {
     $Script:consumerGroupName = 'eventhubconsumergroup'
-    $Script:noconsumerGroupName = 'noeventhubconsumergroup'
+    $Script:noConsumerGroupName = 'noeventhubconsumergroup'
   }
 
   It 'Should contain an eventhub consumer group with the given name - Confirm-AzBPResource' {
@@ -270,7 +270,7 @@ Describe 'Verify EventHub Consumer Group' {
       ResourceGroupName = $rgName
       NamespaceName     = $nameSpaceName
       EventHubName      = $eventHubName
-      Name              = $noconsumerGroupName
+      Name              = $noConsumerGroupName
     }
 
     #act
