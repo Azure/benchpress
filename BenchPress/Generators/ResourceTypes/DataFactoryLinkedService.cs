@@ -4,7 +4,7 @@ public class DataFactoryLinkedService : ResourceType
 {
     public DataFactoryLinkedService() { }
 
-    public override string Id => "Microsoft.DataFactory/factories/linkedServices";
+    public override string Id => "Microsoft.DataFactory/factories/linkedservices";
 
     public override string FullName => Id;
 

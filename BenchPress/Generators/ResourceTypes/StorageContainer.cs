@@ -10,7 +10,7 @@ namespace Generators.ResourceTypes
 
         public override string FriendlyName => "Storage Container";
 
-        public override string Prefix => "sa";
+        public override string Prefix => "sac";
 
         public override string FunctionPrefix => "StorageContainer";
 
