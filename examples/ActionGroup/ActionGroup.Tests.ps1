@@ -1,73 +1,93 @@
 BeforeAll {
   Import-Module Az.InfrastructureTesting
+
+  $Script:rgName = 'rg-test'
+  $Script:actionGroupName = 'sampleaction'
+  $Script:location = 'global'
 }
 
-Describe 'Verify Action Group Exists' {
-  it 'Should contain a action group named sampleaction' {
+Describe 'Verify Action Group' {
+  BeforeAll {
+    $Script:noActionGroupName = "noactiongroup"
+  }
+
+  It "Should contain an actiongroup named $actionGroupName - Confirm-AzBPResource" {
     #arrange
-    $resourceGroupName = "rg-test"
-    $actionGroupName = "sampleaction"
+    $params = @{
+      ResourceType      = 'ActionGroup'
+      ResourceName      = $actionGroupName
+      ResourceGroupName = $rgName
+    }
 
     #act
-    $result = Confirm-AzBPActionGroup -ResourceGroupName $resourceGroupName -ActionGroupName $actionGroupName
+    $result = Confirm-AzBPResource @params
 
     #assert
     $result.Success | Should -Be $true
   }
-}
 
-Describe 'Verify Action Group Does Not Exist' {
-  it 'Should not contain a action group named sampleActionGroup' {
+  It "Should contain an actiongroup named $actionGroupName - Confirm-AzBPResource" {
     #arrange
-    $resourceGroupName = "rg-test"
-    $actionGroupName = "nosampleaction"
+    $params = @{
+      ResourceType      = 'ActionGroup'
+      ResourceName      = $actionGroupName
+      ResourceGroupName = $rgName
+      PropertyKey       = "GroupShortName"
+      PropertyValue     = $actionGroupName
+    }
 
+    #act
+    $result = Confirm-AzBPResource @params
+
+    #assert
+    $result.Success | Should -Be $true
+  }
+
+  It 'Should contain an action group with given name' {
+    #act
+    $result = Confirm-AzBPActionGroup -ResourceGroupName $rgName -ActionGroupName $actionGroupName
+
+    #assert
+    $result.Success | Should -Be $true
+  }
+
+  It 'Should not contain an action group with given name' {
     #act
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
-    $result = Confirm-AzBPActionGroup -ResourceGroupName $resourceGroupName -ActionGroupName $actionGroupName -ErrorAction SilentlyContinue
+    $result = Confirm-AzBPActionGroup -ResourceGroupName $rgName -ActionGroupName $noActionGroupName -ErrorAction SilentlyContinue
 
     #assert
     $result.Success | Should -Be $false
   }
-}
 
-Describe 'Verify Action Group Exists with Custom Assertion' {
-  it 'Should contain an action group named sampleaction' {
-    $resourceGroupName = "rg-test"
-    $actionGroupName = "sampleaction"
-
+  It "Should contain an action group named $actionGroupName" {
     #act
-    $result = Confirm-AzBPActionGroup -ResourceGroupName $resourceGroupName -ActionGroupName $actionGroupName
+    $result = Confirm-AzBPActionGroup -ResourceGroupName $rgName -ActionGroupName $actionGroupName
 
     #assert
     $result | Should -BeDeployed
   }
-}
 
-Describe 'Verify Action Group Exists in Correct Location' {
-  it 'Should contain an action group named sampleaction in global' {
-    $resourceGroupName = "rg-test"
-    $actionGroupName = "sampleaction"
-
+  It "Should contain an action group named $actionGroupName in $location" {
     #act
-    $result = Confirm-AzBPActionGroup -ResourceGroupName $resourceGroupName -ActionGroupName $actionGroupName
+    $result = Confirm-AzBPActionGroup -ResourceGroupName $rgName -ActionGroupName $actionGroupName
 
     #assert
-    $result | Should -BeInLocation 'global'
+    $result | Should -BeInLocation $location
+  }
+
+  It "Should be an action group named $actionGroupName in a resource group named $rgName" {
+    #act
+    $result = Confirm-AzBPActionGroup -ResourceGroupName $rgName -ActionGroupName $actionGroupName
+
+    #assert
+    $result | Should -BeInResourceGroup $rgName
   }
 }
 
-Describe 'Verify Action Group Exists in Resource Group' {
-  it 'Should be in a resource group named rg-test' {
-    $resourceGroupName = "rg-test"
-    $actionGroupName = "sampleaction"
-
-    #act
-    $result = Confirm-AzBPActionGroup -ResourceGroupName $resourceGroupName -ActionGroupName $actionGroupName
-
-    #assert
-    $result | Should -BeInResourceGroup 'rg-test'
-  }
+AfterAll {
+  Get-Module Az-InfrastructureTesting | Remove-Module
+  Get-Module BenchPress.Azure | Remove-Module
 }
