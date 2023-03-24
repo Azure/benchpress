@@ -18,6 +18,7 @@ public class SqlServer : ResourceType
     {
         return new[]
         {
+            Param("ResourceType", "SqlServer"),
             Param("ResourceName", m.ResourceName),
             Param("ResourceGroupName", m.ExtraProperties["resourceGroup"])
         };

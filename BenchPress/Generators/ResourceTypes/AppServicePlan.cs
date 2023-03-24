@@ -10,7 +10,7 @@ public class AppServicePlan : ResourceType
 
     public override string FriendlyName => "Application Service Plan";
 
-    public override string Prefix => "svcp";
+    public override string Prefix => "asp";
 
     public override string FunctionPrefix => "AppServicePlan";
 
@@ -18,6 +18,7 @@ public class AppServicePlan : ResourceType
     {
         return new[]
         {
+            Param("ResourceType", "AppServicePlan"),
             Param("ResourceName", m.ResourceName),
             Param("ResourceGroupName", m.ExtraProperties["resourceGroup"])
         };

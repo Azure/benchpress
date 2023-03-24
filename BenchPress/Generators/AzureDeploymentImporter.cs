@@ -120,7 +120,16 @@ public class AzureDeploymentImporter
 
             var extraProperties = new Dictionary<string, object>();
 
-            var dependsOn = resource["dependsOn"]?.ToString()?.Trim();
+            var dependsOn = resource["dependsOn"]?[0]?.ToString()?.Trim().Split(",");
+            var resourceIds = dependsOn?[0].Trim('\'').Split("/").Skip(1).ToArray();
+            var resourceNames = dependsOn?.Skip(1).ToArray();
+            if(resourceIds != null &&  resourceNames != null && resourceIds.Length == resourceNames.Length)
+            {
+              foreach(var resourceId in resourceIds)
+              {
+                  extraProperties.Add(resourceId, resourceNames[Array.IndexOf(resourceIds, resourceId)]);
+              }
+            }
             var location = resource["location"]?.ToString()?.Trim();
 
             // todo: do actual stuff
@@ -129,14 +138,8 @@ public class AzureDeploymentImporter
                 location = "FAKE-LOCATION";
             }
 
-            if (dependsOn == null)
-            {
-                dependsOn = "FAKE-PARENT-RESOURCE";
-            }
-
             extraProperties.Add("location", location);
             extraProperties.Add("resourceGroup", "FAKE-RESOURCE-GROUP");
-            extraProperties.Add("dependsOn", dependsOn);
 
             try
             {

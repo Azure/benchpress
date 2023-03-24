@@ -18,6 +18,7 @@ public class WebApp : ResourceType
     {
         return new[]
         {
+            Param("ResourceType", "WebApp"),
             Param("ResourceName", m.ResourceName),
             Param("ResourceGroupName", m.ExtraProperties["resourceGroup"])
         };
