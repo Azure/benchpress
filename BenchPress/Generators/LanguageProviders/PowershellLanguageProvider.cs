@@ -55,8 +55,6 @@ public class PowershellLanguageProvider : ILanguageProvider
         {
             case TestType.ResourceExists:
                 return $"Confirm-AzBPResource";
-            case TestType.Location:
-                return $"Check-{sdkFunction.ResourceType.FunctionPrefix}Location";
             default:
                 throw new Exception($"Unknown test type: {sdkFunction.Kind}");
         }

@@ -26,9 +26,6 @@ public class TestGenerator
                 case TestType.ResourceExists:
                     viewModel = GenerateResourceExistsViewModel(definition, template);
                     break;
-                case TestType.Location:
-                    viewModel = GenerateCheckLocationViewModel(definition, template);
-                    break;
                 default:
                     throw new Exception($"Unknown test type: {definition.Type}");
             }
@@ -50,32 +47,6 @@ public class TestGenerator
         );
 
         return output;
-    }
-
-    private TestViewModel GenerateCheckLocationViewModel(TestDefinition definition, string template)
-    {
-        var parameters = GetParameters(definition)
-            .Append(
-                new KeyValuePair<string, string>(
-                    LanguageProvider.Variable($"{definition.Metadata.ResourceType.Prefix}Location"),
-                    LanguageProvider.Value(definition.Metadata.ExtraProperties["location"])
-                )
-            );
-
-        return new TestViewModel
-        {
-            Parameters = parameters,
-            Name = LanguageProvider.Escape(
-                $"Check {definition.Metadata.ResourceType.FriendlyName} location"
-            ),
-            Description = LanguageProvider.Escape(
-                $"Check that {definition.Metadata.ResourceType.FriendlyName} is in the right location"
-            ),
-            ResultVariable = LanguageProvider.Variable($"check"),
-            ActualValue = LanguageProvider.Variable($"check"),
-            GetValueFunctionName = LanguageProvider.SDK(new SDKFunction(definition)),
-            ExpectedValue = LanguageProvider.Value(true)
-        };
     }
 
     private TestViewModel GenerateResourceExistsViewModel(
