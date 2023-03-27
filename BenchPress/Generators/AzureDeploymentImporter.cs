@@ -118,18 +118,7 @@ public class AzureDeploymentImporter
                 throw new Exception("Failed to parse json file");
             }
 
-            var extraProperties = new Dictionary<string, object>();
-
-            var location = resource["location"]?.ToString()?.Trim();
-
-            // todo: do actual stuff
-            if (location == null)
-            {
-                location = "FAKE-LOCATION";
-            }
-
-            extraProperties.Add("location", location);
-            extraProperties.Add("resourceGroup", "FAKE-RESOURCE-GROUP");
+            var extraProperties = GetExtraProperties(resource);
 
             try
             {
@@ -141,5 +130,63 @@ public class AzureDeploymentImporter
             }
         }
         return list;
+    }
+
+    /// <summary>
+    /// Sets the extra properties for the test metadata by using information in the resource definition. When
+    /// the bicep file is transpiled to an ARM template, the dependsOn property for each resource will be in the form
+    /// of a resource unique identifier.  The unique identifier can be used to determine any parent or dependent
+    /// resources. Any parent or dependent resources will be added to the extra properties dictionary with the resource
+    /// type as the key and the resource name as the value. This will allow ResourceTypes that need additional
+    /// parameters (i.e. SqlDatabase will need ServerName) to be able to get the value from the extra properties
+    /// dictionary.
+    /// <example>
+    /// For example, the following resource definition:
+    /// <code>
+    /// {
+    ///  "type": "Microsoft.Sql/servers/databases",
+    ///  "apiVersion": "2022-05-01-preview",
+    ///  "name": "[format('{0}/{1}', parameters('serverName'), parameters('databaseName'))]",
+    ///  "location": "[parameters('location')]",
+    ///  "sku": {
+    ///    "name": "Standard",
+    ///    "tier": "Standard"
+    ///  },
+    ///  "dependsOn": [
+    ///    "[resourceId('Microsoft.Sql/servers', parameters('serverName'))]"
+    ///  ]
+    ///}
+    /// </code>
+    /// Will result in the following extra properties dictionary:
+    /// <code>
+    /// {
+    ///  "servers": "parameters('serverName')"
+    /// }
+    /// </code>
+    /// </summary>
+    private static Dictionary<string, object> GetExtraProperties(JsonNode resource)
+    {
+        var extraProperties = new Dictionary<string, object>();
+
+        var dependsOn = resource["dependsOn"]?[0]?.ToString().Trim().Split(",");
+        var resourceIds = dependsOn?[0].Trim('\'').Split("/").Skip(1).ToArray();
+        var resourceNames = dependsOn?.Skip(1).ToArray();
+        if (
+            resourceIds != null
+            && resourceNames != null
+            && resourceIds.Length == resourceNames.Length
+        )
+        {
+            foreach (var resourceId in resourceIds)
+            {
+                extraProperties.Add(
+                    resourceId,
+                    resourceNames[Array.IndexOf(resourceIds, resourceId)]
+                );
+            }
+        }
+        extraProperties.Add("resourceGroup", "FAKE-RESOURCE-GROUP");
+
+        return extraProperties;
     }
 }

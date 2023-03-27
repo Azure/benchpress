@@ -1,20 +1,20 @@
 namespace Generators.ResourceTypes;
 
-public class SqlServer : ResourceType
+public class ActionGroup : ResourceType
 {
-    public SqlServer() { }
+    public ActionGroup() { }
 
-    public override string Id => "Microsoft.Sql/servers";
+    public override string Id => "Microsoft.Insights/actionGroups";
     public override string FullName => Id;
-    public override string FriendlyName => "SQL Server";
-    public override string Prefix => "sqlserver";
-    public override string FunctionPrefix => "SqlServer";
+    public override string FriendlyName => "Action Group";
+    public override string Prefix => "ag";
+    public override string FunctionPrefix => "ActionGroup";
 
     public override IEnumerable<KeyValuePair<string, object>> GetResourceParameters(TestMetadata m)
     {
         return new[]
         {
-            Param("ResourceType", "SqlServer"),
+            Param("ResourceType", "ActionGroup"),
             Param("ResourceName", m.ResourceName),
             Param("ResourceGroupName", m.ExtraProperties["resourceGroup"])
         };

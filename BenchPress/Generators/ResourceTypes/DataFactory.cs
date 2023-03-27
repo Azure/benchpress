@@ -1,20 +1,20 @@
 namespace Generators.ResourceTypes;
 
-public class SqlServer : ResourceType
+public class DataFactory : ResourceType
 {
-    public SqlServer() { }
+    public DataFactory() { }
 
-    public override string Id => "Microsoft.Sql/servers";
+    public override string Id => "Microsoft.DataFactory/factories";
     public override string FullName => Id;
-    public override string FriendlyName => "SQL Server";
-    public override string Prefix => "sqlserver";
-    public override string FunctionPrefix => "SqlServer";
+    public override string FriendlyName => "Data Factory";
+    public override string Prefix => "adf";
+    public override string FunctionPrefix => "DataFactory";
 
     public override IEnumerable<KeyValuePair<string, object>> GetResourceParameters(TestMetadata m)
     {
         return new[]
         {
-            Param("ResourceType", "SqlServer"),
+            Param("ResourceType", "DataFactory"),
             Param("ResourceName", m.ResourceName),
             Param("ResourceGroupName", m.ExtraProperties["resourceGroup"])
         };
