@@ -19,6 +19,7 @@ enum ResourceType{
   EventHubConsumerGroup
   EventHubNamespace
   KeyVault
+  OperationalInsightsWorkspace
   ResourceGroup
   SqlDatabase
   SqlServer

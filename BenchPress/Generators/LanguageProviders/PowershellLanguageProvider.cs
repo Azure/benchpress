@@ -4,6 +4,11 @@ namespace Generators.LanguageProviders;
 
 public class PowershellLanguageProvider : ILanguageProvider
 {
+    public string Parameter(string name)
+    {
+        return name;
+    }
+
     public string Variable(string name)
     {
         return $"${name}";
@@ -49,9 +54,7 @@ public class PowershellLanguageProvider : ILanguageProvider
         switch (sdkFunction.Kind)
         {
             case TestType.ResourceExists:
-                return $"Get-{sdkFunction.ResourceType.FunctionPrefix}Exists";
-            case TestType.Location:
-                return $"Check-{sdkFunction.ResourceType.FunctionPrefix}Location";
+                return $"Confirm-AzBPResource";
             default:
                 throw new Exception($"Unknown test type: {sdkFunction.Kind}");
         }

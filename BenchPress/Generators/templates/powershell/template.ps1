@@ -14,15 +14,17 @@ BeforeAll {
 Describe '{{ Name }}' {
   it '{{ Description }}' {
     #arrange
-    {{ #Parameters }}
-    {{ Key }} = {{{ Value }}}
-    {{ /Parameters}}
+    $params = @{
+      {{ #Parameters }}
+      {{ Key }} = {{{ Value }}}
+      {{ /Parameters}}
+    }
 
     #act
-    {{ ActualValueVariable }} = {{GetValueFunctionName}} {{{GetValueFunctionParameterList}}}
+    {{ ResultVariable }} = {{GetValueFunctionName}} @params
 
     #assert
-    {{ ActualValueVariable }} | Should -Be {{{ ExpectedValue }}}
+    {{ ActualValue }} | Should -Be {{{ ExpectedValue }}}
   }
 }
 

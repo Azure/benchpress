@@ -30,9 +30,11 @@ The `CosmosDB*.Tests.ps1` files contain examples of using the `Confirm-AzBPCosmo
    - `mongodb-db-name`         -> `your-mongodb-db-name`
    - `sql-account-name`        -> `your-sql-account-name`
    - `sql-db-name`             -> `your-sql-db-name`
+   - `westus3`                 -> `your-resource-group-location-name`
 
 1. If using a local copy of `Az.InfrastructureTesting`, replace `Import-Module Az.InfrastructureTesting` with
-`Import-Module "../../bin/BenchPress.Azure.psd1"`.
+`Import-Module "../../bin/BenchPress.Azure.psd1"`. Note that the final `AfterAll` step will properly remove the module
+regardless of which method is chosen to load the module.
 
 1. Run `CosmosDB.Tests.ps1`:
 

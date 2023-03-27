@@ -10,6 +10,7 @@ public interface ILanguageProvider
     public string Value(object value);
     public string Library(ResourceType resourceType);
     public string SDK(SDKFunction sdkFunction);
+    public string Parameter(string name);
     public string ParameterList(params string[] parameters);
     public string GetTemplateFileName();
 }

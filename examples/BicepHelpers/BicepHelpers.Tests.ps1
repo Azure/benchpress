@@ -2,7 +2,7 @@ BeforeAll {
   Import-Module Az.InfrastructureTesting
 }
 Describe 'Spin up , Tear down Action Group' {
-  it 'Should deploy a bicep file.' {
+  It 'Should deploy a bicep file.' {
     #arrange
     $resourceGroupName = "rg-test"
     $bicepPath = "../ActionGroup/actionGroup.bicep"
@@ -20,4 +20,9 @@ Describe 'Spin up , Tear down Action Group' {
     #clean up
     #Remove-AzBPBicepFeature -ResourceGroupName $resourceGroupName
   }
+}
+
+AfterAll {
+  Get-Module Az-InfrastructureTesting | Remove-Module
+  Get-Module BenchPress.Azure | Remove-Module
 }

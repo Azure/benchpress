@@ -6,9 +6,4 @@ param location string = resourceGroup().location
 resource symbolicname 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
   name: name
   location: location
-  properties: {
-    sku: {
-      name: 'Free'
-    }
-  }
 }

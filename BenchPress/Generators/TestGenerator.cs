@@ -26,9 +26,6 @@ public class TestGenerator
                 case TestType.ResourceExists:
                     viewModel = GenerateResourceExistsViewModel(definition, template);
                     break;
-                case TestType.Location:
-                    viewModel = GenerateCheckLocationViewModel(definition, template);
-                    break;
                 default:
                     throw new Exception($"Unknown test type: {definition.Type}");
             }
@@ -52,34 +49,6 @@ public class TestGenerator
         return output;
     }
 
-    private TestViewModel GenerateCheckLocationViewModel(TestDefinition definition, string template)
-    {
-        var parameters = GetParameters(definition)
-            .Append(
-                new KeyValuePair<string, string>(
-                    LanguageProvider.Variable($"{definition.Metadata.ResourceType.Prefix}Location"),
-                    LanguageProvider.Value(definition.Metadata.ExtraProperties["location"])
-                )
-            );
-
-        return new TestViewModel
-        {
-            Parameters = parameters,
-            Name = LanguageProvider.Escape(
-                $"Check {definition.Metadata.ResourceType.FriendlyName} location"
-            ),
-            Description = LanguageProvider.Escape(
-                $"Check that {definition.Metadata.ResourceType.FriendlyName} is in the right location"
-            ),
-            GetValueFunctionParameterList = LanguageProvider.ParameterList(
-                parameters.Select(p => p.Key).ToArray()
-            ),
-            ActualValueVariable = LanguageProvider.Variable($"check"),
-            GetValueFunctionName = LanguageProvider.SDK(new SDKFunction(definition)),
-            ExpectedValue = LanguageProvider.Value(true)
-        };
-    }
-
     private TestViewModel GenerateResourceExistsViewModel(
         TestDefinition definition,
         string template
@@ -96,10 +65,8 @@ public class TestGenerator
             Description = LanguageProvider.Escape(
                 $"It should contain a {definition.Metadata.ResourceType.FriendlyName} named {definition.Metadata.ResourceName}"
             ),
-            GetValueFunctionParameterList = LanguageProvider.ParameterList(
-                parameters.Select(p => p.Key).ToArray()
-            ),
-            ActualValueVariable = LanguageProvider.Variable($"exists"),
+            ResultVariable = LanguageProvider.Variable($"result"),
+            ActualValue = LanguageProvider.Variable($"result") + ".Success",
             GetValueFunctionName = LanguageProvider.SDK(new SDKFunction(definition)),
             ExpectedValue = LanguageProvider.Value(true)
         };
@@ -110,9 +77,9 @@ public class TestGenerator
         public IEnumerable<KeyValuePair<string, string>> Parameters { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public string GetValueFunctionParameterList { get; set; }
-        public string ActualValueVariable { get; set; }
+        public string ResultVariable { get; set; }
         public string GetValueFunctionName { get; set; }
+        public string ActualValue { get; set; }
         public string ExpectedValue { get; set; }
     }
 
@@ -123,7 +90,7 @@ public class TestGenerator
             .Select(
                 p =>
                     new KeyValuePair<string, string>(
-                        LanguageProvider.Variable(p.Key),
+                        LanguageProvider.Parameter(p.Key),
                         LanguageProvider.Value(p.Value)
                     )
             );
