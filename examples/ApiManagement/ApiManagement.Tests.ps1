@@ -388,7 +388,7 @@ Describe 'Verify API Management Policy' {
     $Script:noApiId = 'nopolicy'
   }
 
-  It 'Should contain an API Management Policy with the given name - Confirm-AzBPResource' {
+  It "Should contain an API Management Policy for the API ID $apiName - Confirm-AzBPResource" {
     #arrange
     $params = @{
       ResourceType = "ApiManagementPolicy"
@@ -404,7 +404,7 @@ Describe 'Verify API Management Policy' {
     $result.Success | Should -Be $true
   }
 
-  It 'Should contain an API Management Policy for the API ID $apiName' {
+  It "Should contain an API Management Policy for the API ID $apiName" {
     #arrange
     $params = @{
       ResourceGroupName = $rgName
@@ -419,7 +419,7 @@ Describe 'Verify API Management Policy' {
     $result.Success | Should -Be $true
   }
 
-  It 'Should not contain an API Management Policy for the API ID $apiName' {
+  It "Should not contain an API Management Policy for the API ID $apiName" {
     #arrange
     $params = @{
       ResourceGroupName = $rgName
