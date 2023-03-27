@@ -31,7 +31,7 @@
         <base />
         <!-- Optional policy to to send custom metrics to Application Insights. Learn more at https://learn.microsoft.com/en-us/azure/api-management/api-management-advanced-policies#emit-metrics -->
         <choose>
-            <when condition="@(context.Response.StatusCode >= 200 && context.Response.StatusCode < 300)">
+            <when condition="@(context.Response.StatusCode &gt;= 200 &amp;&amp; context.Response.StatusCode &lt; 300)">
                 <emit-metric name="Successful requests" value="1" namespace="apim-metrics">
                     <dimension name="API" value="@(context.Api.Name)" />
                     <dimension name="Client IP" value="@(context.Request.IpAddress)" />
@@ -39,7 +39,7 @@
                     <dimension name="Status Reason" value="@(context.Response.StatusReason)" />
                 </emit-metric>
             </when>
-            <when condition="@(context.Response.StatusCode >= 400 && context.Response.StatusCode < 600)">
+            <when condition="@(context.Response.StatusCode &gt;= 400 &amp;&amp; context.Response.StatusCode &lt; 600)">
                 <emit-metric name="Failed requests" value="1" namespace="apim-metrics">
                     <dimension name="API" value="@(context.Api.Name)" />
                     <dimension name="Client IP" value="@(context.Request.IpAddress)" />
