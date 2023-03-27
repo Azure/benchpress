@@ -15,7 +15,7 @@ Describe "Confirm-ApiManagementDiagnostic" {
     }
 
     It "Calls Get-AzApiManagementDiagnostic" {
-      Confirm-ApiManagementDiagnostic -ResourceGroupName "rgn" -ServiceName "sn" -ApiId "apiid" -Name "diag"
+      Confirm-ApiManagementDiagnostic -ResourceGroupName "rgn" -ServiceName "sn" -Name "diag"
       Should -Invoke -CommandName "Get-AzApiManagementDiagnostic" -Times 1
     }
   }
