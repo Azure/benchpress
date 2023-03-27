@@ -44,6 +44,7 @@ function Confirm-RoleAssignment {
     [string]$ServicePrincipalId,
 
     [Parameter(Mandatory=$true)]
+    [ValidatePattern("/subscriptions/.*")]
     [string]$Scope
   )
   Begin {

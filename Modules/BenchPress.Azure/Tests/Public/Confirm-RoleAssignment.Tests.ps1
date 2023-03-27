@@ -12,8 +12,12 @@ Describe "Confirm-RoleAssignment" {
 
     It "Calls Get-AzRoleAssignment" {
       Mock Get-AzRoleAssignment{}
-      Confirm-RoleAssignment -RoleDefinitionName "Reader" -ServicePrincipalName "spn" -Scope "scope"
+      Confirm-RoleAssignment -RoleDefinitionName "Reader" -ServicePrincipalId "spn" -Scope "/subscriptions/"
       Should -Invoke -CommandName "Get-AzRoleAssignment" -Times 1
+    }
+
+    It "Fails with incorrectly formatted scope" {
+      {Confirm-RoleAssignment -RoleDefinitionName "Reader" -ServicePrincipalId "spn" -Scope "samplescope"} | Should -Throw
     }
   }
 }
