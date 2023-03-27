@@ -1,128 +1,119 @@
 BeforeAll {
-  Import-Module Az.InfrastructureTesting
+  Import-Module ../../bin/BenchPress.Azure.psm1
+
+  $Script:rgName = 'rg-test'
+  $Script:kvName = 'kvbenchpresstest'
+  $Script:location = 'westus3'
 }
 
-Describe 'Verify KeyVault Exists' {
-  it 'Should contain a KeyVault with the given name' {
-    #arrange
-    $rgName = "rg-test"
-    $kvName = "kvbenchpresstest"
+Describe 'Verify KeyVault' {
+  BeforeAll {
+    $Script:noKvName = 'nokvbenchpresstest'
+    $Script:kvKeyName = 'samplekey'
+    $Script:kvSecretName = 'samplesecret'
+  }
 
+  It 'Should contain a keyVault with given name - Confirm-AzBPResource' {
+    #arrange
+    $params = @{
+      ResourceType      = "KeyVault"
+      ResourceGroupName = $rgName
+      ResourceName      = $kvName
+    }
+
+    #act
+    $result = Confirm-AzBPResource @params
+
+    #assert
+    $result.Success | Should -Be $true
+  }
+
+
+  It 'Should contain a keyVault with expected property name - Confirm-AzBPResource' {
+    #arrange
+    $params = @{
+      ResourceType      = "KeyVault"
+      ResourceGroupName = $rgName
+      ResourceName      = $kvName
+      PropertyKey       = 'VaultName'
+      PropertyValue     = $kvName
+    }
+
+    #act
+    $result = Confirm-AzBPResource @params
+
+    #assert
+    $result.Success | Should -Be $true
+  }
+
+  It 'Should contain a KeyVault with the given name' {
     #act
     $result = Confirm-AzBPKeyVault -ResourceGroupName $rgName -Name $kvName
 
     #assert
     $result.Success | Should -Be $true
   }
-}
 
-Describe 'Verify samplekey Key in KeyVault Exists' {
-  it 'Should contain a Key named samplekey in the KeyVault with the given name' {
-    #arrange
-    $kvName = "kvbenchpresstest"
-    $kvKeyName = "samplekey"
-
+  It "Should contain a Key named $kvKeyName in the KeyVault with the given name" {
     #act
     $result = Confirm-AzBPKeyVaultKey -KeyVaultName $kvName -Name $kvKeyName
 
     #assert
     $result | Should -Be $true
   }
-}
 
-Describe 'Verify samplesecret Secret in KeyVault Exists' {
-  it 'Should contain a Secret named samplesecret in the KeyVault with the given name' {
-    #arrange
-    $kvName = "kvbenchpresstest"
-    $kvSecretName = "samplesecret"
-
+  It "Should contain a Secret named $kvSecretName in the KeyVault with the given name" {
     #act
     $result = Confirm-AzBPKeyVaultSecret -KeyVaultName $kvName -Name $kvSecretName
 
     #assert
     $result | Should -Be $true
   }
-}
 
-Describe 'Verify KeyVault Does Not Exist' {
-  it 'Should not contain a KeyVault with the given name' {
-    #arrange
-    $rgName = "rg-test"
-    $kvName = "nokvbenchpresstest"
-
+  It 'Should not contain a KeyVault with the given name' {
     #act
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
-    $result = Confirm-AzBPKeyVault -ResourceGroupName $rgName -Name $kvName -ErrorAction SilentlyContinue
+    $result = Confirm-AzBPKeyVault -ResourceGroupName $rgName -Name $noKvName -ErrorAction SilentlyContinue
 
     #assert
     $result.Success | Should -Be $false
   }
-}
 
-Describe 'Verify KeyVault Exists with Custom Assertion' {
-  it 'Should contain a KeyVault named kvbenchpresstest' {
-    #arrange
-    $rgName = "rg-test"
-    $kvName = "kvbenchpresstest"
-
+  It "Should contain a KeyVault named $kvName" {
     #act
     $result = Confirm-AzBPKeyVault -ResourceGroupName $rgName -Name $kvName
 
     #assert
     $result | Should -BeDeployed
   }
-}
 
-Describe 'Verify KeyVault Exists in Correct Location' {
-  it 'Should contain a KeyVault named rg-test in westus3' {
-    #arrange
-    $rgName = "rg-test"
-    $kvName = "kvbenchpresstest"
-
+  It "Should contain a KeyVault named $kvName in $location" {
     #act
     $result = Confirm-AzBPKeyVault -ResourceGroupName $rgName -Name $kvName
 
     #assert
-    $result | Should -BeInLocation 'westus3'
+    $result | Should -BeInLocation $location
   }
-}
 
-Describe 'Verify KeyVault Exists in Resource Group' {
-  it 'Should be a KeyVault in a resource group named rg-test' {
-    #arrange
-    $rgName = "rg-test"
-    $kvName = "kvbenchpresstest"
-
+  It "Should be a KeyVault in a resource group named $rgName" {
     #act
     $result = Confirm-AzBPKeyVault -ResourceGroupName $rgName -Name $kvName
 
     #assert
-    $result | Should -BeInResourceGroup 'rg-test'
+    $result | Should -BeInResourceGroup $rgName
   }
-}
 
-Describe 'Verify KeyVault Key Exists with Custom Assertion' {
-  it 'Should contain a KeyVault Key named samplekey' {
-    #arrange
-    $kvName = "kvbenchpresstest"
-    $kvKeyName = "samplekey"
-
+  It "Should contain a KeyVault Key named $kvKeyName" {
     #act
     $result = Confirm-AzBPKeyVaultKey -KeyVaultName $kvName -Name $kvKeyName
 
     #assert
     $result | Should -BeDeployed
   }
-}
 
-Describe 'Verify KeyVault Secret Exists with Custom Assertion' {
-  it 'Should contain a KeyVault Secret named kvbenchpresstest' {
-    #arrange
-    $kvName = "kvbenchpresstest"
-    $kvSecretName = "samplesecret"
-
+  It "Should contain a KeyVault Secret named $kvSecretName" {
     #act
     $result = Confirm-AzBPKeyVaultSecret -KeyVaultName $kvName -Name $kvSecretName
 
@@ -131,16 +122,7 @@ Describe 'Verify KeyVault Secret Exists with Custom Assertion' {
   }
 }
 
-Describe 'Verify KeyVault Certificate Exists with Custom Assertion' {
-  it 'Should contain a KeyVault Certificate named samplecertificate' {
-    #arrange
-    $kvName = "kvbenchpresstest"
-    $kvCertName = "samplecertificate"
-
-    #act
-    $result = Confirm-AzBPKeyVaultCertificate -KeyVaultName $kvName -Name $kvCertName
-
-    #assert
-    $result | Should -BeDeployed
-  }
+AfterAll {
+  Get-Module Az-InfrastructureTesting | Remove-Module
+  Get-Module BenchPress.Azure | Remove-Module
 }

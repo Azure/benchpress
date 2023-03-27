@@ -197,7 +197,7 @@ function Get-ResourceByType {
         return Confirm-EventHubConsumerGroup @params
       }
       "EventHubNamespace" {
-        return Confirm-EventHubNamespace -NamespaceName $NamespaceName -ResourceGroupName $ResourceGroupName
+        return Confirm-EventHubNamespace -NamespaceName $ResourceName -ResourceGroupName $ResourceGroupName
       }
       "KeyVault" {
         return Confirm-KeyVault -Name $ResourceName -ResourceGroupName $ResourceGroupName
