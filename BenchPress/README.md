@@ -7,8 +7,8 @@ changes.
 
 ## Running Locally
 
-If you are interested in contributing to or consuming the Generator project at this time, the following these steps
-will help you get started:
+If you are interested in contributing to or consuming the Generator project at this time, the following steps will
+help you get started:
 
 ### Prerequisites
 
