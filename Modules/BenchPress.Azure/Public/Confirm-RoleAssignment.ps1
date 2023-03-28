@@ -51,7 +51,14 @@ function Confirm-RoleAssignment {
     $ConnectResults = Connect-Account
   }
   Process {
-    $Resource = Get-AzRoleAssignment -ServicePrincipalName $ServicePrincipalId -Scope $Scope -RoleDefinitionName $RoleDefinitionName
+    $params = @{
+      ServicePrincipalId   = $ServicePrincipalId
+      RoleDefinitionName   = $RoleDefinitionName
+      Scope                = $Scope
+    }
+
+    # Filter to specific scope specified by the parameter
+    $Resource = Get-AzRoleAssignment @params | Where-Object Scope -eq $Scope
 
     [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
   }
