@@ -16,6 +16,7 @@
     "Confirm-AppInsights",
     "Confirm-AppServicePlan",
     "Confirm-BicepFile",
+    "Confirm-ContainerApp",
     "Confirm-ContainerRegistry",
     "Confirm-CosmosDBAccount",
     "Confirm-CosmosDBGremlinDatabase",
