@@ -2,8 +2,9 @@
 
 The Generator project can take a `.bicep` file and scaffold example Pester tests that use the BenchPress PowerShell
 module. These generated tests are not meant to work out of the box and are just a starting point for your
-infrastructure tests. The Generator project is still in the early stages of development, so expect many ongoing
-changes.
+infrastructure tests. Tests will only be generated for supported Azure resources. You can see which resources are
+currently supported by the classes defined in the `Generators\ResourceTypes` folder. The Generator project is still
+in the early stages of development, so expect many ongoing changes.
 
 ## Running Locally
 
