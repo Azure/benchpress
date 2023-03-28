@@ -11,6 +11,20 @@ Describe 'Verify Role Assignment Exists' {
     $Script:noRoleName = 'Owner'
   }
 
+  It "Should have a principal with $roleName role - Confirm-AzBPResource" {
+    #act
+    $params = @{
+      ResourceType         = 'RoleAssignment'
+      ServicePrincipalId   = $principalId
+      RoleDefinitionName   = $roleName
+      Scope                = $scope
+    }
+
+    $result = Confirm-AzBPResource @params
+    #assert
+    $result.Success | Should -Be $true
+  }
+
   It "Should have a principal with $roleName role" {
     #act
     $params = @{
@@ -19,7 +33,6 @@ Describe 'Verify Role Assignment Exists' {
       Scope                = $scope
     }
 
-    Confirm-RoleAssignment @params
     $result = Confirm-AzBPRoleAssignment @params
     #assert
     $result.Success | Should -Be $true
@@ -32,9 +45,9 @@ Describe 'Verify Role Assignment Exists' {
       RoleDefinitionName   = $roleName
       Scope                = $scope
     }
-    Confirm-RoleAssignment @params
+
     $result = Confirm-AzBPRoleAssignment @params
-    $result.Success | Should -BeDeployed
+    $result | Should -BeDeployed
   }
 
   It "Should not have a principal with $noRoleName role" {
@@ -44,7 +57,7 @@ Describe 'Verify Role Assignment Exists' {
       RoleDefinitionName   = $noRoleName
       Scope                = $scope
     }
-    Confirm-RoleAssignment @params
+
     $result = Confirm-AzBPRoleAssignment @params
 
     #assert

@@ -81,7 +81,7 @@ function Confirm-Resource {
     [Parameter(Mandatory = $true)]
     [ResourceType]$ResourceType,
 
-    [Parameter(Mandatory = $true)]
+    [Parameter(Mandatory = $false)]
     [string]$ResourceName,
 
     [Parameter(Mandatory = $false)]
