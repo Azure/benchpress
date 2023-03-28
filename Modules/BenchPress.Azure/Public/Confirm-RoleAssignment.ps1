@@ -7,7 +7,7 @@ using module ./../Classes/ConfirmResult.psm1
 function Confirm-RoleAssignment {
   <#
     .SYNOPSIS
-      Confirms that a Role Assignment for a service principal exists exists.
+      Confirms that a Role Assignment for a service principal exists.
 
     .DESCRIPTION
       The Confirm-AzBPRoleAssignment cmdlet gets a Role Assignment using the specified Service Prinicpal, Scope
