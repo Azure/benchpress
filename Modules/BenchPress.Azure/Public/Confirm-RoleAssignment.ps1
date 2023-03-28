@@ -52,7 +52,7 @@ function Confirm-RoleAssignment {
   }
   Process {
     $params = @{
-      ServicePrincipalId   = $ServicePrincipalId
+      ServicePrincipalName   = $ServicePrincipalId
       RoleDefinitionName   = $RoleDefinitionName
       Scope                = $Scope
     }
