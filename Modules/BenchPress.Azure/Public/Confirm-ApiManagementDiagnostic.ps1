@@ -19,9 +19,6 @@ function Confirm-ApiManagementDiagnostic {
     .PARAMETER ServiceName
       Specifies the name of the deployed API Management service.
 
-    .PARAMETER ApiId
-      Identifier of existing API. If specified will return API-scope diagnostic. This parameters is required.
-
     .PARAMETER Name
       Identifier of existing diagnostic. This will return product-scope policy. This parameters is required.
 
