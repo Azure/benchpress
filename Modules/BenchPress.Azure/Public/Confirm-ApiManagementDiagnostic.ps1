@@ -24,7 +24,7 @@ function Confirm-ApiManagementDiagnostic {
 
     .EXAMPLE
       Confirm-AzBPApiManagementDiagnostic -ResourceGroupName "rgbenchpresstest" -ServiceName "servicetest" `
-        -ApiId "apiidtest" -Name "benchpresstest"
+        -Name "benchpresstest"
 
     .INPUTS
       System.String

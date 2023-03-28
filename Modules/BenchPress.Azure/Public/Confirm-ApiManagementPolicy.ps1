@@ -24,7 +24,7 @@ function Confirm-ApiManagementPolicy {
 
     .EXAMPLE
       Confirm-AzBPApiManagementPolicy -ResourceGroupName "rgbenchpresstest" -ServiceName "servicetest" `
-        -Name "benchpresstest"
+        -ApiId "benchpresstest"
 
     .INPUTS
       System.String
