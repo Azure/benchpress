@@ -121,7 +121,16 @@ function Get-ResourceByType {
     [string]$WorkspaceName,
 
     [Parameter(Mandatory = $false)]
-    [string]$AccountName
+    [string]$AccountName,
+
+    [Parameter(Mandatory = $false)]
+    [string]$ServicePrincipalId,
+
+    [Parameter(Mandatory = $false)]
+    [string]$Scope,
+
+    [Parameter(Mandatory = $false)]
+    [string]$RoleDefinitionName
   )
   Begin { }
   Process {
@@ -207,6 +216,14 @@ function Get-ResourceByType {
       }
       "ResourceGroup" {
         return Confirm-ResourceGroup -ResourceGroupName $ResourceName
+      }
+      "RoleAssignment" {
+        $params = @{
+          ServicePrincipalId   = $ServicePrincipalId
+          RoleDefinitionName   = $RoleDefinitionName
+          Scope                = $Scope
+        }
+        return Confirm-RoleAssignment @params
       }
       "SqlDatabase" {
         $params = @{

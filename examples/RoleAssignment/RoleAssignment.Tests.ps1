@@ -13,21 +13,39 @@ Describe 'Verify Role Assignment Exists' {
 
   It "Should have a principal with $roleName role" {
     #act
-    $result = Confirm-AzBPRoleAssignment -ServicePrincipalId $principalId -RoleDefinitionName $roleName -Scope $scope
+    $params = @{
+      ServicePrincipalId   = $principalId
+      RoleDefinitionName   = $roleName
+      Scope                = $scope
+    }
+
+    Confirm-RoleAssignment @params
+    $result = Confirm-AzBPRoleAssignment @params
     #assert
     $result.Success | Should -Be $true
   }
 
   It "Should have a principal with $roleName role deployed" {
     #act
-    $result = Confirm-AzBPRoleAssignment -ServicePrincipalId $principalId -RoleDefinitionName $roleName -Scope $scope
-    #assert
+    $params = @{
+      ServicePrincipalId   = $principalId
+      RoleDefinitionName   = $roleName
+      Scope                = $scope
+    }
+    Confirm-RoleAssignment @params
+    $result = Confirm-AzBPRoleAssignment @params
     $result.Success | Should -BeDeployed
   }
 
   It "Should not have a principal with $noRoleName role" {
     #act
-    $result = Confirm-AzBPRoleAssignment -ServicePrincipalId $principalId -RoleDefinitionName $noRoleName -Scope $scope
+    $params = @{
+      ServicePrincipalId   = $principalId
+      RoleDefinitionName   = $noRoleName
+      Scope                = $scope
+    }
+    Confirm-RoleAssignment @params
+    $result = Confirm-AzBPRoleAssignment @params
 
     #assert
     $result.Success | Should -Be $false

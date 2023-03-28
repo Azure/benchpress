@@ -103,6 +103,15 @@ function Confirm-Resource {
     [string]$WorkspaceName,
 
     [Parameter(Mandatory = $false)]
+    [string]$ServicePrincipalId,
+
+    [Parameter(Mandatory = $false)]
+    [string]$Scope,
+
+    [Parameter(Mandatory = $false)]
+    [string]$RoleDefinitionName,
+
+    [Parameter(Mandatory = $false)]
     [string]$AccountName,
 
     [Parameter(Mandatory = $false)]
@@ -114,15 +123,18 @@ function Confirm-Resource {
   Begin { }
   Process {
     $ResourceParams = @{
-      ResourceType      = $ResourceType
-      NamespaceName     = $NamespaceName
-      EventHubName      = $EventHubName
-      ResourceName      = $ResourceName
-      ResourceGroupName = $ResourceGroupName
-      ServerName        = $ServerName
-      DataFactoryName   = $DataFactoryName
-      WorkspaceName     = $WorkspaceName
-      AccountName       = $AccountName
+      ResourceType       = $ResourceType
+      NamespaceName      = $NamespaceName
+      EventHubName       = $EventHubName
+      ResourceName       = $ResourceName
+      ResourceGroupName  = $ResourceGroupName
+      ServerName         = $ServerName
+      DataFactoryName    = $DataFactoryName
+      WorkspaceName      = $WorkspaceName
+      AccountName        = $AccountName
+      RoleDefinitionName = $RoleDefinitionName
+      Scope              = $Scope
+      ServicePrincipalId = $ServicePrincipalId
     }
 
     $ConfirmResult = Get-ResourceByType @ResourceParams
