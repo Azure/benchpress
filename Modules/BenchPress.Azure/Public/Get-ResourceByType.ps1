@@ -43,29 +43,7 @@ function Get-ResourceByType {
       The name of the Resource Group
 
     .PARAMETER ResourceType
-      The type of the Resource (currently support the following:
-      ActionGroup
-      AksCluster
-      AppInsights
-      AppServicePlan
-      ContainerRegistry
-      DataFactory
-      DataFactoryLinkedService
-      EventHub
-      EventHubConsumerGroup
-      EventHubNamespace
-      KeyVault
-      ResourceGroup
-      SqlDatabase
-      SqlServer
-      StorageAccount
-      StorageContainer
-      StreamAnalyticsCluster
-      SynapseSparkPool
-      SynapseSqlPool
-      SynapseWorkspace
-      VirtualMachine
-      WebApp)
+      The type of the Resource.
 
     .PARAMETER ServerName
       If testing an Azure SQL Database resource, the name of the server to which the database is assigned.
