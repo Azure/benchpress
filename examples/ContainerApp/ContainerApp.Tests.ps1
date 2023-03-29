@@ -11,7 +11,7 @@ Describe 'Verify Container Application' {
     $Script:noContainerAppName = 'nocontainerapp'
   }
 
-  It "Should contain a container application named $conAppName - Confirm-AzBPResource" {
+  It "Should contain a Container Application named $conAppName - Confirm-AzBPResource" {
     #arrange
     $params = @{
       ResourceType      = "ContainerApp"
@@ -26,7 +26,7 @@ Describe 'Verify Container Application' {
     $result.Success | Should -Be $true
   }
 
-  It "Should contain a container application with an ingress target port of 80 - Confirm-AzBPResource" {
+  It "Should contain a Container Application with an Ingress Port of 80 - Confirm-AzBPResource" {
     #arrange
     $params = @{
       ResourceType      = "ContainerApp"
@@ -43,7 +43,7 @@ Describe 'Verify Container Application' {
     $result.Success | Should -Be $true
   }
 
-  It 'Should contain a container application with the given name' {
+  It "Should contain a Container Application named $conAppName" {
     #act
     $result = Confirm-AzBPContainerApp -ResourceGroupName $rgName -Name $conAppName
 
@@ -51,7 +51,7 @@ Describe 'Verify Container Application' {
     $result.Success | Should -Be $true
   }
 
-  It 'Should not contain a container application with the given name' {
+  It "Should not contain a Container Application named $noContainerAppName" {
     #act
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
@@ -62,7 +62,7 @@ Describe 'Verify Container Application' {
     $result.Success | Should -Be $false
   }
 
-  It "Should contain a Container application named $conAppName" {
+  It "Should contain a Container Application named $conAppName" {
     #act
     $result = Confirm-AzBPContainerApp -ResourceGroupName $rgName -Name $conAppName
 
@@ -70,7 +70,7 @@ Describe 'Verify Container Application' {
     $result | Should -BeDeployed
   }
 
-  It "Should contain a Container application named $conAppName in $location" {
+  It "Should contain a Container Application named $conAppName in $location" {
     #act
     $result = Confirm-AzBPContainerApp -ResourceGroupName $rgName -Name $conAppName
 
@@ -78,7 +78,7 @@ Describe 'Verify Container Application' {
     $result | Should -BeInLocation $location
   }
 
-  It "Should contain a Container application named $conAppName in a resource group named $rgName" {
+  It "Should contain a Container Application named $conAppName in $rgName" {
     #act
     $result = Confirm-AzBPContainerApp -ResourceGroupName $rgName -Name $conAppName
 
