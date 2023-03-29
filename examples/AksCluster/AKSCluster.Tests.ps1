@@ -43,7 +43,7 @@ Describe 'Verify AKS Cluster' {
     $result.Success | Should -Be $true
   }
 
-  It 'Should contain an AKS cluster with given name' {
+  It "Should contain an AKS Cluster named $aksName" {
     #act
     $result = Confirm-AzBPAksCluster -ResourceGroupName $rgName -AKSName $aksName
 
@@ -51,7 +51,7 @@ Describe 'Verify AKS Cluster' {
     $result.Success | Should -Be $true
   }
 
-  It 'Should not contain an AKS cluster with given name' {
+  It "Should not contain an AKS Cluster named $noAksClusterName" {
     #act
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
@@ -78,7 +78,7 @@ Describe 'Verify AKS Cluster' {
     $result | Should -BeInLocation $location
   }
 
-  It "Should be an AKS CLuster named $aksName in a resource group named $rgName" {
+  It "Should contain an AKS Cluster named $aksName in $rgName" {
     #act
     $result = Confirm-AzBPAksCluster -ResourceGroupName $rgName -AKSName $aksName
 

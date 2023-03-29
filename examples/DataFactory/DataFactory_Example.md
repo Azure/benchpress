@@ -24,8 +24,8 @@ and `Confirm-AzBPDataFactoryLinkedService` cmdlet.
 
 1. Update `DataFactory.Tests.ps1` variables to point to your expected resources:
 
-   - `rg-test` -> `your-resource-group-name`
-   - `westus3` -> `your-data-factory-location`
+   - `rg-test`   -> `your-resource-group-name`
+   - `westus3`   -> `your-data-factory-location`
    - `sampleadf` -> `your-data-factory-name`
 
 1. If using a local copy of `Az.InfrastructureTesting`, replace `Import-Module Az.InfrastructureTesting` with

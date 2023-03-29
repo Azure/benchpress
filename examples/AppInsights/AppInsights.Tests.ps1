@@ -26,7 +26,7 @@ Describe 'Verify App Insights' {
     $result.Success | Should -Be $true
   }
 
-  It "Should contain an App Insights named $appInsightsName - Confirm-AzBPResource" {
+  It "Should contain an Application Insights named $appInsightsName - Confirm-AzBPResource" {
     #arrange
     $params = @{
       ResourceType      = "AppInsights"
@@ -43,7 +43,7 @@ Describe 'Verify App Insights' {
     $result.Success | Should -Be $true
   }
 
-  It 'Should contain an application insights with the given name' {
+  It "Should contain an Application Insights named $appInsightsName" {
     #act
     $result = Confirm-AzBPAppInsights -ResourceGroupName $rgName -Name $appInsightsName
 
@@ -51,7 +51,7 @@ Describe 'Verify App Insights' {
     $result.Success | Should -Be $true
   }
 
-  It 'Should not contain an application insights with the given name' {
+  It "Should not contain an Application Insights named $noAppInsightsName" {
     #act
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
@@ -62,7 +62,7 @@ Describe 'Verify App Insights' {
     $result.Success | Should -Be $false
   }
 
-  It "Should contain an App Insights named $appInsightsName" {
+  It "Should contain an Application Insights named $appInsightsName" {
     #act
     $result = Confirm-AzBPAppInsights -ResourceGroupName $rgName -Name $appInsightsName
 
@@ -70,7 +70,7 @@ Describe 'Verify App Insights' {
     $result | Should -BeDeployed
   }
 
-  It "Should contain an App Insights named $appInsightsName in $location" {
+  It "Should contain an Application Insights named $appInsightsName in $location" {
     #act
     $result = Confirm-AzBPAppInsights -ResourceGroupName $rgName -Name $appInsightsName
 
@@ -78,7 +78,7 @@ Describe 'Verify App Insights' {
     $result | Should -BeInLocation $location
   }
 
-  It "Should contain an App Insights named $appInsightsName in a resource group named $rgName" {
+  It "Should contain an Application Insights named $appInsightsName in $rgName" {
     #act
     $result = Confirm-AzBPAppInsights -ResourceGroupName $rgName -Name $appInsightsName
 

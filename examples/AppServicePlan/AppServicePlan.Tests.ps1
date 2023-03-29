@@ -42,7 +42,7 @@ Describe 'Verify App Service Plan' {
     $result.Success | Should -Be $true
   }
 
-  It 'Should contain an App Service Plan with the given name' {
+  It "Should contain an App Service Plan named $appServicePlanName" {
     #act
     $result = Confirm-AzBPAppServicePlan -ResourceGroupName $rgName -AppServicePlanName $appServicePlanName
 
@@ -50,7 +50,7 @@ Describe 'Verify App Service Plan' {
     $result.Success | Should -Be $true
   }
 
-  It 'Should not contain an App Service Plan with the given name' {
+  It "Should not contain an App Service Plan named $noAppServicePlanName" {
     #act
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
@@ -77,7 +77,7 @@ Describe 'Verify App Service Plan' {
     $result | Should -BeInLocation $location
   }
 
-  It "Should contain an App Service Plan named $appServicePlanName in a resource group named $rgName" {
+  It "Should contain an App Service Plan named $appServicePlanName in $rgName" {
     #act
     $result = Confirm-AzBPAppServicePlan -ResourceGroupName $rgName -AppServicePlanName $appServicePlanName
 

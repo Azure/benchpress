@@ -11,7 +11,7 @@ Describe 'Verify Data Factory' {
     $Script:noDataFactoryName = 'nosampleadf'
   }
 
-  It 'Should contain a data factory with the given name - Confirm-AzBPResource'{
+  It "Should contain a Data Factory named $dataFactoryName - Confirm-AzBPResource" {
     #arrange
     $params = @{
       ResourceType      = "DataFactory"
@@ -26,7 +26,7 @@ Describe 'Verify Data Factory' {
     $result.Success | Should -Be $true
   }
 
-  It "Should contain a data factory named $dataFactoryName - Confirm-AzBPResource"{
+  It "Should contain a Data Factory named $dataFactoryName - Confirm-AzBPResource" {
     #arrange
     $params = @{
       ResourceType      = "DataFactory"
@@ -43,7 +43,7 @@ Describe 'Verify Data Factory' {
     $result.Success | Should -Be $true
   }
 
-  It "Should contain a data factory named $dataFactoryName" {
+  It "Should contain a Data Factory named $dataFactoryName" {
     #act
     $result = Confirm-AzBPDataFactory -ResourceGroupName $rgName -Name $dataFactoryName
 
@@ -51,7 +51,7 @@ Describe 'Verify Data Factory' {
     $result.Success | Should -Be $true
   }
 
-  It "Should contain a data factory named $dataFactoryName" {
+  It "Should contain a Data Factory named $dataFactoryName" {
     #act
     $result = Confirm-AzBPDataFactory -ResourceGroupName $rgName -Name $dataFactoryName
 
@@ -59,7 +59,7 @@ Describe 'Verify Data Factory' {
     $result | Should -BeDeployed
   }
 
-  It "Should contain a data factory named $dataFactoryName in $location" {
+  It "Should contain a Data Factory named $dataFactoryName in $location" {
     #act
     $result = Confirm-AzBPDataFactory -ResourceGroupName $rgName -Name $dataFactoryName
 
@@ -67,7 +67,7 @@ Describe 'Verify Data Factory' {
     $result | Should -BeInLocation $location
   }
 
-  It "Should contain a data factory named $dataFactoryName deployed to $rgName resource group" {
+  It "Should contain a Data Factory named $dataFactoryName in $rgName" {
     #act
     $result = Confirm-AzBPDataFactory -ResourceGroupName $rgName -Name $dataFactoryName
 
@@ -75,7 +75,7 @@ Describe 'Verify Data Factory' {
     $result | Should -BeInResourceGroup $rgName
   }
 
-  It "Should not contain a data factory named $noDataFactoryName" {
+  It "Should not contain a Data Factory named $noDataFactoryName" {
     #act
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
@@ -93,7 +93,7 @@ Describe 'Verify Data Factory Linked Service' {
     $Script:linkedServiceName = 'BenchpressStorageLinkedService'
   }
 
-  It 'Should contain a data factory with a linked service - Confirm-AzBPResource' {
+  It "Should contain a Data Factory with a Linked Service named $linkedServiceName - Confirm-AzBPResource" {
     #arrange
     $params = @{
       ResourceType      = 'DataFactoryLinkedService'
@@ -109,7 +109,7 @@ Describe 'Verify Data Factory Linked Service' {
     $result.Success | Should -Be $true
   }
 
-  It 'Should contain a data factory with a linked service - Confirm-AzBPResource' {
+  It "Should contain a Data Factory with a Linked Service named $linkedServiceName - Confirm-AzBPResource" {
     #arrange
     $params = @{
       ResourceType      = 'DataFactoryLinkedService'
@@ -127,7 +127,7 @@ Describe 'Verify Data Factory Linked Service' {
     $result.Success | Should -Be $true
   }
 
-  It "Should contain a data factory with a linked service named $linkedServiceName" {
+  It "Should contain a Data Factory with a Linked Service named $linkedServiceName" {
     #arrange
     $params = @{
       ResourceGroupName = $rgName
@@ -142,7 +142,7 @@ Describe 'Verify Data Factory Linked Service' {
     $result.Success | Should -Be $true
   }
 
-  It "Should contain a data factory with a linked service named $linkedServiceName" {
+  It "Should contain a Data Factory with a Linked Service named $linkedServiceName" {
     # Using custom assertion to check if the workspace with spark pool is deployed
     $params = @{
       ResourceGroupName = $rgName

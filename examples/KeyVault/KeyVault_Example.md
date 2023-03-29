@@ -32,9 +32,9 @@ and `Confirm-AzBPKeyVaultSecret` cmdlets.
 
 1. Update `KeyVault.Tests.ps1` variables to point to your expected resources:
 
-   - `rg-test` -> `your-resource-group-name`
+   - `rg-test`          -> `your-resource-group-name`
    - `kvbenchpresstest` -> `your-key-vault-name`
-   - `westus3` -> `your-key-vault-location`
+   - `westus3`          -> `your-key-vault-location`
 
 1. If using a local copy of `Az.InfrastructureTesting`, replace `Import-Module Az.InfrastructureTesting` with
 `Import-Module "../../bin/BenchPress.Azure.psd1"`. Note that the final `AfterAll` step will properly remove the module

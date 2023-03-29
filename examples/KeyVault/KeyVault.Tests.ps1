@@ -6,14 +6,14 @@ BeforeAll {
   $Script:location = 'westus3'
 }
 
-Describe 'Verify KeyVault' {
+Describe 'Verify Key Vault' {
   BeforeAll {
     $Script:noKvName = 'nokvbenchpresstest'
     $Script:kvKeyName = 'samplekey'
     $Script:kvSecretName = 'samplesecret'
   }
 
-  It 'Should contain a keyVault with given name - Confirm-AzBPResource' {
+  It "Should contain a Key Vault named $kvName - Confirm-AzBPResource" {
     #arrange
     $params = @{
       ResourceType      = "KeyVault"
@@ -29,7 +29,7 @@ Describe 'Verify KeyVault' {
   }
 
 
-  It 'Should contain a keyVault with expected property name - Confirm-AzBPResource' {
+  It "Should contain a Key Vault named $kvName - Confirm-AzBPResource" {
     #arrange
     $params = @{
       ResourceType      = "KeyVault"
@@ -46,7 +46,7 @@ Describe 'Verify KeyVault' {
     $result.Success | Should -Be $true
   }
 
-  It 'Should contain a KeyVault with the given name' {
+  It "Should contain a Key Vault named $kvName" {
     #act
     $result = Confirm-AzBPKeyVault -ResourceGroupName $rgName -Name $kvName
 
@@ -54,7 +54,7 @@ Describe 'Verify KeyVault' {
     $result.Success | Should -Be $true
   }
 
-  It "Should contain a Key named $kvKeyName in the KeyVault with the given name" {
+  It "Should contain a Key named $kvKeyName in the Key Vault named $kvName" {
     #act
     $result = Confirm-AzBPKeyVaultKey -KeyVaultName $kvName -Name $kvKeyName
 
@@ -62,7 +62,7 @@ Describe 'Verify KeyVault' {
     $result | Should -Be $true
   }
 
-  It "Should contain a Secret named $kvSecretName in the KeyVault with the given name" {
+  It "Should contain a Secret named $kvSecretName in the Key Vault named $kvName" {
     #act
     $result = Confirm-AzBPKeyVaultSecret -KeyVaultName $kvName -Name $kvSecretName
 
@@ -70,7 +70,7 @@ Describe 'Verify KeyVault' {
     $result | Should -Be $true
   }
 
-  It 'Should not contain a KeyVault with the given name' {
+  It "Should not contain a Key Vault named $noKvName" {
     #act
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
@@ -81,7 +81,7 @@ Describe 'Verify KeyVault' {
     $result.Success | Should -Be $false
   }
 
-  It "Should contain a KeyVault named $kvName" {
+  It "Should contain a Key Vault named $kvName" {
     #act
     $result = Confirm-AzBPKeyVault -ResourceGroupName $rgName -Name $kvName
 
@@ -89,7 +89,7 @@ Describe 'Verify KeyVault' {
     $result | Should -BeDeployed
   }
 
-  It "Should contain a KeyVault named $kvName in $location" {
+  It "Should contain a Key Vault named $kvName in $location" {
     #act
     $result = Confirm-AzBPKeyVault -ResourceGroupName $rgName -Name $kvName
 
@@ -97,7 +97,7 @@ Describe 'Verify KeyVault' {
     $result | Should -BeInLocation $location
   }
 
-  It "Should be a KeyVault in a resource group named $rgName" {
+  It "Should contain a Key Vault named $kvName in $rgName" {
     #act
     $result = Confirm-AzBPKeyVault -ResourceGroupName $rgName -Name $kvName
 
@@ -105,7 +105,7 @@ Describe 'Verify KeyVault' {
     $result | Should -BeInResourceGroup $rgName
   }
 
-  It "Should contain a KeyVault Key named $kvKeyName" {
+  It "Should contain a Key Vault Key named $kvKeyName" {
     #act
     $result = Confirm-AzBPKeyVaultKey -KeyVaultName $kvName -Name $kvKeyName
 
@@ -113,7 +113,7 @@ Describe 'Verify KeyVault' {
     $result | Should -BeDeployed
   }
 
-  It "Should contain a KeyVault Secret named $kvSecretName" {
+  It "Should contain a Key Vault Secret named $kvSecretName" {
     #act
     $result = Confirm-AzBPKeyVaultSecret -KeyVaultName $kvName -Name $kvSecretName
 

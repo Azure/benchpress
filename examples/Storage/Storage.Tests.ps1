@@ -11,7 +11,7 @@ Describe 'Verify Storage Account' {
     $Script:noAccountName = 'noazbenchpressstorage'
   }
 
-  It 'Should contain a Storage Account with the given name - Confirm-AzBPResource' {
+  It "Should contain a Storage Account named $accountName - Confirm-AzBPResource" {
     #arrange
     $params = @{
       ResourceType = "StorageAccount"
@@ -43,7 +43,7 @@ Describe 'Verify Storage Account' {
     $result.Success | Should -Be $true
   }
 
-  It 'Should contain a Storage Account with the given name' {
+  It "Should contain a Storage Account named $accountName" {
     #act
     $result = Confirm-AzBPStorageAccount -ResourceGroupName $rgName -Name $accountName
 
@@ -51,7 +51,7 @@ Describe 'Verify Storage Account' {
     $result.Success | Should -Be $true
   }
 
-  It 'Should not contain a Storage Account with the given name' {
+  It "Should not contain a Storage Account named $noAccountName" {
 
     #act
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
@@ -78,7 +78,7 @@ Describe 'Verify Storage Account' {
     $result | Should -BeInLocation $location
   }
 
-  It "Should be a Storage Account in a resource group named $rgName" {
+  It "Should contain a Storage Account named $accountName in $rgName" {
     #act
     $result = Confirm-AzBPStorageAccount -ResourceGroupName $rgName -Name $accountName
 
@@ -93,7 +93,7 @@ Describe 'Verify Storage Container' {
     $Script:noContainerName = 'noazbenchpresscontainer'
   }
 
-  It 'Should contain a Storage Container with the given name - Confirm-AzBPResource' {
+  It "Should contain a Storage Container named $containerName - Confirm-AzBPResource" {
     #arrange
     $params = @{
       ResourceType = "StorageContainer"
@@ -127,7 +127,7 @@ Describe 'Verify Storage Container' {
     $result.Success | Should -Be $true
   }
 
-  It 'Should contain a Storage Container with the given name' {
+  It "Should contain a Storage Container named $containerName" {
     #arrange
     $params = @{
       ResourceGroupName = $rgName
@@ -142,7 +142,7 @@ Describe 'Verify Storage Container' {
     $result.Success | Should -Be $true
   }
 
-  It "Should not contain a Storage Container with the given name" {
+  It "Should not contain a Storage Container named $noContainerName" {
     #arrange
     $params = @{
       ResourceGroupName = $rgName

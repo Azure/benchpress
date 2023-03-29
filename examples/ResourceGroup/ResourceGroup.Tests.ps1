@@ -10,7 +10,7 @@ Describe 'Verify Resource Group Exists' {
     $Script:noRgName = 'notestrg'
   }
 
-  It 'Should contain a resource group with given name - Confirm-AzBPResource' {
+  It "Should contain a Resource Group named $rgName - Confirm-AzBPResource" {
     #arrange
     $params = @{
       ResourceType      = "ResourceGroup"
@@ -25,7 +25,7 @@ Describe 'Verify Resource Group Exists' {
   }
 
 
-  It 'Should contain a resource group with expected property name - Confirm-AzBPResource' {
+  It "Should contain a Resource Group named - Confirm-AzBPResource" {
     #arrange
     $params = @{
       ResourceType      = "ResourceGroup"
@@ -41,7 +41,7 @@ Describe 'Verify Resource Group Exists' {
     $result.Success | Should -Be $true
   }
 
-  It "Should contain a resource group named $rgName" {
+  It "Should contain a Resource Group named $rgName" {
     #act
     $result = Confirm-AzBPResourceGroup -ResourceGroupName $rgName
 
@@ -49,7 +49,7 @@ Describe 'Verify Resource Group Exists' {
     $result.Success | Should -Be $true
   }
 
-  It "Should not contain a resource group named $noRgName" {
+  It "Should not contain a Resource Group named $noRgName" {
     #act
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.

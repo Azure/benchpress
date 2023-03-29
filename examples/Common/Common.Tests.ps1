@@ -6,7 +6,7 @@ BeforeAll {
 }
 
 Describe 'Verify Resource Exists' {
-  It "Should have a resource group called $rgName" {
+  It "Should contain a Resource Group named $rgName" {
     #act
     $result = Get-AzBPResourceByType -ResourceType "ResourceGroup" -ResourceName $rgName
 
@@ -14,7 +14,7 @@ Describe 'Verify Resource Exists' {
     $result.Success | Should -Be $true
   }
 
-  It "Should have a virtual machine named $resourceName" {
+  It "Should contain a Virtual Machine named $resourceName" {
     #act
     $result = Get-AzBPResourceByType -ResourceType "VirtualMachine" -ResourceName $resourceName -ResourceGroupName $rgName
 
@@ -22,7 +22,7 @@ Describe 'Verify Resource Exists' {
     $result.Success | Should -Be $true
   }
 
-  It "Should have a resource with name of $resourceName" {
+  It "Should contain a resource named $resourceName" {
     #act
     $exists = Get-AzBPResource -ResourceName $resourceName
 

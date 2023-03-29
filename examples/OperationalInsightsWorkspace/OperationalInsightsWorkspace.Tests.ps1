@@ -11,7 +11,7 @@ Describe 'Verify Operational Insights Workspace Exists' {
     $Script:noOiwName = 'noOiwName'
   }
 
-  It 'Should contain a Operational Insights Workspace with given name - Confirm-AzBPResource' {
+  It "Should contain an Operational Insights Workspace named $oiwName - Confirm-AzBPResource" {
     #arrange
     $params = @{
       ResourceType      = "OperationalInsightsWorkspace"
@@ -27,7 +27,7 @@ Describe 'Verify Operational Insights Workspace Exists' {
   }
 
 
-  It 'Should contain a Operational Insights Workspace with expected property name - Confirm-AzBPResource' {
+  It "Should contain an Operational Insights Workspace named $oiwName - Confirm-AzBPResource" {
     #arrange
     $params = @{
       ResourceType      = "OperationalInsightsWorkspace"
@@ -44,7 +44,7 @@ Describe 'Verify Operational Insights Workspace Exists' {
     $result.Success | Should -Be $true
   }
 
-  It "Should contain a Operational Insights Workspace named $oiwName" {
+  It "Should contain an Operational Insights Workspace named $oiwName" {
     #act
     $result = Confirm-AzBPOperationalInsightsWorkspace -ResourceGroupName $rgName -Name $oiwName
 
@@ -67,7 +67,7 @@ Describe 'Verify Operational Insights Workspace Exists' {
     $result.Success | Should -Be $false
   }
 
-  It "Should contain a Operational Insights Workspace named $oiwName" {
+  It "Should contain an Operational Insights Workspace named $oiwName" {
     #act
     $result = Confirm-AzBPOperationalInsightsWorkspace -ResourceGroupName $rgName -Name $oiwName
 
@@ -75,7 +75,7 @@ Describe 'Verify Operational Insights Workspace Exists' {
     $result | Should -BeDeployed
   }
 
-  It "Should contain a Operational Insights Workspace named $oiwName in $location" {
+  It "Should contain an Operational Insights Workspace named $oiwName in $location" {
     #act
     $result = Confirm-AzBPOperationalInsightsWorkspace -ResourceGroupName $rgName -Name $oiwName
 
@@ -83,7 +83,7 @@ Describe 'Verify Operational Insights Workspace Exists' {
     $result | Should -BeInLocation $location
   }
 
-  It "Should be a Operational Insights Workspace in a resource group named $rgName" {
+  It "Should contain an Operational Insights Workspace named $oiwName in $rgName" {
     #act
     $result = Confirm-AzBPOperationalInsightsWorkspace -ResourceGroupName $rgName -Name $oiwName
 

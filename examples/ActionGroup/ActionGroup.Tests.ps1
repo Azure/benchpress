@@ -11,7 +11,7 @@ Describe 'Verify Action Group' {
     $Script:noActionGroupName = "noactiongroup"
   }
 
-  It "Should contain an actiongroup named $actionGroupName - Confirm-AzBPResource" {
+  It "Should contain an Action Group named $actionGroupName - Confirm-AzBPResource" {
     #arrange
     $params = @{
       ResourceType      = 'ActionGroup'
@@ -26,7 +26,7 @@ Describe 'Verify Action Group' {
     $result.Success | Should -Be $true
   }
 
-  It "Should contain an actiongroup named $actionGroupName - Confirm-AzBPResource" {
+  It "Should contain an Action Group named $actionGroupName - Confirm-AzBPResource" {
     #arrange
     $params = @{
       ResourceType      = 'ActionGroup'
@@ -43,7 +43,7 @@ Describe 'Verify Action Group' {
     $result.Success | Should -Be $true
   }
 
-  It 'Should contain an action group with given name' {
+  It "Should contain an Action Group named $actionGroupName" {
     #act
     $result = Confirm-AzBPActionGroup -ResourceGroupName $rgName -ActionGroupName $actionGroupName
 
@@ -51,7 +51,7 @@ Describe 'Verify Action Group' {
     $result.Success | Should -Be $true
   }
 
-  It 'Should not contain an action group with given name' {
+  It "Should not contain an Action Group named $noActionGroupName" {
     #act
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
@@ -62,7 +62,7 @@ Describe 'Verify Action Group' {
     $result.Success | Should -Be $false
   }
 
-  It "Should contain an action group named $actionGroupName" {
+  It "Should contain an Action Group named $actionGroupName" {
     #act
     $result = Confirm-AzBPActionGroup -ResourceGroupName $rgName -ActionGroupName $actionGroupName
 
@@ -70,7 +70,7 @@ Describe 'Verify Action Group' {
     $result | Should -BeDeployed
   }
 
-  It "Should contain an action group named $actionGroupName in $location" {
+  It "Should contain an Action Group named $actionGroupName in $location" {
     #act
     $result = Confirm-AzBPActionGroup -ResourceGroupName $rgName -ActionGroupName $actionGroupName
 
@@ -78,7 +78,7 @@ Describe 'Verify Action Group' {
     $result | Should -BeInLocation $location
   }
 
-  It "Should be an action group named $actionGroupName in a resource group named $rgName" {
+  It "Should be an Action Group named $actionGroupName in $rgName" {
     #act
     $result = Confirm-AzBPActionGroup -ResourceGroupName $rgName -ActionGroupName $actionGroupName
 
