@@ -101,7 +101,7 @@ function Get-ResourceByType {
   [CmdletBinding()]
   [OutputType([ConfirmResult])]
   param (
-    [Parameter(Mandatory = $true)]
+    [Parameter(Mandatory = $false)]
     [string]$ResourceName,
 
     [Parameter(Mandatory = $false)]
