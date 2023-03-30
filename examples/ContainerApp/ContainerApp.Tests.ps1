@@ -12,7 +12,6 @@ Describe 'Verify Container Application' {
   }
 
   It "Should contain a Container Application named $conAppName - Confirm-AzBPResource" {
-    #arrange
     $params = @{
       ResourceType      = "ContainerApp"
       ResourceName      = $conAppName
@@ -23,7 +22,6 @@ Describe 'Verify Container Application' {
   }
 
   It "Should contain a Container Application with an Ingress Port of 80 - Confirm-AzBPResource" {
-    #arrange
     $params = @{
       ResourceType      = "ContainerApp"
       ResourceName      = $conAppName
@@ -32,17 +30,14 @@ Describe 'Verify Container Application' {
       PropertyValue     = 80
     }
 
-    #act
     (Confirm-AzBPResource @params).Success | Should -Be $true
   }
 
   It "Should contain a Container Application named $conAppName" {
-    #act
     (Confirm-AzBPContainerApp -ResourceGroupName $rgName -Name $conAppName).Success | Should -Be $true
   }
 
   It "Should not contain a Container Application named $noContainerAppName" {
-    #act
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
@@ -64,7 +59,6 @@ Describe 'Verify Container Application' {
   }
 
   It "Should contain a Container Application named $conAppName in $rgName" {
-    #act
     Confirm-AzBPContainerApp -ResourceGroupName $rgName -Name $conAppName | Should -BeInResourceGroup $rgName
   }
 }
