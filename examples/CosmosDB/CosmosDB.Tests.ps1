@@ -1,16 +1,16 @@
 BeforeAll {
   Import-Module Az.InfrastructureTesting
 
-  $Script:rgName = 'rg-test'
+  #TODO: Change after testing
+  $Script:rgName = 'testrg'
   $Script:location = 'westus3'
-  $Script:gremlinAccountName = "gremlin-account-name"
+  $Script:gremlinAccountName = "gremlin-nqpogpnnnhius"
   $Script:gremlinDatabaseName = "gremlin-db-name"
-  $Script:mongoAccountName = "mongodb-account-name"
+  $Script:mongoAccountName = "mongo-nqpogpnnnhius"
   $Script:mongoDatabaseName = "mongodb-db-name"
-  $Script:sqlAccountName = "sql-account-name"
+  $Script:sqlAccountName = "sql-nqpogpnnnhius"
   $Script:sqlDatabaseName = "sql-db-name"
 }
-
 
 Describe 'Verify Cosmos DB Account' {
   It "Should contain a gremlin Cosmos DB Account named $gremlinAccountName - Confirm-AzBPResource" {
@@ -22,10 +22,7 @@ Describe 'Verify Cosmos DB Account' {
     }
 
     #act
-    $result = Confirm-AzBPResource @params
-
-    #assert
-    $result.Success | Should -Be $true
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain a gremlin Cosmos DB Account named $gremlinAccountName - Confirm-AzBPResource" {
@@ -39,10 +36,7 @@ Describe 'Verify Cosmos DB Account' {
     }
 
     #act
-    $result = Confirm-AzBPResource @params
-
-    #assert
-    $result.Success | Should -Be $true
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain a gremlin Cosmos DB named $gremlinDatabaseName - Confirm-AzBPResource" {
@@ -55,10 +49,7 @@ Describe 'Verify Cosmos DB Account' {
     }
 
     #act
-    $result = Confirm-AzBPResource @params
-
-    #assert
-    $result.Success | Should -Be $true
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain a gremlin Cosmos DB named $gremlinDatabaseName - Confirm-AzBPResource" {
@@ -73,10 +64,7 @@ Describe 'Verify Cosmos DB Account' {
     }
 
     #act
-    $result = Confirm-AzBPResource @params
-
-    #assert
-    $result.Success | Should -Be $true
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
 #######################################################################################################################
@@ -90,10 +78,7 @@ Describe 'Verify Cosmos DB Account' {
     }
 
     #act
-    $result = Confirm-AzBPResource @params
-
-    #assert
-    $result.Success | Should -Be $true
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain a mongo Cosmos DB Account named $mongoAccountName - Confirm-AzBPResource" {
@@ -107,10 +92,7 @@ Describe 'Verify Cosmos DB Account' {
     }
 
     #act
-    $result = Confirm-AzBPResource @params
-
-    #assert
-    $result.Success | Should -Be $true
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain a mongo Cosmos DB named $mongoDatabaseName - Confirm-AzBPResource" {
@@ -123,10 +105,7 @@ Describe 'Verify Cosmos DB Account' {
     }
 
     #act
-    $result = Confirm-AzBPResource @params
-
-    #assert
-    $result.Success | Should -Be $true
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain a mongo Cosmos DB named $mongoDatabaseName- Confirm-AzBPResource" {
@@ -141,10 +120,7 @@ Describe 'Verify Cosmos DB Account' {
     }
 
     #act
-    $result = Confirm-AzBPResource @params
-
-    #assert
-    $result.Success | Should -Be $true
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
 #######################################################################################################################
@@ -158,10 +134,7 @@ Describe 'Verify Cosmos DB Account' {
     }
 
     #act
-    $result = Confirm-AzBPResource @params
-
-    #assert
-    $result.Success | Should -Be $true
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain a sql Cosmos DB Account named $sqlAccountName - Confirm-AzBPResource" {
@@ -175,10 +148,7 @@ Describe 'Verify Cosmos DB Account' {
     }
 
     #act
-    $result = Confirm-AzBPResource @params
-
-    #assert
-    $result.Success | Should -Be $true
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain a sql Cosmos DB named $sqlDatabaseName - Confirm-AzBPResource" {
@@ -191,10 +161,7 @@ Describe 'Verify Cosmos DB Account' {
     }
 
     #act
-    $result = Confirm-AzBPResource @params
-
-    #assert
-    $result.Success | Should -Be $true
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain a sql Cosmos DB named $sqlDatabaseName - Confirm-AzBPResource" {
@@ -209,10 +176,7 @@ Describe 'Verify Cosmos DB Account' {
     }
 
     #act
-    $result = Confirm-AzBPResource @params
-
-    #assert
-    $result.Success | Should -Be $true
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 }
 
@@ -222,12 +186,8 @@ Describe 'Cosmos DB Gremlin Database' {
     $Script:noGremlinDBName = 'nocdatabasebenchpresstest'
   }
 
-  It 'Should contain a Cosmos DB account with the given name' {
-    #act
-    $result = Confirm-AzBPCosmosDBAccount -ResourceGroupName $rgName -Name $gremlinAccountName
-
-    #assert
-    $result.Success | Should -Be $true
+  It "Should deploy a Cosmos DB Account named $gremlinAccountName" {
+    Confirm-AzBPCosmosDBAccount -ResourceGroupName $rgName -Name $gremlinAccountName | Should -BeSuccessful
   }
 
   It 'Should not contain a Cosmos DB account with the given name' {
@@ -242,39 +202,20 @@ Describe 'Cosmos DB Gremlin Database' {
     }
 
     #act
-    $result = Confirm-AzBPCosmosDBAccount @params
-
-    #assert
-    $result.Success | Should -Be $false
-  }
-
-  It "Should deploy a Cosmos DB Account named $gremlinAccountName" {
-    #act
-    $result = Confirm-AzBPCosmosDBAccount -ResourceGroupName $rgName -Name $gremlinAccountName
-
-    #assert
-    $result | Should -BeDeployed
+    Confirm-AzBPCosmosDBAccount @params | Should -Not -BeSuccessful
   }
 
   It "Should contain a Cosmos DB Account named $gremlinAccountName in $location" {
-    #act
-    $result = Confirm-AzBPCosmosDBAccount -ResourceGroupName $rgName -Name $gremlinAccountName
-
-    #assert
-    $result | Should -BeInLocation $location
+    Confirm-AzBPCosmosDBAccount -ResourceGroupName $rgName -Name $gremlinAccountName | Should -BeInLocation $location
   }
 
   It "Should contain a Cosmos DB Account named $gremlinAccountName in $rgName" {
-    #act
-    $result = Confirm-AzBPCosmosDBAccount -ResourceGroupName $rgName -Name $gremlinAccountName
-
-    #assert
-    $result | Should -BeInResourceGroup $rgName
+    Confirm-AzBPCosmosDBAccount -ResourceGroupName $rgName -Name $gremlinAccountName | Should -BeInResourceGroup $rgName
   }
 
 #######################################################################################################################
 
-  It 'Should contain a Cosmos DB Gremlin database with the given name' {
+  It "Should deploy a Cosmos DB Gremlin Database named $gremlinDatabaseName" {
     #arrange
     $params = @{
       ResourceGroupName = $rgName
@@ -283,10 +224,7 @@ Describe 'Cosmos DB Gremlin Database' {
     }
 
     #act
-    $result = Confirm-AzBPCosmosDBGremlinDatabase @params
-
-    #assert
-    $result.Success | Should -Be $true
+    Confirm-AzBPCosmosDBGremlinDatabase @params | Should -BeSuccessful
   }
 
   It 'Should not contain a Cosmos DB Gremlin database with the given name' {
@@ -302,25 +240,7 @@ Describe 'Cosmos DB Gremlin Database' {
     }
 
     #act
-    $result = Confirm-AzBPCosmosDBGremlinDatabase @params
-
-    #assert
-    $result.Success | Should -Be $false
-  }
-
-  It "Should deploy a Cosmos DB Gremlin Database named $gremlinDatabaseName" {
-    #arrange
-    $params = @{
-      ResourceGroupName = $rgName
-      AccountName       = $gremlinAccountName
-      Name              = $gremlinDatabaseName
-    }
-
-    #act
-    $result = Confirm-AzBPCosmosDBGremlinDatabase @params
-
-    #assert
-    $result | Should -BeDeployed
+    Confirm-AzBPCosmosDBGremlinDatabase @params | Should -Not -BeSuccessful
   }
 
   It "Should contain a Cosmos DB Gremlin Database named $gremlinDatabaseName in $location" {
@@ -332,10 +252,7 @@ Describe 'Cosmos DB Gremlin Database' {
     }
 
     #act
-    $result = Confirm-AzBPCosmosDBGremlinDatabase @params
-
-    #assert
-    $result | Should -BeInLocation $location
+    Confirm-AzBPCosmosDBGremlinDatabase @params | Should -BeInLocation $location
   }
 
   It "Should contain a Cosmos DB Gremlin Database named $gremlinDatabaseName in $rgName" {
@@ -347,10 +264,7 @@ Describe 'Cosmos DB Gremlin Database' {
     }
 
     #act
-    $result = Confirm-AzBPCosmosDBGremlinDatabase @params
-
-    #assert
-    $result | Should -BeInResourceGroup $rgName
+    Confirm-AzBPCosmosDBGremlinDatabase @params | Should -BeInResourceGroup $rgName
   }
 }
 
@@ -360,12 +274,8 @@ Describe 'Comsos DB Mongo DB Database' {
     $Script:noMongoDBName = 'nomdatabasebenchpresstest'
   }
 
-  It 'Should contain a Cosmos DB account with the given name' {
-    #act
-    $result = Confirm-AzBPCosmosDBAccount -ResourceGroupName $rgName -Name $mongoAccountName
-
-    #assert
-    $result.Success | Should -Be $true
+  It "Should deploy a Cosmos DB Account named $mongoAccountName" {
+    Confirm-AzBPCosmosDBAccount -ResourceGroupName $rgName -Name $mongoAccountName | Should -BeSuccessful
   }
 
   It 'Should not contain a Cosmos DB Mongo account with the given name' {
@@ -380,39 +290,20 @@ Describe 'Comsos DB Mongo DB Database' {
     }
 
     #act
-    $result = Confirm-AzBPCosmosDBAccount @params
-
-    #assert
-    $result.Success | Should -Be $false
-  }
-
-  It "Should deploy a Cosmos DB Account named $mongoAccountName" {
-    #act
-    $result = Confirm-AzBPCosmosDBAccount -ResourceGroupName $rgName -Name $mongoAccountName
-
-    #assert
-    $result | Should -BeDeployed
+    Confirm-AzBPCosmosDBAccount @params | Should -Not -BeSuccessful
   }
 
   It "Should contain a Cosmos DB Account named $mongoAccountName in $location" {
-    #act
-    $result = Confirm-AzBPCosmosDBAccount -ResourceGroupName $rgName -Name $mongoAccountName
-
-    #assert
-    $result | Should -BeInLocation $location
+    Confirm-AzBPCosmosDBAccount -ResourceGroupName $rgName -Name $mongoAccountName | Should -BeInLocation $location
   }
 
   It "Should contain a Cosmos DB Account named $mongoAccountName in $rgName" {
-    #act
-    $result = Confirm-AzBPCosmosDBAccount -ResourceGroupName $rgName -Name $mongoAccountName
-
-    #assert
-    $result | Should -BeInResourceGroup $rgName
+    Confirm-AzBPCosmosDBAccount -ResourceGroupName $rgName -Name $mongoAccountName | Should -BeInResourceGroup $rgName
   }
 
 #######################################################################################################################
 
-  It 'Should contain a Cosmos DB Mongo DB database with the given name' {
+  It "Should deploy a Cosmos DB Mongo DB Database named $mongoDatabaseName" {
     #arrange
     $params = @{
       ResourceGroupName = $rgName
@@ -421,10 +312,7 @@ Describe 'Comsos DB Mongo DB Database' {
     }
 
     #act
-    $result = Confirm-AzBPCosmosDBMongoDBDatabase @params
-
-    #assert
-    $result.Success | Should -Be $true
+    Confirm-AzBPCosmosDBMongoDBDatabase @params | Should -BeSuccessful
   }
 
   It 'Should not contain a Cosmos DB Mongo DB database with the given name' {
@@ -440,25 +328,7 @@ Describe 'Comsos DB Mongo DB Database' {
     }
 
     #act
-    $result = Confirm-AzBPCosmosDBMongoDBDatabase @params
-
-    #assert
-    $result.Success | Should -Be $false
-  }
-
-  It "Should deploy a Cosmos DB Mongo DB Database named $mongoDatabaseName" {
-    #arrange
-    $params = @{
-      ResourceGroupName = $rgName
-      AccountName       = $mongoAccountName
-      Name              = $mongoDatabaseName
-    }
-
-    #act
-    $result = Confirm-AzBPCosmosDBMongoDBDatabase @params
-
-    #assert
-    $result | Should -BeDeployed
+    Confirm-AzBPCosmosDBMongoDBDatabase @params | Should -Not -BeSuccessful
   }
 
   It "Should contain a Cosmos DB Mongo DB Database named $mongoDatabaseName in $location" {
@@ -470,10 +340,7 @@ Describe 'Comsos DB Mongo DB Database' {
     }
 
     #act
-    $result = Confirm-AzBPCosmosDBMongoDBDatabase @params
-
-    #assert
-    $result | Should -BeInLocation $location
+    Confirm-AzBPCosmosDBMongoDBDatabase @params | Should -BeInLocation $location
   }
 
   It "Should contain a Cosmos DB Mongo DB Database named $mongoDatabaseName in $rgName" {
@@ -485,10 +352,7 @@ Describe 'Comsos DB Mongo DB Database' {
     }
 
     #act
-    $result = Confirm-AzBPCosmosDBMongoDBDatabase @params
-
-    #assert
-    $result | Should -BeInResourceGroup $rgName
+    Confirm-AzBPCosmosDBMongoDBDatabase @params | Should -BeInResourceGroup $rgName
   }
 }
 
@@ -498,12 +362,8 @@ Describe 'Comsos DB SQL Database' {
     $Script:noSqlDatabaseName = 'nosqldatabasebenchpresstest'
   }
 
-  It 'Should contain a Cosmos DB account with the given name' {
-    #act
-    $result = Confirm-AzBPCosmosDBAccount -ResourceGroupName $rgName -Name $sqlAccountName
-
-    #assert
-    $result.Success | Should -Be $true
+  It "Should deploy a Cosmos DB Account named $sqlAccountName" {
+    Confirm-AzBPCosmosDBAccount -ResourceGroupName $rgName -Name $sqlAccountName | Should -BeSuccessful
   }
 
   It 'Should not contain a Cosmos DB SQL account with the given name' {
@@ -518,39 +378,21 @@ Describe 'Comsos DB SQL Database' {
     }
 
     #act
-    $result = Confirm-AzBPCosmosDBAccount @params
-
-    #assert
-    $result.Success | Should -Be $false
-  }
-
-  It "Should deploy a Cosmos DB Account named $sqlAccountName" {
-    #act
-    $result = Confirm-AzBPCosmosDBAccount -ResourceGroupName $rgName -Name $sqlAccountName
-
-    #assert
-    $result | Should -BeDeployed
+    Confirm-AzBPCosmosDBAccount @params | Should -Not -BeSuccessful
   }
 
   It "Should contain a Cosmos DB Account named $sqlAccountName in $location" {
-    #act
-    $result = Confirm-AzBPCosmosDBAccount -ResourceGroupName $rgName -Name $sqlAccountName
-
-    #assert
-    $result | Should -BeInLocation $location
+    Confirm-AzBPCosmosDBAccount -ResourceGroupName $rgName -Name $sqlAccountName | Should -BeInLocation $location
   }
 
   It "Should contain a Cosmos DB Account named $sqlAccountName in $rgName" {
-    #act
-    $result = Confirm-AzBPCosmosDBAccount -ResourceGroupName $rgName -Name $sqlAccountName
-
-    #assert
-    $result | Should -BeInResourceGroup $rgName
+    Confirm-AzBPCosmosDBAccount -ResourceGroupName $rgName -Name $sqlAccountName | Should -BeInResourceGroup $rgName
   }
 
 #######################################################################################################################
 
-  It 'Should contain a Cosmos DB SQL database with the given name' {
+
+  It "Should deploy a Cosmos DB SQL Database named $sqlDatabaseName" {
     #arrange
     $params = @{
       ResourceGroupName = $rgName
@@ -559,10 +401,7 @@ Describe 'Comsos DB SQL Database' {
     }
 
     #act
-    $result = Confirm-AzBPCosmosDBSqlDatabase @params
-
-    #assert
-    $result.Success | Should -Be $true
+    Confirm-AzBPCosmosDBSqlDatabase @params | Should -BeSuccessful
   }
 
   It 'Should not contain a Cosmos DB SQL database with the given name' {
@@ -578,25 +417,7 @@ Describe 'Comsos DB SQL Database' {
     }
 
     #act
-    $result = Confirm-AzBPCosmosDBSqlDatabase @params
-
-    #assert
-    $result.Success | Should -Be $false
-  }
-
-  It "Should deploy a Cosmos DB SQL Database named $sqlDatabaseName" {
-    #arrange
-    $params = @{
-      ResourceGroupName = $rgName
-      AccountName       = $sqlAccountName
-      Name              = $sqlDatabaseName
-    }
-
-    #act
-    $result = Confirm-AzBPCosmosDBSqlDatabase @params
-
-    #assert
-    $result | Should -BeDeployed
+    Confirm-AzBPCosmosDBSqlDatabase @params | Should -Not -BeSuccessful
   }
 
   It "Should contain a Cosmos DB SQL Database named $sqlDatabaseName in $location" {
@@ -608,10 +429,7 @@ Describe 'Comsos DB SQL Database' {
     }
 
     #act
-    $result = Confirm-AzBPCosmosDBSqlDatabase @params
-
-    #assert
-    $result | Should -BeInLocation $location
+    Confirm-AzBPCosmosDBSqlDatabase @params | Should -BeInLocation $location
   }
 
   It "Should contain a Cosmos DB SQL Database named $sqlDatabaseName in $rgName" {
@@ -623,14 +441,11 @@ Describe 'Comsos DB SQL Database' {
     }
 
     #act
-    $result = Confirm-AzBPCosmosDBSqlDatabase @params
-
-    #assert
-    $result | Should -BeInResourceGroup $rgName
+    Confirm-AzBPCosmosDBSqlDatabase @params | Should -BeInResourceGroup $rgName
   }
 }
 
 AfterAll {
-  Get-Module Az-InfrastructureTesting | Remove-Module
+  Get-Module Az.InfrastructureTesting | Remove-Module
   Get-Module BenchPress.Azure | Remove-Module
 }

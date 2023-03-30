@@ -1,4 +1,4 @@
-function ShouldBeInLocation ($ActualValue, [string]$ExpectedValue, [switch] $Negate, [string] $Because) {
+function ShouldBeInLocation {
   <#
     .SYNOPSIS
       Custom Assertion function to check status on a resource deployment.
@@ -8,14 +8,10 @@ function ShouldBeInLocation ($ActualValue, [string]$ExpectedValue, [switch] $Neg
       It can be used when writing Pester tests.
 
     .EXAMPLE
-      $result = Confirm-AzBPResourceGroup -ResourceGroupName $rgName
-
-      $result | Should -BeInLocation westus3
+      Confirm-AzBPResourceGroup -ResourceGroupName $rgName | Should -BeInLocation 'westus3'
 
     .EXAMPLE
-      $result = Confirm-AzBPResourceGroup -ResourceGroupName $rgName
-
-      $result | Should -Not -BeInLocation westus2
+      Confirm-AzBPResourceGroup -ResourceGroupName $rgName | Should -Not -BeInLocation 'westus2'
 
     .INPUTS
       ConfirmResult
@@ -25,6 +21,23 @@ function ShouldBeInLocation ($ActualValue, [string]$ExpectedValue, [switch] $Neg
     .OUTPUTS
       PSCustomObject
   #>
+  [CmdletBinding()]
+  param (
+    [Parameter(Mandatory=$true)]
+    $ActualValue,
+
+    [Parameter(Mandatory=$true)]
+    [string]$ExpectedValue,
+
+    [Parameter(Mandatory=$false)]
+    [switch]$Negate,
+
+    [Parameter(Mandatory=$false)]
+    [string]$Because,
+
+    [Parameter(Mandatory=$false)]
+    $CallerSessionState
+  )
   $propertyName = 'Location'
 
   if ($null -eq $ActualValue){

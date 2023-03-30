@@ -20,10 +20,7 @@ Describe 'Verify App Service Plan' {
     }
 
     #act
-    $result = Confirm-AzBPResource @params
-
-    #assert
-    $result.Success | Should -Be $true
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain an App Service Plan named $appServicePlanName - Confirm-AzBPResource" {
@@ -35,58 +32,32 @@ Describe 'Verify App Service Plan' {
       PropertyKey       = "Sku.Tier"
       PropertyValue     = "Free"
     }
+
     #act
-    $result = Confirm-AzBPResource @params
-
-    #assert
-    $result.Success | Should -Be $true
-  }
-
-  It 'Should contain an App Service Plan with the given name' {
-    #act
-    $result = Confirm-AzBPAppServicePlan -ResourceGroupName $rgName -AppServicePlanName $appServicePlanName
-
-    #assert
-    $result.Success | Should -Be $true
-  }
-
-  It 'Should not contain an App Service Plan with the given name' {
-    #act
-    # The '-ErrorAction SilentlyContinue' command suppresses all errors.
-    # In this test, it will suppress the error message when a resource cannot be found.
-    # Remove this field to see all errors.
-    $result = Confirm-AzBPAppServicePlan -ResourceGroupName $rgName -AppServicePlanName $noAppServicePlanName -ErrorAction SilentlyContinue
-
-    #assert
-    $result.Success | Should -Be $false
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain an App Service Plan named $appServicePlanName" {
-    #act
-    $result = Confirm-AzBPAppServicePlan -ResourceGroupName $rgName -AppServicePlanName $appServicePlanName
+    Confirm-AzBPAppServicePlan -ResourceGroupName $rgName -AppServicePlanName $appServicePlanName | Should -BeSuccessful
+  }
 
-    #assert
-    $result | Should -BeDeployed
+  It 'Should not contain an App Service Plan with the given name' {
+    # The '-ErrorAction SilentlyContinue' command suppresses all errors.
+    # In this test, it will suppress the error message when a resource cannot be found.
+    # Remove this field to see all errors.
+    Confirm-AzBPAppServicePlan -ResourceGroupName $rgName -AppServicePlanName $noAppServicePlanName -ErrorAction SilentlyContinue | Should -Not -BeSuccessful
   }
 
   It "Should contain an App Service Plan named $appServicePlanName in $location" {
-    #act
-    $result = Confirm-AzBPAppServicePlan -ResourceGroupName $rgName -AppServicePlanName $appServicePlanName
-
-    #assert
-    $result | Should -BeInLocation $location
+    Confirm-AzBPAppServicePlan -ResourceGroupName $rgName -AppServicePlanName $appServicePlanName | Should -BeInLocation $location
   }
 
   It "Should contain an App Service Plan named $appServicePlanName in a resource group named $rgName" {
-    #act
-    $result = Confirm-AzBPAppServicePlan -ResourceGroupName $rgName -AppServicePlanName $appServicePlanName
-
-    #assert
-    $result | Should -BeInResourceGroup $rgName
+    Confirm-AzBPAppServicePlan -ResourceGroupName $rgName -AppServicePlanName $appServicePlanName | Should -BeInResourceGroup $rgName
   }
 }
 
 AfterAll {
-  Get-Module Az-InfrastructureTesting | Remove-Module
+  Get-Module Az.InfrastructureTesting | Remove-Module
   Get-Module BenchPress.Azure | Remove-Module
 }

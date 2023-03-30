@@ -53,7 +53,7 @@
     "Get-ResourceByType",
     "Invoke-AzCli",
     "Remove-BicepFeature",
-    "ShouldBeDeployed",
+    "ShouldBeSuccessful",
     "ShouldBeInLocation",
     "ShouldBeInResourceGroup"
   )

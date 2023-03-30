@@ -20,10 +20,7 @@ Describe 'Verify Sql Server' {
     }
 
     #act
-    $result = Confirm-AzBPResource @params
-
-    #assert
-    $result.Success | Should -Be $true
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
 
@@ -38,57 +35,30 @@ Describe 'Verify Sql Server' {
     }
 
     #act
-    $result = Confirm-AzBPResource @params
-
-    #assert
-    $result.Success | Should -Be $true
-  }
-
-  It 'Should contain a Sql Server with the given name' {
-    #act
-    $result = Confirm-AzBPSqlServer -ResourceGroupName $rgName -ServerName $serverName
-
-    #assert
-    $result.Success | Should -Be $true
-  }
-
-  It 'Should not contain a Sql Server with the given name' {
-    #act
-    # The '-ErrorAction SilentlyContinue' command suppresses all errors.
-    # In this test, it will suppress the error message when a resource cannot be found.
-    # Remove this field to see all errors.
-    $result = Confirm-AzBPSqlServer -ResourceGroupName $rgName -ServerName $noServerName -ErrorAction SilentlyContinue
-
-    #assert
-    $result.Success | Should -Be $false
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain a Sql Server named $serverName" {
-    #act
-    $result = Confirm-AzBPSqlServer -ResourceGroupName $rgName -ServerName $serverName
+    Confirm-AzBPSqlServer -ResourceGroupName $rgName -ServerName $serverName | Should -BeSuccessful
+  }
 
-    #assert
-    $result | Should -BeDeployed
+  It 'Should not contain a Sql Server with the given name' {
+    # The '-ErrorAction SilentlyContinue' command suppresses all errors.
+    # In this test, it will suppress the error message when a resource cannot be found.
+    # Remove this field to see all errors.
+    Confirm-AzBPSqlServer -ResourceGroupName $rgName -ServerName $noServerName -ErrorAction SilentlyContinue | Should -Not -BeSuccessful
   }
 
   It "Should contain a Sql Server named $serverName in $location" {
-    #act
-    $result = Confirm-AzBPSqlServer -ResourceGroupName $rgName -ServerName $serverName
-
-    #assert
-    $result | Should -BeInLocation $location
+    Confirm-AzBPSqlServer -ResourceGroupName $rgName -ServerName $serverName | Should -BeInLocation $location
   }
 
   It "Should be a Sql Server in a resource group named $rgName" {
-    #act
-    $result = Confirm-AzBPSqlServer -ResourceGroupName $rgName -ServerName $serverName
-
-    #assert
-    $result | Should -BeInResourceGroup $rgName
+    Confirm-AzBPSqlServer -ResourceGroupName $rgName -ServerName $serverName | Should -BeInResourceGroup $rgName
   }
 }
 
 AfterAll {
-  Get-Module Az-InfrastructureTesting | Remove-Module
+  Get-Module Az.InfrastructureTesting | Remove-Module
   Get-Module BenchPress.Azure | Remove-Module
 }

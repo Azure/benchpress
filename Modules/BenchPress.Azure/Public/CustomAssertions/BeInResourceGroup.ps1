@@ -1,4 +1,4 @@
-function ShouldBeInResourceGroup ($ActualValue, [string]$ExpectedValue, [switch] $Negate, [string] $Because) {
+function ShouldBeInResourceGroup {
   <#
     .SYNOPSIS
       Custom Assertion function to check resource's resource group.
@@ -8,14 +8,10 @@ function ShouldBeInResourceGroup ($ActualValue, [string]$ExpectedValue, [switch]
       It can be used when writing Pester tests.
 
     .EXAMPLE
-      $result = Confirm-AzBPContainerRegistry -ResourceGroupName $rgName
-
-      $result | Should -BeInResourceGroup 'rg-test'
+      Confirm-AzBPContainerRegistry -ResourceGroupName $rgName | Should -BeInResourceGroup 'rg-test'
 
     .EXAMPLE
-      $result = Confirm-AzBPContainerRegistry -ResourceGroupName $rgName
-
-      $result | Should -Not -BeInResourceGroup 'rg-test2'
+      Confirm-AzBPContainerRegistry -ResourceGroupName $rgName | Should -Not -BeInResourceGroup 'rg-test2'
 
     .INPUTS
       ConfirmResult
@@ -25,6 +21,23 @@ function ShouldBeInResourceGroup ($ActualValue, [string]$ExpectedValue, [switch]
     .OUTPUTS
       PSCustomObject
   #>
+  [CmdletBinding()]
+  param (
+    [Parameter(Mandatory=$true)]
+    $ActualValue,
+
+    [Parameter(Mandatory=$true)]
+    [string]$ExpectedValue,
+
+    [Parameter(Mandatory=$false)]
+    [switch]$Negate,
+
+    [Parameter(Mandatory=$false)]
+    [string]$Because,
+
+    [Parameter(Mandatory=$false)]
+    $CallerSessionState
+  )
   $rgProperty = 'ResourceGroup'
   $rgNameProperty = 'ResourceGroupName'
   $idProperty = 'Id'
