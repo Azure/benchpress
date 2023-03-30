@@ -17,7 +17,7 @@ Describe 'Resource Group Tests' {
     $resourceGroup = Confirm-AzBPResource @params
 
     #assert
-    $resourceGroup.Success | Should -BeTrue
+    $resourceGroup.Success | Should -BeDeployed
   }
 }
 
@@ -36,7 +36,7 @@ Describe 'Service Plan Tests' {
     $servicePlan = Confirm-AzBPResource @params
 
     #assert
-    $servicePlan.Success | Should -BeTrue
+    $servicePlan.Success | Should -BeDeployed
   }
 }
 
@@ -55,7 +55,7 @@ Describe 'Action Group Tests' {
     $ag = Confirm-AzBPResource @params
 
     #assert
-    $ag.Success | Should -BeTrue
+    $ag.Success | Should -BeDeployed
   }
 }
 
@@ -72,7 +72,7 @@ Describe 'Web Apps Tests' {
     $webApp = Confirm-AzBPResource @params
 
     #assert
-    $webApp.Success | Should -BeTrue
+    $webApp.Success | Should -BeDeployed
   }
 
   it 'Should have the web app availability state as normal' {
@@ -89,7 +89,7 @@ Describe 'Web Apps Tests' {
     $webApp = Confirm-AzBPResource @params
 
     #assert
-    $webApp.Success | Should -BeTrue
+    $webApp.Success | Should -BeDeployed
   }
 
   it 'Should have the web app works https only' {
@@ -105,36 +105,24 @@ Describe 'Web Apps Tests' {
     $webApp = Confirm-AzBPResource @params
 
     #assert
-    $webApp.Success | Should -BeTrue
+    $webApp.Success | Should -BeDeployed
   }
 
-  it 'Should contain configuration in the web app' {
+  it 'Should contain application insights configuration in the web app' {
+    #arrange
     $params = @{
       ResourceType      = 'WebApp'
       ResourceName      = $webAppName
       ResourceGroupName = $rgName
-      PropertyKey       = 'SiteConfig'
-      PropertyValue     = $true
+      PropertyKey       = 'SiteConfig.AppSettings[1].Name'
+      PropertyValue     = 'APPLICATIONINSIGHTS_CONNECTION_STRING'
     }
 
     #act
     $webApp = Confirm-AzBPResource @params
 
     #assert
-    $webApp.Success | Should -BeTrue
-  }
-
-  it 'Should contain application insights configuration in the web app' {
-    #arrange
-
-    <#
-    #act
-    $webApp = Get-AzBPWebApp -ResourceGroupName $rgName -WebAppName $webAppName
-    $aiAppSetting = $webApp.SiteConfig.AppSettings | Where-object {$_.Name -eq "APPLICATIONINSIGHTS_CONNECTION_STRING"} | Select-Object -First 1
-
-    #assert
-    $aiAppSetting | Should -Not -BeNullOrEmpty
-    #>
+    $webApp.Success | Should -BeDeployed
   }
 }
 
