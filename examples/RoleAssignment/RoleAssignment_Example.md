@@ -28,9 +28,9 @@ do not check for this.
 
 1. Update `RoleAssignment.Tests.ps1` variables to point to your expected resources:
 
-   - `sampleappid` -> `your-service-principal-app-id`
+   - `sampleappid`       -> `your-service-principal-app-id`
    - `/subscriptions/id` -> `your-scope`
-   - `Reader` -> `your-role-name`
+   - `Reader`            -> `your-role-name`
 
 1. If using a local copy of `Az.InfrastructureTesting`, replace `Import-Module Az.InfrastructureTesting` with
 `Import-Module "../../bin/BenchPress.Azure.psd1"`. Note that the final `AfterAll` step will properly remove the module
