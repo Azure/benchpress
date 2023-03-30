@@ -138,6 +138,9 @@ function Get-ResourceByType {
       "AppServicePlan" {
         return Confirm-AppServicePlan -AppServicePlanName $ResourceName -ResourceGroupName $ResourceGroupName
       }
+      "ContainerApp" {
+        return Confirm-ContainerApp -ResourceGroupName $ResourceGroupName -Name $ResourceName
+      }
       "ContainerRegistry" {
         return Confirm-ContainerRegistry -Name $ResourceName -ResourceGroupName $ResourceGroupName
       }

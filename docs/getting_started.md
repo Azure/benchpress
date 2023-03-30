@@ -18,6 +18,9 @@ as their testing framework and runner. To use BenchPress, have the following ins
 - [PowerShell](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows)
   (PowerShell 7+ recommended)
 - [Az PowerShell module](https://learn.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-9.3.0)
+  - [Az.App PowerShell module](https://learn.microsoft.com/en-us/powershell/module/az.app/?view=azps-9.5.0) for any
+    testing of Container Applications. Az.App is not GA yet which is why it is not included with the main Az
+    PowerShell module.
 - [Pester](https://pester.dev/docs/introduction/installation)
 - [Bicep](https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/install#azure-powershell)
 - [Service Principal](https://learn.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal)

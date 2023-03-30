@@ -3,6 +3,7 @@ enum ResourceType{
   AksCluster
   AppInsights
   AppServicePlan
+  ContainerApp
   CosmosDBAccount
   CosmosDBGremlinDatabase
   CosmosDBMongoDBDatabase
