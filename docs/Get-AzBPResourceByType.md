@@ -13,9 +13,10 @@ Gets an Azure Resource.
 ## SYNTAX
 
 ```
-Get-AzBPResourceByType [-ResourceName] <String> [[-ResourceGroupName] <String>] [-ResourceType] <ResourceType>
- [[-ServerName] <String>] [[-DataFactoryName] <String>] [[-NamespaceName] <String>] [[-EventHubName] <String>]
- [[-WorkspaceName] <String>] [[-AccountName] <String>] [<CommonParameters>]
+Get-AzBPResourceByType [[-ResourceName] <String>] [[-ResourceGroupName] <String>]
+ [-ResourceType] <ResourceType> [[-ServerName] <String>] [[-DataFactoryName] <String>]
+ [[-NamespaceName] <String>] [[-EventHubName] <String>] [[-WorkspaceName] <String>] [[-AccountName] <String>]
+ [[-ServiceName] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -45,7 +46,7 @@ Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: 1
 Default value: None
 Accept pipeline input: False
@@ -68,35 +69,13 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceType
-The type of the Resource (currently support the following:
-ActionGroup
-AksCluster
-AppInsights
-AppServicePlan
-ContainerRegistry
-DataFactory
-DataFactoryLinkedService
-EventHub
-EventHubConsumerGroup
-EventHubNamespace
-KeyVault
-ResourceGroup
-SqlDatabase
-SqlServer
-StorageAccount
-StorageContainer
-StreamAnalyticsCluster
-SynapseSparkPool
-SynapseSqlPool
-SynapseWorkspace
-VirtualMachine
-WebApp)
+The type of the Resource.
 
 ```yaml
 Type: ResourceType
 Parameter Sets: (All)
 Aliases:
-Accepted values: ActionGroup, AksCluster, AppInsights, AppServicePlan, ContainerApp, CosmosDBAccount, CosmosDBGremlinDatabase, CosmosDBMongoDBDatabase, CosmosDBSqlDatabase, ContainerRegistry, DataFactory, DataFactoryLinkedService, EventHub, EventHubConsumerGroup, EventHubNamespace, KeyVault, OperationalInsightsWorkspace, ResourceGroup, SqlDatabase, SqlServer, StorageAccount, StorageContainer, StreamAnalyticsCluster, StreamAnalyticsFunction, StreamAnalyticsInput, StreamAnalyticsJob, StreamAnalyticsOutput, StreamAnalyticsTransformation, SynapseSparkPool, SynapseSqlPool, SynapseWorkspace, VirtualMachine, WebApp
+Accepted values: ActionGroup, AksCluster, ApiManagement, ApiManagementApi, ApiManagementDiagnostic, ApiManagementLogger, ApiManagementPolicy, AppInsights, AppServicePlan, ContainerApp, CosmosDBAccount, CosmosDBGremlinDatabase, CosmosDBMongoDBDatabase, CosmosDBSqlDatabase, ContainerRegistry, DataFactory, DataFactoryLinkedService, EventHub, EventHubConsumerGroup, EventHubNamespace, KeyVault, OperationalInsightsWorkspace, ResourceGroup, SqlDatabase, SqlServer, StorageAccount, StorageContainer, StreamAnalyticsCluster, StreamAnalyticsFunction, StreamAnalyticsInput, StreamAnalyticsJob, StreamAnalyticsOutput, StreamAnalyticsTransformation, SynapseSparkPool, SynapseSqlPool, SynapseWorkspace, VirtualMachine, WebApp
 
 Required: True
 Position: 3
@@ -184,7 +163,8 @@ Accept wildcard characters: False
 ```
 
 ### -AccountName
-If the Azure resource has an associated account name (e.g., Cosmos DB SQL Database, Storage Container),
+If the Azure resource has an associated account name (e.g., Cosmos DB SQL Database, Storage Container) this is
+the parameter to use to pass the account name.
 
 ```yaml
 Type: String
@@ -193,6 +173,22 @@ Aliases:
 
 Required: False
 Position: 9
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ServiceName
+If the Azure resource is associated with a service (e.g, API Management Service) this is the parameter to use to
+pass the service name.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 10
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

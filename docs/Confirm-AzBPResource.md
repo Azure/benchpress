@@ -13,10 +13,10 @@ Confirms whether a resource exists or properties on a resource are configured co
 ## SYNTAX
 
 ```
-Confirm-AzBPResource [-ResourceType] <ResourceType> [-ResourceName] <String> [[-ResourceGroupName] <String>]
- [[-NamespaceName] <String>] [[-EventHubName] <String>] [[-ServerName] <String>] [[-DataFactoryName] <String>]
- [[-WorkspaceName] <String>] [[-AccountName] <String>] [[-PropertyKey] <String>] [[-PropertyValue] <String>]
- [<CommonParameters>]
+Confirm-AzBPResource [-ResourceName] <String> [[-ResourceGroupName] <String>] [-ResourceType] <ResourceType>
+ [[-ServerName] <String>] [[-DataFactoryName] <String>] [[-NamespaceName] <String>] [[-EventHubName] <String>]
+ [[-WorkspaceName] <String>] [[-AccountName] <String>] [[-ServiceName] <String>] [[-PropertyKey] <String>]
+ [[-PropertyValue] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -60,22 +60,6 @@ $result = Confirm-AzBPResource @params
 
 ## PARAMETERS
 
-### -ResourceType
-The type of the Resource as a \[ResourceType\]
-
-```yaml
-Type: ResourceType
-Parameter Sets: (All)
-Aliases:
-Accepted values: ActionGroup, AksCluster, AppInsights, AppServicePlan, ContainerApp, CosmosDBAccount, CosmosDBGremlinDatabase, CosmosDBMongoDBDatabase, CosmosDBSqlDatabase, ContainerRegistry, DataFactory, DataFactoryLinkedService, EventHub, EventHubConsumerGroup, EventHubNamespace, KeyVault, OperationalInsightsWorkspace, ResourceGroup, SqlDatabase, SqlServer, StorageAccount, StorageContainer, StreamAnalyticsCluster, StreamAnalyticsFunction, StreamAnalyticsInput, StreamAnalyticsJob, StreamAnalyticsOutput, StreamAnalyticsTransformation, SynapseSparkPool, SynapseSqlPool, SynapseWorkspace, VirtualMachine, WebApp
-
-Required: True
-Position: 1
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -ResourceName
 The name of the Resource
 
@@ -85,7 +69,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 2
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -100,37 +84,23 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
+Position: 2
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ResourceType
+The type of the Resource as a \[ResourceType\]
+
+```yaml
+Type: ResourceType
+Parameter Sets: (All)
+Aliases:
+Accepted values: ActionGroup, AksCluster, ApiManagement, ApiManagementApi, ApiManagementDiagnostic, ApiManagementLogger, ApiManagementPolicy, AppInsights, AppServicePlan, ContainerApp, CosmosDBAccount, CosmosDBGremlinDatabase, CosmosDBMongoDBDatabase, CosmosDBSqlDatabase, ContainerRegistry, DataFactory, DataFactoryLinkedService, EventHub, EventHubConsumerGroup, EventHubNamespace, KeyVault, OperationalInsightsWorkspace, ResourceGroup, SqlDatabase, SqlServer, StorageAccount, StorageContainer, StreamAnalyticsCluster, StreamAnalyticsFunction, StreamAnalyticsInput, StreamAnalyticsJob, StreamAnalyticsOutput, StreamAnalyticsTransformation, SynapseSparkPool, SynapseSqlPool, SynapseWorkspace, VirtualMachine, WebApp
+
+Required: True
 Position: 3
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -NamespaceName
-{{ Fill NamespaceName Description }}
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 4
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -EventHubName
-{{ Fill EventHubName Description }}
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 5
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -145,7 +115,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 6
+Position: 4
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -154,6 +124,36 @@ Accept wildcard characters: False
 ### -DataFactoryName
 If testing an Azure Data Factory Linked Service resource, the name of the data factory to which the linked
 service is assigned.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 5
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -NamespaceName
+{{ Fill NamespaceName Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 6
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -EventHubName
+{{ Fill EventHubName Description }}
 
 ```yaml
 Type: String
@@ -199,6 +199,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -ServiceName
+{{ Fill ServiceName Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 10
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -PropertyKey
 The name of the property to check on the resource
 
@@ -208,7 +223,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 10
+Position: 11
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -223,7 +238,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 11
+Position: 12
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
