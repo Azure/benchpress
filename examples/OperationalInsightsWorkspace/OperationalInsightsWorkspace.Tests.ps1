@@ -50,7 +50,7 @@ Describe 'Verify Operational Insights Workspace Exists' {
       ResourceGroupName = $rgName
       Name = $noOiwName
     }
-    
+
     Confirm-AzBPOperationalInsightsWorkspace @params -ErrorAction SilentlyContinue | Should -Not -BeSuccessful
   }
 

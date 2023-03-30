@@ -37,7 +37,7 @@ Describe 'Verify AKS Cluster' {
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
-  It "Should contain an AKS Cluster named $aksName" { 
+  It "Should contain an AKS Cluster named $aksName" {
     Confirm-AzBPAksCluster -ResourceGroupName $rgName -AKSName $aksName | Should -BeSuccessful
   }
 

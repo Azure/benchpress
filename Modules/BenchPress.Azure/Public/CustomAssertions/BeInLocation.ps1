@@ -21,7 +21,6 @@ function ShouldBeInLocation {
     .OUTPUTS
       PSCustomObject
   #>
-  [CmdletBinding()]
   param (
     [Parameter(Mandatory=$true)]
     $ActualValue,

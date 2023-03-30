@@ -21,7 +21,6 @@ function ShouldBeInResourceGroup {
     .OUTPUTS
       PSCustomObject
   #>
-  [CmdletBinding()]
   param (
     [Parameter(Mandatory=$true)]
     $ActualValue,

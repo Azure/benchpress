@@ -33,7 +33,7 @@ Describe 'Verify Web App Exists' {
       PropertyValue = $webappName
     }
 
-    #act
+    #act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
@@ -42,11 +42,11 @@ Describe 'Verify Web App Exists' {
   }
 
   It 'Should not contain a Web App with the given name' {
-    #act
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
-    Confirm-AzBPWebApp -ResourceGroupName $rgName -WebAppName $noWebappName -ErrorAction SilentlyContinue | Should -Not -BeSuccessful
+    Confirm-AzBPWebApp -ResourceGroupName $rgName -WebAppName $noWebappName -ErrorAction SilentlyContinue
+    | Should -Not -BeSuccessful
   }
 
   It "Should contain a Web App named $webappName in $location" {

@@ -21,7 +21,6 @@ function ShouldBeSuccessful{
     .OUTPUTS
       PSCustomObject
   #>
-  [CmdletBinding()]
   param (
     [Parameter(Mandatory=$true)]
     $ActualValue,

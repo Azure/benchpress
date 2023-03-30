@@ -31,7 +31,7 @@ Describe 'Verify Data Factory' {
       PropertyKey       = 'DataFactoryName'
       PropertyValue     = $dataFactoryName
     }
-    
+
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
