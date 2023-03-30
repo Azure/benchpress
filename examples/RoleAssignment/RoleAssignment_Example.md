@@ -1,6 +1,8 @@
 # How To Run RoleAssignment.Tests.ps1
 
 `RoleAssignment.Tests.ps1` contains examples of using the `Confirm-AzBPRoleAssignment` cmdlet.
+Role assignments in Azure do not belong to a location or a resource group, so the example tests
+do not check for this.
 
 ## Pre-Requisites
 
@@ -15,14 +17,14 @@
    ```
 
 1. Deploy the Role Assignment to your subscription:
-  You will need Owner permission or higher
+  You will need Owner permission or higher.
 
    ```Powershell
     New-AzSubscriptionDeployment -TemplateFile ".\roleAssignment.bicep" `
     -Location "WestUS3"
    ```
 
-1. When prompted in your terminal, set the `svcPrincipalObjectId` parameter with your service principal's object ID.
+1. When prompted in your terminal, set the `principalId` parameter with your service principal's object ID.
 
 1. Update `RoleAssignment.Tests.ps1` variables to point to your expected resources:
 
