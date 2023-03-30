@@ -21,7 +21,7 @@ Describe 'Verify Role Assignment Exists' {
     }
 
     #assert
-    (Confirm-AzBPResource @params).Success | Should -Be $true
+    (Confirm-AzBPResource @params).Success | Should -BeDeployed
   }
 
   It "Should have a principal with $roleName role" {
@@ -34,18 +34,7 @@ Describe 'Verify Role Assignment Exists' {
     }
 
     #assert
-    (Confirm-AzBPResource @params).Success | Should -Be $true
-  }
-
-  It "Should have a principal with $roleName role deployed" {
-    #act
-    $params = @{
-      ServicePrincipalId   = $principalId
-      RoleDefinitionName   = $roleName
-      Scope                = $scope
-    }
-
-    Confirm-AzBPRoleAssignment @params | Should -BeDeployed
+    (Confirm-AzBPResource @params).Success | Should -BeDeployed
   }
 
   It "Should not have a principal with $noRoleName role" {
@@ -57,7 +46,7 @@ Describe 'Verify Role Assignment Exists' {
     }
 
     #assert
-    (Confirm-AzBPRoleAssignment @params).Success | Should -Be $false
+    (Confirm-AzBPRoleAssignment @params).Success | Should -Not -BeDeployed
   }
 
 }
