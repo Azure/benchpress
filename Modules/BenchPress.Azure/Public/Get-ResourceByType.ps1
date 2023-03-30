@@ -43,29 +43,7 @@ function Get-ResourceByType {
       The name of the Resource Group
 
     .PARAMETER ResourceType
-      The type of the Resource (currently support the following:
-      ActionGroup
-      AksCluster
-      AppInsights
-      AppServicePlan
-      ContainerRegistry
-      DataFactory
-      DataFactoryLinkedService
-      EventHub
-      EventHubConsumerGroup
-      EventHubNamespace
-      KeyVault
-      ResourceGroup
-      SqlDatabase
-      SqlServer
-      StorageAccount
-      StorageContainer
-      StreamAnalyticsCluster
-      SynapseSparkPool
-      SynapseSqlPool
-      SynapseWorkspace
-      VirtualMachine
-      WebApp)
+      The type of the Resource.
 
     .PARAMETER ServerName
       If testing an Azure SQL Database resource, the name of the server to which the database is assigned.
@@ -79,7 +57,12 @@ function Get-ResourceByType {
       the name of the workspace to which the resource is assigned.
 
     .PARAMETER AccountName
-      If the Azure resource has an associated account name (e.g., Cosmos DB SQL Database, Storage Container),
+      If the Azure resource has an associated account name (e.g., Cosmos DB SQL Database, Storage Container) this is
+      the parameter to use to pass the account name.
+
+    .PARAMETER ServiceName
+      If the Azure resource is associated with a service (e.g, API Management Service) this is the parameter to use to
+      pass the service name.
 
     .EXAMPLE
       Get-AzBPResourceByType -ResourceType ActionGroup -ResourceName "bpactiongroup" -ResourceGroupName "rgbenchpresstest"
@@ -96,7 +79,7 @@ function Get-ResourceByType {
   [CmdletBinding()]
   [OutputType([ConfirmResult])]
   param (
-    [Parameter(Mandatory = $true)]
+    [Parameter(Mandatory = $false)]
     [string]$ResourceName,
 
     [Parameter(Mandatory = $false)]
@@ -121,7 +104,10 @@ function Get-ResourceByType {
     [string]$WorkspaceName,
 
     [Parameter(Mandatory = $false)]
-    [string]$AccountName
+    [string]$AccountName,
+
+    [Parameter(Mandatory = $false)]
+    [string]$ServiceName
   )
   Begin { }
   Process {
@@ -132,11 +118,49 @@ function Get-ResourceByType {
       "AksCluster" {
         return Confirm-AksCluster -AKSName $ResourceName -ResourceGroupName $ResourceGroupName
       }
+      "ApiManagement" {
+        return Confirm-ApiManagement -ResourceGroupName $ResourceGroupName -Name $ResourceName
+      }
+      "ApiManagementApi" {
+        $params = @{
+          ResourceGroupName = $ResourceGroupName
+          ServiceName = $ServiceName
+          Name = $ResourceName
+        }
+        return Confirm-ApiManagementApi @params
+      }
+      "ApiManagementDiagnostic" {
+        $params = @{
+          ResourceGroupName = $ResourceGroupName
+          ServiceName = $ServiceName
+          Name = $ResourceName
+        }
+        return Confirm-ApiManagementDiagnostic @params
+      }
+      "ApiManagementLogger" {
+        $params = @{
+          ResourceGroupName = $ResourceGroupName
+          ServiceName = $ServiceName
+          Name = $ResourceName
+        }
+        return Confirm-ApiManagementLogger @params
+      }
+      "ApiManagementPolicy" {
+        $params = @{
+          ResourceGroupName = $ResourceGroupName
+          ServiceName = $ServiceName
+          ApiId = $ResourceName
+        }
+        return Confirm-ApiManagementPolicy @params
+      }
       "AppInsights" {
         return Confirm-AppInsights -ResourceGroupName $ResourceGroupName -Name $ResourceName
       }
       "AppServicePlan" {
         return Confirm-AppServicePlan -AppServicePlanName $ResourceName -ResourceGroupName $ResourceGroupName
+      }
+      "ContainerApp" {
+        return Confirm-ContainerApp -ResourceGroupName $ResourceGroupName -Name $ResourceName
       }
       "ContainerRegistry" {
         return Confirm-ContainerRegistry -Name $ResourceName -ResourceGroupName $ResourceGroupName

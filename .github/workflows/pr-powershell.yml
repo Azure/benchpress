@@ -24,6 +24,7 @@ jobs:
         run: |
           Set-PSRepository PSGallery -InstallationPolicy Trusted
           Install-Module Az -ErrorAction Stop
+          Install-Module Az.App -ErrorAction Stop
           Install-Module Pester -ErrorAction Stop
       - name: Run PowerShell Unit Tests
         shell: pwsh
