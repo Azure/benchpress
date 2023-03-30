@@ -1,5 +1,5 @@
 BeforeAll {
-  Import-Module ../../bin/BenchPress.Azure.psd1
+  Import-Module Az.InfrastructureTesting
 
   $Script:principalId = 'sampleappid'
   $Script:scope = '/subscriptions/id'
@@ -20,22 +20,21 @@ Describe 'Verify Role Assignment Exists' {
       Scope                = $scope
     }
 
-    $result = Confirm-AzBPResource @params
     #assert
-    $result.Success | Should -Be $true
+    (Confirm-AzBPResource @params).Success | Should -Be $true
   }
 
   It "Should have a principal with $roleName role" {
     #act
     $params = @{
+      ResourceType         = 'RoleAssignment'
       ServicePrincipalId   = $principalId
       RoleDefinitionName   = $roleName
       Scope                = $scope
     }
 
-    $result = Confirm-AzBPRoleAssignment @params
     #assert
-    $result.Success | Should -Be $true
+    (Confirm-AzBPResource @params).Success | Should -Be $true
   }
 
   It "Should have a principal with $roleName role deployed" {
@@ -46,8 +45,7 @@ Describe 'Verify Role Assignment Exists' {
       Scope                = $scope
     }
 
-    $result = Confirm-AzBPRoleAssignment @params
-    $result | Should -BeDeployed
+    Confirm-AzBPRoleAssignment @params | Should -BeDeployed
   }
 
   It "Should not have a principal with $noRoleName role" {
@@ -58,10 +56,8 @@ Describe 'Verify Role Assignment Exists' {
       Scope                = $scope
     }
 
-    $result = Confirm-AzBPRoleAssignment @params
-
     #assert
-    $result.Success | Should -Be $false
+    (Confirm-AzBPRoleAssignment @params).Success | Should -Be $false
   }
 
 }
