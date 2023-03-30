@@ -1,6 +1,11 @@
 enum ResourceType{
   ActionGroup
   AksCluster
+  ApiManagement
+  ApiManagementApi
+  ApiManagementDiagnostic
+  ApiManagementLogger
+  ApiManagementPolicy
   AppInsights
   AppServicePlan
   ContainerApp
