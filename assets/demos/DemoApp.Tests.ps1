@@ -1,5 +1,7 @@
 BeforeAll {
-  Import-Module "../../bin/BenchPress.Azure.psd1"
+  # Navigate to ../../docs/installation.md to build BenchPress module"
+
+  #Import-Module "../../bin/BenchPress.Azure.psd1"
 
   $Script:rgName = "benchpress-rg-${env:ENVIRONMENT_SUFFIX}"
   $Script:webAppName = "benchpress-web-${env:ENVIRONMENT_SUFFIX}"
@@ -17,7 +19,7 @@ Describe 'Resource Group Tests' {
     $resourceGroup = Confirm-AzBPResource @params
 
     #assert
-    $resourceGroup.Success | Should -BeDeployed
+    $resourceGroup | Should -BeDeployed
   }
 }
 
@@ -36,7 +38,7 @@ Describe 'Service Plan Tests' {
     $servicePlan = Confirm-AzBPResource @params
 
     #assert
-    $servicePlan.Success | Should -BeDeployed
+    $servicePlan | Should -BeDeployed
   }
 }
 
@@ -55,7 +57,7 @@ Describe 'Action Group Tests' {
     $ag = Confirm-AzBPResource @params
 
     #assert
-    $ag.Success | Should -BeDeployed
+    $ag | Should -BeDeployed
   }
 }
 
@@ -72,7 +74,7 @@ Describe 'Web Apps Tests' {
     $webApp = Confirm-AzBPResource @params
 
     #assert
-    $webApp.Success | Should -BeDeployed
+    $webApp | Should -BeDeployed
   }
 
   it 'Should have the web app availability state as normal' {
@@ -89,7 +91,7 @@ Describe 'Web Apps Tests' {
     $webApp = Confirm-AzBPResource @params
 
     #assert
-    $webApp.Success | Should -BeDeployed
+    $webApp | Should -BeDeployed
   }
 
   it 'Should have the web app works https only' {
@@ -105,7 +107,7 @@ Describe 'Web Apps Tests' {
     $webApp = Confirm-AzBPResource @params
 
     #assert
-    $webApp.Success | Should -BeDeployed
+    $webApp | Should -BeDeployed
   }
 
   it 'Should contain application insights configuration in the web app' {
@@ -122,7 +124,7 @@ Describe 'Web Apps Tests' {
     $webApp = Confirm-AzBPResource @params
 
     #assert
-    $webApp.Success | Should -BeDeployed
+    $webApp | Should -BeDeployed
   }
 }
 
