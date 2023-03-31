@@ -13,6 +13,11 @@
   FunctionsToExport = @(
     "Confirm-ActionGroup",
     "Confirm-AksCluster",
+    "Confirm-ApiManagement",
+    "Confirm-ApiManagementApi",
+    "Confirm-ApiManagementDiagnostic",
+    "Confirm-ApiManagementLogger",
+    "Confirm-ApiManagementPolicy",
     "Confirm-AppInsights",
     "Confirm-AppServicePlan",
     "Confirm-BicepFile",
