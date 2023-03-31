@@ -1,8 +1,8 @@
 BeforeAll {
   Import-Module ../../bin/BenchPress.Azure.psd1
 
-  $Script:rgName = 'marc-benchpress-test-rg'
-  $Script:aksName = 'aksapzdo'
+  $Script:rgName = 'rg-test'
+  $Script:aksName = 'aksbenchpresstest'
   $Script:location = 'westus3'
 }
 
@@ -89,7 +89,7 @@ Describe 'Verify AKS Cluster' {
 
 Describe 'Verify AKS Node Pool' {
   BeforeAll {
-    $Script:nodePoolName = 'apapzdo'
+    $Script:nodePoolName = 'nodepoolbenchpresstest'
     $Script:noNodePoolName = 'noaksnodepool'
   }
 
