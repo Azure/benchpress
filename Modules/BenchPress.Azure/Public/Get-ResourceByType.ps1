@@ -162,6 +162,9 @@ function Get-ResourceByType {
       "ContainerApp" {
         return Confirm-ContainerApp -ResourceGroupName $ResourceGroupName -Name $ResourceName
       }
+      "ContainerAppManagedEnv" {
+        return Confirm-ContainerAppManagedEnv -ResourceGroupName $ResourceGroupName -Name $ResourceName
+      }
       "ContainerRegistry" {
         return Confirm-ContainerRegistry -Name $ResourceName -ResourceGroupName $ResourceGroupName
       }
