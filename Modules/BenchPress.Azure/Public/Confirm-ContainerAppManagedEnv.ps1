@@ -38,12 +38,12 @@ function Confirm-ContainerAppManagedEnv {
     [string]$Name
   )
   Begin {
-    $ConnectResults = Connect-Account
+    $connectResults = Connect-Account
   }
   Process {
-    $Resource = Get-AzContainerAppManagedEnv -ResourceGroupName $ResourceGroupName -EnvName $Name
+    $resource = Get-AzContainerAppManagedEnv -ResourceGroupName $ResourceGroupName -EnvName $Name
 
-    [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+    [ConfirmResult]::new($resource, $connectResults.AuthenticationData)
   }
   End { }
 }
