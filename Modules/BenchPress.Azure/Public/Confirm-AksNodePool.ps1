@@ -20,7 +20,7 @@ function Confirm-AksNodePool {
       The name of the Resource Group
 
     .EXAMPLE
-      Confirm-AzBPAksNodePool -AKSName "benchpresstest" -ResourceGroupName "rgbenchpresstest"
+      Confirm-AzBPAksNodePool -ResourceGroupName "rgbenchpresstest" -ClusterName "clustertest" -Name "benchpresstest"
 
     .INPUTS
       System.String
