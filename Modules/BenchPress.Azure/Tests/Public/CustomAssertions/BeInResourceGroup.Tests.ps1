@@ -48,13 +48,12 @@ Describe "ShouldBeInResourceGroup" {
       [ConfirmResult]::new($mockResource, $null) | Should -BeInResourceGroup 'fakerg'
     }
 
-    # TODO: Null Tests here too
     It "Should fail if ConfirmResult is null " {
-      { $null | Should -BeInResourceGroup 'testrg' } | Should -Throw -ErrorId 'ParameterArgumentValidationErrorNullNotAllowed,Invoke-Assertion'
+      { $null | Should -BeInResourceGroup 'testrg' } | Should -Throw -ErrorId 'PesterAssertionFailed'
     }
 
     It "Should fail if ConfirmResult is null with '-Not'" {
-      { $null | Should -Not -BeInResourceGroup 'fakerg' } | Should -Throw -ErrorId 'ParameterArgumentValidationErrorNullNotAllowed,Invoke-Assertion'
+      { $null | Should -Not -BeInResourceGroup 'fakerg' } | Should -Throw -ErrorId 'PesterAssertionFailed'
     }
 
     It "Should fail if ResourceGroupName or ResourceGroup empty" {

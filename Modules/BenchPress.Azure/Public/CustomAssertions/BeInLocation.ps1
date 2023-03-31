@@ -1,4 +1,4 @@
-function ShouldBeInLocation {
+function ShouldBeInLocation ($ActualValue, [string]$ExpectedValue, [switch] $Negate, [string] $Because) {
   <#
     .SYNOPSIS
       Custom Assertion function to check status on a resource deployment.
@@ -21,22 +21,6 @@ function ShouldBeInLocation {
     .OUTPUTS
       PSCustomObject
   #>
-  param (
-    [Parameter(Mandatory=$true)]
-    $ActualValue,
-
-    [Parameter(Mandatory=$true)]
-    [string]$ExpectedValue,
-
-    [Parameter(Mandatory=$false)]
-    [switch]$Negate,
-
-    [Parameter(Mandatory=$false)]
-    [string]$Because,
-
-    [Parameter(Mandatory=$false)]
-    $CallerSessionState
-  )
   $propertyName = 'Location'
 
   if ($null -eq $ActualValue){

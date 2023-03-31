@@ -57,8 +57,9 @@ Describe 'Verify Sql Database' {
     # Remove this field to see all errors.
     $params = @{
       ResourceGroupName = $rgName
-      DatabaseName = $noDatabaseName
-      ServerName = $serverName
+      DatabaseName      = $noDatabaseName
+      ServerName        = $serverName
+      ErrorAction       = "SilentlyContinue"
     }
 
     Confirm-AzBPSqlDatabase @params -ErrorAction SilentlyContinue | Should -Not -BeSuccessful

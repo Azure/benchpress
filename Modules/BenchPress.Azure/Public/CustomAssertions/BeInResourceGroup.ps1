@@ -1,4 +1,4 @@
-function ShouldBeInResourceGroup {
+function ShouldBeInResourceGroup ($ActualValue, [string]$ExpectedValue, [switch] $Negate, [string] $Because) {
   <#
     .SYNOPSIS
       Custom Assertion function to check resource's resource group.
@@ -21,22 +21,6 @@ function ShouldBeInResourceGroup {
     .OUTPUTS
       PSCustomObject
   #>
-  param (
-    [Parameter(Mandatory=$true)]
-    $ActualValue,
-
-    [Parameter(Mandatory=$true)]
-    [string]$ExpectedValue,
-
-    [Parameter(Mandatory=$false)]
-    [switch]$Negate,
-
-    [Parameter(Mandatory=$false)]
-    [string]$Because,
-
-    [Parameter(Mandatory=$false)]
-    $CallerSessionState
-  )
   $rgProperty = 'ResourceGroup'
   $rgNameProperty = 'ResourceGroupName'
   $idProperty = 'Id'

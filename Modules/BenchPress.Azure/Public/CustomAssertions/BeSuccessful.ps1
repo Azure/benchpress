@@ -1,4 +1,4 @@
-function ShouldBeSuccessful{
+function ShouldBeSuccessful ($ActualValue, [switch] $Negate, [string] $Because) {
   <#
     .SYNOPSIS
       Custom Assertion function to check status on a resource deployment.
@@ -21,19 +21,6 @@ function ShouldBeSuccessful{
     .OUTPUTS
       PSCustomObject
   #>
-  param (
-    [Parameter(Mandatory=$true)]
-    $ActualValue,
-
-    [Parameter(Mandatory=$false)]
-    [switch]$Negate,
-
-    [Parameter(Mandatory=$false)]
-    [string]$Because,
-
-    [Parameter(Mandatory=$false)]
-    $CallerSessionState
-  )
   if ($null -eq $ActualValue){
     [bool] $succeeded = $false
     $failureMessage = "ConfirmResult is null or empty."

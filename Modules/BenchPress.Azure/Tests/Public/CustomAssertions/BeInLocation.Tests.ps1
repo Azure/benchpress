@@ -48,13 +48,12 @@ Describe "ShouldBeInLocation" {
       [ConfirmResult]::new($mockResource, $null) | Should -Not -BeInLocation 'eastus'
     }
 
-    # TODO: Same issue with Null here
     It "Should fail if ConfirmResult is null" {
-      { $null | Should -BeInLocation 'eastus' } | Should -Throw -ErrorId 'ParameterArgumentValidationErrorNullNotAllowed,Invoke-Assertion'
+      { $null | Should -BeInLocation 'eastus' } | Should -Throw -ErrorId 'PesterAssertionFailed'
     }
 
     It "Should fail if ConfirmResult is null with '-Not'" {
-      { $null | Should -Not -BeInLocation 'eastus' } | Should -Throw -ErrorId 'ParameterArgumentValidationErrorNullNotAllowed,Invoke-Assertion'
+      { $null | Should -Not -BeInLocation 'eastus' } | Should -Throw -ErrorId 'PesterAssertionFailed'
     }
 
     It "Should fail if location empty" {

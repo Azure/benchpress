@@ -15,10 +15,6 @@ Describe "ShouldBeSuccessful" {
   }
 
   It "Should fail if ConfirmResult is null" {
-    # TODO: Should we keep these null examples? Adding cmldet binding to the function now throws
-    # a validation error if the parameter is null
-    # Don't know if we even need the null check now in BeSuccessful.ps1
-    # Could also do a try/catch and throw a custom error ('PesterAssertionFailed')
-    { $null | Should -BeSuccessful } | Should -Throw -ErrorId 'ParameterArgumentValidationErrorNullNotAllowed,Invoke-Assertion'
+    { $null | Should -BeSuccessful } | Should -Throw -ErrorId 'PesterAssertionFailed'
   }
 }

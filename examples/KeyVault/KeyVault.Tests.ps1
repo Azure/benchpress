@@ -51,7 +51,7 @@ Describe 'Verify KeyVault' {
     Confirm-AzBPKeyVaultSecret -KeyVaultName $kvName -Name $kvSecretName | Should -BeSuccessful
   }
 
-  It "Should contain a Certificate named $kvSecretName in the KeyVault with the given name" {
+  It "Should contain a Certificate named $kvCertificateName in the KeyVault with the given name" {
     Confirm-AzBPKeyVaultCertificate -KeyVaultName $kvName -Name $kvCertificateName | Should -BeSuccessful
   }
 

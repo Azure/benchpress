@@ -186,7 +186,7 @@ Describe 'Cosmos DB Gremlin Database' {
     $Script:noGremlinDBName = 'nocdatabasebenchpresstest'
   }
 
-  It "Should deploy a Cosmos DB Account named $gremlinAccountName" {
+  It "Should contain a Cosmos DB Account named $gremlinAccountName" {
     Confirm-AzBPCosmosDBAccount -ResourceGroupName $rgName -Name $gremlinAccountName | Should -BeSuccessful
   }
 
@@ -215,7 +215,7 @@ Describe 'Cosmos DB Gremlin Database' {
 
 #######################################################################################################################
 
-  It "Should deploy a Cosmos DB Gremlin Database named $gremlinDatabaseName" {
+  It "Should contain a Cosmos DB Gremlin Database named $gremlinDatabaseName" {
     #arrange
     $params = @{
       ResourceGroupName = $rgName
@@ -274,7 +274,7 @@ Describe 'Comsos DB Mongo DB Database' {
     $Script:noMongoDBName = 'nomdatabasebenchpresstest'
   }
 
-  It "Should deploy a Cosmos DB Account named $mongoAccountName" {
+  It "Should contain a Cosmos DB Account named $mongoAccountName" {
     Confirm-AzBPCosmosDBAccount -ResourceGroupName $rgName -Name $mongoAccountName | Should -BeSuccessful
   }
 
@@ -303,7 +303,7 @@ Describe 'Comsos DB Mongo DB Database' {
 
 #######################################################################################################################
 
-  It "Should deploy a Cosmos DB Mongo DB Database named $mongoDatabaseName" {
+  It "Should contain a Cosmos DB Mongo DB Database named $mongoDatabaseName" {
     #arrange
     $params = @{
       ResourceGroupName = $rgName
@@ -362,7 +362,7 @@ Describe 'Comsos DB SQL Database' {
     $Script:noSqlDatabaseName = 'nosqldatabasebenchpresstest'
   }
 
-  It "Should deploy a Cosmos DB Account named $sqlAccountName" {
+  It "Should contain a Cosmos DB Account named $sqlAccountName" {
     Confirm-AzBPCosmosDBAccount -ResourceGroupName $rgName -Name $sqlAccountName | Should -BeSuccessful
   }
 
@@ -391,8 +391,7 @@ Describe 'Comsos DB SQL Database' {
 
 #######################################################################################################################
 
-
-  It "Should deploy a Cosmos DB SQL Database named $sqlDatabaseName" {
+  It "Should contain a Cosmos DB SQL Database named $sqlDatabaseName" {
     #arrange
     $params = @{
       ResourceGroupName = $rgName
