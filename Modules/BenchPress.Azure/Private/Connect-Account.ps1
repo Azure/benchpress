@@ -1,4 +1,4 @@
-# INLINE_SKIP
+﻿# INLINE_SKIP
 using module ./../Classes/AuthenticationResult.psm1
 using module ./../Classes/AuthenticationData.psm1
 

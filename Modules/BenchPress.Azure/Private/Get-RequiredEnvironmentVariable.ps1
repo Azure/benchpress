@@ -1,4 +1,4 @@
-function Get-RequiredEnvironmentVariable {
+﻿function Get-RequiredEnvironmentVariable {
   <#
     .SYNOPSIS
       Get-RequiredEnvironmentVariable is a private helper method that retrieves environment variables with the

@@ -1,4 +1,4 @@
-using module ./../../../Classes/ConfirmResult.psm1
+﻿using module ./../../../Classes/ConfirmResult.psm1
 
 BeforeAll {
   . $PSScriptRoot/../../../Public/CustomAssertions/BeInResourceGroup.ps1

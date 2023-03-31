@@ -1,4 +1,4 @@
-BeforeAll {
+﻿BeforeAll {
   . $PSScriptRoot/../../Public/Confirm-StreamAnalyticsCluster.ps1
   . $PSScriptRoot/../../Private/Connect-Account.ps1
   Import-Module Az
