@@ -137,8 +137,8 @@ function Get-ResourceByType {
       "AksNodePool" {
         $params = @{
           ResourceGroupName = $ResourceGroupName
-          ClusterName = $ClusterName
-          Name = $ResourceName
+          ClusterName       = $ClusterName
+          Name              = $ResourceName
         }
         return Confirm-AksNodePool @params
       }
