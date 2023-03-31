@@ -1,13 +1,13 @@
 BeforeAll {
-  Import-Module ../../bin/BenchPress.Azure.psd1
+  Import-Module Azure.InfrastructureTesting
 
-  $Script:rgName = 'marysha-devwork'
+  $Script:rgName = 'rg-test'
   $Script:location = 'westus3'
 }
 
 Describe 'Verify Container Application' {
   BeforeAll {
-    $Script:conAppName = 'acrklhab' #'conAppBenchPressTest'
+    $Script:conAppName = 'conAppBenchPressTest'
     $Script:noContainerAppName = 'nocontainerapp'
   }
 
@@ -65,7 +65,7 @@ Describe 'Verify Container Application' {
 
 Describe 'Verify Container Application Managed Environment' {
   BeforeAll {
-    $Script:managedEnvName = 'envacrklhab'
+    $Script:managedEnvName = 'managedenvbenchpresstest'
     $Script:noManagedEnvName = 'nomanagedenv'
   }
 
