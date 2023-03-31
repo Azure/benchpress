@@ -43,12 +43,12 @@ function Confirm-AksNodePool {
     [string]$Name
   )
   Begin {
-    $ConnectResults = Connect-Account
+    $connectResults = Connect-Account
   }
   Process {
-    $Resource = Get-AzAksNodePool -ResourceGroupName $ResourceGroupName -ClusterName $ClusterName -Name $Name
+    $resource = Get-AzAksNodePool -ResourceGroupName $ResourceGroupName -ClusterName $ClusterName -Name $Name
 
-    [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+    [ConfirmResult]::new($resource, $connectResults.AuthenticationData)
   }
   End { }
 }
