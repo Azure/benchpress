@@ -13,9 +13,10 @@ Confirms whether a resource exists or properties on a resource are configured co
 ## SYNTAX
 
 ```
-Confirm-AzBPResource [-ResourceName] <String> [[-ResourceGroupName] <String>] [-ResourceType] <ResourceType>
+Confirm-AzBPResource [[-ResourceName] <String>] [[-ResourceGroupName] <String>] [-ResourceType] <ResourceType>
  [[-ServerName] <String>] [[-DataFactoryName] <String>] [[-NamespaceName] <String>] [[-EventHubName] <String>]
- [[-WorkspaceName] <String>] [[-AccountName] <String>] [[-ServiceName] <String>] [[-PropertyKey] <String>]
+ [[-WorkspaceName] <String>] [[-ServicePrincipalId] <String>] [[-Scope] <String>]
+ [[-RoleDefinitionName] <String>] [[-AccountName] <String>] [[-ServiceName] <String>] [[-PropertyKey] <String>]
  [[-PropertyValue] <String>] [<CommonParameters>]
 ```
 
@@ -68,7 +69,7 @@ Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: 1
 Default value: None
 Accept pipeline input: False
@@ -97,7 +98,7 @@ The type of the Resource as a \[ResourceType\]
 Type: ResourceType
 Parameter Sets: (All)
 Aliases:
-Accepted values: ActionGroup, AksCluster, ApiManagement, ApiManagementApi, ApiManagementDiagnostic, ApiManagementLogger, ApiManagementPolicy, AppInsights, AppServicePlan, ContainerApp, CosmosDBAccount, CosmosDBGremlinDatabase, CosmosDBMongoDBDatabase, CosmosDBSqlDatabase, ContainerRegistry, DataFactory, DataFactoryLinkedService, EventHub, EventHubConsumerGroup, EventHubNamespace, KeyVault, OperationalInsightsWorkspace, ResourceGroup, SqlDatabase, SqlServer, StorageAccount, StorageContainer, StreamAnalyticsCluster, StreamAnalyticsFunction, StreamAnalyticsInput, StreamAnalyticsJob, StreamAnalyticsOutput, StreamAnalyticsTransformation, SynapseSparkPool, SynapseSqlPool, SynapseWorkspace, VirtualMachine, WebApp
+Accepted values: ActionGroup, AksCluster, ApiManagement, ApiManagementApi, ApiManagementDiagnostic, ApiManagementLogger, ApiManagementPolicy, AppInsights, AppServicePlan, ContainerApp, CosmosDBAccount, CosmosDBGremlinDatabase, CosmosDBMongoDBDatabase, CosmosDBSqlDatabase, ContainerRegistry, DataFactory, DataFactoryLinkedService, EventHub, EventHubConsumerGroup, EventHubNamespace, KeyVault, OperationalInsightsWorkspace, ResourceGroup, RoleAssignment, SqlDatabase, SqlServer, StorageAccount, StorageContainer, StreamAnalyticsCluster, StreamAnalyticsFunction, StreamAnalyticsInput, StreamAnalyticsJob, StreamAnalyticsOutput, StreamAnalyticsTransformation, SynapseSparkPool, SynapseSqlPool, SynapseWorkspace, VirtualMachine, WebApp
 
 Required: True
 Position: 3
@@ -184,6 +185,51 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -ServicePrincipalId
+{{ Fill ServicePrincipalId Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 9
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Scope
+{{ Fill Scope Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 10
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RoleDefinitionName
+{{ Fill RoleDefinitionName Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 11
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -AccountName
 If the Azure resource has an associated account name (e.g., Cosmos DB SQL Database, Storage Container)
 
@@ -193,7 +239,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 9
+Position: 12
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -208,7 +254,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 10
+Position: 13
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -223,7 +269,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 11
+Position: 14
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -238,7 +284,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 12
+Position: 15
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
