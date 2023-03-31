@@ -10,7 +10,7 @@ function Confirm-ContainerAppManagedEnv {
       Confirms that an Managed Environment exists.
 
     .DESCRIPTION
-      The Confirm-AzBPContainerAppManagedEnv cmdlet gets an Managed Environment using the specified Managed Environment
+      The Confirm-AzBPContainerAppManagedEnv cmdlet gets a Managed Environment using the specified Managed Environment
       and Resource Group names.
 
     .PARAMETER ResourceGroupName

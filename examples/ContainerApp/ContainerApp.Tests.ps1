@@ -1,5 +1,5 @@
 BeforeAll {
-  Import-Module Azure.InfrastructureTesting
+  Import-Module Az.InfrastructureTesting
 
   $Script:rgName = 'rg-test'
   $Script:location = 'westus3'
