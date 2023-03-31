@@ -8,10 +8,10 @@ Describe "Confirm-DataFactoryLinkedService" {
   Context "unit tests" -Tag "Unit" {
     BeforeEach {
       Mock Connect-Account{}
+      Mock Get-AzDataFactoryV2LinkedService{}
     }
 
     It "Calls Get-AzDataFactoryLinkedService" {
-      Mock Get-AzDataFactoryV2LinkedService{}
       Confirm-DataFactoryLinkedService -Name "ls" -DataFactoryName "adf" -ResourceGroupName "rgn"
       Should -Invoke -CommandName "Get-AzDataFactoryV2LinkedService" -Times 1
     }

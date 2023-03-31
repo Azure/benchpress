@@ -8,10 +8,10 @@ Describe "Confirm-EventHubConsumerGroup" {
   Context "unit tests" -Tag "Unit" {
     BeforeEach {
       Mock Connect-Account{}
+      Mock Get-AzEventHubConsumerGroup{}
     }
 
     It "Calls Get-AzEventHubConsumerGroup" {
-      Mock Get-AzEventHubConsumerGroup{}
       $params = @{
         Name              = "consumergroup"
         NamespaceName     = "namespace"

@@ -8,10 +8,10 @@ Describe "Confirm-EventHubNamespace" {
   Context "unit tests" -Tag "Unit" {
     BeforeEach {
       Mock Connect-Account{}
+      Mock Get-AzEventHubNamespace{}
     }
 
     It "Calls Get-AzEventHubNamespace" {
-      Mock Get-AzEventHubNamespace{}
       Confirm-EventHubNamespace -NamespaceName "EventHubNamespace" -ResourceGroupName "rgn"
       Should -Invoke -CommandName "Get-AzEventHubNamespace" -Times 1
     }

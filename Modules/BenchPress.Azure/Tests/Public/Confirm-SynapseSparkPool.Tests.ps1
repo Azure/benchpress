@@ -8,10 +8,10 @@ Describe "Confirm-SynapseSparkPool" {
   Context "unit tests" -Tag "Unit" {
     BeforeEach {
       Mock Connect-Account{}
+      Mock Get-AzSynapseSparkPool{}
     }
 
     It "Calls Get-AzSynapseSparkPool" {
-      Mock Get-AzSynapseSparkPool{}
       Confirm-SynapseSparkPool -SynapseSparkPoolName "spark" -WorkspaceName "syn" -ResourceGroupName "rgn"
       Should -Invoke -CommandName "Get-AzSynapseSparkPool" -Times 1
     }
