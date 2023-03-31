@@ -38,12 +38,12 @@ function Confirm-DataFactory {
     [string]$ResourceGroupName
   )
   Begin {
-    $ConnectResults = Connect-Account
+    $connectResults = Connect-Account
   }
   Process {
-    $Resource = Get-AzDataFactoryV2 -ResourceGroupName $ResourceGroupName -Name $Name
+    $resource = Get-AzDataFactoryV2 -ResourceGroupName $ResourceGroupName -Name $Name
 
-    [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+    [ConfirmResult]::new($resource, $connectResults.AuthenticationData)
   }
   End { }
 }

@@ -38,12 +38,12 @@ function Confirm-AppServicePlan {
     [string]$ResourceGroupName
   )
   Begin {
-    $ConnectResults = Connect-Account
+    $connectResults = Connect-Account
   }
   Process {
-    $Resource = Get-AzAppServicePlan -ResourceGroupName $ResourceGroupName -Name $AppServicePlanName
+    $resource = Get-AzAppServicePlan -ResourceGroupName $ResourceGroupName -Name $AppServicePlanName
 
-    [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+    [ConfirmResult]::new($resource, $connectResults.AuthenticationData)
   }
   End { }
 }

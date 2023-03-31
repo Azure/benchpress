@@ -45,13 +45,13 @@ function Confirm-DataFactoryLinkedService {
     [string]$ResourceGroupName
   )
   Begin {
-    $ConnectResults = Connect-Account
+    $connectResults = Connect-Account
   }
   Process {
-    $Resource = Get-AzDataFactoryV2LinkedService -ResourceGroupName $ResourceGroupName `
+    $resource = Get-AzDataFactoryV2LinkedService -ResourceGroupName $ResourceGroupName `
       -DataFactoryName $DataFactoryName -Name $Name
 
-    [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+    [ConfirmResult]::new($resource, $connectResults.AuthenticationData)
   }
   End { }
 }

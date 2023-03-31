@@ -38,12 +38,12 @@ function Confirm-KeyVaultCertificate {
     [string]$KeyVaultName
   )
   Begin {
-    $ConnectResults = Connect-Account
+    $connectResults = Connect-Account
   }
   Process {
-    $Resource = Get-AzKeyVaultCertificate -Name $Name -VaultName $KeyVaultName
+    $resource = Get-AzKeyVaultCertificate -Name $Name -VaultName $KeyVaultName
 
-    [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+    [ConfirmResult]::new($resource, $connectResults.AuthenticationData)
   }
   End { }
 }

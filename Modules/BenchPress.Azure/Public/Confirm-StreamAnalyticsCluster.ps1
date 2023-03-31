@@ -38,12 +38,12 @@ function Confirm-StreamAnalyticsCluster {
     [string]$ResourceGroupName
   )
   Begin {
-    $ConnectResults = Connect-Account
+    $connectResults = Connect-Account
   }
   Process {
-    $Resource = Get-AzStreamAnalyticsCluster -ResourceGroupName $ResourceGroupName -Name $Name
+    $resource = Get-AzStreamAnalyticsCluster -ResourceGroupName $ResourceGroupName -Name $Name
 
-    [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+    [ConfirmResult]::new($resource, $connectResults.AuthenticationData)
   }
   End { }
 }

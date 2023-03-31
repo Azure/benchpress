@@ -47,18 +47,18 @@ function Confirm-SqlDatabase {
     [string]$ResourceGroupName
   )
   Begin {
-    $ConnectResults = Connect-Account
+    $connectResults = Connect-Account
   }
   Process {
     $requestParams = @{
       ResourceGroupName = $ResourceGroupName
-      ServerName = $ServerName
-      DatabaseName = $DatabaseName
+      ServerName        = $ServerName
+      DatabaseName      = $DatabaseName
     }
 
-    $Resource = Get-AzSqlDatabase @requestParams
+    $resource = Get-AzSqlDatabase @requestParams
 
-    [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+    [ConfirmResult]::new($resource, $connectResults.AuthenticationData)
   }
   End { }
 }

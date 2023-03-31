@@ -44,12 +44,12 @@ function Confirm-StreamAnalyticsOutput {
     [string]$Name
   )
   Begin {
-    $ConnectResults = Connect-Account
+    $connectResults = Connect-Account
   }
   Process {
-    $Resource = Get-AzStreamAnalyticsOutput -ResourceGroupName $ResourceGroupName -JobName $JobName -Name $Name
+    $resource = Get-AzStreamAnalyticsOutput -ResourceGroupName $ResourceGroupName -JobName $JobName -Name $Name
 
-    [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+    [ConfirmResult]::new($resource, $connectResults.AuthenticationData)
   }
   End { }
 }

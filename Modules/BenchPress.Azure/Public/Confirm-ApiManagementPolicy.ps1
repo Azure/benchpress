@@ -45,7 +45,7 @@ function Confirm-ApiManagementPolicy {
     [string]$ApiId
   )
   Begin {
-    $ConnectResults = Connect-Account
+    $connectResults = Connect-Account
   }
   Process {
     $policy = New-AzApiManagementContext -ResourceGroupName $ResourceGroupName -ServiceName $ServiceName
@@ -56,7 +56,7 @@ function Confirm-ApiManagementPolicy {
       $policy = $null
     }
 
-    [ConfirmResult]::new($policy, $ConnectResults.AuthenticationData)
+    [ConfirmResult]::new($policy, $connectResults.AuthenticationData)
   }
   End { }
 }

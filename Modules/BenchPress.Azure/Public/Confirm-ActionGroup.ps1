@@ -37,12 +37,12 @@ function Confirm-ActionGroup {
     [string]$ResourceGroupName
   )
   Begin {
-    $ConnectResults = Connect-Account
+    $connectResults = Connect-Account
   }
   Process {
-    $Resource = Get-AzActionGroup -ResourceGroupName $ResourceGroupName -Name $ActionGroupName
+    $resource = Get-AzActionGroup -ResourceGroupName $ResourceGroupName -Name $ActionGroupName
 
-    [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+    [ConfirmResult]::new($resource, $connectResults.AuthenticationData)
   }
   End { }
 }

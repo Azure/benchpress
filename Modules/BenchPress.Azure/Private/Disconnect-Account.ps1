@@ -36,22 +36,22 @@ function Disconnect-Account {
   [CmdletBinding()]
   param ( )
   Begin {
-    $ApplicationId = Get-RequiredEnvironmentVariable AZ_APPLICATION_ID
-    $TenantId = Get-RequiredEnvironmentVariable AZ_TENANT_ID
+    $applicationId = Get-RequiredEnvironmentVariable AZ_APPLICATION_ID
+    $tenantId = Get-RequiredEnvironmentVariable AZ_TENANT_ID
 
     # If the current context doesn't match the target subscription, tentant, and client, then the testing account is
     # not logged in. Do nothing.
-    $CurrentConnection = Get-AzContext
+    $currentConnection = Get-AzContext
   }
   Process {
-    if ($null -eq $CurrentConnection `
-      -or ($CurrentConnection).Account.Type -ne "ServicePrincipal" `
-      -or ($CurrentConnection).Account.Id -ne $ApplicationId `
-      -or ($CurrentConnection).Tenant.Id -ne $TenantId) {
+    if ($null -eq $currentConnection `
+      -or ($currentConnection).Account.Type -ne "ServicePrincipal" `
+      -or ($currentConnection).Account.Id -ne $applicationId `
+      -or ($currentConnection).Tenant.Id -ne $tenantId) {
       return
     }
 
-    $CurrentConnection | Disconnect-AzAccount -Scope CurrentUser
+    $currentConnection | Disconnect-AzAccount -Scope CurrentUser
   }
   End { }
 }

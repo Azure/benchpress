@@ -40,12 +40,12 @@ function Confirm-AppInsights {
     [string]$ResourceGroupName
   )
   Begin {
-    $ConnectResults = Connect-Account
+    $connectResults = Connect-Account
   }
   Process {
-    $Resource = Get-AzApplicationInsights -ResourceGroupName $ResourceGroupName -Name $Name
+    $resource = Get-AzApplicationInsights -ResourceGroupName $ResourceGroupName -Name $Name
 
-    [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+    [ConfirmResult]::new($resource, $connectResults.AuthenticationData)
   }
   End { }
 }

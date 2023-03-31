@@ -124,32 +124,32 @@ function Get-ResourceByType {
       "ApiManagementApi" {
         $params = @{
           ResourceGroupName = $ResourceGroupName
-          ServiceName = $ServiceName
-          Name = $ResourceName
+          ServiceName       = $ServiceName
+          Name              = $ResourceName
         }
         return Confirm-ApiManagementApi @params
       }
       "ApiManagementDiagnostic" {
         $params = @{
           ResourceGroupName = $ResourceGroupName
-          ServiceName = $ServiceName
-          Name = $ResourceName
+          ServiceName       = $ServiceName
+          Name              = $ResourceName
         }
         return Confirm-ApiManagementDiagnostic @params
       }
       "ApiManagementLogger" {
         $params = @{
           ResourceGroupName = $ResourceGroupName
-          ServiceName = $ServiceName
-          Name = $ResourceName
+          ServiceName       = $ServiceName
+          Name              = $ResourceName
         }
         return Confirm-ApiManagementLogger @params
       }
       "ApiManagementPolicy" {
         $params = @{
           ResourceGroupName = $ResourceGroupName
-          ServiceName = $ServiceName
-          ApiId = $ResourceName
+          ServiceName       = $ServiceName
+          ApiId             = $ResourceName
         }
         return Confirm-ApiManagementPolicy @params
       }
@@ -260,16 +260,16 @@ function Get-ResourceByType {
       "StreamAnalyticsFunction" {
         $params = @{
           ResourceGroupName = $ResourceGroupName
-          JobName = $JobName
-          Name = $Name
+          JobName           = $JobName
+          Name              = $Name
         }
         return Confirm-StreamAnalyticsFunction @params
       }
       "StreamAnalyticsInput" {
         $params = @{
           ResourceGroupName = $ResourceGroupName
-          JobName = $JobName
-          Name = $Name
+          JobName           = $JobName
+          Name              = $Name
         }
         return Confirm-StreamAnalyticsInput @params
       }
@@ -279,16 +279,16 @@ function Get-ResourceByType {
       "StreamAnalyticsOutput" {
         $params = @{
           ResourceGroupName = $ResourceGroupName
-          JobName = $JobName
-          Name = $Name
+          JobName           = $JobName
+          Name              = $Name
         }
         return Confirm-StreamAnalyticsOutput @params
       }
       "StreamAnalyticsTransformation" {
         $params = @{
           ResourceGroupName = $ResourceGroupName
-          JobName = $JobName
-          Name = $Name
+          JobName           = $JobName
+          Name              = $Name
         }
         return Confirm-StreamAnalyticsTransformation @params
       }

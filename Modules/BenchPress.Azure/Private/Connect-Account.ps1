@@ -44,43 +44,43 @@ function Connect-Account {
   param ( )
   Begin { }
   Process {
-    $ApplicationId = Get-RequiredEnvironmentVariable AZ_APPLICATION_ID
-    $TenantId = Get-RequiredEnvironmentVariable AZ_TENANT_ID
-    $SubscriptionId = Get-RequiredEnvironmentVariable AZ_SUBSCRIPTION_ID
-    $CurrentConnection = Get-AzContext
-    $Results = [AuthenticationResult]::new()
+    $applicationId = Get-RequiredEnvironmentVariable AZ_APPLICATION_ID
+    $tenantId = Get-RequiredEnvironmentVariable AZ_TENANT_ID
+    $subscriptionId = Get-RequiredEnvironmentVariable AZ_SUBSCRIPTION_ID
+    $currentConnection = Get-AzContext
+    $results = [AuthenticationResult]::new()
 
     # If the current context matches the subscription, tenant, and service principal, then we're already properly
     # logged in.
-    if ($null -ne $CurrentConnection `
-      -and ($CurrentConnection).Account.Type -eq 'ServicePrincipal' `
-      -and ($CurrentConnection).Account.Id -eq $ApplicationId `
-      -and ($CurrentConnection).Tenant.Id -eq $TenantId `
-      -and ($CurrentConnection).Subscription.Id -eq $SubscriptionId) {
-      $Results.Success = $true
-      $Results.AuthenticationData = [AuthenticationData]::new(($CurrentConnection).Subscription.Id)
+    if ($null -ne $currentConnection `
+      -and ($currentConnection).Account.Type -eq 'ServicePrincipal' `
+      -and ($currentConnection).Account.Id -eq $applicationId `
+      -and ($currentConnection).Tenant.Id -eq $tenantId `
+      -and ($currentConnection).Subscription.Id -eq $subscriptionId) {
+      $results.Success = $true
+      $results.AuthenticationData = [AuthenticationData]::new(($currentConnection).Subscription.Id)
     } else {
       # The current context is not correct, create the credentials and login to the correct account
-      $ClientSecret = Get-RequiredEnvironmentVariable AZ_ENCRYPTED_PASSWORD | ConvertTo-SecureString
-      $Credential = New-Object System.Management.Automation.PSCredential -ArgumentList $ApplicationId, $ClientSecret
+      $clientSecret = Get-RequiredEnvironmentVariable AZ_ENCRYPTED_PASSWORD | ConvertTo-SecureString
+      $clientSecret = New-Object System.Management.Automation.PSCredential -ArgumentList $applicationId, $clientSecret
 
       try {
-        $ConnectionParams = @{
-          Credential = $Credential
-          TenantId = $TenantId
-          Subscription = $SubscriptionId
+        $connectionParams = @{
+          Credential   = $clientSecret
+          TenantId     = $tenantId
+          Subscription = $subscriptionId
         }
-        $Connection = Connect-AzAccount -ServicePrincipal @ConnectionParams
+        $connection = Connect-AzAccount -ServicePrincipal @connectionParams
 
-        $Results.Success = $true
-        $Results.AuthenticationData = [AuthenticationData]::new($Connection.Context.Subscription.Id)
+        $results.Success = $true
+        $results.AuthenticationData = [AuthenticationData]::new($connection.Context.Subscription.Id)
       } catch {
         $thrownError = $_
-        $Results.Success = $false
+        $results.Success = $false
         Write-Error $thrownError
       }
 
-      $Results
+      $results
     }
   }
   End { }

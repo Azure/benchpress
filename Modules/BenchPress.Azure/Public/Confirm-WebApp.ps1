@@ -38,12 +38,12 @@ function Confirm-WebApp {
     [string]$ResourceGroupName
   )
   Begin {
-    $ConnectResults = Connect-Account
+    $connectResults = Connect-Account
   }
   Process {
-      $Resource = Get-AzWebApp -ResourceGroupName $ResourceGroupName -Name $WebAppName
+      $resource = Get-AzWebApp -ResourceGroupName $ResourceGroupName -Name $WebAppName
 
-      [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+      [ConfirmResult]::new($resource, $connectResults.AuthenticationData)
   }
   End { }
 }

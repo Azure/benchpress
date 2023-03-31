@@ -116,7 +116,7 @@ function Confirm-Resource {
   )
   Begin { }
   Process {
-    $ResourceParams = @{
+    $resourceParams = @{
       ResourceName      = $ResourceName
       ResourceGroupName = $ResourceGroupName
       ResourceType      = $ResourceType
@@ -129,36 +129,36 @@ function Confirm-Resource {
       ServiceName       = $ServiceName
     }
 
-    $ConfirmResult = Get-ResourceByType @ResourceParams
+    $confirmResult = Get-ResourceByType @resourceParams
 
-    if ($null -eq $ConfirmResult) {
+    if ($null -eq $confirmResult) {
       Write-Error "Resource not found" -Category InvalidResult -ErrorId "InvalidResource"
-      $ConfirmResult = [ConfirmResult]::new($null)
-    } elseif ($ConfirmResult.Success -and -not [string]::IsNullOrWhiteSpace($PropertyKey)) {
-      $ActualValue = $ConfirmResult.ResourceDetails
+      $confirmResult = [ConfirmResult]::new($null)
+    } elseif ($confirmResult.Success -and -not [string]::IsNullOrWhiteSpace($PropertyKey)) {
+      $actualValue = $confirmResult.ResourceDetails
 
       # Split property path on open and close square brackets and periods. Remove empty items from array.
-      $Keys = ($PropertyKey -split '[\[\]\.]').Where({ $_ -ne "" })
-      foreach ($Key in $Keys) {
+      $keys = ($PropertyKey -split '[\[\]\.]').Where({ $_ -ne "" })
+      foreach ($key in $keys) {
         try {
           # If key is a numerical value, index into array
-          if ($Key -match "^\d+$") {
-            $ActualValue = $ActualValue[$Key]
+          if ($key -match "^\d+$") {
+            $actualValue = $actualValue[$key]
           } else {
-            $ActualValue = $ActualValue.$Key
+            $actualValue = $actualValue.$key
           }
         } catch {
           $thrownError = $_
-          $ConfirmResult = [ConfirmResult]::new($null)
+          $confirmResult = [ConfirmResult]::new($null)
           Write-Error $thrownError
           break
         }
       }
 
-      if ($ConfirmResult.Success -and $ActualValue -ne $PropertyValue) {
-        $ConfirmResult.Success = $false
+      if ($confirmResult.Success -and $actualValue -ne $PropertyValue) {
+        $confirmResult.Success = $false
 
-        if ($null -eq $ActualValue) {
+        if ($null -eq $actualValue) {
           $errorParams = @{
             Message  = "A value for the property key: ${$PropertyKey}, was not found."
             Category = [System.Management.Automation.ErrorCategory]::InvalidArgument
@@ -168,8 +168,8 @@ function Confirm-Resource {
           Write-Error @errorParams
         } else {
           $errorParams = @{
-            Message  = "The value provided: ${$PropertyValue}, does not match the actual value: ${ActualValue} for " +
-            "property key: ${$PropertyKey}"
+            Message  = "The value provided: ${$PropertyValue}, does not match the actual value: ${actualValue} for " +
+                       "property key: ${$PropertyKey}"
             Category = [System.Management.Automation.ErrorCategory]::InvalidResult
             ErrorId  = "InvalidPropertyValue"
           }
@@ -179,7 +179,7 @@ function Confirm-Resource {
       }
     }
 
-    $ConfirmResult
+    $confirmResult
   }
   End { }
 }

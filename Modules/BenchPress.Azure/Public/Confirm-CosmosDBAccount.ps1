@@ -38,12 +38,12 @@ function Confirm-CosmosDBAccount {
     [string]$Name
   )
   Begin {
-    $ConnectResults = Connect-Account
+    $connectResults = Connect-Account
   }
   Process {
-    $Resource = Get-AzCosmosDBAccount -ResourceGroupName $ResourceGroupName -Name $Name
+    $resource = Get-AzCosmosDBAccount -ResourceGroupName $ResourceGroupName -Name $Name
 
-    [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+    [ConfirmResult]::new($resource, $connectResults.AuthenticationData)
   }
   End { }
 }

@@ -38,12 +38,12 @@ function Confirm-VirtualMachine {
     [string]$ResourceGroupName
   )
   Begin {
-    $ConnectResults = Connect-Account
+    $connectResults = Connect-Account
   }
   Process {
-      $Resource = Get-AzVM -ResourceGroupName $ResourceGroupName -Name $VirtualMachineName
+      $resource = Get-AzVM -ResourceGroupName $ResourceGroupName -Name $VirtualMachineName
 
-      [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+      [ConfirmResult]::new($resource, $connectResults.AuthenticationData)
   }
   End { }
 }

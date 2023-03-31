@@ -44,7 +44,7 @@ function Confirm-CosmosDBMongoDBDatabase {
     [string]$Name
   )
   Begin {
-    $ConnectResults = Connect-Account
+    $connectResults = Connect-Account
   }
   Process {
     $params = @{
@@ -52,9 +52,9 @@ function Confirm-CosmosDBMongoDBDatabase {
       AccountName       = $AccountName
       Name              = $Name
     }
-    $Resource = Get-AzCosmosDBMongoDBDatabase @params
+    $resource = Get-AzCosmosDBMongoDBDatabase @params
 
-    [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+    [ConfirmResult]::new($resource, $connectResults.AuthenticationData)
   }
   End { }
 }

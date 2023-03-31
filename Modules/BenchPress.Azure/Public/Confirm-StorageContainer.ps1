@@ -44,13 +44,13 @@ function Confirm-StorageContainer {
     [string]$ResourceGroupName
   )
   Begin {
-    $ConnectResults = Connect-Account
+    $connectResults = Connect-Account
   }
   Process {
-      $Resource = Get-AzStorageAccount -ResourceGroupName $ResourceGroupName -AccountName $AccountName `
+      $resource = Get-AzStorageAccount -ResourceGroupName $ResourceGroupName -AccountName $AccountName `
        | Get-AzStorageContainer -Name $Name
 
-      [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+      [ConfirmResult]::new($resource, $connectResults.AuthenticationData)
   }
   End { }
 }

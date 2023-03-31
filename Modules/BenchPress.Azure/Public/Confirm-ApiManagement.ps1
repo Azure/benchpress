@@ -38,12 +38,12 @@ function Confirm-ApiManagement {
     [string]$Name
   )
   Begin {
-    $ConnectResults = Connect-Account
+    $connectResults = Connect-Account
   }
   Process {
-    $Resource = Get-AzApiManagement -ResourceGroupName $ResourceGroupName -Name $Name
+    $resource = Get-AzApiManagement -ResourceGroupName $ResourceGroupName -Name $Name
 
-    [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+    [ConfirmResult]::new($resource, $connectResults.AuthenticationData)
   }
   End { }
 }

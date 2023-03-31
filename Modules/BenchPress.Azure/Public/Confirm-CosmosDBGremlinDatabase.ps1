@@ -44,7 +44,7 @@ function Confirm-CosmosDBGremlinDatabase {
     [string]$Name
   )
   Begin {
-    $ConnectResults = Connect-Account
+    $connectResults = Connect-Account
   }
   Process {
     $params = @{
@@ -52,9 +52,9 @@ function Confirm-CosmosDBGremlinDatabase {
       AccountName       = $AccountName
       Name              = $Name
     }
-    $Resource = Get-AzCosmosDBGremlinDatabase @params
+    $resource = Get-AzCosmosDBGremlinDatabase @params
 
-    [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+    [ConfirmResult]::new($resource, $connectResults.AuthenticationData)
   }
   End { }
 }

@@ -38,12 +38,12 @@ function Confirm-SynapseWorkspace {
     [string]$ResourceGroupName
   )
   Begin {
-    $ConnectResults = Connect-Account
+    $connectResults = Connect-Account
   }
   Process {
-    $Resource = Get-AzSynapseWorkspace -ResourceGroupName $ResourceGroupName -Name $WorkspaceName
+    $resource = Get-AzSynapseWorkspace -ResourceGroupName $ResourceGroupName -Name $WorkspaceName
 
-    [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+    [ConfirmResult]::new($resource, $connectResults.AuthenticationData)
   }
   End { }
 }

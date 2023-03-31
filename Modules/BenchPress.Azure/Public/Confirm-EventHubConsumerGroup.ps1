@@ -50,7 +50,7 @@ function Confirm-EventHubConsumerGroup {
     [string]$ResourceGroupName
   )
   Begin {
-    $ConnectResults = Connect-Account
+    $connectResults = Connect-Account
   }
   Process {
     $params = @{
@@ -60,9 +60,9 @@ function Confirm-EventHubConsumerGroup {
       ResourceGroupName = $ResourceGroupName
     }
 
-    $Resource = Get-AzEventHubConsumerGroup @params
+    $resource = Get-AzEventHubConsumerGroup @params
 
-    [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+    [ConfirmResult]::new($resource, $connectResults.AuthenticationData)
   }
   End { }
 }

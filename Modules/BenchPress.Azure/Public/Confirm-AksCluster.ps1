@@ -37,12 +37,12 @@ function Confirm-AksCluster {
     [string]$ResourceGroupName
   )
   Begin {
-    $ConnectResults = Connect-Account
+    $connectResults = Connect-Account
   }
   Process {
-    $Resource = Get-AzAksCluster -ResourceGroupName $ResourceGroupName -Name $AksName
+    $resource = Get-AzAksCluster -ResourceGroupName $ResourceGroupName -Name $AksName
 
-    [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+    [ConfirmResult]::new($resource, $connectResults.AuthenticationData)
   }
   End { }
 }

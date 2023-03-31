@@ -34,17 +34,17 @@ function Get-RequiredEnvironmentVariable {
     [string]$VariableName
   )
   Begin {
-    $Value = [string]$null
+    $value = [string]$null
   }
   Process {
-    $Value = [System.Environment]::GetEnvironmentVariable($VariableName)
+    $value = [System.Environment]::GetEnvironmentVariable($VariableName)
 
-    if ([string]::IsNullOrWhiteSpace($Value)) {
+    if ([string]::IsNullOrWhiteSpace($value)) {
       Write-Error "Missing Required Environment Variable $VariableName"
       exit 1
     }
   }
   End {
-    return $Value
+    return $value
   }
 }

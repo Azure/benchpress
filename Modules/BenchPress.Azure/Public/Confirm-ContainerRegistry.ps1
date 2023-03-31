@@ -38,12 +38,12 @@ function Confirm-ContainerRegistry {
     [string]$ResourceGroupName
   )
   Begin {
-    $ConnectResults = Connect-Account
+    $connectResults = Connect-Account
   }
   Process {
-    $Resource = Get-AzContainerRegistry -ResourceGroupName $ResourceGroupName -Name $Name
+    $resource = Get-AzContainerRegistry -ResourceGroupName $ResourceGroupName -Name $Name
 
-    [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+    [ConfirmResult]::new($resource, $connectResults.AuthenticationData)
   }
   End { }
 }

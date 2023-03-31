@@ -38,12 +38,12 @@ function Confirm-SqlServer {
     [string]$ResourceGroupName
   )
   Begin {
-    $ConnectResults = Connect-Account
+    $connectResults = Connect-Account
   }
   Process {
-      $Resource = Get-AzSqlServer -ResourceGroupName $ResourceGroupName -ServerName $ServerName
+      $resource = Get-AzSqlServer -ResourceGroupName $ResourceGroupName -ServerName $ServerName
 
-      [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+      [ConfirmResult]::new($resource, $connectResults.AuthenticationData)
   }
   End { }
 }
