@@ -1,6 +1,5 @@
-
-param location string = resourceGroup().location
 param aksName string = 'aks${take(uniqueString(resourceGroup().id), 5)}'
+param location string = resourceGroup().location
 
 resource aksCluster 'Microsoft.ContainerService/managedClusters@2022-09-01' = {
   name: aksName
