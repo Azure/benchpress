@@ -22,6 +22,7 @@ enum ResourceType{
   KeyVault
   OperationalInsightsWorkspace
   ResourceGroup
+  RoleAssignment
   SqlDatabase
   SqlServer
   StorageAccount

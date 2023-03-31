@@ -1,107 +1,112 @@
 BeforeAll {
-  Import-Module "../../BenchPress/Helpers/BenchPress.Azure/BenchPress.Azure.psd1"
+  # Navigate to ../../docs/installation.md to build BenchPress module"
+
+  #Import-Module "../../bin/BenchPress.Azure.psd1"
+
+  $Script:rgName = "benchpress-rg-${env:ENVIRONMENT_SUFFIX}"
+  $Script:webAppName = "benchpress-web-${env:ENVIRONMENT_SUFFIX}"
 }
 
 Describe 'Resource Group Tests' {
   it 'Should contain a resource group with the given name' {
     #arrange
-    $rgName = "benchpress-rg-${env:ENVIRONMENT_SUFFIX}"
+    $params = @{
+      ResourceType = 'ResourceGroup'
+      ResourceName = $rgName
+    }
 
     #act
-    $resourceGroup = Get-AzBPResourceGroup -ResourceGroupName $rgName
-
-    #assert
-    $resourceGroup | Should -Not -Be $null
+    Confirm-AzBPResource @params | Should -BeDeployed
   }
 }
 
 Describe 'Service Plan Tests' {
   it 'Should contain a service plan with the given name' {
     #arrange
-    $rgName = "benchpress-rg-${env:ENVIRONMENT_SUFFIX}"
     $svcPlanName = "benchpress-hosting-plan-${env:ENVIRONMENT_SUFFIX}"
 
-    #act
-    $servicePlan = Get-AzBPAppServicePlan -ResourceGroupName $rgName -AppServicePlanName $svcPlanName
+    $params = @{
+      ResourceType      = 'Appserviceplan'
+      ResourceName      = $svcPlanName
+      ResourceGroupName = $rgName
+    }
 
-    #assert
-    $servicePlan | Should -Not -Be $null
+    #act
+    Confirm-AzBPResource @params | Should -BeDeployed
   }
 }
 
 Describe 'Action Group Tests' {
   it 'Should contain an email action group with the given name' {
     #arrange
-    $rgName = "benchpress-rg-${env:ENVIRONMENT_SUFFIX}"
     $agName = "benchpress-email-action-group-${env:ENVIRONMENT_SUFFIX}"
+    $params = @{
+      ResourceType      = 'ActionGroup'
+      ResourceName      = $agName
+      ResourceGroupName = $rgName
+    }
 
     #act
-    $ag = Get-AzBPActionGroup -ResourceGroupName $rgName -ActionGroupName $agName
-
-    #assert
-    $ag | Should -Not -Be $null
+    Confirm-AzBPResource @params | Should -BeDeployed
   }
 }
 
 Describe 'Web Apps Tests' {
   it 'Should contain a web app with the given name' {
     #arrange
-    $rgName = "benchpress-rg-${env:ENVIRONMENT_SUFFIX}"
-    $webAppName = "benchpress-web-${env:ENVIRONMENT_SUFFIX}"
+    $params = @{
+      ResourceType      = 'WebApp'
+      ResourceName      = $webAppName
+      ResourceGroupName = $rgName
+    }
 
     #act
-    $webApp = Get-AzBPWebApp -ResourceGroupName $rgName -WebAppName $webAppName
-
-    #assert
-    $webApp | Should -Not -Be $null
+    Confirm-AzBPResource @params | Should -BeDeployed
   }
 
   it 'Should have the web app availability state as normal' {
     #arrange
-    $rgName = "benchpress-rg-${env:ENVIRONMENT_SUFFIX}"
-    $webAppName = "benchpress-web-${env:ENVIRONMENT_SUFFIX}"
+    $params = @{
+      ResourceType      = 'WebApp'
+      ResourceName      = $webAppName
+      ResourceGroupName = $rgName
+      PropertyKey       = 'AvailabilityState'
+      PropertyValue     = 'Normal'
+    }
 
     #act
-    $webApp = Get-AzBPWebApp -ResourceGroupName $rgName -WebAppName $webAppName
-
-    #assert
-    $webApp.AvailabilityState | Should -Be "Normal"
+    Confirm-AzBPResource @params | Should -BeDeployed
   }
 
   it 'Should have the web app works https only' {
-    #arrange
-    $rgName = "benchpress-rg-${env:ENVIRONMENT_SUFFIX}"
-    $webAppName = "benchpress-web-${env:ENVIRONMENT_SUFFIX}"
+    $params = @{
+      ResourceType      = 'WebApp'
+      ResourceName      = $webAppName
+      ResourceGroupName = $rgName
+      PropertyKey       = 'HttpsOnly'
+      PropertyValue     = $true
+    }
 
     #act
-    $webApp = Get-AzBPWebApp -ResourceGroupName $rgName -WebAppName $webAppName
-
-    #assert
-    $webApp.HttpsOnly | Should -Be $true
-  }
-
-  it 'Should contain configuration in the web app' {
-    #arrange
-    $rgName = "benchpress-rg-${env:ENVIRONMENT_SUFFIX}"
-    $webAppName = "benchpress-web-${env:ENVIRONMENT_SUFFIX}"
-
-    #act
-    $webApp = Get-AzBPWebApp -ResourceGroupName $rgName -WebAppName $webAppName
-
-    #assert
-    $webApp.SiteConfig.AppSettings | Should -Not -BeNullOrEmpty
+    Confirm-AzBPResource @params | Should -BeDeployed
   }
 
   it 'Should contain application insights configuration in the web app' {
     #arrange
-    $rgName = "benchpress-rg-${env:ENVIRONMENT_SUFFIX}"
-    $webAppName = "benchpress-web-${env:ENVIRONMENT_SUFFIX}"
+    $params = @{
+      ResourceType      = 'WebApp'
+      ResourceName      = $webAppName
+      ResourceGroupName = $rgName
+      PropertyKey       = 'SiteConfig.AppSettings[1].Name'
+      PropertyValue     = 'APPLICATIONINSIGHTS_CONNECTION_STRING'
+    }
 
     #act
-    $webApp = Get-AzBPWebApp -ResourceGroupName $rgName -WebAppName $webAppName
-    $aiAppSetting = $webApp.SiteConfig.AppSettings | Where-object {$_.Name -eq "APPLICATIONINSIGHTS_CONNECTION_STRING"} | Select-Object -First 1
-
-    #assert
-    $aiAppSetting | Should -Not -BeNullOrEmpty
+    Confirm-AzBPResource @params | Should -BeDeployed
   }
+}
+
+AfterAll {
+  Get-Module Az-InfrastructureTesting | Remove-Module
+  Get-Module BenchPress.Azure | Remove-Module
 }
