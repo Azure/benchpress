@@ -138,6 +138,7 @@ function Confirm-Resource {
       RoleDefinitionName = $RoleDefinitionName
       Scope              = $Scope
       ServicePrincipalId = $ServicePrincipalId
+      ServiceName        = $ServiceName
     }
 
     $ConfirmResult = Get-ResourceByType @ResourceParams
