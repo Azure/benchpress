@@ -16,10 +16,7 @@ Describe 'Resource Group Tests' {
     }
 
     #act
-    $resourceGroup = Confirm-AzBPResource @params
-
-    #assert
-    $resourceGroup | Should -BeDeployed
+    Confirm-AzBPResource @params | Should -BeDeployed
   }
 }
 
@@ -35,10 +32,7 @@ Describe 'Service Plan Tests' {
     }
 
     #act
-    $servicePlan = Confirm-AzBPResource @params
-
-    #assert
-    $servicePlan | Should -BeDeployed
+    Confirm-AzBPResource @params | Should -BeDeployed
   }
 }
 
@@ -52,12 +46,8 @@ Describe 'Action Group Tests' {
       ResourceGroupName = $rgName
     }
 
-
     #act
-    $ag = Confirm-AzBPResource @params
-
-    #assert
-    $ag | Should -BeDeployed
+    Confirm-AzBPResource @params | Should -BeDeployed
   }
 }
 
@@ -71,10 +61,7 @@ Describe 'Web Apps Tests' {
     }
 
     #act
-    $webApp = Confirm-AzBPResource @params
-
-    #assert
-    $webApp | Should -BeDeployed
+    Confirm-AzBPResource @params | Should -BeDeployed
   }
 
   it 'Should have the web app availability state as normal' {
@@ -88,10 +75,7 @@ Describe 'Web Apps Tests' {
     }
 
     #act
-    $webApp = Confirm-AzBPResource @params
-
-    #assert
-    $webApp | Should -BeDeployed
+    Confirm-AzBPResource @params | Should -BeDeployed
   }
 
   it 'Should have the web app works https only' {
@@ -104,10 +88,7 @@ Describe 'Web Apps Tests' {
     }
 
     #act
-    $webApp = Confirm-AzBPResource @params
-
-    #assert
-    $webApp | Should -BeDeployed
+    Confirm-AzBPResource @params | Should -BeDeployed
   }
 
   it 'Should contain application insights configuration in the web app' {
@@ -121,10 +102,7 @@ Describe 'Web Apps Tests' {
     }
 
     #act
-    $webApp = Confirm-AzBPResource @params
-
-    #assert
-    $webApp | Should -BeDeployed
+    Confirm-AzBPResource @params | Should -BeDeployed
   }
 }
 
