@@ -45,6 +45,6 @@
     }
   }
   End {
-    return $value
+    $value
   }
 }
