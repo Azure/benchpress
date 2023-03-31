@@ -55,6 +55,7 @@ jobs:
         shell: pwsh
         run: |
           Install-Module -Name Az -Scope CurrentUser -Repository PSGallery -Force
+          Install-Module -Name Az.App -Scope CurrentUser -Repository PSGallery -Force
           Publish-Module -Path ./BenchPress.Azure -Repository LocalFeedPSRepo -Verbose
       - name: Install AzBP Module from the repository
         shell: pwsh

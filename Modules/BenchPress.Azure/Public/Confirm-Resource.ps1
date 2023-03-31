@@ -78,26 +78,26 @@ function Confirm-Resource {
   [CmdletBinding()]
   [OutputType([ConfirmResult])]
   param (
-    [Parameter(Mandatory = $true)]
-    [ResourceType]$ResourceType,
-
     [Parameter(Mandatory = $false)]
     [string]$ResourceName,
 
     [Parameter(Mandatory = $false)]
     [string]$ResourceGroupName,
 
-    [Parameter(Mandatory = $false)]
-    [string]$NamespaceName,
-
-    [Parameter(Mandatory = $false)]
-    [string]$EventHubName,
+    [Parameter(Mandatory = $true)]
+    [ResourceType]$ResourceType,
 
     [Parameter(Mandatory = $false)]
     [string]$ServerName,
 
     [Parameter(Mandatory = $false)]
     [string]$DataFactoryName,
+
+    [Parameter(Mandatory = $false)]
+    [string]$NamespaceName,
+
+    [Parameter(Mandatory = $false)]
+    [string]$EventHubName,
 
     [Parameter(Mandatory = $false)]
     [string]$WorkspaceName,
@@ -113,6 +113,9 @@ function Confirm-Resource {
 
     [Parameter(Mandatory = $false)]
     [string]$AccountName,
+
+    [Parameter(Mandatory = $false)]
+    [string]$ServiceName,
 
     [Parameter(Mandatory = $false)]
     [string]$PropertyKey,
