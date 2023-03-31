@@ -1,14 +1,16 @@
-param name string = 'aks${take(uniqueString(resourceGroup().id), 5)}'
+
 param location string = resourceGroup().location
 
+param aksName string = 'aks${take(uniqueString(resourceGroup().id), 5)}'
+
 resource aksCluster 'Microsoft.ContainerService/managedClusters@2022-09-01' = {
-  name: name
+  name: aksName
   location: location
   identity: {
     type: 'SystemAssigned'
   }
   properties: {
-    dnsPrefix: '${name}-dns'
+    dnsPrefix: '${aksName}-dns'
     agentPoolProfiles: [
       {
         name: 'agentpool'
@@ -19,5 +21,20 @@ resource aksCluster 'Microsoft.ContainerService/managedClusters@2022-09-01' = {
         mode: 'System'
       }
     ]
+  }
+}
+
+param agentPoolName string = 'ap${take(uniqueString(resourceGroup().id), 5)}'
+
+resource agentPool 'Microsoft.ContainerService/managedClusters/agentPools@2022-09-01' = {
+  name: agentPoolName
+  parent: aksCluster
+  properties: {
+    availabilityZones: []
+    enableAutoScaling: false
+    count: 1
+    mode: 'User'
+    osType: 'Linux'
+    vmSize: 'Standard_B4ms'
   }
 }

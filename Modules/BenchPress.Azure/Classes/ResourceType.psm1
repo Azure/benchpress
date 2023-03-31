@@ -1,6 +1,7 @@
 enum ResourceType{
   ActionGroup
   AksCluster
+  AksNodePool
   ApiManagement
   ApiManagementApi
   ApiManagementDiagnostic

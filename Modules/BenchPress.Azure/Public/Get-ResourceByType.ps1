@@ -64,6 +64,10 @@ function Get-ResourceByType {
       If the Azure resource is associated with a service (e.g, API Management Service) this is the parameter to use to
       pass the service name.
 
+    .PARAMETER ClusterName
+      If the Azure resource is associated with an AKS Cluster (e.g, AKS Node Pool) this is the parameter to use to pass
+      the AKS cluster name.
+
     .EXAMPLE
       Get-AzBPResourceByType -ResourceType ActionGroup -ResourceName "bpactiongroup" -ResourceGroupName "rgbenchpresstest"
 
@@ -116,7 +120,10 @@ function Get-ResourceByType {
     [string]$RoleDefinitionName,
 
     [Parameter(Mandatory = $false)]
-    [string]$ServiceName
+    [string]$ServiceName,
+
+    [Parameter(Mandatory = $false)]
+    [string]$ClusterName
   )
   Begin { }
   Process {
@@ -126,6 +133,14 @@ function Get-ResourceByType {
       }
       "AksCluster" {
         return Confirm-AksCluster -AKSName $ResourceName -ResourceGroupName $ResourceGroupName
+      }
+      "AksNodePool" {
+        $params = @{
+          ResourceGroupName = $ResourceGroupName
+          ClusterName = $ClusterName
+          Name = $ResourceName
+        }
+        return Confirm-AksNodePool @params
       }
       "ApiManagement" {
         return Confirm-ApiManagement -ResourceGroupName $ResourceGroupName -Name $ResourceName

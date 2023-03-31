@@ -40,6 +40,10 @@ function Confirm-Resource {
     .PARAMETER AccountName
       If the Azure resource has an associated account name (e.g., Cosmos DB SQL Database, Storage Container)
 
+    .PARAMETER ClusterName
+      If the Azure resource is associated with an AKS Cluster (e.g, AKS Node Pool) this is the parameter to use to pass
+      the AKS cluster name.
+
     .PARAMETER PropertyKey
       The name of the property to check on the resource
 
@@ -118,6 +122,9 @@ function Confirm-Resource {
     [string]$ServiceName,
 
     [Parameter(Mandatory = $false)]
+    [string]$ClusterName,
+
+    [Parameter(Mandatory = $false)]
     [string]$PropertyKey,
 
     [Parameter(Mandatory = $false)]
@@ -139,6 +146,7 @@ function Confirm-Resource {
       Scope              = $Scope
       ServicePrincipalId = $ServicePrincipalId
       ServiceName        = $ServiceName
+      ClusterName        = $ClusterName
     }
 
     $ConfirmResult = Get-ResourceByType @ResourceParams
