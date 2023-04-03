@@ -1,13 +1,13 @@
 ﻿BeforeAll {
   Import-Module Az.InfrastructureTesting
 
-  $Script:rgName = 'testrg'
+  $Script:rgName = 'rg-test'
   $Script:location = 'westus3'
 }
 
 Describe 'Verify Stream Analytics Cluster' {
   BeforeAll {
-    $Script:clusterName = 'clstrnqpogp'
+    $Script:clusterName = 'teststreamcluster'
   }
 
   It 'Should contain a Stream Analytics Cluster with the given name - Confirm-AzBPResource' {

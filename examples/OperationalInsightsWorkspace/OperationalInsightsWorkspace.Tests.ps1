@@ -54,7 +54,7 @@ Describe 'Verify Operational Insights Workspace Exists' {
     }
 
     #act and asssert
-    Confirm-AzBPOperationalInsightsWorkspace @params -ErrorAction SilentlyContinue | Should -Not -BeSuccessful
+    Confirm-AzBPOperationalInsightsWorkspace @params | Should -Not -BeSuccessful
   }
 
   It "Should contain a Operational Insights Workspace named $oiwName in $location" {

@@ -6,15 +6,19 @@ BeforeAll {
 
 Describe "ShouldBeSuccessful" {
   Context "unit tests" -Tag "Unit" {
-    It "Should be deployed with a ConfirmResult object" {
+    It "Should be successful with a ConfirmResult object" {
       $mockResource = [PSCustomObject]@{
         Name = 'mockValue'
       }
       [ConfirmResult]::new($mockResource, $null) | Should -BeSuccessful
     }
-  }
 
-  It "Should fail if ConfirmResult is null" {
-    { $null | Should -BeSuccessful } | Should -Throw -ErrorId 'PesterAssertionFailed'
+    It "Should not be successful with a negative ConfirmResult object" {
+      [ConfirmResult]::new($null, $null) | Should -Not -BeSuccessful
+    }
+
+    It "Should fail if ConfirmResult is null" {
+      { $null | Should -BeSuccessful } | Should -Throw -ErrorId 'PesterAssertionFailed'
+    }
   }
 }

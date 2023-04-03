@@ -62,7 +62,7 @@ Describe 'Verify Sql Database' {
       ErrorAction       = "SilentlyContinue"
     }
 
-    Confirm-AzBPSqlDatabase @params -ErrorAction SilentlyContinue | Should -Not -BeSuccessful
+    Confirm-AzBPSqlDatabase @params | Should -Not -BeSuccessful
   }
 
   It "Should contain a Sql Database named $databaseName in $location" {

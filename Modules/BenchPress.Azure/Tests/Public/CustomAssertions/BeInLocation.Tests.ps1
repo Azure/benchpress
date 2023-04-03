@@ -58,12 +58,14 @@ Describe "ShouldBeInLocation" {
 
     It "Should fail if location empty" {
       $mockResource = [PSCustomObject]@{}
-      { [ConfirmResult]::new($mockResource, $null) | Should -BeInLocation 'eastus' }  | Should -Throw -ErrorId 'PesterAssertionFailed'
+      { [ConfirmResult]::new($mockResource, $null) | Should -BeInLocation 'eastus' }
+      | Should -Throw -ErrorId 'PesterAssertionFailed'
     }
 
     It "Should fail if location empty with '-Not'" {
       $mockResource = [PSCustomObject]@{}
-      { [ConfirmResult]::new($mockResource, $null) | Should -Not -BeInLocation 'eastus' }  | Should -Throw -ErrorId 'PesterAssertionFailed'
+      { [ConfirmResult]::new($mockResource, $null) | Should -Not -BeInLocation 'eastus' }
+      | Should -Throw -ErrorId 'PesterAssertionFailed'
     }
   }
 }

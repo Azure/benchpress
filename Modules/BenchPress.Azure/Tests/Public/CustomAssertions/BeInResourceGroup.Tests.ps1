@@ -58,26 +58,30 @@ Describe "ShouldBeInResourceGroup" {
 
     It "Should fail if ResourceGroupName or ResourceGroup empty" {
       $mockResource = [PSCustomObject]@{}
-      { [ConfirmResult]::new($mockResource, $null)| Should -BeInResourceGroup 'fakerg' }  | Should -Throw -ErrorId 'PesterAssertionFailed'
+      { [ConfirmResult]::new($mockResource, $null)| Should -BeInResourceGroup 'fakerg' }
+      | Should -Throw -ErrorId 'PesterAssertionFailed'
     }
 
     It "Should fail if ResourceGroupName or ResourceGroup empty with '-Not'" {
       $mockResource = [PSCustomObject]@{}
-      { [ConfirmResult]::new($mockResource, $null)| Should -Not -BeInResourceGroup 'fakerg' }  | Should -Throw -ErrorId 'PesterAssertionFailed'
+      { [ConfirmResult]::new($mockResource, $null)| Should -Not -BeInResourceGroup 'fakerg' }
+      | Should -Throw -ErrorId 'PesterAssertionFailed'
     }
 
     It "Should fail if Id is the wrong format" {
       $mockResource = [PSCustomObject]@{
         Id = 'https://myvault.vault.azure.net/keys/my-key/version'
       }
-      { [ConfirmResult]::new($mockResource, $null) | Should -BeInResourceGroup 'fakerg' } | Should -Throw -ErrorId 'PesterAssertionFailed'
+      { [ConfirmResult]::new($mockResource, $null) | Should -BeInResourceGroup 'fakerg' }
+      | Should -Throw -ErrorId 'PesterAssertionFailed'
     }
 
     It "Should fail if Id is the wrong format with '-Not'" {
       $mockResource = [PSCustomObject]@{
         Id = 'https://myvault.vault.azure.net/keys/my-key/version'
       }
-      { [ConfirmResult]::new($mockResource, $null) | Should -Not -BeInResourceGroup 'fakerg' } | Should -Throw -ErrorId 'PesterAssertionFailed'
+      { [ConfirmResult]::new($mockResource, $null) | Should -Not -BeInResourceGroup 'fakerg' }
+      | Should -Throw -ErrorId 'PesterAssertionFailed'
     }
   }
 }
