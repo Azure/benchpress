@@ -79,7 +79,7 @@ Describe 'Verify Container Application Managed Environment' {
     (Confirm-AzBPResource @params).Success | Should -Be $true
   }
 
-  It "Should contain a Container Application Managed Environment with a name of $managedEnvName -
+  It "Should contain a Container Application Managed Environment named $managedEnvName -
     Confirm-AzBPResource" {
     $params = @{
       ResourceType      = "ContainerAppManagedEnv"
