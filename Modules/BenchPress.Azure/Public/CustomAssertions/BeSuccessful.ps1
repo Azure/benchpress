@@ -1,21 +1,17 @@
-function ShouldBeDeployed ($ActualValue, [switch] $Negate, [string] $Because) {
+﻿function ShouldBeSuccessful ($ActualValue, [switch] $Negate, [string] $Because) {
   <#
     .SYNOPSIS
       Custom Assertion function to check status on a resource deployment.
 
     .DESCRIPTION
-      BeDeployed is a custom assertion that checks the provided ConfirmResult Object for deployment success.
+      BeSuccessful is a custom assertion that checks the provided ConfirmResult Object for deployment success.
       It can be used when writing Pester tests.
 
     .EXAMPLE
-      $result = Confirm-AzBPResourceGroup -ResourceGroupName $rgName
-
-      $result | Should -BeDeployed
+      Confirm-AzBPResourceGroup -ResourceGroupName $rgName | Should -BeSuccessful
 
     .EXAMPLE
-      $result = Confirm-AzBPResourceGroup -ResourceGroupName $rgName
-
-      $result | Should -Not -BeDeployed
+      Confirm-AzBPResourceGroup -ResourceGroupName $rgName | Should -Not -BeSuccessful
 
     .INPUTS
       ConfirmResult
@@ -48,7 +44,7 @@ function ShouldBeDeployed ($ActualValue, [switch] $Negate, [string] $Because) {
   }
 }
 
-Add-ShouldOperator -Name BeDeployed `
-    -InternalName 'ShouldBeDeployed' `
-    -Test ${function:ShouldBeDeployed} `
-    -Alias 'SBD'
+Add-ShouldOperator -Name BeSuccessful `
+    -InternalName 'ShouldBeSuccessful' `
+    -Test ${function:ShouldBeSuccessful} `
+    -Alias 'SBS'

@@ -123,7 +123,10 @@ function Get-ResourceByType {
     [string]$ServiceName,
 
     [Parameter(Mandatory = $false)]
-    [string]$ClusterName
+    [string]$ClusterName,
+
+    [Parameter(Mandatory = $false)]
+    [string]$JobName
   )
   Begin { }
   Process {
@@ -190,7 +193,7 @@ function Get-ResourceByType {
         return Confirm-ContainerRegistry -Name $ResourceName -ResourceGroupName $ResourceGroupName
       }
       "CosmosDBAccount" {
-        return Confirm-CosmosDBAccount -ResourceGroupName $ResourceGroupName -Name $AccountName
+        return Confirm-CosmosDBAccount -ResourceGroupName $ResourceGroupName -Name $ResourceName
       }
       "CosmosDBGremlinDatabase" {
         $params = @{
@@ -293,7 +296,7 @@ function Get-ResourceByType {
         $params = @{
           ResourceGroupName = $ResourceGroupName
           JobName = $JobName
-          Name = $Name
+          Name = $ResourceName
         }
         return Confirm-StreamAnalyticsFunction @params
       }
@@ -301,7 +304,7 @@ function Get-ResourceByType {
         $params = @{
           ResourceGroupName = $ResourceGroupName
           JobName = $JobName
-          Name = $Name
+          Name = $ResourceName
         }
         return Confirm-StreamAnalyticsInput @params
       }
@@ -312,7 +315,7 @@ function Get-ResourceByType {
         $params = @{
           ResourceGroupName = $ResourceGroupName
           JobName = $JobName
-          Name = $Name
+          Name = $ResourceName
         }
         return Confirm-StreamAnalyticsOutput @params
       }
@@ -320,7 +323,7 @@ function Get-ResourceByType {
         $params = @{
           ResourceGroupName = $ResourceGroupName
           JobName = $JobName
-          Name = $Name
+          Name = $ResourceName
         }
         return Confirm-StreamAnalyticsTransformation @params
       }
