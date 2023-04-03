@@ -61,7 +61,8 @@ Describe 'Verify Virtual Machine' {
   }
 
   It "Should be a Virtual Machine in a resource group named $rgName" {
-    Confirm-AzBPVirtualMachine -ResourceGroupName $rgName -VirtualMachineName $vmName | Should -BeInResourceGroup $rgName
+    Confirm-AzBPVirtualMachine -ResourceGroupName $rgName -VirtualMachineName $vmName
+    | Should -BeInResourceGroup $rgName
   }
 }
 

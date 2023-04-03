@@ -62,7 +62,8 @@ Describe 'Verify Operational Insights Workspace Exists' {
   }
 
   It "Should be a Operational Insights Workspace in a resource group named $rgName" {
-    Confirm-AzBPOperationalInsightsWorkspace -ResourceGroupName $rgName -Name $oiwName | Should -BeInResourceGroup $rgName
+    Confirm-AzBPOperationalInsightsWorkspace -ResourceGroupName $rgName -Name $oiwName
+    | Should -BeInResourceGroup $rgName
   }
 }
 

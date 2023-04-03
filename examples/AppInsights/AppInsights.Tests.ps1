@@ -45,7 +45,8 @@ Describe 'Verify App Insights' {
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
-    Confirm-AzBPAppInsights -ResourceGroupName $rgName -Name $noAppInsightsName -ErrorAction SilentlyContinue | Should -Not -BeSuccessful
+    Confirm-AzBPAppInsights -ResourceGroupName $rgName -Name $noAppInsightsName -ErrorAction SilentlyContinue
+    | Should -Not -BeSuccessful
   }
 
   It "Should contain an App Insights named $appInsightsName in $location" {

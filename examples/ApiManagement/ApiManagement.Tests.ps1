@@ -121,7 +121,7 @@ Describe 'Verify API Management API' {
 
   It "Should be an API Management API in a resource group named $rgName" {
     Confirm-AzBPApiManagementApi -ResourceGroupName $rgName -ServiceName $apiServiceName -Name $apiName
-      | Should -BeInResourceGroup $rgName
+    | Should -BeInResourceGroup $rgName
   }
 }
 

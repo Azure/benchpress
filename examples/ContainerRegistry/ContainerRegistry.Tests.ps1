@@ -45,7 +45,12 @@ Describe 'Verify Container Registry' {
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
-    Confirm-AzBPContainerRegistry -ResourceGroupName $rgName -Name $noContainerRegistryName -ErrorAction SilentlyContinue | Should -Not -BeSuccessful
+    $params = @{
+      ResourceGroupName     = $rgName
+      Name                  = $noContainerRegistryName
+      ErrorAction           = "SilentlyContinue"
+    }
+    Confirm-AzBPContainerRegistry @params | Should -Not -BeSuccessful
   }
 
   It "Should contain a Container Registry named $acrName in $location" {

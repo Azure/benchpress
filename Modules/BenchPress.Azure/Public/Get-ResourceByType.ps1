@@ -107,7 +107,10 @@ function Get-ResourceByType {
     [string]$AccountName,
 
     [Parameter(Mandatory = $false)]
-    [string]$ServiceName
+    [string]$ServiceName, 
+
+    [Parameter(Mandatory = $false)]
+    [string]$JobName
   )
   Begin { }
   Process {
@@ -261,7 +264,7 @@ function Get-ResourceByType {
         $params = @{
           ResourceGroupName = $ResourceGroupName
           JobName = $JobName
-          Name = $Name
+          Name = $ResourceName
         }
         return Confirm-StreamAnalyticsFunction @params
       }
@@ -269,7 +272,7 @@ function Get-ResourceByType {
         $params = @{
           ResourceGroupName = $ResourceGroupName
           JobName = $JobName
-          Name = $Name
+          Name = $ResourceName
         }
         return Confirm-StreamAnalyticsInput @params
       }
@@ -280,7 +283,7 @@ function Get-ResourceByType {
         $params = @{
           ResourceGroupName = $ResourceGroupName
           JobName = $JobName
-          Name = $Name
+          Name = $ResourceName
         }
         return Confirm-StreamAnalyticsOutput @params
       }
@@ -288,7 +291,7 @@ function Get-ResourceByType {
         $params = @{
           ResourceGroupName = $ResourceGroupName
           JobName = $JobName
-          Name = $Name
+          Name = $ResourceName
         }
         return Confirm-StreamAnalyticsTransformation @params
       }

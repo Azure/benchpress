@@ -46,7 +46,8 @@ Describe 'Verify Storage Account' {
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
-    Confirm-AzBPStorageAccount -ResourceGroupName $rgName -Name $noAccountName -ErrorAction SilentlyContinue | Should -Not -BeSuccessful
+    Confirm-AzBPStorageAccount -ResourceGroupName $rgName -Name $noAccountName -ErrorAction SilentlyContinue
+    | Should -Not -BeSuccessful
   }
 
   It "Should contain a Storage Account named $accountName in $location" {

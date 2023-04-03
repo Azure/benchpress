@@ -133,15 +133,18 @@ Describe 'Verify EventHub Namespace' {
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
-    Confirm-AzBPEventHubNamespace -NamespaceName $noNamespaceName -ResourceGroupName $rgName | Should -Not -BeSuccessful
+    Confirm-AzBPEventHubNamespace -NamespaceName $noNamespaceName -ResourceGroupName $rgName
+    | Should -Not -BeSuccessful
   }
 
   It "Should contain an EventHub Namespace named $nameSpace in $location" {
-    Confirm-AzBPEventHubNamespace -NamespaceName $namespaceName -ResourceGroupName $rgName | Should -BeInLocation $location
+    Confirm-AzBPEventHubNamespace -NamespaceName $namespaceName -ResourceGroupName $rgName
+    | Should -BeInLocation $location
   }
 
   It "Should be in a resource group named $rgName" {
-    Confirm-AzBPEventHubNamespace -NamespaceName $namespaceName -ResourceGroupName $rgName | Should -BeInResourceGroup $rgName
+    Confirm-AzBPEventHubNamespace -NamespaceName $namespaceName -ResourceGroupName $rgName
+    | Should -BeInResourceGroup $rgName
   }
 }
 

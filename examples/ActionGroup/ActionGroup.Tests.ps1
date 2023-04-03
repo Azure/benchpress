@@ -45,15 +45,22 @@ Describe 'Verify Action Group' {
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
-    Confirm-AzBPActionGroup -ResourceGroupName $rgName -ActionGroupName $noActionGroupName -ErrorAction SilentlyContinue | Should -Not -BeSuccessful
+    $params = @{
+      ResourceGroupName = $rgName
+      ActionGroupName   = $noActionGroupName
+      ErrorAction       = "SilentlyContinue"
+    }
+    Confirm-AzBPActionGroup @params | Should -Not -BeSuccessful
   }
 
   It "Should contain an action group named $actionGroupName in $location" {
-    Confirm-AzBPActionGroup -ResourceGroupName $rgName -ActionGroupName $actionGroupName | Should -BeInLocation $location
+    Confirm-AzBPActionGroup -ResourceGroupName $rgName -ActionGroupName $actionGroupName
+    | Should -BeInLocation $location
   }
 
   It "Should be an action group named $actionGroupName in a resource group named $rgName" {
-    Confirm-AzBPActionGroup -ResourceGroupName $rgName -ActionGroupName $actionGroupName | Should -BeInResourceGroup $rgName
+    Confirm-AzBPActionGroup -ResourceGroupName $rgName -ActionGroupName $actionGroupName
+    | Should -BeInResourceGroup $rgName
   }
 }
 

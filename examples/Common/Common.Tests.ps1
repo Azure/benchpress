@@ -11,7 +11,8 @@ Describe 'Verify Resource Exists' {
   }
 
   It "Should have a virtual machine named $resourceName" {
-    Get-AzBPResourceByType -ResourceType "VirtualMachine" -ResourceName $resourceName -ResourceGroupName $rgName | Should -BeSuccessful
+    Get-AzBPResourceByType -ResourceType "VirtualMachine" -ResourceName $resourceName -ResourceGroupName $rgName
+    | Should -BeSuccessful
   }
 
   It "Should have a resource with name of $resourceName" {

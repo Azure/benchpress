@@ -1,13 +1,13 @@
 BeforeAll {
   Import-Module Az.InfrastructureTesting
 
-  $Script:rgName = 'rg-test'
+  $Script:rgName = 'testrg'
   $Script:location = 'westus3'
 }
 
 Describe 'Verify Stream Analytics Cluster' {
   BeforeAll {
-    $Script:clusterName = 'teststreamcluster'
+    $Script:clusterName = 'clstrnqpogp'
   }
 
   It 'Should contain a Stream Analytics Cluster with the given name - Confirm-AzBPResource' {
@@ -45,7 +45,8 @@ Describe 'Verify Stream Analytics Cluster' {
   }
 
   It "Should be a Stream Analytics Cluster in a resource group named $rgName" {
-    Confirm-AzBPStreamAnalyticsCluster -ResourceGroupName $rgName -Name $clusterName | Should -BeInResourceGroup $rgName
+    Confirm-AzBPStreamAnalyticsCluster -ResourceGroupName $rgName -Name $clusterName
+    | Should -BeInResourceGroup $rgName
   }
 }
 
@@ -131,7 +132,7 @@ Describe 'Stream Analytics Jobs' {
     $params = @{
       ResourceGroupName = $rgName
       JobName = $jobName
-      ResourceName = $functionName
+      Name = $functionName
     }
 
     #act
@@ -143,7 +144,7 @@ Describe 'Stream Analytics Jobs' {
     $params = @{
       ResourceGroupName = $rgName
       JobName = $jobName
-      ResourceName = $functionName
+      Name = $functionName
     }
 
     #act
@@ -185,7 +186,7 @@ Describe 'Stream Analytics Jobs' {
     $params = @{
       ResourceGroupName = $rgName
       JobName = $jobName
-      ResourceName = $inputName
+      Name = $inputName
     }
 
     #act
@@ -197,7 +198,7 @@ Describe 'Stream Analytics Jobs' {
     $params = @{
       ResourceGroupName = $rgName
       JobName = $jobName
-      ResourceName = $inputName
+      Name = $inputName
     }
 
     #act
@@ -239,7 +240,7 @@ Describe 'Stream Analytics Jobs' {
     $params = @{
       ResourceGroupName = $rgName
       JobName = $jobName
-      ResourceName = $outputName
+      Name = $outputName
     }
 
     #act
@@ -251,7 +252,7 @@ Describe 'Stream Analytics Jobs' {
     $params = @{
       ResourceGroupName = $rgName
       JobName = $jobName
-      ResourceName = $outputName
+      Name = $outputName
     }
 
     #act
