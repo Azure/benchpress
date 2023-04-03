@@ -1,4 +1,4 @@
-BeforeAll {
+﻿BeforeAll {
   Import-Module ../../bin/BenchPress.Azure.psm1
 
   $Script:rgName = 'rg-test'

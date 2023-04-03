@@ -1,4 +1,4 @@
-function ShouldBeSuccessful ($ActualValue, [switch] $Negate, [string] $Because) {
+﻿function ShouldBeSuccessful ($ActualValue, [switch] $Negate, [string] $Because) {
   <#
     .SYNOPSIS
       Custom Assertion function to check status on a resource deployment.

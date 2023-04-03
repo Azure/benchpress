@@ -1,4 +1,4 @@
-# How To Run KeyVault.Tests.ps1
+﻿# How To Run KeyVault.Tests.ps1
 
 `KeyVault.Tests.ps1` contains examples of using the `Confirm-AzBPKeyVault`, `Confirm-AzBPKeyVaultKey`,
 and `Confirm-AzBPKeyVaultSecret` cmdlets.

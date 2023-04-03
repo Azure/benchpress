@@ -1,4 +1,4 @@
-param location string = resourceGroup().location
+﻿param location string = resourceGroup().location
 param name string = 'str${take(uniqueString(resourceGroup().id), 6)}'
 
 resource storage 'Microsoft.Storage/storageAccounts@2022-09-01' = {
