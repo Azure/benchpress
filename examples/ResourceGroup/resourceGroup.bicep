@@ -1,4 +1,4 @@
-﻿targetScope = 'subscription'
+targetScope = 'subscription'
 
 param name string = 'rg${take(uniqueString(subscription().id), 5)}'
 param location string = deployment().location

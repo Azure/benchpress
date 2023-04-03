@@ -1,4 +1,4 @@
-﻿param synapseName string = 'synapse${take(uniqueString(resourceGroup().id), 5)}'
+param synapseName string = 'synapse${take(uniqueString(resourceGroup().id), 5)}'
 param location string = resourceGroup().location
 param adlsName string = 'adls${take(uniqueString(resourceGroup().id), 5)}'
 param adlsFsName string = 'fs${take(uniqueString(resourceGroup().id), 5)}'
