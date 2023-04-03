@@ -61,7 +61,7 @@ Describe 'Verify Synapse Workspace' {
       WorkspaceName = $noWorkspaceName
       ErrorAction = 'SilentlyContinue'
     }
-    
+
     #act and assert
     Confirm-AzBPSynapseWorkspace @params | Should -Not -BeSuccessful
   }
