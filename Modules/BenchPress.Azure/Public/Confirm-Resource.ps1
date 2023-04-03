@@ -118,6 +118,9 @@ function Confirm-Resource {
     [string]$ServiceName,
 
     [Parameter(Mandatory = $false)]
+    [string]$JobName,
+
+    [Parameter(Mandatory = $false)]
     [string]$PropertyKey,
 
     [Parameter(Mandatory = $false)]
@@ -129,6 +132,7 @@ function Confirm-Resource {
       ResourceType       = $ResourceType
       NamespaceName      = $NamespaceName
       EventHubName       = $EventHubName
+      JobName            = $JobName
       ResourceName       = $ResourceName
       ResourceGroupName  = $ResourceGroupName
       ServerName         = $ServerName
