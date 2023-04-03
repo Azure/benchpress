@@ -16,8 +16,8 @@ Confirms whether a resource exists or properties on a resource are configured co
 Confirm-AzBPResource [[-ResourceName] <String>] [[-ResourceGroupName] <String>] [-ResourceType] <ResourceType>
  [[-ServerName] <String>] [[-DataFactoryName] <String>] [[-NamespaceName] <String>] [[-EventHubName] <String>]
  [[-WorkspaceName] <String>] [[-ServicePrincipalId] <String>] [[-Scope] <String>]
- [[-RoleDefinitionName] <String>] [[-AccountName] <String>] [[-ServiceName] <String>] [[-PropertyKey] <String>]
- [[-PropertyValue] <String>] [<CommonParameters>]
+ [[-RoleDefinitionName] <String>] [[-AccountName] <String>] [[-ServiceName] <String>] [[-JobName] <String>]
+ [[-PropertyKey] <String>] [[-PropertyValue] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -260,6 +260,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -JobName
+{{ Fill JobName Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 14
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -PropertyKey
 The name of the property to check on the resource
 
@@ -269,7 +284,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 14
+Position: 15
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -284,7 +299,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 15
+Position: 16
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

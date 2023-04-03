@@ -17,7 +17,7 @@ Get-AzBPResourceByType [[-ResourceName] <String>] [[-ResourceGroupName] <String>
  [-ResourceType] <ResourceType> [[-ServerName] <String>] [[-DataFactoryName] <String>]
  [[-NamespaceName] <String>] [[-EventHubName] <String>] [[-WorkspaceName] <String>] [[-AccountName] <String>]
  [[-ServicePrincipalId] <String>] [[-Scope] <String>] [[-RoleDefinitionName] <String>]
- [[-ServiceName] <String>] [<CommonParameters>]
+ [[-ServiceName] <String>] [[-JobName] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -235,6 +235,21 @@ Aliases:
 
 Required: False
 Position: 13
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -JobName
+{{ Fill JobName Description }}
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 14
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
