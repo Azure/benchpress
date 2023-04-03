@@ -96,10 +96,6 @@ Describe 'Verify Container Application Managed Environment' {
     (Confirm-AzBPContainerAppManagedEnv -ResourceGroupName $rgName -Name $managedEnvName).Success | Should -Be $true
   }
 
-  It "Should contain a Container Application named $managedEnvName" {
-    Confirm-AzBPContainerAppManagedEnv -ResourceGroupName $rgName -Name $managedEnvName | Should -BeDeployed
-  }
-
   It "Should contain a Container Application named $managedEnvName in $location" {
     Confirm-AzBPContainerAppManagedEnv -ResourceGroupName $rgName -Name $managedEnvName
       | Should -BeInLocation $location
