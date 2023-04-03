@@ -150,6 +150,8 @@ BenchPress code and documentation:
 sourcing another file), or that execute `Import-Module` must be at the top of the file, and must be preceded by a line
 with the content `# INLINE_SKIP` and followed by a line with the content `# end INLINE_SKIP`. These denote to the build
 script that content which will not be built into the final inline module script.
+- If you add a new cmdlet and resource type to `Modules\BenchPress.Azure\Public`, you must also add the new type
+to the generator code at `BenchPress\Generators\ResourceTypes`.
 
 ## Thank You
 
