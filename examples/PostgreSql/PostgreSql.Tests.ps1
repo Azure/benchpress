@@ -17,7 +17,7 @@ Describe 'Verify PostgreSql Flexible Server' {
     }
 
     #act and assert
-    (Confirm-AzBPResource @params).Success | Should -Be $true
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
 
@@ -32,11 +32,11 @@ Describe 'Verify PostgreSql Flexible Server' {
     }
 
     #act and assert
-    (Confirm-AzBPResource @params).Success | Should -Be $true
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain a PostgreSQL Flexible Server named $serverName" {
-    (Confirm-AzBPPostgreSqlFlexibleServer -ResourceGroupName $rgName -Server $serverName).Success | Should -Be $true
+    Confirm-AzBPPostgreSqlFlexibleServer -ResourceGroupName $rgName -Server $serverName | Should -BeSuccessful
   }
 
   It "Should not contain a PostgreSQL Flexible Server named $noServerName" {
@@ -52,11 +52,7 @@ Describe 'Verify PostgreSql Flexible Server' {
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
-    (Confirm-AzBPPostgreSqlFlexibleServer @params).Success | Should -Be $false
-  }
-
-  It "Should contain a PostgreSQL Flexible Server named $serverName" {
-    Confirm-AzBPPostgreSqlFlexibleServer -ResourceGroupName $rgName -Name $serverName | Should -BeDeployed
+    Confirm-AzBPPostgreSqlFlexibleServer @params | Should -Not -BeSuccessful
   }
 
   It "Should contain a PostgreSQL Flexible Server named $serverName in $location" {
