@@ -1,4 +1,4 @@
-BeforeAll {
+﻿BeforeAll {
   Import-Module Az.InfrastructureTesting
 
   $Script:rgName = 'rg-test'
@@ -19,11 +19,7 @@ Describe 'Verify Data Factory' {
       ResourceName      = $dataFactoryName
     }
 
-    #act
-    $result = Confirm-AzBPResource @params
-
-    #assert
-    $result.Success | Should -Be $true
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain a data factory named $dataFactoryName - Confirm-AzBPResource"{
@@ -36,43 +32,11 @@ Describe 'Verify Data Factory' {
       PropertyValue     = $dataFactoryName
     }
 
-    #act
-    $result = Confirm-AzBPResource @params
-
-    #assert
-    $result.Success | Should -Be $true
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain a data factory named $dataFactoryName" {
-    #act
-    $result = Confirm-AzBPDataFactory -ResourceGroupName $rgName -Name $dataFactoryName
-
-    #assert
-    $result.Success | Should -Be $true
-  }
-
-  It "Should contain a data factory named $dataFactoryName" {
-    #act
-    $result = Confirm-AzBPDataFactory -ResourceGroupName $rgName -Name $dataFactoryName
-
-    #assert
-    $result | Should -BeDeployed
-  }
-
-  It "Should contain a data factory named $dataFactoryName in $location" {
-    #act
-    $result = Confirm-AzBPDataFactory -ResourceGroupName $rgName -Name $dataFactoryName
-
-    #assert
-    $result | Should -BeInLocation $location
-  }
-
-  It "Should contain a data factory named $dataFactoryName deployed to $rgName resource group" {
-    #act
-    $result = Confirm-AzBPDataFactory -ResourceGroupName $rgName -Name $dataFactoryName
-
-    #assert
-    $result | Should -BeInResourceGroup $rgName
+    Confirm-AzBPDataFactory -ResourceGroupName $rgName -Name $dataFactoryName | Should -BeSuccessful
   }
 
   It "Should not contain a data factory named $noDataFactoryName" {
@@ -80,11 +44,16 @@ Describe 'Verify Data Factory' {
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
-    $result = Confirm-AzBPDataFactory -ResourceGroupName $rgName -Name $noDataFactoryName `
-      -ErrorAction SilentlyContinue
+    Confirm-AzBPDataFactory -ResourceGroupName $rgName -Name $noDataFactoryName -ErrorAction SilentlyContinue
+    | Should -Not -BeSuccessful
+  }
 
-    #assert
-    $result.Success | Should -Be $false
+  It "Should contain a data factory named $dataFactoryName in $location" {
+    Confirm-AzBPDataFactory -ResourceGroupName $rgName -Name $dataFactoryName | Should -BeInLocation $location
+  }
+
+  It "Should contain a data factory named $dataFactoryName deployed to $rgName resource group" {
+    Confirm-AzBPDataFactory -ResourceGroupName $rgName -Name $dataFactoryName | Should -BeInResourceGroup $rgName
   }
 }
 
@@ -103,10 +72,7 @@ Describe 'Verify Data Factory Linked Service' {
     }
 
     #act
-    $result = Confirm-AzBPResource @params
-
-    #assert
-    $result.Success | Should -Be $true
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It 'Should contain a data factory with a linked service - Confirm-AzBPResource' {
@@ -121,10 +87,7 @@ Describe 'Verify Data Factory Linked Service' {
     }
 
     #act
-    $result = Confirm-AzBPResource @params
-
-    #assert
-    $result.Success | Should -Be $true
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain a data factory with a linked service named $linkedServiceName" {
@@ -136,25 +99,7 @@ Describe 'Verify Data Factory Linked Service' {
     }
 
     #act
-    $result = Confirm-AzBPDataFactoryLinkedService @params
-
-    #assert
-    $result.Success | Should -Be $true
-  }
-
-  It "Should contain a data factory with a linked service named $linkedServiceName" {
-    # Using custom assertion to check if the workspace with spark pool is deployed
-    $params = @{
-      ResourceGroupName = $rgName
-      DataFactoryName   = $dataFactoryName
-      Name              = $linkedServiceName
-    }
-
-    #act
-    $result = Confirm-AzBPDataFactoryLinkedService @params
-
-    #assert
-    $result | Should -BeDeployed
+    Confirm-AzBPDataFactoryLinkedService @params | Should -BeSuccessful
   }
 }
 

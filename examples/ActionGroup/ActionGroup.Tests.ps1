@@ -1,4 +1,4 @@
-BeforeAll {
+﻿BeforeAll {
   Import-Module Az.InfrastructureTesting
 
   $Script:rgName = 'rg-test'
@@ -20,10 +20,7 @@ Describe 'Verify Action Group' {
     }
 
     #act
-    $result = Confirm-AzBPResource @params
-
-    #assert
-    $result.Success | Should -Be $true
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain an actiongroup named $actionGroupName - Confirm-AzBPResource" {
@@ -37,53 +34,33 @@ Describe 'Verify Action Group' {
     }
 
     #act
-    $result = Confirm-AzBPResource @params
-
-    #assert
-    $result.Success | Should -Be $true
-  }
-
-  It 'Should contain an action group with given name' {
-    #act
-    $result = Confirm-AzBPActionGroup -ResourceGroupName $rgName -ActionGroupName $actionGroupName
-
-    #assert
-    $result.Success | Should -Be $true
-  }
-
-  It 'Should not contain an action group with given name' {
-    #act
-    # The '-ErrorAction SilentlyContinue' command suppresses all errors.
-    # In this test, it will suppress the error message when a resource cannot be found.
-    # Remove this field to see all errors.
-    $result = Confirm-AzBPActionGroup -ResourceGroupName $rgName -ActionGroupName $noActionGroupName -ErrorAction SilentlyContinue
-
-    #assert
-    $result.Success | Should -Be $false
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain an action group named $actionGroupName" {
-    #act
-    $result = Confirm-AzBPActionGroup -ResourceGroupName $rgName -ActionGroupName $actionGroupName
+    Confirm-AzBPActionGroup -ResourceGroupName $rgName -ActionGroupName $actionGroupName | Should -BeSuccessful
+  }
 
-    #assert
-    $result | Should -BeDeployed
+  It 'Should not contain an action group with given name' {
+    # The '-ErrorAction SilentlyContinue' command suppresses all errors.
+    # In this test, it will suppress the error message when a resource cannot be found.
+    # Remove this field to see all errors.
+    $params = @{
+      ResourceGroupName = $rgName
+      ActionGroupName   = $noActionGroupName
+      ErrorAction       = "SilentlyContinue"
+    }
+    Confirm-AzBPActionGroup @params | Should -Not -BeSuccessful
   }
 
   It "Should contain an action group named $actionGroupName in $location" {
-    #act
-    $result = Confirm-AzBPActionGroup -ResourceGroupName $rgName -ActionGroupName $actionGroupName
-
-    #assert
-    $result | Should -BeInLocation $location
+    Confirm-AzBPActionGroup -ResourceGroupName $rgName -ActionGroupName $actionGroupName
+    | Should -BeInLocation $location
   }
 
   It "Should be an action group named $actionGroupName in a resource group named $rgName" {
-    #act
-    $result = Confirm-AzBPActionGroup -ResourceGroupName $rgName -ActionGroupName $actionGroupName
-
-    #assert
-    $result | Should -BeInResourceGroup $rgName
+    Confirm-AzBPActionGroup -ResourceGroupName $rgName -ActionGroupName $actionGroupName
+    | Should -BeInResourceGroup $rgName
   }
 }
 

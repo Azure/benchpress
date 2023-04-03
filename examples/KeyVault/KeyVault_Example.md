@@ -1,4 +1,4 @@
-# How To Run KeyVault.Tests.ps1
+﻿# How To Run KeyVault.Tests.ps1
 
 `KeyVault.Tests.ps1` contains examples of using the `Confirm-AzBPKeyVault`, `Confirm-AzBPKeyVaultKey`,
 and `Confirm-AzBPKeyVaultSecret` cmdlets.
@@ -29,6 +29,7 @@ and `Confirm-AzBPKeyVaultSecret` cmdlets.
 
    - `rg-test`          -> `your-resource-group-name`
    - `kvbenchpresstest` -> `your-key-vault-name`
+   - `samplecert`       -> `your-certifcate-name`
    - `westus3`          -> `your-key-vault-location`
    - `svcprinoid`       -> `your-svc-principal-object-id (the same object id from step 3)`
 
