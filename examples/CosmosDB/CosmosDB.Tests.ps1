@@ -1,14 +1,13 @@
 BeforeAll {
   Import-Module Az.InfrastructureTesting
 
-  #TODO: Change after testing
-  $Script:rgName = 'testrg'
+  $Script:rgName = 'rg-test'
   $Script:location = 'westus3'
-  $Script:gremlinAccountName = "gremlin-nqpogpnnnhius"
+  $Script:gremlinAccountName = "gremlin-account-name"
   $Script:gremlinDatabaseName = "gremlin-db-name"
-  $Script:mongoAccountName = "mongo-nqpogpnnnhius"
+  $Script:mongoAccountName = "mongodb-account-name"
   $Script:mongoDatabaseName = "mongodb-db-name"
-  $Script:sqlAccountName = "sql-nqpogpnnnhius"
+  $Script:sqlAccountName = "sql-account-name"
   $Script:sqlDatabaseName = "sql-db-name"
 }
 
@@ -210,7 +209,8 @@ Describe 'Cosmos DB Gremlin Database' {
   }
 
   It "Should contain a Cosmos DB Account named $gremlinAccountName in $rgName" {
-    Confirm-AzBPCosmosDBAccount -ResourceGroupName $rgName -Name $gremlinAccountName | Should -BeInResourceGroup $rgName
+    Confirm-AzBPCosmosDBAccount -ResourceGroupName $rgName -Name $gremlinAccountName
+    | Should -BeInResourceGroup $rgName
   }
 
 #######################################################################################################################
