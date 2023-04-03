@@ -40,6 +40,7 @@
     "Confirm-OperationalInsightsWorkspace",
     "Confirm-Resource",
     "Confirm-ResourceGroup",
+    "Confirm-RoleAssignment",
     "Confirm-SqlDatabase",
     "Confirm-SqlServer",
     "Confirm-StorageAccount",
