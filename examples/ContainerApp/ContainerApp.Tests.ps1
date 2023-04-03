@@ -1,4 +1,4 @@
-BeforeAll {
+﻿BeforeAll {
   Import-Module Az.InfrastructureTesting
 
   $Script:rgName = 'rg-test'
@@ -12,16 +12,19 @@ Describe 'Verify Container Application' {
   }
 
   It "Should contain a Container Application named $conAppName - Confirm-AzBPResource" {
+    #arrange
     $params = @{
       ResourceType      = "ContainerApp"
       ResourceName      = $conAppName
       ResourceGroupName = $rgName
     }
 
-    (Confirm-AzBPResource @params).Success | Should -Be $true
+    #act and assert
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain a Container Application with an Ingress Port of 80 - Confirm-AzBPResource" {
+    #arrange
     $params = @{
       ResourceType      = "ContainerApp"
       ResourceName      = $conAppName
@@ -30,11 +33,12 @@ Describe 'Verify Container Application' {
       PropertyValue     = 80
     }
 
-    (Confirm-AzBPResource @params).Success | Should -Be $true
+    #act and assert
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain a Container Application named $conAppName" {
-    (Confirm-AzBPContainerApp -ResourceGroupName $rgName -Name $conAppName).Success | Should -Be $true
+    Confirm-AzBPContainerApp -ResourceGroupName $rgName -Name $conAppName | Should -BeSuccessful
   }
 
   It "Should not contain a Container Application named $noContainerAppName" {
@@ -47,11 +51,7 @@ Describe 'Verify Container Application' {
       ErrorAction       = 'SilentlyContinue'
     }
 
-    (Confirm-AzBPContainerApp @params).Success | Should -Be $false
-  }
-
-  It "Should contain a Container Application named $conAppName" {
-    Confirm-AzBPContainerApp -ResourceGroupName $rgName -Name $conAppName | Should -BeDeployed
+    Confirm-AzBPContainerApp @params | Should -Not -BeSuccessful
   }
 
   It "Should contain a Container Application named $conAppName in $location" {
@@ -64,6 +64,6 @@ Describe 'Verify Container Application' {
 }
 
 AfterAll {
-  Get-Module Az-InfrastructureTesting | Remove-Module
+  Get-Module Az.InfrastructureTesting | Remove-Module
   Get-Module BenchPress.Azure | Remove-Module
 }

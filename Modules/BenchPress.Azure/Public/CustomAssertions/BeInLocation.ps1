@@ -1,4 +1,4 @@
-function ShouldBeInLocation ($ActualValue, [string]$ExpectedValue, [switch] $Negate, [string] $Because) {
+﻿function ShouldBeInLocation ($ActualValue, [string]$ExpectedValue, [switch] $Negate, [string] $Because) {
   <#
     .SYNOPSIS
       Custom Assertion function to check status on a resource deployment.
@@ -8,14 +8,10 @@ function ShouldBeInLocation ($ActualValue, [string]$ExpectedValue, [switch] $Neg
       It can be used when writing Pester tests.
 
     .EXAMPLE
-      $result = Confirm-AzBPResourceGroup -ResourceGroupName $rgName
-
-      $result | Should -BeInLocation westus3
+      Confirm-AzBPResourceGroup -ResourceGroupName $rgName | Should -BeInLocation 'westus3'
 
     .EXAMPLE
-      $result = Confirm-AzBPResourceGroup -ResourceGroupName $rgName
-
-      $result | Should -Not -BeInLocation westus2
+      Confirm-AzBPResourceGroup -ResourceGroupName $rgName | Should -Not -BeInLocation 'westus2'
 
     .INPUTS
       ConfirmResult
