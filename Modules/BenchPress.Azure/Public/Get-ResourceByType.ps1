@@ -166,7 +166,7 @@ function Get-ResourceByType {
         return Confirm-ContainerRegistry -Name $ResourceName -ResourceGroupName $ResourceGroupName
       }
       "CosmosDBAccount" {
-        return Confirm-CosmosDBAccount -ResourceGroupName $ResourceGroupName -Name $AccountName
+        return Confirm-CosmosDBAccount -ResourceGroupName $ResourceGroupName -Name $ResourceName
       }
       "CosmosDBGremlinDatabase" {
         $params = @{
