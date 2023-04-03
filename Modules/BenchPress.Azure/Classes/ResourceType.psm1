@@ -21,6 +21,7 @@ enum ResourceType{
   EventHubNamespace
   KeyVault
   OperationalInsightsWorkspace
+  PostgreSqlFlexibleServer
   ResourceGroup
   RoleAssignment
   SqlDatabase

@@ -37,6 +37,7 @@
     "Confirm-KeyVaultKey",
     "Confirm-KeyVaultSecret",
     "Confirm-OperationalInsightsWorkspace",
+    "Confirm-PostgreSqlFlexibleServer",
     "Confirm-Resource",
     "Confirm-ResourceGroup",
     "Confirm-RoleAssignment",

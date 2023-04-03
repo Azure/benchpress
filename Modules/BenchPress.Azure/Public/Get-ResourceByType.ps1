@@ -238,6 +238,9 @@ function Get-ResourceByType {
       "OperationalInsightsWorkspace" {
         return Confirm-OperationalInsightsWorkspace -Name $ResourceName -ResourceGroupName $ResourceGroupName
       }
+      "PostgreSqlFlexibleServer" {
+        return Confirm-PostgreSqlFlexibleServer -ResourceGroupName $ResourceGroupName -Name $ResourceName
+      }
       "ResourceGroup" {
         return Confirm-ResourceGroup -ResourceGroupName $ResourceName
       }
