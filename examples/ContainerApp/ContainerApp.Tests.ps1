@@ -12,16 +12,19 @@ Describe 'Verify Container Application' {
   }
 
   It "Should contain a Container Application named $containerAppName - Confirm-AzBPResource" {
+    #arrange
     $params = @{
       ResourceType      = "ContainerApp"
       ResourceName      = $containerAppName
       ResourceGroupName = $rgName
     }
 
-    (Confirm-AzBPResource @params).Success | Should -Be $true
+    #act and assert
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain a Container Application with an Ingress Port of 80 - Confirm-AzBPResource" {
+    #arrange
     $params = @{
       ResourceType      = "ContainerApp"
       ResourceName      = $containerAppName
@@ -30,11 +33,12 @@ Describe 'Verify Container Application' {
       PropertyValue     = 80
     }
 
-    (Confirm-AzBPResource @params).Success | Should -Be $true
+    #act and assert
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain a Container Application named $containerAppName" {
-    (Confirm-AzBPContainerApp -ResourceGroupName $rgName -Name $containerAppName).Success | Should -Be $true
+    Confirm-AzBPContainerApp -ResourceGroupName $rgName -Name $containerAppName | Should -BeSuccessful
   }
 
   It "Should not contain a Container Application named $noContainerAppName" {
@@ -47,11 +51,7 @@ Describe 'Verify Container Application' {
       ErrorAction       = 'SilentlyContinue'
     }
 
-    (Confirm-AzBPContainerApp @params).Success | Should -Be $false
-  }
-
-  It "Should contain a Container Application named $containerAppName" {
-    Confirm-AzBPContainerApp -ResourceGroupName $rgName -Name $containerAppName | Should -BeDeployed
+    Confirm-AzBPContainerApp @params | Should -Not -BeSuccessful
   }
 
   It "Should contain a Container Application named $containerAppName in $location" {
@@ -76,7 +76,7 @@ Describe 'Verify Container Application Managed Environment' {
       ResourceGroupName = $rgName
     }
 
-    (Confirm-AzBPResource @params).Success | Should -Be $true
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain a Container Application Managed Environment named $managedEnvName -
@@ -89,11 +89,11 @@ Describe 'Verify Container Application Managed Environment' {
       PropertyValue     = $managedEnvName
     }
 
-    (Confirm-AzBPResource @params).Success | Should -Be $true
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain a Container Application named $managedEnvName" {
-    (Confirm-AzBPContainerAppManagedEnv -ResourceGroupName $rgName -Name $managedEnvName).Success | Should -Be $true
+    Confirm-AzBPContainerAppManagedEnv -ResourceGroupName $rgName -Name $managedEnvName | Should -BeSuccessful
   }
 
   It "Should contain a Container Application named $managedEnvName in $location" {
