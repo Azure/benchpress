@@ -7,7 +7,7 @@ using module ./../Classes/ConfirmResult.psm1
 function Confirm-ContainerAppManagedEnv {
   <#
     .SYNOPSIS
-      Confirms that an Managed Environment exists.
+      Confirms that a Container App Managed Environment exists.
 
     .DESCRIPTION
       The Confirm-AzBPContainerAppManagedEnv cmdlet gets a Managed Environment using the specified Managed Environment
