@@ -7,14 +7,14 @@
 
 Describe 'Verify Container Application' {
   BeforeAll {
-    $Script:conAppName = 'conAppBenchPressTest'
+    $Script:containerAppName = 'containerAppBenchPressTest'
     $Script:noContainerAppName = 'nocontainerapp'
   }
 
-  It "Should contain a Container Application named $conAppName - Confirm-AzBPResource" {
+  It "Should contain a Container Application named $containerAppName - Confirm-AzBPResource" {
     $params = @{
       ResourceType      = "ContainerApp"
-      ResourceName      = $conAppName
+      ResourceName      = $containerAppName
       ResourceGroupName = $rgName
     }
 
@@ -24,7 +24,7 @@ Describe 'Verify Container Application' {
   It "Should contain a Container Application with an Ingress Port of 80 - Confirm-AzBPResource" {
     $params = @{
       ResourceType      = "ContainerApp"
-      ResourceName      = $conAppName
+      ResourceName      = $containerAppName
       ResourceGroupName = $rgName
       PropertyKey       = "IngressTargetPort"
       PropertyValue     = 80
@@ -33,8 +33,8 @@ Describe 'Verify Container Application' {
     (Confirm-AzBPResource @params).Success | Should -Be $true
   }
 
-  It "Should contain a Container Application named $conAppName" {
-    (Confirm-AzBPContainerApp -ResourceGroupName $rgName -Name $conAppName).Success | Should -Be $true
+  It "Should contain a Container Application named $containerAppName" {
+    (Confirm-AzBPContainerApp -ResourceGroupName $rgName -Name $containerAppName).Success | Should -Be $true
   }
 
   It "Should not contain a Container Application named $noContainerAppName" {
@@ -50,16 +50,16 @@ Describe 'Verify Container Application' {
     (Confirm-AzBPContainerApp @params).Success | Should -Be $false
   }
 
-  It "Should contain a Container Application named $conAppName" {
-    Confirm-AzBPContainerApp -ResourceGroupName $rgName -Name $conAppName | Should -BeDeployed
+  It "Should contain a Container Application named $containerAppName" {
+    Confirm-AzBPContainerApp -ResourceGroupName $rgName -Name $containerAppName | Should -BeDeployed
   }
 
-  It "Should contain a Container Application named $conAppName in $location" {
-    Confirm-AzBPContainerApp -ResourceGroupName $rgName -Name $conAppName | Should -BeInLocation $location
+  It "Should contain a Container Application named $containerAppName in $location" {
+    Confirm-AzBPContainerApp -ResourceGroupName $rgName -Name $containerAppName | Should -BeInLocation $location
   }
 
-  It "Should contain a Container Application named $conAppName in $rgName" {
-    Confirm-AzBPContainerApp -ResourceGroupName $rgName -Name $conAppName | Should -BeInResourceGroup $rgName
+  It "Should contain a Container Application named $containerAppName in $rgName" {
+    Confirm-AzBPContainerApp -ResourceGroupName $rgName -Name $containerAppName | Should -BeInResourceGroup $rgName
   }
 }
 
