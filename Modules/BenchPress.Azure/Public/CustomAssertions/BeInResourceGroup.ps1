@@ -1,4 +1,4 @@
-function ShouldBeInResourceGroup ($ActualValue, [string]$ExpectedValue, [switch] $Negate, [string] $Because) {
+﻿function ShouldBeInResourceGroup ($ActualValue, [string]$ExpectedValue, [switch] $Negate, [string] $Because) {
   <#
     .SYNOPSIS
       Custom Assertion function to check resource's resource group.
@@ -8,14 +8,10 @@ function ShouldBeInResourceGroup ($ActualValue, [string]$ExpectedValue, [switch]
       It can be used when writing Pester tests.
 
     .EXAMPLE
-      $result = Confirm-AzBPContainerRegistry -ResourceGroupName $rgName
-
-      $result | Should -BeInResourceGroup 'rg-test'
+      Confirm-AzBPContainerRegistry -ResourceGroupName $rgName | Should -BeInResourceGroup 'rg-test'
 
     .EXAMPLE
-      $result = Confirm-AzBPContainerRegistry -ResourceGroupName $rgName
-
-      $result | Should -Not -BeInResourceGroup 'rg-test2'
+      Confirm-AzBPContainerRegistry -ResourceGroupName $rgName | Should -Not -BeInResourceGroup 'rg-test2'
 
     .INPUTS
       ConfirmResult
@@ -38,9 +34,9 @@ function ShouldBeInResourceGroup ($ActualValue, [string]$ExpectedValue, [switch]
     } elseif ([bool]$ActualValue.ResourceDetails.PSObject.Properties[$rgNameProperty]){
       $resourceGroupName = $ActualValue.ResourceDetails.$rgNameProperty
     } elseif ([bool]$ActualValue.ResourceDetails.PSObject.Properties[$idProperty]){
-      # If it does not have a property for resource group but it has an Id,
-      # then we can get it from Id
-      # ex: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
+      # If it does not have a property for resource group, then we can maybe get the resource group from Id
+      # ex: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/'
+      # providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
       $resourceId = $ActualValue.ResourceDetails.$idProperty
       $resourceGroupPath = $resourceId -split 'resourceGroups' | Select-Object -Last 1
       $resourceGroupName = @($resourceGroupPath -split '/')[1]
@@ -55,7 +51,8 @@ function ShouldBeInResourceGroup ($ActualValue, [string]$ExpectedValue, [switch]
     # Some resources don't have any of the resource group properties
     if ($null -eq $resourceGroupName){
       [bool] $succeeded = $false
-      $failureMessage = "Resource does not have a ResourceGroup, a ResourceGroupName, or an Id (with a RG) property. They are null or empty."
+      $failureMessage = "Resource does not have a ResourceGroup, a ResourceGroupName, or an Id (with a RG) property.
+      They are null or empty."
     } else {
         [bool] $succeeded = $resourceGroupName -eq $ExpectedValue
         if ($Negate) { $succeeded = -not $succeeded }

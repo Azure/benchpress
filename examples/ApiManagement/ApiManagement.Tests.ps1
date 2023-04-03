@@ -1,4 +1,4 @@
-BeforeAll {
+﻿BeforeAll {
   Import-Module Az.InfrastructureTesting
 
   $Script:rgName = 'rg-test'
@@ -21,7 +21,7 @@ Describe 'Verify API Management Service' {
     }
 
     #act and assert
-    (Confirm-AzBPResource @params).Success | Should -Be $true
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
   It "Should contain an API Management Service named $apiServiceName - ConfirmAzBPResource" {
     #arrange
@@ -34,11 +34,11 @@ Describe 'Verify API Management Service' {
     }
 
     #act and assert
-    (Confirm-AzBPResource @params).Success | Should -Be $true
+    Confirm-AzBPResource @params | -BeSuccessful
   }
 
-  It 'Should contain an API Management Service with the given name' {
-    (Confirm-AzBPApiManagement -ResourceGroupName $rgName -Name $apiServiceName).Success | Should -Be $true
+  It "Should contain an API Management Service named $apiServiceName" {
+    Confirm-AzBPApiManagement -ResourceGroupName $rgName -Name $apiServiceName | Should -BeSuccessful
   }
 
   It 'Should not contain an API Management Service with the given name' {
@@ -53,11 +53,7 @@ Describe 'Verify API Management Service' {
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
-    (Confirm-AzBPApiManagement @params).Success | Should -Be $false
-  }
-
-  It "Should contain an API Management Service named $apiServiceName" {
-    Confirm-AzBPApiManagement -ResourceGroupName $rgName -Name $apiServiceName | Should -BeDeployed
+    Confirm-AzBPApiManagement @params | Should -Not -BeSuccessful
   }
 
   It "Should contain an API Management Service named $apiServiceName in $location" {
@@ -84,7 +80,7 @@ Describe 'Verify API Management API' {
     }
 
     #act and assert
-    (Confirm-AzBPResource @params).Success | Should -Be $true
+    Confirm-AzBPResource @params | -BeSuccessful
   }
 
   It "Should contain an API Management API named $apiName - ConfirmAzBPResource" {
@@ -99,12 +95,12 @@ Describe 'Verify API Management API' {
     }
 
     #act and assert
-    (Confirm-AzBPResource @params).Success | Should -Be $true
+    Confirm-AzBPResource @params | -BeSuccessful
   }
 
-  It 'Should contain an API Management API with the given name' {
-    (Confirm-AzBPApiManagementApi -ResourceGroupName $rgName -ServiceName $apiServiceName -Name $apiName).Success
-      | Should -Be $true
+  It "Should contain an API Management API named $apiName" {
+    Confirm-AzBPApiManagementApi -ResourceGroupName $rgName -ServiceName $apiServiceName -Name $apiName
+      | Should -BeSuccessful
   }
 
   It 'Should not contain an API Management API with the given name' {
@@ -120,17 +116,12 @@ Describe 'Verify API Management API' {
     }
 
     #act and assert
-    (Confirm-AzBPApiManagementApi @params).Success | Should -Be $false
-  }
-
-  It "Should contain an API Management API named $apiName" {
-    Confirm-AzBPApiManagementApi -ResourceGroupName $rgName -ServiceName $apiServiceName -Name $apiName
-      | Should -BeDeployed
+    Confirm-AzBPApiManagementApi @params | Should -Not -BeSuccessful
   }
 
   It "Should be an API Management API in a resource group named $rgName" {
     Confirm-AzBPApiManagementApi -ResourceGroupName $rgName -ServiceName $apiServiceName -Name $apiName
-      | Should -BeInResourceGroup $rgName
+    | Should -BeInResourceGroup $rgName
   }
 }
 
@@ -150,7 +141,7 @@ Describe 'Verify API Management Diagnostic' {
     }
 
     #act and assert
-    (Confirm-AzBPResource @params).Success | Should -Be $true
+    Confirm-AzBPResource @params | -BeSuccessful
   }
 
   It "Should contain an API Management Diagnostic named $diagnosticName - ConfirmAzBPResource" {
@@ -165,10 +156,10 @@ Describe 'Verify API Management Diagnostic' {
     }
 
     #act and assert
-    (Confirm-AzBPResource @params).Success | Should -Be $true
+    Confirm-AzBPResource @params | -BeSuccessful
   }
 
-  It 'Should contain an API Management Diagnostic with the given name' {
+  It "Should contain an API Management Diagnostic named $diagnosticName" {
     #arrange
     $params = @{
       ResourceGroupName = $rgName
@@ -177,7 +168,7 @@ Describe 'Verify API Management Diagnostic' {
     }
 
     #act and assert
-    (Confirm-AzBPApiManagementDiagnostic @params).Success | Should -Be $true
+    Confirm-AzBPApiManagementDiagnostic @params | Should -BeSuccessful
   }
 
   It 'Should not contain an API Management Diagnostic with the given name' {
@@ -193,19 +184,7 @@ Describe 'Verify API Management Diagnostic' {
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
-    (Confirm-AzBPApiManagementDiagnostic @params).Success | Should -Be $false
-  }
-
-  It "Should contain an API Management Diagnostic named $diagnosticName" {
-    #arrange
-    $params = @{
-      ResourceGroupName = $rgName
-      ServiceName = $apiServiceName
-      Name = $diagnosticName
-    }
-
-    #act and assert
-    Confirm-AzBPApiManagementDiagnostic @params | Should -BeDeployed
+    Confirm-AzBPApiManagementDiagnostic @params | Should -Not -BeSuccessful
   }
 
   It "Should be an API Management Diagnostic in a resource group named $rgName" {
@@ -236,7 +215,7 @@ Describe 'Verify API Management Logger' {
     }
 
     #act and assert
-    (Confirm-AzBPResource @params).Success | Should -Be $true
+    Confirm-AzBPResource @params | -BeSuccessful
   }
 
   It "Should contain an API Management Logger named $loggerName - ConfirmAzBPResource" {
@@ -251,10 +230,10 @@ Describe 'Verify API Management Logger' {
     }
 
     #act and assert
-    (Confirm-AzBPResource @params).Success | Should -Be $true
+    Confirm-AzBPResource @params | -BeSuccessful
   }
 
-  It 'Should contain an API Management Logger with the given name' {
+  It "Should contain an API Management Logger named $loggerName" {
     #arrange
     $params = @{
       ResourceGroupName = $rgName
@@ -263,7 +242,7 @@ Describe 'Verify API Management Logger' {
     }
 
     #act and assert
-    (Confirm-AzBPApiManagementLogger @params).Success | Should -Be $true
+    Confirm-AzBPApiManagementLogger @params | Should -BeSuccessful
   }
 
   It 'Should not contain an API Management Logger with the given name' {
@@ -279,19 +258,7 @@ Describe 'Verify API Management Logger' {
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
-    (Confirm-AzBPApiManagementLogger @params).Success | Should -Be $false
-  }
-
-  It "Should contain an API Management Logger named $loggerName" {
-    #arrange
-    $params = @{
-      ResourceGroupName = $rgName
-      ServiceName = $apiServiceName
-      Name = $loggerName
-    }
-
-    #act and assert
-    Confirm-AzBPApiManagementLogger @params | Should -BeDeployed
+    Confirm-AzBPApiManagementLogger @params | Should -Not -BeSuccessful
   }
 
   It "Should be an API Management Logger in a resource group named $rgName" {
@@ -321,7 +288,7 @@ Describe 'Verify API Management Policy' {
     }
 
     #act and assert
-    (Confirm-AzBPResource @params).Success | Should -Be $true
+    Confirm-AzBPResource @params | -BeSuccessful
   }
 
   It "Should contain an API Management Policy for the API ID $apiName" {
@@ -333,7 +300,7 @@ Describe 'Verify API Management Policy' {
     }
 
     #act and assert
-    (Confirm-AzBPApiManagementPolicy @params).Success | Should -Be $true
+    Confirm-AzBPApiManagementPolicy @params | -BeSuccessful
   }
 
   It "Should not contain an API Management Policy for the API ID $apiName" {
@@ -349,19 +316,7 @@ Describe 'Verify API Management Policy' {
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
-    (Confirm-AzBPApiManagementPolicy @params).Success | Should -Be $false
-  }
-
-  It "Should contain an API Management Policy for the API ID $apiName" {
-    #arrange
-    $params = @{
-      ResourceGroupName = $rgName
-      ServiceName = $apiServiceName
-      ApiId = $apiName
-    }
-
-    #act and assert
-    Confirm-AzBPApiManagementPolicy @params | Should -BeDeployed
+    Confirm-AzBPApiManagementPolicy @params | Should -Not -BeSuccessful
   }
 }
 
