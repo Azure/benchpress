@@ -1,28 +1,27 @@
 ﻿BeforeAll {
   Import-Module Az.InfrastructureTesting
 
-  $Script:rgName = 'rg-test'
-  $Script:location = 'westus3'
-  $Script:serverName = 'samplepostgresqlserver'
+  $Script:rgName       = 'rg-test'
+  $Script:location     = 'westus3'
+  $Script:serverName   = 'samplepostgresqlserver'
   $Script:noServerName = 'nosamplepostgresqlserver'
 }
 
 Describe 'Verify PostgreSql Flexible Server' {
   It "Should contain a PostgreSQL Flexible Server named $serverName - Confirm-AzBPResource" {
-    #arrange
+    # arrange
     $params = @{
       ResourceType      = "PostgreSqlFlexibleServer"
       ResourceName      = $serverName
       ResourceGroupName = $rgName
     }
 
-    #act and assert
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
-
   It "Should contain a PostgreSQL Flexible Server with Name property of $serverName - Confirm-AzBPResource" {
-    #arrange
+    # arrange
     $params = @{
       ResourceType      = "PostgreSqlFlexibleServer"
       ResourceName      = $serverName
@@ -31,7 +30,7 @@ Describe 'Verify PostgreSql Flexible Server' {
       PropertyValue     = $serverName
     }
 
-    #act and assert
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
@@ -40,7 +39,7 @@ Describe 'Verify PostgreSql Flexible Server' {
   }
 
   It "Should not contain a PostgreSQL Flexible Server named $noServerName" {
-    #arrange
+    # arrange
     $params = @{
       ResourceType      = "PostgreSqlFlexibleServer"
       ResourceGroupName = $rgName
@@ -48,7 +47,7 @@ Describe 'Verify PostgreSql Flexible Server' {
       ErrorAction       = "SilentlyContinue"
     }
 
-    #act and assert
+    # act and assert
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
