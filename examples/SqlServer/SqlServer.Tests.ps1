@@ -42,7 +42,7 @@ Describe 'Verify SQL Server' {
     Confirm-AzBPSqlServer -ResourceGroupName $rgName -ServerName $serverName | Should -BeSuccessful
   }
 
-  It 'Should not contain a SQL Server with the given name' {
+  It "Should not contain a SQL Server named $noServerName" {
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.

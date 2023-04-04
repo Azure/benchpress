@@ -23,8 +23,8 @@
 
 1. Update `ResourceGroup.Tests.ps1` variables to point to your expected resources:
 
-   - `rgtest`    -> `your-resource-group-name`
-   - `notRgName` -> `not-your-resource-group-name`
+   - `rg-test`  -> `your-resource-group-name`
+   - `westus3`  -> `your-resource-group-location`
 
 1. If using a local copy of `Az.InfrastructureTesting`, replace `Import-Module Az.InfrastructureTesting` with
 `Import-Module "../../bin/BenchPress.Azure.psd1"`. Note that the final `AfterAll` step will properly remove the module

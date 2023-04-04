@@ -53,7 +53,7 @@ Describe 'Verify SQL Database' {
     Confirm-AzBPSqlDatabase @params | Should -BeSuccessful
   }
 
-  It 'Should not contain a SQL Database with the given name' {
+  It "Should not contain a SQL Database named $noDatabaseName" {
     # arrange
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
