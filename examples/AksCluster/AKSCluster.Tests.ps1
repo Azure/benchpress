@@ -64,7 +64,7 @@ Describe 'Verify AKS Node Pool' {
   }
 
   It "Should contain an AKS Node Pool named $nodePoolName - Confirm-AzBPResource" {
-    #arrange
+    # arrange
     $params = @{
       ResourceType      = "AksNodePool"
       ResourceGroupName = $rgName
@@ -72,12 +72,12 @@ Describe 'Verify AKS Node Pool' {
       ResourceName      = $nodePoolName
     }
 
-    #act and assert
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain an AKS NodePool named $nodePoolName - Confirm-AzBPResource" {
-    #arrange
+    # arrange
     $params = @{
       ResourceType      = "AksNodePool"
       ResourceGroupName = $rgName
@@ -87,7 +87,7 @@ Describe 'Verify AKS Node Pool' {
       PropertyValue     = $nodePoolName
     }
 
-    #act and assert
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
@@ -96,7 +96,7 @@ Describe 'Verify AKS Node Pool' {
   }
 
   It "Should not contain an AKS Node Pool with the name $noNodePoolName" {
-    #arrange
+    # arrange
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
@@ -107,7 +107,7 @@ Describe 'Verify AKS Node Pool' {
       ErrorAction       = "SilentlyContinue"
     }
 
-    #act and assert
+    # act and assert
     Confirm-AzBPAksNodePool @params | Should -Not -BeSuccessful
   }
 }
