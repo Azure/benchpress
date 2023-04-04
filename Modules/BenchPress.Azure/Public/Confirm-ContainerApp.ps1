@@ -1,4 +1,4 @@
-# INLINE_SKIP
+﻿# INLINE_SKIP
 using module ./../Classes/ConfirmResult.psm1
 
 . $PSScriptRoot/../Private/Connect-Account.ps1
@@ -11,13 +11,13 @@ function Confirm-ContainerApp {
 
     .DESCRIPTION
       The Confirm-AzBPContainerApp cmdlet gets a Container Application using the specified Container Application and
-      Resource Group name.
+      Resource Group names.
 
     .PARAMETER Name
-      The name of the Container Application
+      The name of the Container Application.
 
     .PARAMETER ResourceGroupName
-      The name of the Resource Group
+      The name of the Resource Group. The name is case insensitive.
 
     .EXAMPLE
       Confirm-AzBPContainerApp -Name "benchpresstest" -ResourceGroupName "rgbenchpresstest"
@@ -38,12 +38,12 @@ function Confirm-ContainerApp {
     [string]$ResourceGroupName
   )
   Begin {
-    $ConnectResults = Connect-Account
+    $connectResults = Connect-Account
   }
   Process {
-    $Resource = Get-AzContainerApp -ResourceGroupName $ResourceGroupName -Name $Name
+    $resource = Get-AzContainerApp -ResourceGroupName $ResourceGroupName -Name $Name
 
-    [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+    [ConfirmResult]::new($resource, $connectResults.AuthenticationData)
   }
   End { }
 }

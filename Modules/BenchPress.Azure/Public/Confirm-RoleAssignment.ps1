@@ -1,4 +1,4 @@
-# INLINE_SKIP
+﻿# INLINE_SKIP
 using module ./../Classes/ConfirmResult.psm1
 
 . $PSScriptRoot/../Private/Connect-Account.ps1
@@ -10,17 +10,17 @@ function Confirm-RoleAssignment {
       Confirms that a Role Assignment for a service principal exists.
 
     .DESCRIPTION
-      The Confirm-AzBPRoleAssignment cmdlet gets a Role Assignment using the specified Service Prinicpal, Scope
-      and Role Assignment name.
+      The Confirm-AzBPRoleAssignment cmdlet gets a Role Assignment using the specified Service Prinicpal, Scope,
+      and Role Assignment names.
 
     .PARAMETER RoleDefinitionName
-      The name of the role definition i.e. Reader, Contributor etc.
+      The name of the Role Definition i.e. Reader, Contributor etc.
 
     .PARAMETER ServicePrincipalId
-      The service principal app id
+      The Application ID of the Service Principal.
 
     .PARAMETER Scope
-      The scope of the role assignment. In the format of relative URI. For e.g.
+      The Scope of the Role Assignment. In the format of relative URI. For e.g.
       /subscriptions/{id}/resourceGroups/{resourceGroupName}.
       It must start with "/subscriptions/{id}".
 
@@ -48,7 +48,7 @@ function Confirm-RoleAssignment {
     [string]$Scope
   )
   Begin {
-    $ConnectResults = Connect-Account
+    $connectResults = Connect-Account
   }
   Process {
     $params = @{
@@ -58,9 +58,9 @@ function Confirm-RoleAssignment {
     }
 
     # Filter to specific scope specified by the parameter
-    $Resource = Get-AzRoleAssignment @params | Where-Object Scope -eq $Scope
+    $resource = Get-AzRoleAssignment @params | Where-Object Scope -eq $Scope
 
-    [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+    [ConfirmResult]::new($resource, $connectResults.AuthenticationData)
   }
   End { }
 }

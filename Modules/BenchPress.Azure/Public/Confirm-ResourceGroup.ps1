@@ -1,4 +1,4 @@
-# INLINE_SKIP
+﻿# INLINE_SKIP
 using module ./../Classes/ConfirmResult.psm1
 
 . $PSScriptRoot/../Private/Connect-Account.ps1
@@ -10,11 +10,10 @@ function Confirm-ResourceGroup {
       Confirms that a Resource Group exists.
 
     .DESCRIPTION
-      The Confirm-AzBPResourceGroup cmdlet gets a Resource Group using the specified Resource Group and
-      Resource Group name.
+      The Confirm-AzBPResourceGroup cmdlet gets a Resource Group using the specified Resource Group name.
 
     .PARAMETER ResourceGroupName
-      The name of the Resource Group
+      The name of the Resource Group. The name is case insensitive.
 
     .EXAMPLE
       Confirm-AzBPResourceGroup -ResourceGroupName "rgbenchpresstest"
@@ -32,12 +31,12 @@ function Confirm-ResourceGroup {
     [string]$ResourceGroupName
   )
   Begin {
-    $ConnectResults = Connect-Account
+    $connectResults = Connect-Account
   }
   Process {
-    $Resource = Get-AzResourceGroup $ResourceGroupName
+    $resource = Get-AzResourceGroup $ResourceGroupName
 
-    [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+    [ConfirmResult]::new($resource, $connectResults.AuthenticationData)
   }
   End { }
 }

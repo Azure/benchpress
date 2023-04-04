@@ -1,4 +1,4 @@
-# INLINE_SKIP
+﻿# INLINE_SKIP
 using module ./../Classes/ConfirmResult.psm1
 
 . $PSScriptRoot/../Private/Connect-Account.ps1
@@ -10,14 +10,13 @@ function Confirm-KeyVaultSecret {
       Confirms that a Key Vault Secret exists.
 
     .DESCRIPTION
-      The Confirm-AzBPKeyVaultSecret cmdlet gets a Key Vault Secret using the specified Key Vault and
-      Secret name.
+      The Confirm-AzBPKeyVaultSecret cmdlet gets a Key Vault Secret using the specified Key Vault and Secret name.
 
     .PARAMETER Name
-      The name of the Secret
+      The name of the Secret.
 
     .PARAMETER KeyVaultName
-      The name of the Key Vault
+      The name of the Key Vault.
 
     .EXAMPLE
       Confirm-AzBPKeyVaultSecret -Name "benchpresstest" -KeyVaultName "kvbenchpresstest"
@@ -38,12 +37,12 @@ function Confirm-KeyVaultSecret {
     [string]$KeyVaultName
   )
   Begin {
-    $ConnectResults = Connect-Account
+    $connectResults = Connect-Account
   }
   Process {
-    $Resource = Get-AzKeyVaultSecret -Name $Name -VaultName $KeyVaultName
+    $resource = Get-AzKeyVaultSecret -Name $Name -VaultName $KeyVaultName
 
-    [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+    [ConfirmResult]::new($resource, $connectResults.AuthenticationData)
   }
   End { }
 }

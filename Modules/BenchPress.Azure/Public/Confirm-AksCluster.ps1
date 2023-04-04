@@ -1,4 +1,4 @@
-# INLINE_SKIP
+﻿# INLINE_SKIP
 using module ./../Classes/ConfirmResult.psm1
 
 . $PSScriptRoot/../Private/Connect-Account.ps1
@@ -10,13 +10,13 @@ function Confirm-AksCluster {
       Confirms that an AKS Cluster exists.
 
     .DESCRIPTION
-      The Confirm-AzBPAksCluster cmdlet gets an AKS cluster using the specified AKS Cluster and Resource Group name.
+      The Confirm-AzBPAksCluster cmdlet gets an AKS Cluster using the specified AKS Cluster and Resource Group names.
 
     .PARAMETER AKSName
-      The name of the AKS Cluster
+      The name of the AKS Cluster.
 
     .PARAMETER ResourceGroupName
-      The name of the Resource Group
+      The name of the Resource Group. The name is case insensitive.
 
     .EXAMPLE
       Confirm-AzBPAksCluster -AKSName "benchpresstest" -ResourceGroupName "rgbenchpresstest"
@@ -37,12 +37,12 @@ function Confirm-AksCluster {
     [string]$ResourceGroupName
   )
   Begin {
-    $ConnectResults = Connect-Account
+    $connectResults = Connect-Account
   }
   Process {
-    $Resource = Get-AzAksCluster -ResourceGroupName $ResourceGroupName -Name $AksName
+    $resource = Get-AzAksCluster -ResourceGroupName $ResourceGroupName -Name $AksName
 
-    [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+    [ConfirmResult]::new($resource, $connectResults.AuthenticationData)
   }
   End { }
 }

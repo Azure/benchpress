@@ -28,8 +28,8 @@ Describe "Connect-Account" {
     }
 
     It "Does not invoke Connect-AzAccount when the account matches environment variables." {
-      Mock Get-AzContext { @{Account = @{Type = "ServicePrincipal"; Id = $ApplicationId};
-                             Tenant = @{Id = $TenantId};
+      Mock Get-AzContext { @{Account      = @{Type = "ServicePrincipal"; Id = $ApplicationId};
+                             Tenant       = @{Id = $TenantId};
                              Subscription = @{Id = $SubscriptionId}}}
 
       Connect-Account
@@ -38,8 +38,8 @@ Describe "Connect-Account" {
     }
 
     It "Invokes Connect-AzAccount when the account type is not ServicePrincipal." {
-      Mock Get-AzContext { @{Account = @{Type = "User"; Id = $ApplicationId};
-                             Tenant = @{Id = $TenantId};
+      Mock Get-AzContext { @{Account      = @{Type = "User"; Id = $ApplicationId};
+                             Tenant       = @{Id = $TenantId};
                              Subscription = @{Id = $SubscriptionId}}} `
         -Verifiable
 
@@ -49,8 +49,8 @@ Describe "Connect-Account" {
     }
 
     It "Invokes Connect-AzAccount when the application ID does not match environment variables." {
-      Mock Get-AzContext { @{Account = @{Type = "ServicePrincipal"; Id = "not application ID"};
-                             Tenant = @{Id = $TenantId};
+      Mock Get-AzContext { @{Account      = @{Type = "ServicePrincipal"; Id = "not application ID"};
+                             Tenant       = @{Id = $TenantId};
                              Subscription = @{Id = $SubscriptionId}}} `
         -Verifiable
 
@@ -60,8 +60,8 @@ Describe "Connect-Account" {
     }
 
     It "Invokes Connect-AzAccount when the tenant ID does not match environment variables." {
-      Mock Get-AzContext { @{Account = @{Type = "ServicePrincipal"; Id = $ApplicationId};
-                             Tenant = @{Id = "not tenant id"};
+      Mock Get-AzContext { @{Account      = @{Type = "ServicePrincipal"; Id = $ApplicationId};
+                             Tenant       = @{Id = "not tenant id"};
                              Subscription = @{Id = $SubscriptionId}}} `
         -Verifiable
 
@@ -71,8 +71,8 @@ Describe "Connect-Account" {
     }
 
     It "Invokes Connect-AzAccount when the subscription ID does not match environment variables." {
-      Mock Get-AzContext { @{Account = @{Type = "ServicePrincipal"; Id = $ApplicationId};
-                             Tenant = @{Id = $TenantId};
+      Mock Get-AzContext { @{Account      = @{Type = "ServicePrincipal"; Id = $ApplicationId};
+                             Tenant       = @{Id = $TenantId};
                              Subscription = @{Id = "Not subscription id"}}} `
         -Verifiable
 

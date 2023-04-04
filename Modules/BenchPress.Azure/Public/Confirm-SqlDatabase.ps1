@@ -1,4 +1,4 @@
-# INLINE_SKIP
+﻿# INLINE_SKIP
 using module ./../Classes/ConfirmResult.psm1
 
 . $PSScriptRoot/../Private/Connect-Account.ps1
@@ -7,20 +7,20 @@ using module ./../Classes/ConfirmResult.psm1
 function Confirm-SqlDatabase {
   <#
     .SYNOPSIS
-      Confirms that one or more SQL Databases exist.
+      Confirms that a SQL Database exists.
 
     .DESCRIPTION
-      The Confirm-AzBPSqlDatabase cmdlet gets one or more SQL Databases using the specified SQL Database, SQL Server
-      and Resource Group name.
+      The Confirm-AzBPSqlDatabase cmdlet gets a SQL Database using the specified SQL Database, SQL Server,
+      and Resource Group names.
 
     .PARAMETER DatabaseName
-      The name of the SQL Database
+      The name of the SQL Database.
 
     .PARAMETER DatabaseServer
-      The name of the SQL Server
+      The name of the SQL Server.
 
     .PARAMETER ResourceGroupName
-      The name of the Resource Group
+      The name of the Resource Group. The name is case insensitive.
 
     .EXAMPLE
       Confirm-AzBPSqlDatabase -ServerName "testserver" -ResourceGroupName "rgbenchpresstest"
@@ -47,18 +47,18 @@ function Confirm-SqlDatabase {
     [string]$ResourceGroupName
   )
   Begin {
-    $ConnectResults = Connect-Account
+    $connectResults = Connect-Account
   }
   Process {
     $requestParams = @{
       ResourceGroupName = $ResourceGroupName
-      ServerName = $ServerName
-      DatabaseName = $DatabaseName
+      ServerName        = $ServerName
+      DatabaseName      = $DatabaseName
     }
 
-    $Resource = Get-AzSqlDatabase @requestParams
+    $resource = Get-AzSqlDatabase @requestParams
 
-    [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+    [ConfirmResult]::new($resource, $connectResults.AuthenticationData)
   }
   End { }
 }

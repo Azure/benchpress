@@ -12,7 +12,7 @@ function Remove-BicepFeature(){
       resources contained in it.
 
     .PARAMETER ResourceGroupName
-      Name of the Resource Group to delete
+      The name of the Resource Group to delete. The name is case insensitive.
 
     .EXAMPLE
       Remove-AzBPBicepFeature -ResourceGroupName "rg-test"

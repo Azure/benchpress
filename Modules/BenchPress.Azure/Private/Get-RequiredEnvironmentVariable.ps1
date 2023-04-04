@@ -1,4 +1,4 @@
-function Get-RequiredEnvironmentVariable {
+﻿function Get-RequiredEnvironmentVariable {
   <#
     .SYNOPSIS
       Get-RequiredEnvironmentVariable is a private helper method that retrieves environment variables with the
@@ -13,12 +13,12 @@ function Get-RequiredEnvironmentVariable {
       This is the name of the environment variable to retrieve and validate that a value is present.
 
     .EXAMPLE
-      Provide -VariableName Parameter
+      Provide -VariableName Parameter.
 
       Get-RequiredEnvironmentVariable -VariableName AZ_APPLICATION_ID
 
     .EXAMPLE
-      Provide variable name without -VariableName Parameter
+      Provide variable name without -VariableName Parameter.
 
       Get-RequiredEnvironmentVariable AZ_APPLICATION_ID
 
@@ -34,17 +34,17 @@ function Get-RequiredEnvironmentVariable {
     [string]$VariableName
   )
   Begin {
-    $Value = [string]$null
+    $value = [string]$null
   }
   Process {
-    $Value = [System.Environment]::GetEnvironmentVariable($VariableName)
+    $value = [System.Environment]::GetEnvironmentVariable($VariableName)
 
-    if ([string]::IsNullOrWhiteSpace($Value)) {
+    if ([string]::IsNullOrWhiteSpace($value)) {
       Write-Error "Missing Required Environment Variable $VariableName"
       exit 1
     }
   }
   End {
-    return $Value
+    $value
   }
 }

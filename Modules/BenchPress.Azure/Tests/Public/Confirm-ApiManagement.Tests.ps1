@@ -8,10 +8,10 @@ Describe "Confirm-ApiManagement" {
   Context "unit tests" -Tag "Unit" {
     BeforeEach {
       Mock Connect-Account{}
+      Mock Get-AzApiManagement{}
     }
 
     It "Calls Get-AzApiManagement" {
-      Mock Get-AzApiManagement{}
       Confirm-ApiManagement -Name "apim" -ResourceGroupName "rgn"
       Should -Invoke -CommandName "Get-AzApiManagement" -Times 1
     }

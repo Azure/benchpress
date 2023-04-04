@@ -1,4 +1,4 @@
-# INLINE_SKIP
+﻿# INLINE_SKIP
 using module ./../Classes/ConfirmResult.psm1
 
 . $PSScriptRoot/../Private/Connect-Account.ps1
@@ -14,10 +14,10 @@ function Confirm-ApiManagement {
       and Resource Group names.
 
     .PARAMETER ResourceGroupName
-      Specifies the name of the resource group under in which this cmdlet gets the API Management service.
+      The name of the Resource Group. The name is case insensitive.
 
     .PARAMETER Name
-      Specifies the name of API Management service.
+      The name of the API Management Service.
 
     .EXAMPLE
       Confirm-AzBPApiManagement -ResourceGroupName "rgbenchpresstest" -Name "benchpresstest"
@@ -38,12 +38,12 @@ function Confirm-ApiManagement {
     [string]$Name
   )
   Begin {
-    $ConnectResults = Connect-Account
+    $connectResults = Connect-Account
   }
   Process {
-    $Resource = Get-AzApiManagement -ResourceGroupName $ResourceGroupName -Name $Name
+    $resource = Get-AzApiManagement -ResourceGroupName $ResourceGroupName -Name $Name
 
-    [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+    [ConfirmResult]::new($resource, $connectResults.AuthenticationData)
   }
   End { }
 }
