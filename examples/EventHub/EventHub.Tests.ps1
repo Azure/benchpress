@@ -7,7 +7,7 @@
   $Script:location = 'westus3'
 }
 
-Describe 'Verify EventHub' {
+Describe 'Verify Event Hub' {
   BeforeAll {
     $Script:noEventHub = 'noeventhub'
   }
@@ -93,7 +93,7 @@ Describe 'Verify EventHub' {
   }
 }
 
-Describe 'Verify EventHub Namespace' {
+Describe 'Verify Event Hub Namespace' {
   BeforeAll {
     $Script:noNameSpaceName = 'nosamplenamespace'
   }
@@ -149,7 +149,7 @@ Describe 'Verify EventHub Namespace' {
   }
 }
 
-Describe 'Verify EventHub Consumer Group' {
+Describe 'Verify Event Hub Consumer Group' {
   BeforeAll {
     $Script:consumerGroupName = 'eventhubconsumergroup'
     $Script:noConsumerGroupName = 'noeventhubconsumergroup'

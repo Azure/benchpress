@@ -7,12 +7,12 @@
   $Script:databaseName = 'samplesqldatabase'
 }
 
-Describe 'Verify Sql Database' {
+Describe 'Verify SQL Database' {
   BeforeAll {
     $Script:noDatabaseName = 'nosamplesqlserver'
   }
 
-  It "Should contain a Sql Database named $databaseName - Confirm-AzBPResource" {
+  It "Should contain a SQL Database named $databaseName - Confirm-AzBPResource" {
     #arrange
     $params = @{
       ResourceType      = "SqlDatabase"
@@ -26,7 +26,7 @@ Describe 'Verify Sql Database' {
   }
 
 
-  It "Should contain a Sql Database named $databaseName - Confirm-AzBPResource" {
+  It "Should contain a SQL Database named $databaseName - Confirm-AzBPResource" {
     #arrange
     $params = @{
       ResourceType      = "SqlDatabase"
@@ -41,7 +41,7 @@ Describe 'Verify Sql Database' {
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
-  It "Should contain a Sql Database named $databaseName" {
+  It "Should contain a SQL Database named $databaseName" {
     $params = @{
       ResourceGroupName = $rgName
       DatabaseName      = $databaseName
@@ -51,7 +51,7 @@ Describe 'Verify Sql Database' {
     Confirm-AzBPSqlDatabase @params | Should -BeSuccessful
   }
 
-  It 'Should not contain a Sql Database with the given name' {
+  It 'Should not contain a SQL Database with the given name' {
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
@@ -65,7 +65,7 @@ Describe 'Verify Sql Database' {
     Confirm-AzBPSqlDatabase @params | Should -Not -BeSuccessful
   }
 
-  It "Should contain a Sql Database named $databaseName in $location" {
+  It "Should contain a SQL Database named $databaseName in $location" {
     $params = @{
       ResourceGroupName = $rgName
       DatabaseName      = $databaseName
@@ -75,7 +75,7 @@ Describe 'Verify Sql Database' {
     Confirm-AzBPSqlDatabase @params | Should -BeInLocation $location
   }
 
-  It "Should contain a Sql Database named $databaseName in $rgName" {
+  It "Should contain a SQL Database named $databaseName in $rgName" {
     $params = @{
       ResourceGroupName = $rgName
       DatabaseName      = $databaseName

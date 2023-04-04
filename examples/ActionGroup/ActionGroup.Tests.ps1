@@ -53,12 +53,12 @@ Describe 'Verify Action Group' {
     Confirm-AzBPActionGroup @params | Should -Not -BeSuccessful
   }
 
-  It "Should contain an action group named $actionGroupName in $location" {
+  It "Should contain an Action Group named $actionGroupName in $location" {
     Confirm-AzBPActionGroup -ResourceGroupName $rgName -ActionGroupName $actionGroupName
     | Should -BeInLocation $location
   }
 
-  It "Should contain an action group named $actionGroupName in $rgName" {
+  It "Should contain an Action Group named $actionGroupName in $rgName" {
     Confirm-AzBPActionGroup -ResourceGroupName $rgName -ActionGroupName $actionGroupName
     | Should -BeInResourceGroup $rgName
   }

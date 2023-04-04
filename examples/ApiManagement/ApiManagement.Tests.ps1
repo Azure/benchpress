@@ -12,7 +12,7 @@ Describe 'Verify API Management Service' {
     $Script:noApiServiceName = 'noservice'
   }
 
-  It 'Should contain an API Management Service with the given name - Confirm-AzBPResource' {
+  It 'Should contain an API Management Service named $apiServiceName - Confirm-AzBPResource' {
     #arrange
     $params = @{
       ResourceType      = "ApiManagement"
@@ -41,7 +41,7 @@ Describe 'Verify API Management Service' {
     Confirm-AzBPApiManagement -ResourceGroupName $rgName -Name $apiServiceName | Should -BeSuccessful
   }
 
-  It 'Should not contain an API Management Service with the given name' {
+  It "Should not contain an API Management Service named $noApiServiceName" {
     #arrange
     $params = @{
       ResourceGroupName = $rgName
@@ -60,7 +60,7 @@ Describe 'Verify API Management Service' {
     Confirm-AzBPApiManagement -ResourceGroupName $rgName -Name $apiServiceName | Should -BeInLocation $location
   }
 
-  It "Should be an API Management Service in a resource group named $rgName" {
+  It "Should contain an API Management Service named $apiServiceName in $rgName" {
     Confirm-AzBPApiManagement -ResourceGroupName $rgName -Name $apiServiceName | Should -BeInResourceGroup $rgName
   }
 }
@@ -70,7 +70,7 @@ Describe 'Verify API Management API' {
     $Script:noApiName = 'noapi'
   }
 
-  It 'Should contain an API Management API with the given name - Confirm-AzBPResource' {
+  It "Should contain an API Management API named $apiName - ConfirmAzBPResource" {
     #arrange
     $params = @{
       ResourceType      = "ApiManagementApi"
@@ -103,7 +103,7 @@ Describe 'Verify API Management API' {
       | Should -BeSuccessful
   }
 
-  It 'Should not contain an API Management API with the given name' {
+  It "Should not contain an API Management API named $noApiName" {
     # arrange
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
@@ -119,7 +119,7 @@ Describe 'Verify API Management API' {
     Confirm-AzBPApiManagementApi @params | Should -Not -BeSuccessful
   }
 
-  It "Should be an API Management API in a resource group named $rgName" {
+  It "Should contain an API Management API named $apiName in $rgName" {
     Confirm-AzBPApiManagementApi -ResourceGroupName $rgName -ServiceName $apiServiceName -Name $apiName
     | Should -BeInResourceGroup $rgName
   }
@@ -131,7 +131,7 @@ Describe 'Verify API Management Diagnostic' {
     $Script:noDiagnosticName = 'nodiag'
   }
 
-  It 'Should contain an API Management Diagnostic with the given name - Confirm-AzBPResource' {
+  It "Should contain an API Management Diagnostic named $diagnosticName - Confirm-AzBPResource" {
     #arrange
     $params = @{
       ResourceType      = "ApiManagementDiagnostic"
@@ -171,7 +171,7 @@ Describe 'Verify API Management Diagnostic' {
     Confirm-AzBPApiManagementDiagnostic @params | Should -BeSuccessful
   }
 
-  It 'Should not contain an API Management Diagnostic with the given name' {
+  It "Should not contain an API Management Diagnostic named $noDiagnosticName" {
     #arrange
     $params = @{
       ResourceGroupName = $rgName
@@ -187,7 +187,7 @@ Describe 'Verify API Management Diagnostic' {
     Confirm-AzBPApiManagementDiagnostic @params | Should -Not -BeSuccessful
   }
 
-  It "Should be an API Management Diagnostic in a resource group named $rgName" {
+  It "Should contain an API Management Diagnostic named $diagnosticName in $rgName" {
     $params = @{
       ResourceGroupName = $rgName
       ServiceName       = $apiServiceName
@@ -205,7 +205,7 @@ Describe 'Verify API Management Logger' {
     $Script:noLoggerName = 'nologger'
   }
 
-  It 'Should contain an API Management Logger with the given name - Confirm-AzBPResource' {
+  It "Should contain an API Management Logger named $loggerName - ConfirmAzBPResource" {
     #arrange
     $params = @{
       ResourceType      = "ApiManagementLogger"
@@ -245,7 +245,7 @@ Describe 'Verify API Management Logger' {
     Confirm-AzBPApiManagementLogger @params | Should -BeSuccessful
   }
 
-  It 'Should not contain an API Management Logger with the given name' {
+  It "Should not contain an API Management Logger named $noLoggerName" {
     #arrange
     $params = @{
       ResourceGroupName = $rgName
@@ -261,7 +261,7 @@ Describe 'Verify API Management Logger' {
     Confirm-AzBPApiManagementLogger @params | Should -Not -BeSuccessful
   }
 
-  It "Should be an API Management Logger in a resource group named $rgName" {
+  It "Should contain an API Management Logger named $loggerName in $rgName" {
     $params = @{
       ResourceGroupName = $rgName
       ServiceName       = $apiServiceName

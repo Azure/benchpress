@@ -124,7 +124,7 @@ Describe 'Verify Cosmos DB Account' {
 
 #######################################################################################################################
 
-  It "Should contain a Sql Cosmos DB Account named $sqlAccountName - Confirm-AzBPResource" {
+  It "Should contain a SQL Cosmos DB Account named $sqlAccountName - Confirm-AzBPResource" {
     #arrange
     $params = @{
       ResourceType      = "CosmosDBAccount"
@@ -136,7 +136,7 @@ Describe 'Verify Cosmos DB Account' {
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
-  It "Should contain a Sql Cosmos DB Account named $sqlAccountName - Confirm-AzBPResource" {
+  It "Should contain a SQL Cosmos DB Account named $sqlAccountName - Confirm-AzBPResource" {
     #arrange
     $params = @{
       ResourceType      = "CosmosDBAccount"
@@ -150,7 +150,7 @@ Describe 'Verify Cosmos DB Account' {
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
-  It "Should contain a Sql Cosmos DB named $sqlDatabaseName - Confirm-AzBPResource" {
+  It "Should contain a SQL Cosmos DB named $sqlDatabaseName - Confirm-AzBPResource" {
     #arrange
     $params = @{
       ResourceType      = "CosmosDBSQLDatabase"
@@ -163,7 +163,7 @@ Describe 'Verify Cosmos DB Account' {
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
-  It "Should contain a Sql Cosmos DB named $sqlDatabaseName - Confirm-AzBPResource" {
+  It "Should contain a SQL Cosmos DB named $sqlDatabaseName - Confirm-AzBPResource" {
     #arrange
     $params = @{
       ResourceType      = "CosmosDBSQLDatabase"
@@ -278,7 +278,7 @@ Describe 'Comsos DB Mongo DB Database' {
     Confirm-AzBPCosmosDBAccount -ResourceGroupName $rgName -Name $mongoAccountName | Should -BeSuccessful
   }
 
-  It "Should not contain a Cosmos DB Mongo Account named $noMongoDBAccountName" {
+  It "Should not contain a Cosmos DB Account named $noMongoDBAccountName" {
     #arrange
     # The 'ErrorAction = SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
@@ -366,7 +366,7 @@ Describe 'Comsos DB SQL Database' {
     Confirm-AzBPCosmosDBAccount -ResourceGroupName $rgName -Name $sqlAccountName | Should -BeSuccessful
   }
 
-  It "Should not contain a Cosmos DB SQL Account named $noSqlAccountName" {
+  It "Should not contain a Cosmos DB Account named $noSqlAccountName" {
     #arrange
     # The 'ErrorAction = SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.

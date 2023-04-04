@@ -6,12 +6,12 @@
   $Script:location = 'westus3'
 }
 
-Describe 'Verify App Insights' {
+Describe 'Verify Application Insights' {
   BeforeAll {
     $Script:noAppInsightsName = 'noappinsights'
   }
 
-  It "Should contain an App Insights named $appInsightsName - Confirm-AzBPResource" {
+  It "Should contain an Application Insights named $appInsightsName - Confirm-AzBPResource" {
     #arrange
     $params = @{
       ResourceType      = "AppInsights"

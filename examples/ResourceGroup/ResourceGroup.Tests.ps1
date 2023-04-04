@@ -21,7 +21,7 @@ Describe 'Verify Resource Group Exists' {
   }
 
 
-  It "Should contain a Resource Group named - Confirm-AzBPResource" {
+  It "Should contain a Resource Group named $rgName - Confirm-AzBPResource" {
     #arrange
     $params = @{
       ResourceType      = "ResourceGroup"
@@ -44,7 +44,7 @@ Describe 'Verify Resource Group Exists' {
     Confirm-AzBPResourceGroup -ResourceGroupName $noRgName -ErrorAction SilentlyContinue | Should -Not -BeSuccessful
   }
 
-  It "Should contain an Resource Group named $rgName in $location" {
+  It "Should contain a Resource Group named $rgName in $location" {
     Confirm-AzBPResourceGroup -ResourceGroupName $rgName | Should -BeInLocation $location
   }
 }

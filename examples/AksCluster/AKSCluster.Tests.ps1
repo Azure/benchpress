@@ -52,7 +52,7 @@ Describe 'Verify AKS Cluster' {
     Confirm-AzBPAksCluster -ResourceGroupName $rgName -AKSName $aksName | Should -BeInLocation $location
   }
 
-  It "Should be an AKS CLuster named $aksName in $rgName" {
+  It "Should contain an AKS Cluster named $aksName in $rgName" {
     Confirm-AzBPAksCluster -ResourceGroupName $rgName -AKSName $aksName | Should -BeInResourceGroup $rgName
   }
 }
