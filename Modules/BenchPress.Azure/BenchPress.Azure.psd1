@@ -27,6 +27,7 @@
     "Confirm-CosmosDBGremlinDatabase",
     "Confirm-CosmosDBMongoDBDatabase",
     "Confirm-CosmosDBSqlDatabase",
+    "Confirm-CosmosDBSqlRoleAssignment",
     "Confirm-DataFactory",
     "Confirm-DataFactoryLinkedService",
     "Confirm-EventHub",

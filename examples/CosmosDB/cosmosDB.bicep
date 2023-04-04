@@ -125,3 +125,12 @@ resource sql_database 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2022-0
     }
   }
 }
+
+resource sqlRoleAssignment 'Microsoft.DocumentDB/databaseAccounts/sqlRoleAssignments@2021-04-15' = {
+  name: '${databaseAccount.name}/${roleAssignmentId}'
+  properties: {
+    roleDefinitionId: sqlRoleDefinition.id
+    principalId: principalId
+    scope: databaseAccount.id
+  }
+}

@@ -7,6 +7,7 @@ using module ./../Classes/ResourceType.psm1
 . $PSScriptRoot/Confirm-AppInsights.ps1
 . $PSScriptRoot/Confirm-AppServicePlan.ps1
 . $PSScriptRoot/Confirm-ContainerRegistry.ps1
+. $PSScriptRoot/Confirm-CosmosDBSqlRoleAssignment.ps1
 . $PSScriptRoot/Confirm-DataFactory.ps1
 . $PSScriptRoot/Confirm-DataFactoryLinkedService.ps1
 . $PSScriptRoot/Confirm-EventHub.ps1
@@ -63,6 +64,10 @@ function Get-ResourceByType {
     .PARAMETER ServiceName
       If the Azure resource is associated with a service (e.g, API Management Service) this is the parameter to use to
       pass the service name.
+    
+    .PARAMETER RoleAssignmentId
+      If the Azure resource is associated with a role assignment (e.g., Cosmos DB SQL Role Assignment) this is the
+      parameter to use to pass the role assignment id.
 
     .EXAMPLE
       Get-AzBPResourceByType -ResourceType ActionGroup -ResourceName "bpactiongroup" -ResourceGroupName "rgbenchpresstest"
@@ -119,7 +124,10 @@ function Get-ResourceByType {
     [string]$ServiceName,
 
     [Parameter(Mandatory = $false)]
-    [string]$JobName
+    [string]$JobName,
+
+    [Parameter(Mandatory = $false)]
+    [string]$RoleAssignmentId
   )
   Begin { }
   Process {
@@ -203,6 +211,14 @@ function Get-ResourceByType {
           Name              = $ResourceName
         }
         return Confirm-CosmosDBSqlDatabase @params
+      }
+      "CosmosDBSqlRoleAssignment" {
+        $params = @{
+          ResourceGroupName = $ResourceGroupName
+          AccountName       = $AccountName
+          RoleAssignmentId  = $RoleAssignmentId
+        }
+        return Confirm-CosmosDBSqlRoleAssignment @params
       }
       "DataFactory" {
         return Confirm-DataFactory -Name $ResourceName -ResourceGroupName $ResourceGroupName

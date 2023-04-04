@@ -13,6 +13,7 @@ enum ResourceType{
   CosmosDBGremlinDatabase
   CosmosDBMongoDBDatabase
   CosmosDBSqlDatabase
+  CosmosDBSqlRoleAssignment
   ContainerRegistry
   DataFactory
   DataFactoryLinkedService
