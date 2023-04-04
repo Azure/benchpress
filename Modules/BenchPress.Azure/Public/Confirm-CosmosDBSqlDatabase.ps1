@@ -10,7 +10,7 @@ function Confirm-CosmosDBSqlDatabase {
       Confirms that a Cosmos DB SQL Database exists.
 
     .DESCRIPTION
-      The Confirm-AzBPCosmosDBSqlDatabase cmdlet gets Cosmos DB SQL Database using the specified Resource Group,
+      The Confirm-AzBPCosmosDBSqlDatabase cmdlet gets a Cosmos DB SQL Database using the specified Resource Group,
       Cosmos DB Account, and SQL Database names.
 
     .PARAMETER ResourceGroupName
