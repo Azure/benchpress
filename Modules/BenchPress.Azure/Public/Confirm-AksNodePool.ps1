@@ -13,7 +13,7 @@ function Confirm-AksNodePool {
       The Confirm-AzBPAksNodePool cmdlet gets an AKS Node Pool using the specified AKS Node Pool and Resource Group names.
 
     .PARAMETER ResourceGroupName
-      The name of the Resource Group.
+      The name of the Resource Group. The name is case insensitive.
 
     .PARAMETER ClusterName
       The name of the Managed Cluster.
