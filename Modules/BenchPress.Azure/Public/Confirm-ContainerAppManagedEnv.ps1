@@ -17,7 +17,7 @@ function Confirm-ContainerAppManagedEnv {
       The name of the resource group. The name is case insensitive.
 
     .PARAMETER Name
-      Name of the Environment.
+      The name of the Environment.
 
     .EXAMPLE
       Confirm-AzBPContainerAppManagedEnv -Name "benchpresstest" -ResourceGroupName "rgbenchpresstest"
