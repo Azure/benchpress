@@ -4,6 +4,7 @@ using module ./../Classes/ResourceType.psm1
 
 . $PSScriptRoot/Confirm-ActionGroup.ps1
 . $PSScriptRoot/Confirm-AksCluster.ps1
+. $PSScriptRoot/Confirm-AksNodePool.ps1
 . $PSScriptRoot/Confirm-AppInsights.ps1
 . $PSScriptRoot/Confirm-AppServicePlan.ps1
 . $PSScriptRoot/Confirm-ContainerRegistry.ps1
