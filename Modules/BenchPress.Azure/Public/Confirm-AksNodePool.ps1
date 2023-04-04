@@ -16,7 +16,7 @@ function Confirm-AksNodePool {
       The name of the Resource Group.
 
     .PARAMETER ClusterName
-      The name of the managed cluster resource.
+      The name of the Managed Cluster.
 
     .PARAMETER Name
       The name of the Node Pool
