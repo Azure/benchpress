@@ -49,7 +49,7 @@ function Confirm-ApiManagementPolicy {
   }
   Process {
     $policy = New-AzApiManagementContext -ResourceGroupName $ResourceGroupName -ServiceName $ServiceName
-      | Get-AzApiManagementPolicy -ApiId $ApiId
+    | Get-AzApiManagementPolicy -ApiId $ApiId
 
     # Get-AzApiManagementPolicy returns the XML for a policy, not a resource
     if ([string]::IsNullOrWhiteSpace($policy)) {

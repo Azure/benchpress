@@ -48,7 +48,7 @@ function Confirm-ApiManagementApi {
   }
   Process {
     $resource = New-AzApiManagementContext -ResourceGroupName $ResourceGroupName -ServiceName $ServiceName
-      | Get-AzApiManagementApi -Name $Name
+    | Get-AzApiManagementApi -Name $Name
 
     [ConfirmResult]::new($resource, $connectResults.AuthenticationData)
   }

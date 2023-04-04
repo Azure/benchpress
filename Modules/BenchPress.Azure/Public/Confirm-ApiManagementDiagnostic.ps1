@@ -49,7 +49,7 @@ function Confirm-ApiManagementDiagnostic {
   }
   Process {
     $resource = New-AzApiManagementContext -ResourceGroupName $ResourceGroupName -ServiceName $ServiceName
-      | Get-AzApiManagementDiagnostic -DiagnosticId $Name
+    | Get-AzApiManagementDiagnostic -DiagnosticId $Name
 
     [ConfirmResult]::new($resource, $connectResults.AuthenticationData)
   }
