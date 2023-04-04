@@ -8,7 +8,7 @@ Describe 'Spin up , Tear down Action Group' {
     $bicepPath = "../ActionGroup/actionGroup.bicep"
     $params = @{
       actionGroupName = "sampleaction"
-      location    = "swedencentral"
+      location        = "swedencentral"
     }
 
     #act

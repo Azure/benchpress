@@ -13,9 +13,9 @@ Describe 'Verify Stream Analytics Cluster' {
   It "Should contain a Stream Analytics Cluster named $clusterName - Confirm-AzBPResource" {
     #arrange
     $params = @{
-      ResourceType = "StreamAnalyticsCluster"
+      ResourceType      = "StreamAnalyticsCluster"
       ResourceGroupName = $rgName
-      ResourceName = $clusterName
+      ResourceName      = $clusterName
     }
 
     #act
@@ -25,11 +25,11 @@ Describe 'Verify Stream Analytics Cluster' {
   It "Should contain a Stream Analytics Cluster named $clusterName - ConfirmAzBPResource" {
     #arrange
     $params = @{
-      ResourceType = "StreamAnalyticsCluster"
+      ResourceType      = "StreamAnalyticsCluster"
       ResourceGroupName = $rgName
-      ResourceName = $clusterName
-      PropertyKey = 'Name'
-      PropertyValue = $clusterName
+      ResourceName      = $clusterName
+      PropertyKey       = 'Name'
+      PropertyValue     = $clusterName
     }
 
     #act
@@ -62,9 +62,9 @@ Describe 'Stream Analytics Jobs' {
   It "Should contain a Stream Analytics Job named $jobName - Confirm-AzBPResource" {
     #arrange
     $params = @{
-      ResourceType = "StreamAnalyticsJob"
+      ResourceType      = "StreamAnalyticsJob"
       ResourceGroupName = $rgName
-      ResourceName = $jobName
+      ResourceName      = $jobName
     }
 
     #act
@@ -74,11 +74,11 @@ Describe 'Stream Analytics Jobs' {
   It "Should contain a Stream Analytics Job named $jobName - ConfirmAzBPResource" {
     #arrange
     $params = @{
-      ResourceType = "StreamAnalyticsJob"
+      ResourceType      = "StreamAnalyticsJob"
       ResourceGroupName = $rgName
-      ResourceName = $jobName
-      PropertyKey = 'Name'
-      PropertyValue = $jobName
+      ResourceName      = $jobName
+      PropertyKey       = 'Name'
+      PropertyValue     = $jobName
     }
 
     #act
@@ -102,10 +102,10 @@ Describe 'Stream Analytics Jobs' {
   It "Should contain a Stream Analytics Function named $functionName - Confirm-AzBPResource" {
     #arrange
     $params = @{
-      ResourceType = "StreamAnalyticsFunction"
+      ResourceType      = "StreamAnalyticsFunction"
       ResourceGroupName = $rgName
-      JobName = $jobName
-      ResourceName = $functionName
+      JobName           = $jobName
+      ResourceName      = $functionName
     }
 
     #act
@@ -115,12 +115,12 @@ Describe 'Stream Analytics Jobs' {
   It "Should contain a Stream Analytics Function named $functionName - ConfirmAzBPResource" {
     #arrange
     $params = @{
-      ResourceType = "StreamAnalyticsFunction"
+      ResourceType      = "StreamAnalyticsFunction"
       ResourceGroupName = $rgName
-      JobName = $jobName
-      ResourceName = $functionName
-      PropertyKey = 'Name'
-      PropertyValue = $functionName
+      JobName           = $jobName
+      ResourceName      = $functionName
+      PropertyKey       = 'Name'
+      PropertyValue     = $functionName
     }
 
     #act
@@ -131,8 +131,8 @@ Describe 'Stream Analytics Jobs' {
     #arrange
     $params = @{
       ResourceGroupName = $rgName
-      JobName = $jobName
-      Name = $functionName
+      JobName           = $jobName
+      Name              = $functionName
     }
 
     #act
@@ -143,8 +143,8 @@ Describe 'Stream Analytics Jobs' {
     #arrange
     $params = @{
       ResourceGroupName = $rgName
-      JobName = $jobName
-      Name = $functionName
+      JobName           = $jobName
+      Name              = $functionName
     }
 
     #act
@@ -156,10 +156,10 @@ Describe 'Stream Analytics Jobs' {
   It "Should contain a Stream Analytics Input named $inputName - Confirm-AzBPResource" {
     #arrange
     $params = @{
-      ResourceType = "StreamAnalyticsInput"
+      ResourceType      = "StreamAnalyticsInput"
       ResourceGroupName = $rgName
-      JobName = $jobName
-      ResourceName = $inputName
+      JobName           = $jobName
+      ResourceName      = $inputName
     }
 
     #act
@@ -169,12 +169,12 @@ Describe 'Stream Analytics Jobs' {
   It "Should contain a Stream Analytics Input named $inputName - ConfirmAzBPResource" {
     #arrange
     $params = @{
-      ResourceType = "StreamAnalyticsInput"
+      ResourceType      = "StreamAnalyticsInput"
       ResourceGroupName = $rgName
-      JobName = $jobName
-      ResourceName = $inputName
-      PropertyKey = 'Name'
-      PropertyValue = $inputName
+      JobName           = $jobName
+      ResourceName      = $inputName
+      PropertyKey       = 'Name'
+      PropertyValue     = $inputName
     }
 
     #act
@@ -185,8 +185,8 @@ Describe 'Stream Analytics Jobs' {
     #arrange
     $params = @{
       ResourceGroupName = $rgName
-      JobName = $jobName
-      Name = $inputName
+      JobName           = $jobName
+      Name              = $inputName
     }
 
     #act
@@ -197,8 +197,8 @@ Describe 'Stream Analytics Jobs' {
     #arrange
     $params = @{
       ResourceGroupName = $rgName
-      JobName = $jobName
-      Name = $inputName
+      JobName           = $jobName
+      Name              = $inputName
     }
 
     #act
@@ -210,10 +210,10 @@ Describe 'Stream Analytics Jobs' {
   It "Should contain a Stream Analytics Output named $outputName - Confirm-AzBPResource" {
     #arrange
     $params = @{
-      ResourceType = "StreamAnalyticsOutput"
+      ResourceType      = "StreamAnalyticsOutput"
       ResourceGroupName = $rgName
-      JobName = $jobName
-      ResourceName = $outputName
+      JobName           = $jobName
+      ResourceName      = $outputName
     }
 
     #act
@@ -223,12 +223,12 @@ Describe 'Stream Analytics Jobs' {
   It "Should contain a Stream Analytics Output named $outputName - ConfirmAzBPResource" {
     #arrange
     $params = @{
-      ResourceType = "StreamAnalyticsOutput"
+      ResourceType      = "StreamAnalyticsOutput"
       ResourceGroupName = $rgName
-      JobName = $jobName
-      ResourceName = $outputName
-      PropertyKey = 'Name'
-      PropertyValue = $outputName
+      JobName           = $jobName
+      ResourceName      = $outputName
+      PropertyKey       = 'Name'
+      PropertyValue     = $outputName
     }
 
     #act
@@ -239,8 +239,8 @@ Describe 'Stream Analytics Jobs' {
     #arrange
     $params = @{
       ResourceGroupName = $rgName
-      JobName = $jobName
-      Name = $outputName
+      JobName           = $jobName
+      Name              = $outputName
     }
 
     #act
@@ -251,8 +251,8 @@ Describe 'Stream Analytics Jobs' {
     #arrange
     $params = @{
       ResourceGroupName = $rgName
-      JobName = $jobName
-      Name = $outputName
+      JobName           = $jobName
+      Name              = $outputName
     }
 
     #act
@@ -264,10 +264,10 @@ Describe 'Stream Analytics Jobs' {
   It "Should contain a Stream Analytics Transformation named $transformationName- Confirm-AzBPResource" {
     #arrange
     $params = @{
-      ResourceType = "StreamAnalyticsTransformation"
+      ResourceType      = "StreamAnalyticsTransformation"
       ResourceGroupName = $rgName
-      JobName = $jobName
-      ResourceName = $transformationName
+      JobName           = $jobName
+      ResourceName      = $transformationName
     }
 
     #act
@@ -277,12 +277,12 @@ Describe 'Stream Analytics Jobs' {
   It "Should contain a Stream Analytics Transformation named $transformationName - ConfirmAzBPResource" {
     #arrange
     $params = @{
-      ResourceType = "StreamAnalyticsTransformation"
+      ResourceType      = "StreamAnalyticsTransformation"
       ResourceGroupName = $rgName
-      JobName = $jobName
-      ResourceName = $transformationName
-      PropertyKey = 'Name'
-      PropertyValue = $transformationName
+      JobName           = $jobName
+      ResourceName      = $transformationName
+      PropertyKey       = 'Name'
+      PropertyValue     = $transformationName
     }
 
     #act
@@ -293,8 +293,8 @@ Describe 'Stream Analytics Jobs' {
     #arrange
     $params = @{
       ResourceGroupName = $rgName
-      JobName = $jobName
-      Name = $transformationName
+      JobName           = $jobName
+      Name              = $transformationName
     }
 
     #act
@@ -305,8 +305,8 @@ Describe 'Stream Analytics Jobs' {
     #arrange
     $params = @{
       ResourceGroupName = $rgName
-      JobName = $jobName
-      Name = $transformationName
+      JobName           = $jobName
+      Name              = $transformationName
     }
 
     #act

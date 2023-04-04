@@ -14,9 +14,9 @@ Describe 'Verify Storage Account' {
   It "Should contain a Storage Account named $accountName - Confirm-AzBPResource" {
     #arrange
     $params = @{
-      ResourceType = "StorageAccount"
+      ResourceType      = "StorageAccount"
       ResourceGroupName = $rgName
-      ResourceName = $accountName
+      ResourceName      = $accountName
     }
 
     #act
@@ -26,11 +26,11 @@ Describe 'Verify Storage Account' {
   It "Should contain a Storage Account named $accountName - ConfirmAzBPResource" {
     #arrange
     $params = @{
-      ResourceType = "StorageAccount"
+      ResourceType      = "StorageAccount"
       ResourceGroupName = $rgName
-      ResourceName = $accountName
-      PropertyKey = 'StorageAccountName'
-      PropertyValue = $accountName
+      ResourceName      = $accountName
+      PropertyKey       = 'StorageAccountName'
+      PropertyValue     = $accountName
     }
 
     #act
@@ -68,10 +68,10 @@ Describe 'Verify Storage Container' {
   It "Should contain a Storage Container named $containerName - Confirm-AzBPResource" {
     #arrange
     $params = @{
-      ResourceType = "StorageContainer"
+      ResourceType      = "StorageContainer"
       ResourceGroupName = $rgName
-      AccountName = $accountName
-      ResourceName = $containerName
+      AccountName       = $accountName
+      ResourceName      = $containerName
     }
 
     #act
@@ -81,12 +81,12 @@ Describe 'Verify Storage Container' {
   It "Should contain a Storage Container named $containerName - ConfirmAzBPResource" {
     #arrange
     $params = @{
-      ResourceType = "StorageContainer"
+      ResourceType      = "StorageContainer"
       ResourceGroupName = $rgName
-      AccountName = $accountName
-      ResourceName = $containerName
-      PropertyKey = 'Name'
-      PropertyValue = $containerName
+      AccountName       = $accountName
+      ResourceName      = $containerName
+      PropertyKey       = 'Name'
+      PropertyValue     = $containerName
     }
 
     #act

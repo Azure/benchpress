@@ -14,9 +14,9 @@ Describe 'Verify Virtual Machine' {
   It "Should contain a Virtual Machine named $vmName - Confirm-AzBPResource" {
     #arrange
     $params = @{
-      ResourceType = "VirtualMachine"
+      ResourceType      = "VirtualMachine"
       ResourceGroupName = $rgName
-      ResourceName = $vmName
+      ResourceName      = $vmName
     }
 
     #act
@@ -26,11 +26,11 @@ Describe 'Verify Virtual Machine' {
   It "Should contain a Virtual Machine named $vmName - ConfirmAzBPResource" {
     #arrange
     $params = @{
-      ResourceType = "VirtualMachine"
+      ResourceType      = "VirtualMachine"
       ResourceGroupName = $rgName
-      ResourceName = $vmName
-      PropertyKey = 'Name'
-      PropertyValue = $vmName
+      ResourceName      = $vmName
+      PropertyKey       = 'Name'
+      PropertyValue     = $vmName
     }
 
     #act
@@ -44,9 +44,9 @@ Describe 'Verify Virtual Machine' {
   It "Should not contain a Virtual Machine named $noVmName" {
     #arrange
     $params = @{
-      ResourceGroupName = $rgName
+      ResourceGroupName  = $rgName
       VirtualMachineName = $noVmName
-      ErrorAction = "SilentlyContinue"
+      ErrorAction        = "SilentlyContinue"
     }
 
     #act

@@ -14,9 +14,9 @@ Describe 'Verify Synapse Workspace' {
   It "Should contain a Synapse Workspace named $workSpaceName - Confirm-AzBPResource" {
     #arrange
     $params = @{
-      ResourceType = "SynapseWorkspace"
+      ResourceType      = "SynapseWorkspace"
       ResourceGroupName = $rgName
-      ResourceName = $workSpaceName
+      ResourceName      = $workSpaceName
     }
 
     #act
@@ -26,11 +26,11 @@ Describe 'Verify Synapse Workspace' {
   It "Should contain a Synapse Workspace named $workSpaceName - ConfirmAzBPResource" {
     #arrange
     $params = @{
-      ResourceType = "SynapseWorkspace"
+      ResourceType      = "SynapseWorkspace"
       ResourceGroupName = $rgName
-      ResourceName = $workSpaceName
-      PropertyKey = 'Name'
-      PropertyValue = $workSpaceName
+      ResourceName      = $workSpaceName
+      PropertyKey       = 'Name'
+      PropertyValue     = $workSpaceName
     }
 
     #act
@@ -58,8 +58,8 @@ Describe 'Verify Synapse Workspace' {
     # Remove this field to see all errors.
     $params = @{
       ResourceGroupName = $rgName
-      WorkspaceName = $noWorkspaceName
-      ErrorAction = 'SilentlyContinue'
+      WorkspaceName     = $noWorkspaceName
+      ErrorAction       = 'SilentlyContinue'
     }
 
     #act and assert
@@ -76,10 +76,10 @@ Describe 'Verify Synapse Spark/SQL Pool' {
   It "Should contain a Synapse Spark Pool named $sparkPoolName - Confirm-AzBPResource" {
     #arrange
     $params = @{
-      ResourceType = "SynapseSparkPool"
+      ResourceType      = "SynapseSparkPool"
       ResourceGroupName = $rgName
-      WorkspaceName = $workSpaceName
-      ResourceName = $sparkPoolName
+      WorkspaceName     = $workSpaceName
+      ResourceName      = $sparkPoolName
     }
 
     #act
@@ -89,12 +89,12 @@ Describe 'Verify Synapse Spark/SQL Pool' {
   It "Should contain a Synapse Spark Pool named $sparkPoolName - ConfirmAzBPResource" {
     #arrange
     $params = @{
-      ResourceType = "SynapseSparkPool"
+      ResourceType      = "SynapseSparkPool"
       ResourceGroupName = $rgName
-      WorkspaceName = $workSpaceName
-      ResourceName = $sparkPoolName
-      PropertyKey = 'Name'
-      PropertyValue = $sparkPoolName
+      WorkspaceName     = $workSpaceName
+      ResourceName      = $sparkPoolName
+      PropertyKey       = 'Name'
+      PropertyValue     = $sparkPoolName
     }
 
     #act
@@ -141,10 +141,10 @@ Describe 'Verify Synapse Spark/SQL Pool' {
   It "Should contain a Synapse SQL Pool named $sqlPoolName - Confirm-AzBPResource" {
     #arrange
     $params = @{
-      ResourceType = "SynapseSqlPool"
+      ResourceType      = "SynapseSqlPool"
       ResourceGroupName = $rgName
-      WorkspaceName = $workSpaceName
-      ResourceName = $sqlPoolName
+      WorkspaceName     = $workSpaceName
+      ResourceName      = $sqlPoolName
     }
 
     #act
@@ -154,12 +154,12 @@ Describe 'Verify Synapse Spark/SQL Pool' {
   It "Should contain a Synapse SQL Pool named $sqlPoolName - ConfirmAzBPResource" {
     #arrange
     $params = @{
-      ResourceType = "SynapseSqlPool"
+      ResourceType      = "SynapseSqlPool"
       ResourceGroupName = $rgName
-      WorkspaceName = $workSpaceName
-      ResourceName = $sqlPoolName
-      PropertyKey = 'Name'
-      PropertyValue = $sqlPoolName
+      WorkspaceName     = $workSpaceName
+      ResourceName      = $sqlPoolName
+      PropertyKey       = 'Name'
+      PropertyValue     = $sqlPoolName
     }
 
     #act

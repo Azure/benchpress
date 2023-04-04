@@ -44,8 +44,8 @@ Describe 'Verify Sql Database' {
   It "Should contain a Sql Database named $databaseName" {
     $params = @{
       ResourceGroupName = $rgName
-      DatabaseName = $databaseName
-      ServerName = $serverName
+      DatabaseName      = $databaseName
+      ServerName        = $serverName
     }
 
     Confirm-AzBPSqlDatabase @params | Should -BeSuccessful
@@ -68,8 +68,8 @@ Describe 'Verify Sql Database' {
   It "Should contain a Sql Database named $databaseName in $location" {
     $params = @{
       ResourceGroupName = $rgName
-      DatabaseName = $databaseName
-      ServerName = $serverName
+      DatabaseName      = $databaseName
+      ServerName        = $serverName
     }
 
     Confirm-AzBPSqlDatabase @params | Should -BeInLocation $location
@@ -78,8 +78,8 @@ Describe 'Verify Sql Database' {
   It "Should contain a Sql Database named $databaseName in $rgName" {
     $params = @{
       ResourceGroupName = $rgName
-      DatabaseName = $databaseName
-      ServerName = $serverName
+      DatabaseName      = $databaseName
+      ServerName        = $serverName
     }
 
     Confirm-AzBPSqlDatabase @params | Should -BeInResourceGroup $rgName

@@ -15,9 +15,9 @@ Describe 'Verify API Management Service' {
   It 'Should contain an API Management Service with the given name - Confirm-AzBPResource' {
     #arrange
     $params = @{
-      ResourceType = "ApiManagement"
+      ResourceType      = "ApiManagement"
       ResourceGroupName = $rgName
-      ResourceName = $apiServiceName
+      ResourceName      = $apiServiceName
     }
 
     #act and assert
@@ -26,11 +26,11 @@ Describe 'Verify API Management Service' {
   It "Should contain an API Management Service named $apiServiceName - ConfirmAzBPResource" {
     #arrange
     $params = @{
-      ResourceType = "ApiManagement"
+      ResourceType      = "ApiManagement"
       ResourceGroupName = $rgName
-      ResourceName = $apiServiceName
-      PropertyKey = 'Name'
-      PropertyValue = $apiServiceName
+      ResourceName      = $apiServiceName
+      PropertyKey       = 'Name'
+      PropertyValue     = $apiServiceName
     }
 
     #act and assert
@@ -45,8 +45,8 @@ Describe 'Verify API Management Service' {
     #arrange
     $params = @{
       ResourceGroupName = $rgName
-      Name = $noApiServiceName
-      ErrorAction = "SilentlyContinue"
+      Name              = $noApiServiceName
+      ErrorAction       = "SilentlyContinue"
     }
 
     #act and assert
@@ -73,10 +73,10 @@ Describe 'Verify API Management API' {
   It 'Should contain an API Management API with the given name - Confirm-AzBPResource' {
     #arrange
     $params = @{
-      ResourceType = "ApiManagementApi"
+      ResourceType      = "ApiManagementApi"
       ResourceGroupName = $rgName
-      ServiceName = $apiServiceName
-      ResourceName = $apiName
+      ServiceName       = $apiServiceName
+      ResourceName      = $apiName
     }
 
     #act and assert
@@ -86,12 +86,12 @@ Describe 'Verify API Management API' {
   It "Should contain an API Management API named $apiName - ConfirmAzBPResource" {
     #arrange
     $params = @{
-      ResourceType = "ApiManagementApi"
+      ResourceType      = "ApiManagementApi"
       ResourceGroupName = $rgName
-      ServiceName = $apiServiceName
-      ResourceName = $apiName
-      PropertyKey = 'Name'
-      PropertyValue = $apiName
+      ServiceName       = $apiServiceName
+      ResourceName      = $apiName
+      PropertyKey       = 'Name'
+      PropertyValue     = $apiName
     }
 
     #act and assert
@@ -110,9 +110,9 @@ Describe 'Verify API Management API' {
     # Remove this field to see all errors.
     $params = @{
       ResourceGroupName = $rgName
-      Name = $noApiName
-      ServiceName = $apiServiceName
-      ErrorAction = "SilentlyContinue"
+      Name              = $noApiName
+      ServiceName       = $apiServiceName
+      ErrorAction       = "SilentlyContinue"
     }
 
     #act and assert
@@ -134,10 +134,10 @@ Describe 'Verify API Management Diagnostic' {
   It 'Should contain an API Management Diagnostic with the given name - Confirm-AzBPResource' {
     #arrange
     $params = @{
-      ResourceType = "ApiManagementDiagnostic"
+      ResourceType      = "ApiManagementDiagnostic"
       ResourceGroupName = $rgName
-      ServiceName = $apiServiceName
-      ResourceName = $diagnosticName
+      ServiceName       = $apiServiceName
+      ResourceName      = $diagnosticName
     }
 
     #act and assert
@@ -147,12 +147,12 @@ Describe 'Verify API Management Diagnostic' {
   It "Should contain an API Management Diagnostic named $diagnosticName - ConfirmAzBPResource" {
     #arrange
     $params = @{
-      ResourceType = "ApiManagementDiagnostic"
+      ResourceType      = "ApiManagementDiagnostic"
       ResourceGroupName = $rgName
-      ServiceName = $apiServiceName
-      ResourceName = $diagnosticName
-      PropertyKey = 'DiagnosticId'
-      PropertyValue = $diagnosticName
+      ServiceName       = $apiServiceName
+      ResourceName      = $diagnosticName
+      PropertyKey       = 'DiagnosticId'
+      PropertyValue     = $diagnosticName
     }
 
     #act and assert
@@ -163,8 +163,8 @@ Describe 'Verify API Management Diagnostic' {
     #arrange
     $params = @{
       ResourceGroupName = $rgName
-      ServiceName = $apiServiceName
-      Name = $diagnosticName
+      ServiceName       = $apiServiceName
+      Name              = $diagnosticName
     }
 
     #act and assert
@@ -175,9 +175,9 @@ Describe 'Verify API Management Diagnostic' {
     #arrange
     $params = @{
       ResourceGroupName = $rgName
-      ServiceName = $apiServiceName
-      Name = $noDiagnosticName
-      ErrorAction = "SilentlyContinue"
+      ServiceName       = $apiServiceName
+      Name              = $noDiagnosticName
+      ErrorAction       = "SilentlyContinue"
     }
 
     #act and assert
@@ -190,8 +190,8 @@ Describe 'Verify API Management Diagnostic' {
   It "Should be an API Management Diagnostic in a resource group named $rgName" {
     $params = @{
       ResourceGroupName = $rgName
-      ServiceName = $apiServiceName
-      Name = $diagnosticName
+      ServiceName       = $apiServiceName
+      Name              = $diagnosticName
     }
 
     #act and assert
@@ -208,10 +208,10 @@ Describe 'Verify API Management Logger' {
   It 'Should contain an API Management Logger with the given name - Confirm-AzBPResource' {
     #arrange
     $params = @{
-      ResourceType = "ApiManagementLogger"
+      ResourceType      = "ApiManagementLogger"
       ResourceGroupName = $rgName
-      ServiceName = $apiServiceName
-      ResourceName = $loggerName
+      ServiceName       = $apiServiceName
+      ResourceName      = $loggerName
     }
 
     #act and assert
@@ -221,12 +221,12 @@ Describe 'Verify API Management Logger' {
   It "Should contain an API Management Logger named $loggerName - ConfirmAzBPResource" {
     #arrange
     $params = @{
-      ResourceType = "ApiManagementLogger"
+      ResourceType      = "ApiManagementLogger"
       ResourceGroupName = $rgName
-      ServiceName = $apiServiceName
-      ResourceName = $loggerName
-      PropertyKey = 'LoggerId'
-      PropertyValue = $loggerName
+      ServiceName       = $apiServiceName
+      ResourceName      = $loggerName
+      PropertyKey       = 'LoggerId'
+      PropertyValue     = $loggerName
     }
 
     #act and assert
@@ -237,8 +237,8 @@ Describe 'Verify API Management Logger' {
     #arrange
     $params = @{
       ResourceGroupName = $rgName
-      ServiceName = $apiServiceName
-      Name = $loggerName
+      ServiceName       = $apiServiceName
+      Name              = $loggerName
     }
 
     #act and assert
@@ -249,9 +249,9 @@ Describe 'Verify API Management Logger' {
     #arrange
     $params = @{
       ResourceGroupName = $rgName
-      ServiceName = $apiServiceName
-      Name = $noLoggerName
-      ErrorAction = "SilentlyContinue"
+      ServiceName       = $apiServiceName
+      Name              = $noLoggerName
+      ErrorAction       = "SilentlyContinue"
     }
 
     #act and assert
@@ -264,8 +264,8 @@ Describe 'Verify API Management Logger' {
   It "Should be an API Management Logger in a resource group named $rgName" {
     $params = @{
       ResourceGroupName = $rgName
-      ServiceName = $apiServiceName
-      Name = $loggerName
+      ServiceName       = $apiServiceName
+      Name              = $loggerName
     }
 
     #act and assert
@@ -281,10 +281,10 @@ Describe 'Verify API Management Policy' {
   It "Should contain an API Management Policy for the API ID $apiName - Confirm-AzBPResource" {
     #arrange
     $params = @{
-      ResourceType = "ApiManagementPolicy"
+      ResourceType      = "ApiManagementPolicy"
       ResourceGroupName = $rgName
-      ServiceName = $apiServiceName
-      ResourceName = $apiName
+      ServiceName       = $apiServiceName
+      ResourceName      = $apiName
     }
 
     #act and assert
@@ -295,8 +295,8 @@ Describe 'Verify API Management Policy' {
     #arrange
     $params = @{
       ResourceGroupName = $rgName
-      ServiceName = $apiServiceName
-      ApiId = $apiName
+      ServiceName       = $apiServiceName
+      ApiId             = $apiName
     }
 
     #act and assert
@@ -307,9 +307,9 @@ Describe 'Verify API Management Policy' {
     #arrange
     $params = @{
       ResourceGroupName = $rgName
-      ServiceName = $apiServiceName
-      ApiId = $noApiId
-      ErrorAction = "SilentlyContinue"
+      ServiceName       = $apiServiceName
+      ApiId             = $noApiId
+      ErrorAction       = "SilentlyContinue"
     }
 
     #act and assert
