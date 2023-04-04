@@ -381,7 +381,7 @@ function Get-ResourceByType {
         return Confirm-WebApp -WebAppName $ResourceName -ResourceGroupName $ResourceGroupName
       }
       "WebAppStaticSite" {
-        return Confirm-WebAppStaticSIte -WebAppName $ResourceName -ResourceGroupName $ResourceGroupName
+        return Confirm-WebAppStaticSIte -StaticWebAppName $ResourceName -ResourceGroupName $ResourceGroupName
       }
       default {
         Write-Information "Not implemented yet"

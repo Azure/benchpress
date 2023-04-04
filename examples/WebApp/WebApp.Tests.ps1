@@ -1,13 +1,13 @@
 ﻿BeforeAll {
-  Import-Module Az.InfrastructureTesting
+  Import-Module ../../bin/BenchPress.Azure.psd1
 
   $Script:rgName = 'rg-test'
-  $Script:webappName = 'azbpwebapptest'
   $Script:location = 'westus3'
 }
 
 Describe 'Verify Web App Exists' {
   BeforeAll {
+    $Script:webappName = 'azbpwebapptest'
     $Script:noWebAppName = 'noazbpwebapptest'
   }
 
@@ -55,6 +55,61 @@ Describe 'Verify Web App Exists' {
 
   It "Should contain a Web App named $webappName in $rgName" {
     Confirm-AzBPWebApp -ResourceGroupName $rgName -WebAppName $webappName | Should -BeInResourceGroup $rgName
+  }
+}
+
+Describe 'Verify Web App Static Site Exists' {
+  BeforeAll {
+    $Script:webappStaticSiteName = 'staticwebapptest'
+    $Script:noWebAppStaticSiteName = 'nostaticwebapptest'
+  }
+
+  It 'Should contain a Web App Static Site with the given name - Confirm-AzBPResource' {
+    # arrange
+    $params = @{
+      ResourceType = "WebAppStaticSite"
+      ResourceGroupName = $rgName
+      ResourceName = $webappStaticSiteName
+    }
+
+    # act and assert
+    Confirm-AzBPResource @params | Should -BeSuccessful
+  }
+
+  It "Should contain a Web App Static Site named $webappStaticSiteName - ConfirmAzBPResource" {
+    # arrange
+    $params = @{
+      ResourceType = "WebAppStaticSite"
+      ResourceGroupName = $rgName
+      ResourceName = $webappStaticSiteName
+      PropertyKey = 'Name'
+      PropertyValue = $webappStaticSiteName
+    }
+
+    # act and assert
+    Confirm-AzBPResource @params | Should -BeSuccessful
+  }
+
+  It "Should contain a Web App Static Site named $webappStaticSiteName" {
+    Confirm-AzBPWebAppStaticSite -ResourceGroupName $rgName -StaticWebAppName $webappStaticSiteName | Should -BeSuccessful
+  }
+
+  It 'Should not contain a Web App Static Site with the given name' {
+    # The '-ErrorAction SilentlyContinue' command suppresses all errors.
+    # In this test, it will suppress the error message when a resource cannot be found.
+    # Remove this field to see all errors.
+    Confirm-AzBPWebAppStaticSite -ResourceGroupName $rgName -StaticWebAppName $noWebAppStaticSiteName -ErrorAction SilentlyContinue
+    | Should -Not -BeSuccessful
+  }
+
+  It "Should contain a Web App Static Site named $webappStaticSiteName in $location" {
+    Confirm-AzBPWebAppStaticSite -ResourceGroupName $rgName -StaticWebAppName $webappStaticSiteName
+    | Should -BeInLocation $location
+  }
+
+  It "Should be a Web App Static Site in a resource group named $rgName" {
+    Confirm-AzBPWebAppStaticSite -ResourceGroupName $rgName -StaticWebAppName $webappStaticSiteName
+    | Should -BeInResourceGroup $rgName
   }
 }
 
