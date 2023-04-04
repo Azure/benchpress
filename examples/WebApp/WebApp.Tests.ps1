@@ -12,19 +12,19 @@ Describe 'Verify Web App Exists' {
   }
 
   It "Should contain a Web App named $webappName - Confirm-AzBPResource" {
-    #arrange
+    # arrange
     $params = @{
       ResourceType      = "WebApp"
       ResourceGroupName = $rgName
       ResourceName      = $webappName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain a Web App named $webappName - ConfirmAzBPResource" {
-    #arrange
+    # arrange
     $params = @{
       ResourceType      = "WebApp"
       ResourceGroupName = $rgName
@@ -33,7 +33,7 @@ Describe 'Verify Web App Exists' {
       PropertyValue     = $webappName
     }
 
-    #act and assert
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 

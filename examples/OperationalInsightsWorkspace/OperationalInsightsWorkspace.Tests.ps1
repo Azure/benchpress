@@ -12,20 +12,20 @@ Describe 'Verify Operational Insights Workspace Exists' {
   }
 
   It "Should contain an Operational Insights Workspace named $oiwName - Confirm-AzBPResource" {
-    #arrange
+    # arrange
     $params = @{
       ResourceType      = "OperationalInsightsWorkspace"
       ResourceGroupName = $rgName
       ResourceName      = $oiwName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
 
   It "Should contain an Operational Insights Workspace named $oiwName - Confirm-AzBPResource" {
-    #arrange
+    # arrange
     $params = @{
       ResourceType      = "OperationalInsightsWorkspace"
       ResourceGroupName = $rgName
@@ -34,7 +34,7 @@ Describe 'Verify Operational Insights Workspace Exists' {
       PropertyValue     = $oiwName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
@@ -43,7 +43,7 @@ Describe 'Verify Operational Insights Workspace Exists' {
   }
 
   It "Should not contain an Operational Insights Workspace named $noOiwName" {
-    #arrange
+    # arrange
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
@@ -53,7 +53,7 @@ Describe 'Verify Operational Insights Workspace Exists' {
       ErrorAction       = "SilentlyContinue"
     }
 
-    #act and asssert
+    # act and asssert
     Confirm-AzBPOperationalInsightsWorkspace @params | Should -Not -BeSuccessful
   }
 

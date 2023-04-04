@@ -13,7 +13,7 @@ Describe 'Verify Event Hub' {
   }
 
   It "Should contain an Event Hub named $eventHubName - Confirm-AzBPResource" {
-    #arrange
+    # arrange
     $params = @{
       ResourceType      = "EventHub"
       ResourceGroupName = $rgName
@@ -21,12 +21,12 @@ Describe 'Verify Event Hub' {
       NamespaceName     = $nameSpaceName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain an Event Hub named $eventHubName - Confirm-AzBPResource" {
-    #arrange
+    # arrange
     $params = @{
       ResourceType      = "EventHub"
       ResourceGroupName = $rgName
@@ -36,24 +36,27 @@ Describe 'Verify Event Hub' {
       PropertyValue     = $eventHubName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain an Event Hub named $eventHubName" {
-    #arrange
+    # arrange
     $params = @{
       ResourceGroupName = $rgName
       NamespaceName     = $nameSpaceName
       Name              = $eventHubName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPEventHub @params | Should -BeSuccessful
   }
 
   It "Should not contain an Event Hub named $noEventHub" {
-    #arrange
+    # arrange
+    # The '-ErrorAction SilentlyContinue' command suppresses all errors.
+    # In this test, it will suppress the error message when a resource cannot be found.
+    # Remove this field to see all errors.
     $params = @{
       ResourceGroupName = $rgName
       NamespaceName     = $nameSpaceName
@@ -61,34 +64,31 @@ Describe 'Verify Event Hub' {
       ErrorAction       = "SilentlyContinue"
     }
 
-    #act
-    # The '-ErrorAction SilentlyContinue' command suppresses all errors.
-    # In this test, it will suppress the error message when a resource cannot be found.
-    # Remove this field to see all errors.
+    # act and assert
     Confirm-AzBPEventHub @params | Should -Not -BeSuccessful
   }
 
   It "Should contain an Event Hub named $eventHubName in $location" {
-    #arrange
+    # arrange
     $params = @{
       ResourceGroupName = $rgName
       NamespaceName     = $nameSpaceName
       Name              = $eventHubName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPEventHub @params | Should -BeInLocation $location
   }
 
   It "Should contain an Event Hub named $eventHubName in  $rgName" {
-    #arrange
+    # arrange
     $params = @{
       ResourceGroupName = $rgName
       NamespaceName     = $nameSpaceName
       Name              = $eventHubName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPEventHub @params | Should -BeInResourceGroup $rgName
   }
 }
@@ -99,19 +99,19 @@ Describe 'Verify Event Hub Namespace' {
   }
 
   It "Should contain an Event Hub Namespace named $nameSpaceName - Confirm-AzBPResource" {
-    #arrange
+    # arrange
     $params = @{
       ResourceType      = "EventHubNamespace"
       ResourceGroupName = $rgName
       ResourceName      = $nameSpaceName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain an Event Hub Namespace named $nameSpaceName - Confirm-AzBPResource" {
-    #arrange
+    # arrange
     $params = @{
       ResourceType      = "EventHubNamespace"
       ResourceGroupName = $rgName
@@ -120,17 +120,15 @@ Describe 'Verify Event Hub Namespace' {
       PropertyValue     = $nameSpaceName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain an Event Hub Namespace named $nameSpaceName" {
-    #act
     Confirm-AzBPEventHubNamespace -NamespaceName $namespaceName -ResourceGroupName $rgName | Should -BeSuccessful
   }
 
   It "Should not contain an Event Hub Namespace named $noNameSpaceName" {
-    #act
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
@@ -156,7 +154,7 @@ Describe 'Verify Event Hub Consumer Group' {
   }
 
   It "Should contain an Event Hub Consumer Group named $consumerGroupName - Confirm-AzBPResource" {
-    #arrange
+    # arrange
     $params = @{
       ResourceType      = "EventHubConsumerGroup"
       ResourceGroupName = $rgName
@@ -165,12 +163,12 @@ Describe 'Verify Event Hub Consumer Group' {
       EventHubName      = $eventHubName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain an Event Hub Consumer Group named $consumerGroupName - Confirm-AzBPResource" {
-    #arrange
+    # arrange
     $params = @{
       ResourceType      = "EventHubConsumerGroup"
       ResourceGroupName = $rgName
@@ -181,12 +179,12 @@ Describe 'Verify Event Hub Consumer Group' {
       PropertyValue     = $consumerGroupName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain an Event Hub Consumer Group named $consumerGroupName" {
-    #arrange
+    # arrange
     $params = @{
       ResourceGroupName = $rgName
       NamespaceName     = $nameSpaceName
@@ -194,12 +192,15 @@ Describe 'Verify Event Hub Consumer Group' {
       Name              = $consumerGroupName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPEventHubConsumerGroup @params | Should -BeSuccessful
   }
 
   It "Should not contain an Event Hub Consumer Group named $noConsumerGroupName" {
-    #arrange
+    # arrange
+    # The '-ErrorAction SilentlyContinue' command suppresses all errors.
+    # In this test, it will suppress the error message when a resource cannot be found.
+    # Remove this field to see all errors.
     $params = @{
       ResourceGroupName = $rgName
       NamespaceName     = $nameSpaceName
@@ -208,15 +209,12 @@ Describe 'Verify Event Hub Consumer Group' {
       ErrorAction       = "SilentlyContinue"
     }
 
-    #act
-    # The '-ErrorAction SilentlyContinue' command suppresses all errors.
-    # In this test, it will suppress the error message when a resource cannot be found.
-    # Remove this field to see all errors.
+    # act and assert
     Confirm-AzBPEventHubConsumerGroup @params | Should -Not -BeSuccessful
   }
 
   It "Should contain an Event Hub Consumer Group named $consumerGroupName in $location" {
-    #arrange
+    # arrange
     $params = @{
       ResourceGroupName = $rgName
       NamespaceName     = $nameSpaceName
@@ -224,12 +222,12 @@ Describe 'Verify Event Hub Consumer Group' {
       Name              = $consumerGroupName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPEventHubConsumerGroup @params | Should -BeInLocation $location
   }
 
   It "Should contain an Event Hub Consumer Group named $consumerGroupName in $rgName" {
-    #arrange
+    # arrange
     $params = @{
       ResourceGroupName = $rgName
       NamespaceName     = $nameSpaceName
@@ -237,7 +235,7 @@ Describe 'Verify Event Hub Consumer Group' {
       Name              = $consumerGroupName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPEventHubConsumerGroup @params | Should -BeInResourceGroup $rgName
   }
 }

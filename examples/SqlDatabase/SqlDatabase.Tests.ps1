@@ -13,7 +13,7 @@ Describe 'Verify SQL Database' {
   }
 
   It "Should contain a SQL Database named $databaseName - Confirm-AzBPResource" {
-    #arrange
+    # arrange
     $params = @{
       ResourceType      = "SqlDatabase"
       ResourceName      = $databaseName
@@ -21,13 +21,13 @@ Describe 'Verify SQL Database' {
       ServerName        = $serverName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
 
   It "Should contain a SQL Database named $databaseName - Confirm-AzBPResource" {
-    #arrange
+    # arrange
     $params = @{
       ResourceType      = "SqlDatabase"
       ResourceName      = $databaseName
@@ -37,21 +37,24 @@ Describe 'Verify SQL Database' {
       PropertyValue     = $databaseName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain a SQL Database named $databaseName" {
+    # arrange
     $params = @{
       ResourceGroupName = $rgName
       DatabaseName      = $databaseName
       ServerName        = $serverName
     }
 
+    # act and assert
     Confirm-AzBPSqlDatabase @params | Should -BeSuccessful
   }
 
   It 'Should not contain a SQL Database with the given name' {
+    # arrange
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
@@ -62,26 +65,31 @@ Describe 'Verify SQL Database' {
       ErrorAction       = "SilentlyContinue"
     }
 
+    # act and asssert
     Confirm-AzBPSqlDatabase @params | Should -Not -BeSuccessful
   }
 
   It "Should contain a SQL Database named $databaseName in $location" {
+    # arrange
     $params = @{
       ResourceGroupName = $rgName
       DatabaseName      = $databaseName
       ServerName        = $serverName
     }
 
+    # act and assert
     Confirm-AzBPSqlDatabase @params | Should -BeInLocation $location
   }
 
   It "Should contain a SQL Database named $databaseName in $rgName" {
+    # arrange
     $params = @{
       ResourceGroupName = $rgName
       DatabaseName      = $databaseName
       ServerName        = $serverName
     }
 
+    # act and assert
     Confirm-AzBPSqlDatabase @params | Should -BeInResourceGroup $rgName
   }
 }

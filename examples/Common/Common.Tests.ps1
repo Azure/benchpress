@@ -16,10 +16,10 @@ Describe 'Verify Resource Exists' {
   }
 
   It "Should contain a resource named $resourceName" {
-    #act
+    # act
     $exists = Get-AzBPResource -ResourceName $resourceName
 
-    #assert
+    # assert
     $exists | Should -Not -Be $null
   }
 }

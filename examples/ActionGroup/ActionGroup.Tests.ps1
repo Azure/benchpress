@@ -12,19 +12,19 @@ Describe 'Verify Action Group' {
   }
 
   It "Should contain an Action Group named $actionGroupName - Confirm-AzBPResource" {
-    #arrange
+    # arrange
     $params = @{
       ResourceType      = 'ActionGroup'
       ResourceName      = $actionGroupName
       ResourceGroupName = $rgName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain an Action Group named $actionGroupName - Confirm-AzBPResource" {
-    #arrange
+    # arrange
     $params = @{
       ResourceType      = 'ActionGroup'
       ResourceName      = $actionGroupName
@@ -33,7 +33,7 @@ Describe 'Verify Action Group' {
       PropertyValue     = $actionGroupName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
@@ -42,6 +42,7 @@ Describe 'Verify Action Group' {
   }
 
   It "Should not contain an Action Group named $noActionGroupName" {
+    # arrange
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
@@ -50,6 +51,7 @@ Describe 'Verify Action Group' {
       ActionGroupName   = $noActionGroupName
       ErrorAction       = "SilentlyContinue"
     }
+    # act and assert
     Confirm-AzBPActionGroup @params | Should -Not -BeSuccessful
   }
 

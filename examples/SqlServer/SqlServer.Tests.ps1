@@ -12,20 +12,20 @@ Describe 'Verify SQL Server' {
   }
 
   It "Should contain a SQL Server named $serverName - Confirm-AzBPResource" {
-    #arrange
+    # arrange
     $params = @{
       ResourceType      = "SqlServer"
       ResourceName      = $serverName
       ResourceGroupName = $rgName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
 
   It "Should contain a SQL Server named $serverName - Confirm-AzBPResource" {
-    #arrange
+    # arrange
     $params = @{
       ResourceType      = "SqlServer"
       ResourceName      = $serverName
@@ -34,7 +34,7 @@ Describe 'Verify SQL Server' {
       PropertyValue     = $serverName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 

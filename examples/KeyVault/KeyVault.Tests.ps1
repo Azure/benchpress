@@ -15,19 +15,20 @@ Describe 'Verify Key Vault' {
   }
 
   It "Should contain a Key Vault named $kvName - Confirm-AzBPResource" {
-    #arrange
+    # arrange
     $params = @{
       ResourceType      = "KeyVault"
       ResourceGroupName = $rgName
       ResourceName      = $kvName
     }
 
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
 
   It "Should contain a Key Vault named $kvName - Confirm-AzBPResource" {
-    #arrange
+    # arrange
     $params = @{
       ResourceType      = "KeyVault"
       ResourceGroupName = $rgName
@@ -36,6 +37,7 @@ Describe 'Verify Key Vault' {
       PropertyValue     = $kvName
     }
 
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
@@ -56,7 +58,6 @@ Describe 'Verify Key Vault' {
   }
 
   It "Should not contain a Key Vault named $noKvName" {
-    #act
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.

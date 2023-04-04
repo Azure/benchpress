@@ -12,19 +12,19 @@ Describe 'Verify Application Insights' {
   }
 
   It "Should contain an Application Insights named $appInsightsName - Confirm-AzBPResource" {
-    #arrange
+    # arrange
     $params = @{
       ResourceType      = "AppInsights"
       ResourceName      = $appInsightsName
       ResourceGroupName = $rgName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain an Application Insights named $appInsightsName - Confirm-AzBPResource" {
-    #arrange
+    # arrange
     $params = @{
       ResourceType      = "AppInsights"
       ResourceName      = $appInsightsName
@@ -33,7 +33,7 @@ Describe 'Verify Application Insights' {
       PropertyValue     = "web"
     }
 
-    #act
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 

@@ -12,19 +12,19 @@ Describe 'Verify App Service Plan' {
   }
 
   It "Should contain an App Service Plan named $appServicePlanName - Confirm-AzBPResource" {
-    #arrange
+    # arrange
     $params = @{
       ResourceType      = "Appserviceplan"
       ResourceName      = $appServicePlanName
       ResourceGroupName = $rgName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain an App Service Plan named $appServicePlanName - Confirm-AzBPResource" {
-    #arrange
+    # arrange
     $params = @{
       ResourceType      = "Appserviceplan"
       ResourceName      = $appServicePlanName
@@ -33,7 +33,7 @@ Describe 'Verify App Service Plan' {
       PropertyValue     = "Free"
     }
 
-    #act
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
@@ -43,6 +43,7 @@ Describe 'Verify App Service Plan' {
   }
 
   It "Should not contain an App Service Plan named $noAppServicePlanName" {
+    # arrange
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
@@ -51,6 +52,8 @@ Describe 'Verify App Service Plan' {
       AppServicePlanName    = $noAppServicePlanName
       ErrorAction           = "SilentlyContinue"
     }
+
+    # act and assert
     Confirm-AzBPAppServicePlan @params | Should -Not -BeSuccessful
   }
 

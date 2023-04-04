@@ -12,19 +12,19 @@ Describe 'Verify AKS Cluster' {
   }
 
   It "Should contain an AKS Cluster named $aksName - Confirm-AzBPResource" {
-    #arrange
+    # arrange
     $params = @{
       ResourceType      = "AksCluster"
       ResourceName      = $aksName
       ResourceGroupName = $rgName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain an AKS Cluster named $aksName - Confirm-AzBPResource" {
-    #arrange
+    # arrange
     $params = @{
       ResourceType      = "AksCluster"
       ResourceName      = $aksName
@@ -33,7 +33,7 @@ Describe 'Verify AKS Cluster' {
       PropertyValue     = "agentpool"
     }
 
-    #act
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 

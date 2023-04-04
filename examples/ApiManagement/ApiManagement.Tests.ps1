@@ -13,18 +13,18 @@ Describe 'Verify API Management Service' {
   }
 
   It 'Should contain an API Management Service named $apiServiceName - Confirm-AzBPResource' {
-    #arrange
+    # arrange
     $params = @{
       ResourceType      = "ApiManagement"
       ResourceGroupName = $rgName
       ResourceName      = $apiServiceName
     }
 
-    #act and assert
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
   It "Should contain an API Management Service named $apiServiceName - ConfirmAzBPResource" {
-    #arrange
+    # arrange
     $params = @{
       ResourceType      = "ApiManagement"
       ResourceGroupName = $rgName
@@ -33,7 +33,7 @@ Describe 'Verify API Management Service' {
       PropertyValue     = $apiServiceName
     }
 
-    #act and assert
+    # act and assert
     Confirm-AzBPResource @params | -BeSuccessful
   }
 
@@ -42,17 +42,17 @@ Describe 'Verify API Management Service' {
   }
 
   It "Should not contain an API Management Service named $noApiServiceName" {
-    #arrange
+    # arrange
+    # The '-ErrorAction SilentlyContinue' command suppresses all errors.
+    # In this test, it will suppress the error message when a resource cannot be found.
+    # Remove this field to see all errors.
     $params = @{
       ResourceGroupName = $rgName
       Name              = $noApiServiceName
       ErrorAction       = "SilentlyContinue"
     }
 
-    #act and assert
-    # The '-ErrorAction SilentlyContinue' command suppresses all errors.
-    # In this test, it will suppress the error message when a resource cannot be found.
-    # Remove this field to see all errors.
+    # act and assert
     Confirm-AzBPApiManagement @params | Should -Not -BeSuccessful
   }
 
@@ -71,7 +71,7 @@ Describe 'Verify API Management API' {
   }
 
   It "Should contain an API Management API named $apiName - ConfirmAzBPResource" {
-    #arrange
+    # arrange
     $params = @{
       ResourceType      = "ApiManagementApi"
       ResourceGroupName = $rgName
@@ -79,12 +79,12 @@ Describe 'Verify API Management API' {
       ResourceName      = $apiName
     }
 
-    #act and assert
+    # act and assert
     Confirm-AzBPResource @params | -BeSuccessful
   }
 
   It "Should contain an API Management API named $apiName - ConfirmAzBPResource" {
-    #arrange
+    # arrange
     $params = @{
       ResourceType      = "ApiManagementApi"
       ResourceGroupName = $rgName
@@ -94,7 +94,7 @@ Describe 'Verify API Management API' {
       PropertyValue     = $apiName
     }
 
-    #act and assert
+    # act and assert
     Confirm-AzBPResource @params | -BeSuccessful
   }
 
@@ -115,7 +115,7 @@ Describe 'Verify API Management API' {
       ErrorAction       = "SilentlyContinue"
     }
 
-    #act and assert
+    # act and assert
     Confirm-AzBPApiManagementApi @params | Should -Not -BeSuccessful
   }
 
@@ -132,7 +132,7 @@ Describe 'Verify API Management Diagnostic' {
   }
 
   It "Should contain an API Management Diagnostic named $diagnosticName - Confirm-AzBPResource" {
-    #arrange
+    # arrange
     $params = @{
       ResourceType      = "ApiManagementDiagnostic"
       ResourceGroupName = $rgName
@@ -140,12 +140,12 @@ Describe 'Verify API Management Diagnostic' {
       ResourceName      = $diagnosticName
     }
 
-    #act and assert
+    # act and assert
     Confirm-AzBPResource @params | -BeSuccessful
   }
 
   It "Should contain an API Management Diagnostic named $diagnosticName - ConfirmAzBPResource" {
-    #arrange
+    # arrange
     $params = @{
       ResourceType      = "ApiManagementDiagnostic"
       ResourceGroupName = $rgName
@@ -155,24 +155,27 @@ Describe 'Verify API Management Diagnostic' {
       PropertyValue     = $diagnosticName
     }
 
-    #act and assert
+    # act and assert
     Confirm-AzBPResource @params | -BeSuccessful
   }
 
   It "Should contain an API Management Diagnostic named $diagnosticName" {
-    #arrange
+    # arrange
     $params = @{
       ResourceGroupName = $rgName
       ServiceName       = $apiServiceName
       Name              = $diagnosticName
     }
 
-    #act and assert
+    # act and assert
     Confirm-AzBPApiManagementDiagnostic @params | Should -BeSuccessful
   }
 
   It "Should not contain an API Management Diagnostic named $noDiagnosticName" {
-    #arrange
+    # arrange
+    # The '-ErrorAction SilentlyContinue' command suppresses all errors.
+    # In this test, it will suppress the error message when a resource cannot be found.
+    # Remove this field to see all errors.
     $params = @{
       ResourceGroupName = $rgName
       ServiceName       = $apiServiceName
@@ -180,10 +183,7 @@ Describe 'Verify API Management Diagnostic' {
       ErrorAction       = "SilentlyContinue"
     }
 
-    #act and assert
-    # The '-ErrorAction SilentlyContinue' command suppresses all errors.
-    # In this test, it will suppress the error message when a resource cannot be found.
-    # Remove this field to see all errors.
+    # act and assert
     Confirm-AzBPApiManagementDiagnostic @params | Should -Not -BeSuccessful
   }
 
@@ -194,7 +194,7 @@ Describe 'Verify API Management Diagnostic' {
       Name              = $diagnosticName
     }
 
-    #act and assert
+    # act and assert
     Confirm-AzBPApiManagementDiagnostic @params | Should -BeInResourceGroup $rgName
   }
 }
@@ -206,7 +206,7 @@ Describe 'Verify API Management Logger' {
   }
 
   It "Should contain an API Management Logger named $loggerName - ConfirmAzBPResource" {
-    #arrange
+    # arrange
     $params = @{
       ResourceType      = "ApiManagementLogger"
       ResourceGroupName = $rgName
@@ -214,12 +214,12 @@ Describe 'Verify API Management Logger' {
       ResourceName      = $loggerName
     }
 
-    #act and assert
+    # act and assert
     Confirm-AzBPResource @params | -BeSuccessful
   }
 
   It "Should contain an API Management Logger named $loggerName - ConfirmAzBPResource" {
-    #arrange
+    # arrange
     $params = @{
       ResourceType      = "ApiManagementLogger"
       ResourceGroupName = $rgName
@@ -229,24 +229,27 @@ Describe 'Verify API Management Logger' {
       PropertyValue     = $loggerName
     }
 
-    #act and assert
+    # act and assert
     Confirm-AzBPResource @params | -BeSuccessful
   }
 
   It "Should contain an API Management Logger named $loggerName" {
-    #arrange
+    # arrange
     $params = @{
       ResourceGroupName = $rgName
       ServiceName       = $apiServiceName
       Name              = $loggerName
     }
 
-    #act and assert
+    # act and assert
     Confirm-AzBPApiManagementLogger @params | Should -BeSuccessful
   }
 
   It "Should not contain an API Management Logger named $noLoggerName" {
-    #arrange
+    # arrange
+    # The '-ErrorAction SilentlyContinue' command suppresses all errors.
+    # In this test, it will suppress the error message when a resource cannot be found.
+    # Remove this field to see all errors.
     $params = @{
       ResourceGroupName = $rgName
       ServiceName       = $apiServiceName
@@ -254,21 +257,19 @@ Describe 'Verify API Management Logger' {
       ErrorAction       = "SilentlyContinue"
     }
 
-    #act and assert
-    # The '-ErrorAction SilentlyContinue' command suppresses all errors.
-    # In this test, it will suppress the error message when a resource cannot be found.
-    # Remove this field to see all errors.
+    # act and assert
     Confirm-AzBPApiManagementLogger @params | Should -Not -BeSuccessful
   }
 
   It "Should contain an API Management Logger named $loggerName in $rgName" {
+    # arrange
     $params = @{
       ResourceGroupName = $rgName
       ServiceName       = $apiServiceName
       Name              = $loggerName
     }
 
-    #act and assert
+    # act and assert
     Confirm-AzBPApiManagementLogger @params | Should -BeInResourceGroup $rgName
   }
 }
@@ -279,7 +280,7 @@ Describe 'Verify API Management Policy' {
   }
 
   It "Should contain an API Management Policy for the API ID $apiName - Confirm-AzBPResource" {
-    #arrange
+    # arrange
     $params = @{
       ResourceType      = "ApiManagementPolicy"
       ResourceGroupName = $rgName
@@ -287,24 +288,27 @@ Describe 'Verify API Management Policy' {
       ResourceName      = $apiName
     }
 
-    #act and assert
+    # act and assert
     Confirm-AzBPResource @params | -BeSuccessful
   }
 
   It "Should contain an API Management Policy for the API ID $apiName" {
-    #arrange
+    # arrange
     $params = @{
       ResourceGroupName = $rgName
       ServiceName       = $apiServiceName
       ApiId             = $apiName
     }
 
-    #act and assert
+    # act and assert
     Confirm-AzBPApiManagementPolicy @params | -BeSuccessful
   }
 
   It "Should not contain an API Management Policy for the API ID $apiName" {
-    #arrange
+    # arrange
+    # The '-ErrorAction SilentlyContinue' command suppresses all errors.
+    # In this test, it will suppress the error message when a resource cannot be found.
+    # Remove this field to see all errors.
     $params = @{
       ResourceGroupName = $rgName
       ServiceName       = $apiServiceName
@@ -312,10 +316,7 @@ Describe 'Verify API Management Policy' {
       ErrorAction       = "SilentlyContinue"
     }
 
-    #act and assert
-    # The '-ErrorAction SilentlyContinue' command suppresses all errors.
-    # In this test, it will suppress the error message when a resource cannot be found.
-    # Remove this field to see all errors.
+    # act and assert
     Confirm-AzBPApiManagementPolicy @params | Should -Not -BeSuccessful
   }
 }
