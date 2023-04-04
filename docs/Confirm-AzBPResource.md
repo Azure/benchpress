@@ -16,8 +16,8 @@ Confirms whether a resource exists or properties on a resource are configured co
 Confirm-AzBPResource [[-ResourceName] <String>] [[-ResourceGroupName] <String>] [-ResourceType] <ResourceType>
  [[-ServerName] <String>] [[-DataFactoryName] <String>] [[-NamespaceName] <String>] [[-EventHubName] <String>]
  [[-WorkspaceName] <String>] [[-ServicePrincipalId] <String>] [[-Scope] <String>]
- [[-RoleDefinitionName] <String>] [[-AccountName] <String>] [[-ServiceName] <String>] [[-JobName] <String>]
- [[-PropertyKey] <String>] [[-PropertyValue] <String>] [<CommonParameters>]
+ [[-RoleDefinitionName] <String>] [[-AccountName] <String>] [[-ServiceName] <String>] [[-ClusterName] <String>]
+ [[-JobName] <String>] [[-PropertyKey] <String>] [[-PropertyValue] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -99,7 +99,7 @@ The type of the Resource as a \[ResourceType\].
 Type: ResourceType
 Parameter Sets: (All)
 Aliases:
-Accepted values: ActionGroup, AksCluster, ApiManagement, ApiManagementApi, ApiManagementDiagnostic, ApiManagementLogger, ApiManagementPolicy, AppInsights, AppServicePlan, ContainerApp, ContainerAppManagedEnv, CosmosDBAccount, CosmosDBGremlinDatabase, CosmosDBMongoDBDatabase, CosmosDBSqlDatabase, ContainerRegistry, DataFactory, DataFactoryLinkedService, EventHub, EventHubConsumerGroup, EventHubNamespace, KeyVault, OperationalInsightsWorkspace, ResourceGroup, RoleAssignment, SqlDatabase, SqlServer, StorageAccount, StorageContainer, StreamAnalyticsCluster, StreamAnalyticsFunction, StreamAnalyticsInput, StreamAnalyticsJob, StreamAnalyticsOutput, StreamAnalyticsTransformation, SynapseSparkPool, SynapseSqlPool, SynapseWorkspace, VirtualMachine, WebApp
+Accepted values: ActionGroup, AksCluster, AksNodePool, ApiManagement, ApiManagementApi, ApiManagementDiagnostic, ApiManagementLogger, ApiManagementPolicy, AppInsights, AppServicePlan, ContainerApp, ContainerAppManagedEnv, CosmosDBAccount, CosmosDBGremlinDatabase, CosmosDBMongoDBDatabase, CosmosDBSqlDatabase, ContainerRegistry, DataFactory, DataFactoryLinkedService, EventHub, EventHubConsumerGroup, EventHubNamespace, KeyVault, OperationalInsightsWorkspace, ResourceGroup, RoleAssignment, SqlDatabase, SqlServer, StorageAccount, StorageContainer, StreamAnalyticsCluster, StreamAnalyticsFunction, StreamAnalyticsInput, StreamAnalyticsJob, StreamAnalyticsOutput, StreamAnalyticsTransformation, SynapseSparkPool, SynapseSqlPool, SynapseWorkspace, VirtualMachine, WebApp
 
 Required: True
 Position: 3
@@ -266,6 +266,22 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -ClusterName
+If the Azure resource is associated with an AKS Cluster (e.g, AKS Node Pool) this is the parameter to use to pass
+the AKS cluster name.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 14
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -JobName
 If testing an Azure resource that is associated with a Job (e.g., Stream Analytics Output), the name of
 the associated Job.
@@ -276,7 +292,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 14
+Position: 15
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -291,7 +307,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 15
+Position: 16
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -306,7 +322,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 16
+Position: 17
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
