@@ -19,7 +19,7 @@ function Confirm-AksNodePool {
       The name of the Managed Cluster.
 
     .PARAMETER Name
-      The name of the Node Pool
+      The name of the Node Pool.
 
     .EXAMPLE
       Confirm-AzBPAksNodePool -ResourceGroupName "rgbenchpresstest" -ClusterName "clustertest" -Name "benchpresstest"
