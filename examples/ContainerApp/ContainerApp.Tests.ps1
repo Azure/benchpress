@@ -67,7 +67,7 @@ Describe 'Verify Container Application' {
 
 Describe 'Verify Container Application Managed Environment' {
   BeforeAll {
-    $Script:managedEnvName = 'managedenvbenchpresstest'
+    $Script:managedEnvName   = 'managedenvbenchpresstest'
     $Script:noManagedEnvName = 'nomanagedenv'
   }
 
