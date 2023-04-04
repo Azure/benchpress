@@ -24,7 +24,7 @@ function Confirm-BicepFile {
       The property name is optional if the path is provided as the first argument to Confirm-AzBPBicepFile.
 
     .EXAMPLE
-      Pipe path into Confirm-AzBPBicepFile
+      Pipe path into Confirm-AzBPBicepFile.
 
       "./examples/actionGroupErrors.bicep" | Confirm-AzBPBicepFile
 
@@ -38,7 +38,7 @@ function Confirm-BicepFile {
       {@{Path=../../../examples/actionGroupErrors.bicep; ErrorResults=System.Collections.ObjectModel.Collection`1[System.Management.Automation.PSObject]...
 
     .EXAMPLE
-      Pipe multiple paths into Confirm-AzBPBicepFile
+      Pipe multiple paths into Confirm-AzBPBicepFile.
 
       "./examples/actionGroupErrors.bicep", "./examples/actionGroupErrors.bicep" | Confirm-AzBPBicepFile
 
@@ -56,7 +56,7 @@ function Confirm-BicepFile {
       {@{Path=../../../examples/actionGroupErrors.bicep; ErrorResults=System.Collections.ObjectModel.Collection`1[System.Management.Automation.PSObject]...
 
     .EXAMPLE
-      Provide -BicepPath Parameter
+      Provide -BicepPath Parameter.
 
       Confirm-AzBPBicepFile -BicepPath ./examples/actionGroupErrors.bicep
 
@@ -70,7 +70,7 @@ function Confirm-BicepFile {
       {@{Path=../../../examples/actionGroupErrors.bicep; ErrorResults=System.Collections.ObjectModel.Collection`1[System.Management.Automation.PSObject]...
 
     .EXAMPLE
-        Path without -BicepPath Parameter
+      Path without -BicepPath Parameter.
 
       Confirm-AzBPBicepFile ./examples/actionGroupErrors.bicep
 

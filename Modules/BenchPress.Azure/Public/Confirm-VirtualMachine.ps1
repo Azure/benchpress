@@ -1,4 +1,4 @@
-# INLINE_SKIP
+﻿# INLINE_SKIP
 using module ./../Classes/ConfirmResult.psm1
 
 . $PSScriptRoot/../Private/Connect-Account.ps1
@@ -11,13 +11,13 @@ function Confirm-VirtualMachine {
 
     .DESCRIPTION
       The Confirm-AzBPVirtualMachine cmdlet gets a Virtual Machine using the specified Virtual Machine and
-      Resource Group name.
+      Resource Group names.
 
     .PARAMETER VirtualMachineName
-      The name of the Virtual Machine
+      The name of the Virtual Machine.
 
     .PARAMETER ResourceGroupName
-      The name of the Resource Group
+      The name of the Resource Group. The name is case insensitive.
 
     .EXAMPLE
       Confirm-AzBPVirtualMachine -VirtualMachineName "benchpresstest" -ResourceGroupName "rgbenchpresstest"
@@ -38,12 +38,12 @@ function Confirm-VirtualMachine {
     [string]$ResourceGroupName
   )
   Begin {
-    $ConnectResults = Connect-Account
+    $connectResults = Connect-Account
   }
   Process {
-      $Resource = Get-AzVM -ResourceGroupName $ResourceGroupName -Name $VirtualMachineName
+      $resource = Get-AzVM -ResourceGroupName $ResourceGroupName -Name $VirtualMachineName
 
-      [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+      [ConfirmResult]::new($resource, $connectResults.AuthenticationData)
   }
   End { }
 }

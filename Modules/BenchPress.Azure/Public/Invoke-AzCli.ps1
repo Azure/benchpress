@@ -1,4 +1,4 @@
-function Invoke-AzCli {
+﻿function Invoke-AzCli {
   <#
     .DESCRIPTION
     Invoke an Azure CLI command.

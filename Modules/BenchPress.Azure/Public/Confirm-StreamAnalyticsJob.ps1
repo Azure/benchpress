@@ -1,4 +1,4 @@
-# INLINE_SKIP
+﻿# INLINE_SKIP
 using module ./../Classes/ConfirmResult.psm1
 
 . $PSScriptRoot/../Private/Connect-Account.ps1
@@ -11,13 +11,13 @@ function Confirm-StreamAnalyticsJob {
 
     .DESCRIPTION
       The Confirm-AzBPStreamAnalyticsJob cmdlet gets a Stream Analytics Job using the specified Resource Group and
-      Stream Analytics job name.
+      Stream Analytics Job names.
 
     .PARAMETER ResourceGroupName
-      The name of the resource group. The name is case insensitive.
+      The name of the Resource Group. The name is case insensitive.
 
     .PARAMETER Name
-      The name of the Stream Analytics job.
+      The name of the Stream Analytics Job.
 
     .EXAMPLE
       Confirm-AzBPStreamAnalyticsCluster -ResourceGroupName "rgbenchpresstest" -Name "benchpresstest"
@@ -38,12 +38,12 @@ function Confirm-StreamAnalyticsJob {
     [string]$Name
   )
   Begin {
-    $ConnectResults = Connect-Account
+    $connectResults = Connect-Account
   }
   Process {
-    $Resource = Get-AzStreamAnalyticsJob -ResourceGroupName $ResourceGroupName -Name $Name
+    $resource = Get-AzStreamAnalyticsJob -ResourceGroupName $ResourceGroupName -Name $Name
 
-    [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+    [ConfirmResult]::new($resource, $connectResults.AuthenticationData)
   }
   End { }
 }

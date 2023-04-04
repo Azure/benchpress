@@ -1,4 +1,4 @@
-# INLINE_SKIP
+﻿# INLINE_SKIP
 using module ./../Classes/ConfirmResult.psm1
 
 . $PSScriptRoot/../Private/Connect-Account.ps1
@@ -14,13 +14,13 @@ function Confirm-ApiManagementPolicy {
       Service, and Resource Group names.
 
     .PARAMETER ResourceGroupName
-      Specifies the name of the resource group under which an API Management service is deployed.
+      The name of the Resource Group. The name is case insensitive.
 
     .PARAMETER ServiceName
-      Specifies the name of the deployed API Management service.
+      The name of the API Management Service.
 
     .PARAMETER ApiId
-      Specifies the identifier of the existing API. This cmdlet returns the API-scope policy.
+      The ID of the API. This cmdlet returns the API-scope policy.
 
     .EXAMPLE
       Confirm-AzBPApiManagementPolicy -ResourceGroupName "rgbenchpresstest" -ServiceName "servicetest" `
@@ -45,18 +45,18 @@ function Confirm-ApiManagementPolicy {
     [string]$ApiId
   )
   Begin {
-    $ConnectResults = Connect-Account
+    $connectResults = Connect-Account
   }
   Process {
     $policy = New-AzApiManagementContext -ResourceGroupName $ResourceGroupName -ServiceName $ServiceName
-      | Get-AzApiManagementPolicy -ApiId $ApiId
+    | Get-AzApiManagementPolicy -ApiId $ApiId
 
     # Get-AzApiManagementPolicy returns the XML for a policy, not a resource
     if ([string]::IsNullOrWhiteSpace($policy)) {
       $policy = $null
     }
 
-    [ConfirmResult]::new($policy, $ConnectResults.AuthenticationData)
+    [ConfirmResult]::new($policy, $connectResults.AuthenticationData)
   }
   End { }
 }
