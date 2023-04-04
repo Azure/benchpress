@@ -8,10 +8,10 @@ Describe "Confirm-SqlServer" {
   Context "unit tests" -Tag "Unit" {
     BeforeEach {
       Mock Connect-Account{}
+      Mock Get-AzSqlServer{}
     }
 
     It "Calls Get-AzSqlServer" {
-      Mock Get-AzSqlServer{}
       Confirm-SqlServer -ServerName "sn" -ResourceGroupName "rgn"
       Should -Invoke -CommandName "Get-AzSqlServer" -Times 1
     }

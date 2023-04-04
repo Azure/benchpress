@@ -12,7 +12,6 @@ Describe "Confirm-AppServicePlan" {
     }
 
     It "Calls Get-AzAppServicePlan" {
-      Mock Get-AzAppServicePlan{}
       Confirm-AppServicePlan -AppServicePlanName "aspn" -ResourceGroupName "rgn"
       Should -Invoke -CommandName "Get-AzAppServicePlan" -Times 1
     }

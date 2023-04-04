@@ -11,7 +11,7 @@ Describe "Confirm-Resource" {
       Mock Write-Error{ }
       $script:ConfirmResult = [ConfirmResult]::new(
         @{
-          TestKey = "TestValue"
+          TestKey   = "TestValue"
           TestArray = @(@{AnotherKey = "AnotherValue"})
         }, $null)
     }

@@ -1,4 +1,4 @@
-# INLINE_SKIP
+﻿# INLINE_SKIP
 using module ./../Classes/ConfirmResult.psm1
 
 . $PSScriptRoot/../Private/Connect-Account.ps1
@@ -7,20 +7,20 @@ using module ./../Classes/ConfirmResult.psm1
 function Confirm-EventHub {
   <#
     .SYNOPSIS
-      Confirms that an EventHub exists.
+      Confirms that an Event Hub exists.
 
     .DESCRIPTION
-      The Confirm-AzBPEventHub cmdlet gets an EventHub using the specified EventHub name, EventHub Namespace,
-      and Resource Group name.
+      The Confirm-AzBPEventHub cmdlet gets an Event Hub using the specified Event Hub, Event Hub Namespace,
+      and Resource Group names.
 
     .PARAMETER Name
-      The name of the EventHub
+      The name of the Event Hub.
 
     .PARAMETER NamespaceName
-      The name of the EventHub Namespace
+      The name of the Event Hub Namespace.
 
     .PARAMETER ResourceGroupName
-      The name of the Resource Group
+      The name of the Resource Group. The name is case insensitive.
 
     .EXAMPLE
       Confirm-AzBPEventHub -Name "bpeventhub" -NamespaceName 'bpeventhubnamespace' -ResourceGroupName "rgbenchpresstest"
@@ -44,12 +44,12 @@ function Confirm-EventHub {
     [string]$ResourceGroupName
   )
   Begin {
-    $ConnectResults = Connect-Account
+    $connectResults = Connect-Account
   }
   Process {
-    $Resource = Get-AzEventHub -ResourceGroupName $ResourceGroupName -NamespaceName $NamespaceName -Name $Name
+    $resource = Get-AzEventHub -ResourceGroupName $ResourceGroupName -NamespaceName $NamespaceName -Name $Name
 
-    [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+    [ConfirmResult]::new($resource, $connectResults.AuthenticationData)
   }
   End { }
 }

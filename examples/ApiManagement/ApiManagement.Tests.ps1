@@ -100,7 +100,7 @@ Describe 'Verify API Management API' {
 
   It "Should contain an API Management API named $apiName" {
     Confirm-AzBPApiManagementApi -ResourceGroupName $rgName -ServiceName $apiServiceName -Name $apiName
-      | Should -BeSuccessful
+    | Should -BeSuccessful
   }
 
   It "Should not contain an API Management API named $noApiName" {
