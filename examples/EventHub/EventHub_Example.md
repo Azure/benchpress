@@ -24,11 +24,11 @@ and `Confirm-AzBPEventHubNamespace` cmdlet.
 
 1. Update `EventHub.Tests.ps1` variables to point to your expected resources:
 
-   - `rg-test` -> `your-resource-group-name`
-   - `eventhub` -> `your-eventhub-name`
-   - `eventhubamespace` -> `your-eventhub-namespace-name`
+   - `rg-test`               -> `your-resource-group-name`
+   - `eventhub`              -> `your-eventhub-name`
+   - `eventhubamespace`      -> `your-eventhub-namespace-name`
    - `eventhubconsumergroup` -> `your-eventhub-consumer-group-name`
-   - `westus3` -> `your-eventhub-location`
+   - `westus3`               -> `your-eventhub-location`
 
 1. If using a local copy of `Az.InfrastructureTesting`, replace `Import-Module Az.InfrastructureTesting` with
 `Import-Module "../../bin/BenchPress.Azure.psd1"`. Note that the final `AfterAll` step will properly remove the module

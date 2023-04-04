@@ -11,29 +11,29 @@ Describe 'Verify Virtual Machine' {
     $Script:noVmName = 'noSimpleLinuxVM1'
   }
 
-  It 'Should contain a Virtual Machine with the given name - Confirm-AzBPResource' {
-    #arrange
+  It "Should contain a Virtual Machine named $vmName - Confirm-AzBPResource" {
+    # arrange
     $params = @{
-      ResourceType = "VirtualMachine"
+      ResourceType      = "VirtualMachine"
       ResourceGroupName = $rgName
-      ResourceName = $vmName
+      ResourceName      = $vmName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain a Virtual Machine named $vmName - ConfirmAzBPResource" {
-    #arrange
+    # arrange
     $params = @{
-      ResourceType = "VirtualMachine"
+      ResourceType      = "VirtualMachine"
       ResourceGroupName = $rgName
-      ResourceName = $vmName
-      PropertyKey = 'Name'
-      PropertyValue = $vmName
+      ResourceName      = $vmName
+      PropertyKey       = 'Name'
+      PropertyValue     = $vmName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
@@ -41,26 +41,26 @@ Describe 'Verify Virtual Machine' {
     Confirm-AzBPVirtualMachine -ResourceGroupName $rgName -VirtualMachineName $vmName | Should -BeSuccessful
   }
 
-  It 'Should not contain a Virtual Machine with the given name' {
-    #arrange
-    $params = @{
-      ResourceGroupName = $rgName
-      VirtualMachineName = $noVmName
-      ErrorAction = "SilentlyContinue"
-    }
-
-    #act
+  It "Should not contain a Virtual Machine named $noVmName" {
+    # arrange
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
+    $params = @{
+      ResourceGroupName  = $rgName
+      VirtualMachineName = $noVmName
+      ErrorAction        = "SilentlyContinue"
+    }
+
+    # act and assert
     Confirm-AzBPVirtualMachine @params | Should -Not -BeSuccessful
   }
 
-  It "Should contain an Virtual Machine named $vmName in $location" {
+  It "Should contain a Virtual Machine named $vmName in $location" {
     Confirm-AzBPVirtualMachine -ResourceGroupName $rgName -VirtualMachineName $vmName | Should -BeInLocation $location
   }
 
-  It "Should be a Virtual Machine in a resource group named $rgName" {
+  It "Should contain a Virtual Machine named $vmName in $rgName" {
     Confirm-AzBPVirtualMachine -ResourceGroupName $rgName -VirtualMachineName $vmName
     | Should -BeInResourceGroup $rgName
   }

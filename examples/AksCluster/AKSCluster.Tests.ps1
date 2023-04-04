@@ -12,19 +12,19 @@ Describe 'Verify AKS Cluster' {
   }
 
   It "Should contain an AKS Cluster named $aksName - Confirm-AzBPResource" {
-    #arrange
+    # arrange
     $params = @{
       ResourceType      = "AksCluster"
       ResourceName      = $aksName
       ResourceGroupName = $rgName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
-  It "Should contain an AKS Cluster named $aksName - Confirm-AzBPResource" {
-    #arrange
+  It "Should contain an AKS Cluster named $aksName with an Agent Pool Profile named agentpool - Confirm-AzBPResource" {
+    # arrange
     $params = @{
       ResourceType      = "AksCluster"
       ResourceName      = $aksName
@@ -33,7 +33,7 @@ Describe 'Verify AKS Cluster' {
       PropertyValue     = "agentpool"
     }
 
-    #act
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
@@ -41,7 +41,7 @@ Describe 'Verify AKS Cluster' {
     Confirm-AzBPAksCluster -ResourceGroupName $rgName -AKSName $aksName | Should -BeSuccessful
   }
 
-  It 'Should not contain an AKS cluster with given name' {
+  It "Should not contain an AKS Cluster named $noAksClusterName" {
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
@@ -52,7 +52,7 @@ Describe 'Verify AKS Cluster' {
     Confirm-AzBPAksCluster -ResourceGroupName $rgName -AKSName $aksName | Should -BeInLocation $location
   }
 
-  It "Should be an AKS CLuster named $aksName in a resource group named $rgName" {
+  It "Should contain an AKS Cluster named $aksName in $rgName" {
     Confirm-AzBPAksCluster -ResourceGroupName $rgName -AKSName $aksName | Should -BeInResourceGroup $rgName
   }
 }

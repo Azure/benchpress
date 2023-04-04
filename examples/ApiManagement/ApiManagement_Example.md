@@ -30,7 +30,7 @@ cmdlets.
    - `apitest`     -> `your-api-management-api-name`
    - `diagtest`    -> `your-api-management-diagnostic-name`
    - `loggertest`  -> `your-api-managemetn-logger-name`
-   - `westus`      -> `your-resource-group-location`
+   - `westus3`     -> `your-resource-group-location`
 
 1. If using a local copy of `Az.InfrastructureTesting`, replace `Import-Module Az.InfrastructureTesting` with
 `Import-Module "../../bin/BenchPress.Azure.psd1"`.

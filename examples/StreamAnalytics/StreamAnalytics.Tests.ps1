@@ -10,29 +10,29 @@ Describe 'Verify Stream Analytics Cluster' {
     $Script:clusterName = 'teststreamcluster'
   }
 
-  It 'Should contain a Stream Analytics Cluster with the given name - Confirm-AzBPResource' {
-    #arrange
+  It "Should contain a Stream Analytics Cluster named $clusterName - Confirm-AzBPResource" {
+    # arrange
     $params = @{
-      ResourceType = "StreamAnalyticsCluster"
+      ResourceType      = "StreamAnalyticsCluster"
       ResourceGroupName = $rgName
-      ResourceName = $clusterName
+      ResourceName      = $clusterName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain a Stream Analytics Cluster named $clusterName - ConfirmAzBPResource" {
-    #arrange
+    # arrange
     $params = @{
-      ResourceType = "StreamAnalyticsCluster"
+      ResourceType      = "StreamAnalyticsCluster"
       ResourceGroupName = $rgName
-      ResourceName = $clusterName
-      PropertyKey = 'Name'
-      PropertyValue = $clusterName
+      ResourceName      = $clusterName
+      PropertyKey       = 'Name'
+      PropertyValue     = $clusterName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
@@ -44,7 +44,7 @@ Describe 'Verify Stream Analytics Cluster' {
     Confirm-AzBPStreamAnalyticsCluster -ResourceGroupName $rgName -Name $clusterName | Should -BeInLocation $location
   }
 
-  It "Should be a Stream Analytics Cluster in a resource group named $rgName" {
+  It "Should contain a Stream Analytics Cluster named $clusterName in $rgName" {
     Confirm-AzBPStreamAnalyticsCluster -ResourceGroupName $rgName -Name $clusterName
     | Should -BeInResourceGroup $rgName
   }
@@ -59,29 +59,29 @@ Describe 'Stream Analytics Jobs' {
     $Script:transformationName = 'testtransformation'
   }
 
-  It 'Should contain a Stream Analytics Job with the given name - Confirm-AzBPResource' {
-    #arrange
+  It "Should contain a Stream Analytics Job named $jobName - Confirm-AzBPResource" {
+    # arrange
     $params = @{
-      ResourceType = "StreamAnalyticsJob"
+      ResourceType      = "StreamAnalyticsJob"
       ResourceGroupName = $rgName
-      ResourceName = $jobName
+      ResourceName      = $jobName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain a Stream Analytics Job named $jobName - ConfirmAzBPResource" {
-    #arrange
+    # arrange
     $params = @{
-      ResourceType = "StreamAnalyticsJob"
+      ResourceType      = "StreamAnalyticsJob"
       ResourceGroupName = $rgName
-      ResourceName = $jobName
-      PropertyKey = 'Name'
-      PropertyValue = $jobName
+      ResourceName      = $jobName
+      PropertyKey       = 'Name'
+      PropertyValue     = $jobName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
@@ -93,223 +93,223 @@ Describe 'Stream Analytics Jobs' {
     Confirm-AzBPStreamAnalyticsJob -ResourceGroupName $rgName -Name $jobName | Should -BeInLocation $location
   }
 
-  It "Should be a Stream Analytics Job in a resource group named $rgName" {
+  It "Should contain a Stream Analytics Job named $jobName in $rgName" {
     Confirm-AzBPStreamAnalyticsJob -ResourceGroupName $rgName -Name $jobName | Should -BeInResourceGroup $rgName
   }
 
 #######################################################################################################################
 
-  It 'Should contain a Stream Analytics Function with the given name - Confirm-AzBPResource' {
-    #arrange
+  It "Should contain a Stream Analytics Function named $functionName - Confirm-AzBPResource" {
+    # arrange
     $params = @{
-      ResourceType = "StreamAnalyticsFunction"
+      ResourceType      = "StreamAnalyticsFunction"
       ResourceGroupName = $rgName
-      JobName = $jobName
-      ResourceName = $functionName
+      JobName           = $jobName
+      ResourceName      = $functionName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain a Stream Analytics Function named $functionName - ConfirmAzBPResource" {
-    #arrange
+    # arrange
     $params = @{
-      ResourceType = "StreamAnalyticsFunction"
+      ResourceType      = "StreamAnalyticsFunction"
       ResourceGroupName = $rgName
-      JobName = $jobName
-      ResourceName = $functionName
-      PropertyKey = 'Name'
-      PropertyValue = $functionName
+      JobName           = $jobName
+      ResourceName      = $functionName
+      PropertyKey       = 'Name'
+      PropertyValue     = $functionName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain a Stream Analytics Function named $functionName" {
-    #arrange
+    # arrange
     $params = @{
       ResourceGroupName = $rgName
-      JobName = $jobName
-      Name = $functionName
+      JobName           = $jobName
+      Name              = $functionName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPStreamAnalyticsFunction @params | Should -BeSuccessful
   }
 
-  It "Should be a Stream Analytics Function in a resource group named $rgName" {
-    #arrange
+  It "Should contain a Stream Analytics Function named $functionName in $rgName" {
+    # arrange
     $params = @{
       ResourceGroupName = $rgName
-      JobName = $jobName
-      Name = $functionName
+      JobName           = $jobName
+      Name              = $functionName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPStreamAnalyticsFunction @params | Should -BeInResourceGroup $rgName
   }
 
 #######################################################################################################################
 
-  It 'Should contain a Stream Analytics Input with the given name - Confirm-AzBPResource' {
-    #arrange
+  It "Should contain a Stream Analytics Input named $inputName - Confirm-AzBPResource" {
+    # arrange
     $params = @{
-      ResourceType = "StreamAnalyticsInput"
+      ResourceType      = "StreamAnalyticsInput"
       ResourceGroupName = $rgName
-      JobName = $jobName
-      ResourceName = $inputName
+      JobName           = $jobName
+      ResourceName      = $inputName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain a Stream Analytics Input named $inputName - ConfirmAzBPResource" {
-    #arrange
+    # arrange
     $params = @{
-      ResourceType = "StreamAnalyticsInput"
+      ResourceType      = "StreamAnalyticsInput"
       ResourceGroupName = $rgName
-      JobName = $jobName
-      ResourceName = $inputName
-      PropertyKey = 'Name'
-      PropertyValue = $inputName
+      JobName           = $jobName
+      ResourceName      = $inputName
+      PropertyKey       = 'Name'
+      PropertyValue     = $inputName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain a Stream Analytics Input named $inputName" {
-    #arrange
+    # arrange
     $params = @{
       ResourceGroupName = $rgName
-      JobName = $jobName
-      Name = $inputName
+      JobName           = $jobName
+      Name              = $inputName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPStreamAnalyticsInput @params | Should -BeSuccessful
   }
 
-  It "Should be a Stream Analytics Input in a resource group named $rgName" {
-    #arrange
+  It "Should contain a Stream Analytics Input named $inputName in $rgName" {
+    # arrange
     $params = @{
       ResourceGroupName = $rgName
-      JobName = $jobName
-      Name = $inputName
+      JobName           = $jobName
+      Name              = $inputName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPStreamAnalyticsInput @params | Should -BeInResourceGroup $rgName
   }
 
 #######################################################################################################################
 
-  It 'Should contain a Stream Analytics Output with the given name - Confirm-AzBPResource' {
-    #arrange
+  It "Should contain a Stream Analytics Output named $outputName - Confirm-AzBPResource" {
+    # arrange
     $params = @{
-      ResourceType = "StreamAnalyticsOutput"
+      ResourceType      = "StreamAnalyticsOutput"
       ResourceGroupName = $rgName
-      JobName = $jobName
-      ResourceName = $outputName
+      JobName           = $jobName
+      ResourceName      = $outputName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain a Stream Analytics Output named $outputName - ConfirmAzBPResource" {
-    #arrange
+    # arrange
     $params = @{
-      ResourceType = "StreamAnalyticsOutput"
+      ResourceType      = "StreamAnalyticsOutput"
       ResourceGroupName = $rgName
-      JobName = $jobName
-      ResourceName = $outputName
-      PropertyKey = 'Name'
-      PropertyValue = $outputName
+      JobName           = $jobName
+      ResourceName      = $outputName
+      PropertyKey       = 'Name'
+      PropertyValue     = $outputName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain a Stream Analytics Output named $outputName" {
-    #arrange
+    # arrange
     $params = @{
       ResourceGroupName = $rgName
-      JobName = $jobName
-      Name = $outputName
+      JobName           = $jobName
+      Name              = $outputName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPStreamAnalyticsOutput @params | Should -BeSuccessful
   }
 
-  It "Should be a Stream Analytics Output in a resource group named $rgName" {
-    #arrange
+  It "Should contain a Stream Analytics Output named $outputName in $rgName" {
+    # arrange
     $params = @{
       ResourceGroupName = $rgName
-      JobName = $jobName
-      Name = $outputName
+      JobName           = $jobName
+      Name              = $outputName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPStreamAnalyticsOutput @params | Should -BeInResourceGroup $rgName
   }
 
 #######################################################################################################################
 
-  It 'Should contain a Stream Analytics Transformation with the given name - Confirm-AzBPResource' {
-    #arrange
+  It "Should contain a Stream Analytics Transformation named $transformationName- Confirm-AzBPResource" {
+    # arrange
     $params = @{
-      ResourceType = "StreamAnalyticsTransformation"
+      ResourceType      = "StreamAnalyticsTransformation"
       ResourceGroupName = $rgName
-      JobName = $jobName
-      ResourceName = $transformationName
+      JobName           = $jobName
+      ResourceName      = $transformationName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain a Stream Analytics Transformation named $transformationName - ConfirmAzBPResource" {
-    #arrange
+    # arrange
     $params = @{
-      ResourceType = "StreamAnalyticsTransformation"
+      ResourceType      = "StreamAnalyticsTransformation"
       ResourceGroupName = $rgName
-      JobName = $jobName
-      ResourceName = $transformationName
-      PropertyKey = 'Name'
-      PropertyValue = $transformationName
+      JobName           = $jobName
+      ResourceName      = $transformationName
+      PropertyKey       = 'Name'
+      PropertyValue     = $transformationName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain a Stream Analytics Transformation named $transformationName" {
-    #arrange
+    # arrange
     $params = @{
       ResourceGroupName = $rgName
-      JobName = $jobName
-      Name = $transformationName
+      JobName           = $jobName
+      Name              = $transformationName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPStreamAnalyticsTransformation @params | Should -BeSuccessful
   }
 
-  It "Should be a Stream Analytics Transformation in a resource group named $rgName" {
-    #arrange
+  It "Should contain a Stream Analytics Transformation named $transformationName in $rgName" {
+    # arrange
     $params = @{
       ResourceGroupName = $rgName
-      JobName = $jobName
-      Name = $transformationName
+      JobName           = $jobName
+      Name              = $transformationName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPStreamAnalyticsTransformation @params | Should -BeInResourceGroup $rgName
   }
 }
