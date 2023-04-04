@@ -1,6 +1,7 @@
 # How To Run ContainerApp.Tests.ps1
 
-`ContainerApp.Tests.ps1` contains examples of using the `Confirm-AzBPContainerApp` cmdlet.
+`ContainerApp.Tests.ps1` contains examples of using the `Confirm-AzBPContainerApp` and the
+`Confirm-AzBPContainerAppManagedEnv` cmdlet.
 
 ## Pre-Requisites
 
@@ -23,9 +24,10 @@
 
 1. Update `ContainerApp.Tests.ps1` variables to point to your expected resources:
 
-   - `rg-test`              -> `your-resource-group-name`
-   - `conAppBenchPressTest` -> `your-container-application-name`
-   - `westus3`              -> `your-resource-group-location-name`
+   - `rg-test`                    -> `your-resource-group-name`
+   - `containerAppBenchPressTest` -> `your-container-application-name`
+   - `managedenvbenchpresstest`   -> `your-container-application-managed-environment-name`
+   - `westus3`                    -> `your-resource-group-location-name`
 
 1. If using a local copy of `Az.InfrastructureTesting`, replace `Import-Module Az.InfrastructureTesting` with
 `Import-Module "../../bin/BenchPress.Azure.psd1"`. Note that the final `AfterAll` step will properly remove the module

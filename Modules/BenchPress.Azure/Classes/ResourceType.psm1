@@ -9,6 +9,7 @@
   AppInsights
   AppServicePlan
   ContainerApp
+  ContainerAppManagedEnv
   CosmosDBAccount
   CosmosDBGremlinDatabase
   CosmosDBMongoDBDatabase

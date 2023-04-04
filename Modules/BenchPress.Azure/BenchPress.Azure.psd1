@@ -22,6 +22,7 @@
     "Confirm-AppServicePlan",
     "Confirm-BicepFile",
     "Confirm-ContainerApp",
+    "Confirm-ContainerAppManagedEnv",
     "Confirm-ContainerRegistry",
     "Confirm-CosmosDBAccount",
     "Confirm-CosmosDBGremlinDatabase",

@@ -6,6 +6,7 @@ using module ./../Classes/ResourceType.psm1
 . $PSScriptRoot/Confirm-AksCluster.ps1
 . $PSScriptRoot/Confirm-AppInsights.ps1
 . $PSScriptRoot/Confirm-AppServicePlan.ps1
+. $PSScriptRoot/Confirm-ContainerAppManagedEnv
 . $PSScriptRoot/Confirm-ContainerRegistry.ps1
 . $PSScriptRoot/Confirm-DataFactory.ps1
 . $PSScriptRoot/Confirm-DataFactoryLinkedService.ps1
@@ -196,6 +197,9 @@ function Get-ResourceByType {
       }
       "ContainerApp" {
         return Confirm-ContainerApp -ResourceGroupName $ResourceGroupName -Name $ResourceName
+      }
+      "ContainerAppManagedEnv" {
+        return Confirm-ContainerAppManagedEnv -ResourceGroupName $ResourceGroupName -Name $ResourceName
       }
       "ContainerRegistry" {
         return Confirm-ContainerRegistry -Name $ResourceName -ResourceGroupName $ResourceGroupName
