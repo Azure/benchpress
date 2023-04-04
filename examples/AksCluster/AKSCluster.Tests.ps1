@@ -91,7 +91,7 @@ Describe 'Verify AKS Node Pool' {
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
-  It "Should contain an AKS Node Pool with the name $nodePoolName" {
+  It "Should contain an AKS Node Pool named $nodePoolName" {
     Confirm-AzBPAksNodePool -ResourceGroupName $rgName -ClusterName $aksName -Name $nodePoolName | Should -BeSuccessful
   }
 
