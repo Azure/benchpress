@@ -95,7 +95,7 @@ Describe 'Verify AKS Node Pool' {
     Confirm-AzBPAksNodePool -ResourceGroupName $rgName -ClusterName $aksName -Name $nodePoolName | Should -BeSuccessful
   }
 
-  It "Should not contain an AKS Node Pool with the name $noNodePoolName" {
+  It "Should not contain an AKS Node Pool named $noNodePoolName" {
     # arrange
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
