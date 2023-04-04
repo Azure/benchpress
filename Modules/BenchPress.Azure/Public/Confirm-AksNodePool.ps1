@@ -10,7 +10,7 @@ function Confirm-AksNodePool {
       Confirms that an AKS Node Pool exists.
 
     .DESCRIPTION
-      The Confirm-AzBPAksNodePool cmdlet gets an AKS Node Pool using the specified AKS Node Pool and Resource Group
+      The Confirm-AzBPAksNodePool cmdlet gets an AKS Node Pool using the specified AKS Node Pool and Resource Group names.
 
     .PARAMETER ResourceGroupName
       The name of the Resource Group.
