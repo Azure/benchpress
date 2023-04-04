@@ -23,7 +23,7 @@ Describe 'Verify App Service Plan' {
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
-  It "Should contain an App Service Plan named $appServicePlanName - Confirm-AzBPResource" {
+  It "Should contain an App Service Plan named $appServicePlanName with a Free SKU - Confirm-AzBPResource" {
     # arrange
     $params = @{
       ResourceType      = "Appserviceplan"

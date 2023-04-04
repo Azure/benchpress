@@ -23,7 +23,7 @@ Describe 'Verify Container Registry' {
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
-  It "Should contain a Container Registry named $acrName - Confirm-AzBPResource" {
+  It "Should contain a Container Registry named $acrName with a Standard SKU - Confirm-AzBPResource" {
     # arrange
     $params = @{
       ResourceType      = "ContainerRegistry"

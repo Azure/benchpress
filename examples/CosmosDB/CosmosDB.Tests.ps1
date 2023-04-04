@@ -24,7 +24,8 @@ Describe 'Verify Cosmos DB Account' {
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
-  It "Should contain a Gremlin Cosmos DB Account named $gremlinAccountName - Confirm-AzBPResource" {
+  It "Should contain a Gremlin Cosmos DB Account named $gremlinAccountName that is a Global Document DB -
+  Confirm-AzBPResource" {
     # arrange
     $params = @{
       ResourceType      = "CosmosDBAccount"
@@ -80,7 +81,8 @@ Describe 'Verify Cosmos DB Account' {
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
-  It "Should contain a Mongo Cosmos DB Account named $mongoAccountName - Confirm-AzBPResource" {
+  It "Should contain a Mongo Cosmos DB Account named $mongoAccountName that is a Global Document DB -
+  Confirm-AzBPResource" {
     # arrange
     $params = @{
       ResourceType      = "CosmosDBAccount"
@@ -136,7 +138,8 @@ Describe 'Verify Cosmos DB Account' {
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
-  It "Should contain a SQL Cosmos DB Account named $sqlAccountName - Confirm-AzBPResource" {
+  It "Should contain a SQL Cosmos DB Account named $sqlAccountName that is a Global Document DB -
+  Confirm-AzBPResource" {
     # arrange
     $params = @{
       ResourceType      = "CosmosDBAccount"

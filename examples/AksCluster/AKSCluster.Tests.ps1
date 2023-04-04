@@ -23,7 +23,7 @@ Describe 'Verify AKS Cluster' {
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
-  It "Should contain an AKS Cluster named $aksName - Confirm-AzBPResource" {
+  It "Should contain an AKS Cluster named $aksName with an Agent Pool Profile named agentpool - Confirm-AzBPResource" {
     # arrange
     $params = @{
       ResourceType      = "AksCluster"

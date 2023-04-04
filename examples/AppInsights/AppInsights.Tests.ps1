@@ -23,7 +23,8 @@ Describe 'Verify Application Insights' {
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
-  It "Should contain an Application Insights named $appInsightsName - Confirm-AzBPResource" {
+  It "Should contain an Application Insights named $appInsightsName with Application Type of web -
+  Confirm-AzBPResource" {
     # arrange
     $params = @{
       ResourceType      = "AppInsights"
