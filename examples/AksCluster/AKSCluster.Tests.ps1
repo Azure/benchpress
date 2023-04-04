@@ -1,8 +1,8 @@
 ﻿BeforeAll {
   Import-Module Az.InfrastructureTesting
 
-  $Script:rgName = 'rg-test'
-  $Script:aksName = 'aksbenchpresstest'
+  $Script:rgName   = 'rg-test'
+  $Script:aksName  = 'aksbenchpresstest'
   $Script:location = 'westus3'
 }
 
