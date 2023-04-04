@@ -59,7 +59,7 @@ Describe 'Verify AKS Cluster' {
 
 Describe 'Verify AKS Node Pool' {
   BeforeAll {
-    $Script:nodePoolName = 'nodepoolbenchpresstest'
+    $Script:nodePoolName   = 'nodepoolbenchpresstest'
     $Script:noNodePoolName = 'noaksnodepool'
   }
 
@@ -102,9 +102,9 @@ Describe 'Verify AKS Node Pool' {
     # Remove this field to see all errors.
     $params = @{
       ResourceGroupName = $rgName
-      ClusterName = $aksName
-      Name = $noNodePoolName
-      ErrorAction = "SilentlyContinue"
+      ClusterName       = $aksName
+      Name              = $noNodePoolName
+      ErrorAction       = "SilentlyContinue"
     }
 
     #act and assert
