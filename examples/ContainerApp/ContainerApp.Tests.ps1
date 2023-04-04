@@ -72,17 +72,20 @@ Describe 'Verify Container Application Managed Environment' {
   }
 
   It "Should contain a Container Application Managed Environment named $managedEnvName - Confirm-AzBPResource" {
+    # arrange
     $params = @{
       ResourceType      = "ContainerAppManagedEnv"
       ResourceName      = $managedEnvName
       ResourceGroupName = $rgName
     }
 
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain a Container Application Managed Environment named $managedEnvName -
     Confirm-AzBPResource" {
+    # arrange
     $params = @{
       ResourceType      = "ContainerAppManagedEnv"
       ResourceName      = $managedEnvName
@@ -91,6 +94,7 @@ Describe 'Verify Container Application Managed Environment' {
       PropertyValue     = $managedEnvName
     }
 
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
