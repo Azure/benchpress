@@ -7,7 +7,7 @@
 
 Describe 'Verify Container Application' {
   BeforeAll {
-    $Script:containerAppName = 'containerAppBenchPressTest'
+    $Script:containerAppName   = 'containerAppBenchPressTest'
     $Script:noContainerAppName = 'nocontainerapp'
   }
 
