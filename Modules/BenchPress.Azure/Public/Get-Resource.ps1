@@ -13,10 +13,10 @@ function Get-Resource {
       The Get-AzBPResource cmdlet gets Azure resources of a given name.
 
     .PARAMETER ResourceName
-      The name of the Resources
+      The name of the Resource.
 
     .PARAMETER ResourceGroupName
-      The name of the Resource Group
+      The name of the Resource Group. The name is case insensitive.
 
     .EXAMPLE
       Get-AzBPResource -ResourceName "benchpresstest"

@@ -10,14 +10,13 @@ function Confirm-WebApp {
       Confirms that a Web App exists.
 
     .DESCRIPTION
-      The Confirm-AzBPWebApp cmdlet gets a Web App using the specified Web App and
-      Resource Group name.
+      The Confirm-AzBPWebApp cmdlet gets a Web App using the specified Web App and Resource Group names.
 
     .PARAMETER WebAppName
-      The name of the Web App
+      The name of the Web App.
 
     .PARAMETER ResourceGroupName
-      The name of the Resource Group
+      The name of the Resource Group. The name is case insensitive.
 
     .EXAMPLE
       Confirm-AzBPWebApp -WebAppName "benchpresstest" -ResourceGroupName "rgbenchpresstest"

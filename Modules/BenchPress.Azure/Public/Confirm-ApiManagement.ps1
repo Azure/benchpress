@@ -14,10 +14,10 @@ function Confirm-ApiManagement {
       and Resource Group names.
 
     .PARAMETER ResourceGroupName
-      Specifies the name of the resource group under in which this cmdlet gets the API Management service.
+      The name of the Resource Group. The name is case insensitive.
 
     .PARAMETER Name
-      Specifies the name of API Management service.
+      The name of the API Management Service.
 
     .EXAMPLE
       Confirm-AzBPApiManagement -ResourceGroupName "rgbenchpresstest" -Name "benchpresstest"

@@ -13,12 +13,12 @@
       This is the name of the environment variable to retrieve and validate that a value is present.
 
     .EXAMPLE
-      Provide -VariableName Parameter
+      Provide -VariableName Parameter.
 
       Get-RequiredEnvironmentVariable -VariableName AZ_APPLICATION_ID
 
     .EXAMPLE
-      Provide variable name without -VariableName Parameter
+      Provide variable name without -VariableName Parameter.
 
       Get-RequiredEnvironmentVariable AZ_APPLICATION_ID
 

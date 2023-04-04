@@ -11,16 +11,16 @@ function Confirm-StreamAnalyticsOutput {
 
     .DESCRIPTION
       The Confirm-AzBPStreamAnalyticsOutput cmdlet gets a Stream Analytics Output using the specified Resource Group,
-      the name of the Job with the Output, and the name of the Output.
+      the Job with the Output, and the Output names.
 
     .PARAMETER ResourceGroupName
-      The name of the resource group. The name is case insensitive.
+      The name of the Resource Group. The name is case insensitive.
 
     .PARAMETER JobName
-      The name of the streaming job.
+      The name of the Streaming Job.
 
     .PARAMETER Name
-      The name of the output.
+      The name of the Output.
 
     .EXAMPLE
       Confirm-AzBPStreamAnalyticsOutput -ResourceGroupName "rgbenchpresstest" -JobName "jn" -Name "benchpresstest"

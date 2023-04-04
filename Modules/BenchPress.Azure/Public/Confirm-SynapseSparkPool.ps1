@@ -7,20 +7,20 @@ using module ./../Classes/ConfirmResult.psm1
 function Confirm-SynapseSparkPool {
   <#
     .SYNOPSIS
-      Confirms that a Synapse Spark pool exists.
+      Confirms that a Synapse Spark Pool exists.
 
     .DESCRIPTION
-      The Confirm-AzBPSynapseSparkPool cmdlet gets a Spark pool under a Synapse workspace using the specified
-      Synapse Workspace, Spark Pool and Resource Group name.
+      The Confirm-AzBPSynapseSparkPool cmdlet gets a Spark Pool under a Synapse Workspace using the specified
+      Synapse Workspace, Spark Pool, and Resource Group names.
 
     .PARAMETER SynapseSparkPoolName
-      The name of the Spark pool
+      The name of the Spark Pool.
 
     .PARAMETER WorkspaceName
-      The name of the Synapse Workspace
+      The name of the Synapse Workspace.
 
     .PARAMETER ResourceGroupName
-      The name of the Resource Group
+      The name of the Resource Group. The name is case insensitive.
 
     .EXAMPLE
       Confirm-AzBPSynapseSparkPool -SynapseSparkPoolName "benchpresstest" -WorkspaceName "wstest" `

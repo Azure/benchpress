@@ -11,13 +11,13 @@ function Confirm-ContainerRegistry {
 
     .DESCRIPTION
       The Confirm-AzBPContainerRegistry cmdlet gets a Container Registry using the specified Container Registry and
-      Resource Group name.
+      Resource Group names.
 
     .PARAMETER Name
-      The name of the Container Registry
+      The name of the Container Registry.
 
     .PARAMETER ResourceGroupName
-      The name of the Resource Group
+      The name of the Resource Group. The name is case insensitive.
 
     .EXAMPLE
       Confirm-AzBPContainerRegistry -Name "benchpresstest" -ResourceGroupName "rgbenchpresstest"

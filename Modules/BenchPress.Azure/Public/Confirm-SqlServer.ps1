@@ -11,13 +11,13 @@ function Confirm-SqlServer {
 
     .DESCRIPTION
       The Confirm-AzBPSqlServer cmdlet gets a SQL Server using the specified SQL Server and
-      Resource Group name.
+      Resource Group names.
 
     .PARAMETER ServerName
-      The name of the SQL Server
+      The name of the SQL Server.
 
     .PARAMETER ResourceGroupName
-      The name of the Resource Group
+      The name of the Resource Group. The name is case insensitive.
 
     .EXAMPLE
       Confirm-AzBPSqlServer -ServerName "testserver" -ResourceGroupName "rgbenchpresstest"

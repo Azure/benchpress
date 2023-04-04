@@ -14,13 +14,13 @@ function Confirm-ApiManagementDiagnostic {
       Diagnostic, API, API Management Service, and Resource Group names.
 
     .PARAMETER ResourceGroupName
-      Specifies the name of the resource group under which an API Management service is deployed.
+      The name of the Resource Group. The name is case insensitive.
 
     .PARAMETER ServiceName
-      Specifies the name of the deployed API Management service.
+      The name of the API Management Service.
 
     .PARAMETER Name
-      Identifier of existing diagnostic. This will return product-scope policy. This parameters is required.
+      The ID of the Diagnostic. This will return product-scope policy. This parameter is required.
 
     .EXAMPLE
       Confirm-AzBPApiManagementDiagnostic -ResourceGroupName "rgbenchpresstest" -ServiceName "servicetest" `

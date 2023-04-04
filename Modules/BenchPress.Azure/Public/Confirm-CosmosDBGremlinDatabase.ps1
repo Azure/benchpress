@@ -10,17 +10,17 @@ function Confirm-CosmosDBGremlinDatabase {
       Confirms that a Cosmos DB Gremlin Database exists.
 
     .DESCRIPTION
-      The Confirm-AzBPCosmosDBGremlinDatabase cmdlet gets Cosmos DB Gremlin database given the Resource Group Name, the
-      name of the Cosmos DB Account, and the name of the Gremlin Database.
+      The Confirm-AzBPCosmosDBGremlinDatabase cmdlet gets a Cosmos DB Gremlin Database using the specified Resource
+      Group, Cosmos DB Account, and Gremlin Database names.
 
     .PARAMETER ResourceGroupName
-      The name of the Resource Group.
+      The name of the Resource Group. The name is case insensitive.
 
     .PARAMETER AccountName
-      The Cosmos DB account name.
+      The name of the Cosmos DB Account.
 
     .PARAMETER Name
-      The name of the Cosmos DB Gremlin Database
+      The name of the Cosmos DB Gremlin Database.
 
     .EXAMPLE
       Confirm-AzBPCosmosDBGremlinDatabase -ResourceGroupName "rgbenchpresstest" -AccountName "an" -Name "gremlindb"

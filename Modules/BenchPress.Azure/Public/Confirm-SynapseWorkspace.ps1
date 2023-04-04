@@ -10,14 +10,14 @@ function Confirm-SynapseWorkspace {
       Confirms that a Synapse Workspace exists.
 
     .DESCRIPTION
-      The Confirm-AzBPSynapseWorkspace cmdlet gets a synapse workspace using the specified Synapse Workspace and
-      Resource Group name.
+      The Confirm-AzBPSynapseWorkspace cmdlet gets a Synapse Workspace using the specified Synapse Workspace and
+      Resource Group names.
 
     .PARAMETER WorkspaceName
-      The name of the Synapse Workspace
+      The name of the Synapse Workspace.
 
     .PARAMETER ResourceGroupName
-      The name of the Resource Group
+      The name of the Resource Group. The name is case insensitive.
 
     .EXAMPLE
       Confirm-AzBPSynapseWorkspace -WorkspaceName "benchpresstest" -ResourceGroupName "rgbenchpresstest"

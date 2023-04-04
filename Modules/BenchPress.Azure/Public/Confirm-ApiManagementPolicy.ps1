@@ -14,13 +14,13 @@ function Confirm-ApiManagementPolicy {
       Service, and Resource Group names.
 
     .PARAMETER ResourceGroupName
-      Specifies the name of the resource group under which an API Management service is deployed.
+      The name of the Resource Group. The name is case insensitive.
 
     .PARAMETER ServiceName
-      Specifies the name of the deployed API Management service.
+      The name of the API Management Service.
 
     .PARAMETER ApiId
-      Specifies the identifier of the existing API. This cmdlet returns the API-scope policy.
+      The ID of the API. This cmdlet returns the API-scope policy.
 
     .EXAMPLE
       Confirm-AzBPApiManagementPolicy -ResourceGroupName "rgbenchpresstest" -ServiceName "servicetest" `

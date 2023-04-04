@@ -10,17 +10,17 @@ function Confirm-RoleAssignment {
       Confirms that a Role Assignment for a service principal exists.
 
     .DESCRIPTION
-      The Confirm-AzBPRoleAssignment cmdlet gets a Role Assignment using the specified Service Prinicpal, Scope
-      and Role Assignment name.
+      The Confirm-AzBPRoleAssignment cmdlet gets a Role Assignment using the specified Service Prinicpal, Scope,
+      and Role Assignment names.
 
     .PARAMETER RoleDefinitionName
-      The name of the role definition i.e. Reader, Contributor etc.
+      The name of the Role Definition i.e. Reader, Contributor etc.
 
     .PARAMETER ServicePrincipalId
-      The service principal app id
+      The Application ID of the Service Principal.
 
     .PARAMETER Scope
-      The scope of the role assignment. In the format of relative URI. For e.g.
+      The Scope of the Role Assignment. In the format of relative URI. For e.g.
       /subscriptions/{id}/resourceGroups/{resourceGroupName}.
       It must start with "/subscriptions/{id}".
 

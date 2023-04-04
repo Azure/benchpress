@@ -10,20 +10,20 @@ function Confirm-EventHubConsumerGroup {
       Confirms that an EventHub ConsumerGroup exists.
 
     .DESCRIPTION
-      The Confirm-AzBPEventHubConsumerGroup cmdlet gets an EventHub ConsumerGroup using the specified EventHub ConsumerGroup name,
-      EventHub Namespace name, Eventhub name and Resource Group name.
+      The Confirm-AzBPEventHubConsumerGroup cmdlet gets an Event Hub Consumer Group using the specified Event Hub
+      Consumer Group, Event Hub Namespace, Event Hub, and Resource Group names.
 
     .PARAMETER Name
-      The name of the EventHub ConsumerGroup
+      The name of the Event Hub Consumer Group.
 
     .PARAMETER NamespaceName
-      The name of the EventHub Namespace
+      The name of the Event Hub Namespace.
 
     .PARAMETER EventHubName
-      The name of the EventHub
+      The name of the Event Hub.
 
     .PARAMETER ResourceGroupName
-      The name of the Resource Group
+      The name of the Resource Group. The name is case insensitive.
 
     .EXAMPLE
       Confirm-AzBPEventHubConsumerGroup -Name 'consumergrouptest' -NamespaceName 'bpeventhubnamespace' -EventHubName 'bpeventhub' -ResourceGroupName "rgbenchpresstest"

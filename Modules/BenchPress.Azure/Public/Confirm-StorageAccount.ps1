@@ -11,13 +11,13 @@ function Confirm-StorageAccount {
 
     .DESCRIPTION
       The Confirm-AzBPStorageAccount cmdlet gets a Storage Account using the specified Storage Account and
-      Resource Group name.
+      Resource Group names.
 
     .PARAMETER Name
-      The name of the Storage Account
+      The name of the Storage Account.
 
     .PARAMETER ResourceGroupName
-      The name of the Resource Group
+      The name of the Resource Group. The name is case insensitive.
 
     .EXAMPLE
       Confirm-AzBPStorageAccount -Name "teststorageaccount" -ResourceGroupName "rgbenchpresstest"

@@ -10,11 +10,10 @@ function Confirm-ResourceGroup {
       Confirms that a Resource Group exists.
 
     .DESCRIPTION
-      The Confirm-AzBPResourceGroup cmdlet gets a Resource Group using the specified Resource Group and
-      Resource Group name.
+      The Confirm-AzBPResourceGroup cmdlet gets a Resource Group using the specified Resource Group name.
 
     .PARAMETER ResourceGroupName
-      The name of the Resource Group
+      The name of the Resource Group. The name is case insensitive.
 
     .EXAMPLE
       Confirm-AzBPResourceGroup -ResourceGroupName "rgbenchpresstest"

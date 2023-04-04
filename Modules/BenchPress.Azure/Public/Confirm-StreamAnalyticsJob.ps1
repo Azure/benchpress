@@ -11,13 +11,13 @@ function Confirm-StreamAnalyticsJob {
 
     .DESCRIPTION
       The Confirm-AzBPStreamAnalyticsJob cmdlet gets a Stream Analytics Job using the specified Resource Group and
-      Stream Analytics job name.
+      Stream Analytics Job names.
 
     .PARAMETER ResourceGroupName
-      The name of the resource group. The name is case insensitive.
+      The name of the Resource Group. The name is case insensitive.
 
     .PARAMETER Name
-      The name of the Stream Analytics job.
+      The name of the Stream Analytics Job.
 
     .EXAMPLE
       Confirm-AzBPStreamAnalyticsCluster -ResourceGroupName "rgbenchpresstest" -Name "benchpresstest"

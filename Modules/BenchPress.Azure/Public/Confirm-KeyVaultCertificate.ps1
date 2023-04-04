@@ -14,10 +14,10 @@ function Confirm-KeyVaultCertificate {
       Certificate name.
 
     .PARAMETER Name
-      The name of the Certificate
+      The name of the Certificate.
 
     .PARAMETER KeyVaultName
-      The name of the Key Vault
+      The name of the Key Vault.
 
     .EXAMPLE
       Confirm-AzBPKeyVaultCertificate -Name "benchpresstest" -KeyVaultName "kvbenchpresstest"

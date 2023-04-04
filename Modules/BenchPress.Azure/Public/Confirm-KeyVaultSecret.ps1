@@ -10,14 +10,13 @@ function Confirm-KeyVaultSecret {
       Confirms that a Key Vault Secret exists.
 
     .DESCRIPTION
-      The Confirm-AzBPKeyVaultSecret cmdlet gets a Key Vault Secret using the specified Key Vault and
-      Secret name.
+      The Confirm-AzBPKeyVaultSecret cmdlet gets a Key Vault Secret using the specified Key Vault and Secret name.
 
     .PARAMETER Name
-      The name of the Secret
+      The name of the Secret.
 
     .PARAMETER KeyVaultName
-      The name of the Key Vault
+      The name of the Key Vault.
 
     .EXAMPLE
       Confirm-AzBPKeyVaultSecret -Name "benchpresstest" -KeyVaultName "kvbenchpresstest"

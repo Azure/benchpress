@@ -10,14 +10,14 @@ function Confirm-CosmosDBAccount {
       Confirms that a Cosmos DB Account exists.
 
     .DESCRIPTION
-      The Confirm-AzBPCosmosDBAccount cmdlet gets Cosmos DB Account given the Resource Group Name and the name of the
-      Cosmos DB Account.
+      The Confirm-AzBPCosmosDBAccount cmdlet gets a Cosmos DB Account using the specified Resource Group and Cosmos DB
+      Account names.
 
     .PARAMETER ResourceGroupName
-      The name of the Resource Group.
+      The name of the Resource Group. The name is case insensitive.
 
     .PARAMETER Name
-      The Cosmos DB account name.
+      The name of the Cosmos DB Account.
 
     .EXAMPLE
       Confirm-AzBPCosmosDBAccount -Name "benchpresstest" -ResourceGroupName "rgbenchpresstest"

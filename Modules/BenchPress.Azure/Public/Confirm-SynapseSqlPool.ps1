@@ -7,20 +7,20 @@ using module ./../Classes/ConfirmResult.psm1
 function Confirm-SynapseSqlPool {
   <#
     .SYNOPSIS
-      Confirms that a Synapse SQL pool exists.
+      Confirms that a Synapse SQL Pool exists.
 
     .DESCRIPTION
-      The Confirm-AzBPSynapseSqlPool cmdlet gets a SQL pool under a Synapse workspace using the specified
-      Synapse Workspace, SQL Pool and Resource Group name.
+      The Confirm-AzBPSynapseSqlPool cmdlet gets a SQL Pool under a Synapse Workspace using the specified
+      Synapse Workspace, SQL Pool, and Resource Group names.
 
     .PARAMETER SynapseSqlPoolName
-      The name of the SQL pool
+      The name of the SQL Pool.
 
     .PARAMETER WorkspaceName
-      The name of the Synapse Workspace
+      The name of the Synapse Workspace.
 
     .PARAMETER ResourceGroupName
-      The name of the Resource Group
+      The name of the Resource Group. The name is case insensitive.
 
     .EXAMPLE
       Confirm-AzBPSynapseSqlPool -SynapseSqlPoolName "benchpresstest" -WorkspaceName "wstest" `

@@ -10,14 +10,14 @@ function Confirm-AppInsights {
       Confirms that an Application Insights exists.
 
     .DESCRIPTION
-      The Confirm-AzBPAppInsights cmdlet gets an Application Insights using the specified Application Insights name
-      and Resource Group name.
+      The Confirm-AzBPAppInsights cmdlet gets an Application Insights using the specified Application Insights and
+      Resource Group names.
 
     .PARAMETER Name
-      The name of the Application Insights
+      The name of the Application Insights.
 
     .PARAMETER ResourceGroupName
-      The name of the Resource Group
+      The name of the Resource Group. The name is case insensitive.
 
     .EXAMPLE
       Confirm-AzBPAppInsights -Name "benchpresstest" -ResourceGroupName "rgbenchpresstest"

@@ -19,7 +19,7 @@ function Disconnect-Account {
       AZ_SUBSCRIPTION_ID - The Subscription ID to login to
 
       If the current context does not match the Service Principal, Tenant, or Subscription then this function is a
-      no-op
+      no-op.
 
     .EXAMPLE
       There is only one way to call Disconnect-Account:

@@ -10,14 +10,13 @@ function Confirm-KeyVault {
       Confirms that a Key Vault exists.
 
     .DESCRIPTION
-      The Confirm-AzBPKeyVault cmdlet gets a Key Vault using the specified Key Vault and
-      Resource Group name.
+      The Confirm-AzBPKeyVault cmdlet gets a Key Vault using the specified Key Vault and Resource Group names.
 
     .PARAMETER Name
-      The name of the Key Vault
+      The name of the Key Vault.
 
     .PARAMETER ResourceGroupName
-      The name of the Resource Group
+      The name of the Resource Group. The name is case insensitive.
 
     .EXAMPLE
       Confirm-AzBPKeyVault -Name "benchpresstest" -ResourceGroupName "rgbenchpresstest"

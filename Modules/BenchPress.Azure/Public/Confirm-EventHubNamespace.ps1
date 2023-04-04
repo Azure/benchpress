@@ -7,17 +7,17 @@ using module ./../Classes/ConfirmResult.psm1
 function Confirm-EventHubNamespace {
   <#
     .SYNOPSIS
-      Confirms that an EventHub Namespace exists.
+      Confirms that an Event Hub Namespace exists.
 
     .DESCRIPTION
-      The Confirm-AzBPEventHubNamespace cmdlet gets an EventHub Namespace using the specified EventHub Namespace name,
-      and Resource Group name.
+      The Confirm-AzBPEventHubNamespace cmdlet gets an Event Hub Namespace using the specified Event Hub Namespace
+      and Resource Group names.
 
     .PARAMETER NamespaceName
-      The name of the EventHub Namespace
+      The name of the Event Hub Namespace.
 
     .PARAMETER ResourceGroupName
-      The name of the Resource Group
+      The name of the Resource Group. The name is case insensitive.
 
     .EXAMPLE
       Confirm-AzBPEventHubNamespace -NamespaceName 'bpeventhubnamespace' -ResourceGroupName "rgbenchpresstest"

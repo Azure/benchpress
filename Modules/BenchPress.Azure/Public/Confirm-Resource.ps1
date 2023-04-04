@@ -18,45 +18,73 @@ function Confirm-Resource {
       - ResourceDetails: System.Object that contains the details of the Azure Resource that is being confirmed.
 
     .PARAMETER ResourceName
-      The name of the Resource
+      The name of the Resource.
 
     .PARAMETER ResourceGroupName
-      The name of the Resource Group
+      The name of the Resource Group. The name is case insensitive.
 
     .PARAMETER ResourceType
-      The type of the Resource as a [ResourceType]
+      The type of the Resource as a [ResourceType].
 
     .PARAMETER ServerName
-      If testing an Azure SQL Database resource, the name of the server to which the database is assigned.
+      If testing an Azure SQL Database resource, the name of the Server to which the Database is assigned.
 
     .PARAMETER DataFactoryName
-      If testing an Azure Data Factory Linked Service resource, the name of the data factory to which the linked
-      service is assigned.
+      If testing an Azure Data Factory Linked Service resource, the name of the Data Factory to which the Linked
+      Service is assigned.
+
+    .PARAMETER NamespaceName
+      If testing an Azure resource that is associated with a Namespace (e.g., Event Hub), the name of the associated
+      Namespace.
+
+    .PARAMETER EventHubName
+      If testing a component of Event Hub (e.g., Consumer Group), the name of the Event Hub to which the component
+      is assigned.
 
     .PARAMETER WorkspaceName
-      If testing a resource that belongs to some sort of Azure workspace (i.e. SQL pool in a Synapse workspace),
-      the name of the workspace to which the resource is assigned.
+      If testing an Azure resource that belongs to some sort of Azure Workspace (e.g., SQL Pool in a Synapse
+      Workspace), the name of the Workspace to which the resource is assigned.
 
     .PARAMETER AccountName
-      If the Azure resource has an associated account name (e.g., Cosmos DB SQL Database, Storage Container)
+      If testing an Azure resource that is associated with an Account (e.g., Cosmos DB SQL Database,
+      Storage Container), the name of the associated Account.
+
+    .PARAMETER ServicePrincipalId
+      If testing an Azure Role Assignment, the Application ID of the Service Principal.
+
+    .PARAMETER Scope
+      If testing an Azure Role Assignment, the Scope of the Role Assignment (e.g.,
+      /subscriptions/{id}/resourceGroups/{resourceGroupName}).
+      It must start with "/subscriptions/{id}".
+
+    .PARAMETER RoleDefinitionName
+      If testing an Azure Role Assignment, the name of the Role Definition (e.g., Reader, Contributor etc.).
+
+    .PARAMETER ServiceName
+      If testing an Azure resource that is associated with a Service (e.g., API Management Service), the name of
+      the associated Service.
+
+    .PARAMETER JobName
+      If testing an Azure resource that is associated with a Job (e.g., Stream Analytics Output), the name of
+      the associated Job.
 
     .PARAMETER PropertyKey
-      The name of the property to check on the resource
+      The name of the property to check on the resource.
 
     .PARAMETER PropertyValue
-      The expected value of the property to check
+      The expected value of the property to check.
 
     .EXAMPLE
-      Checking whether a resource exists (i.e. Resource Group)
+      Checking whether a resource exists (i.e. Resource Group).
       Confirm-AzBPResource -ResourceType $resourceType -ResourceName $resourceGroupName
 
     .EXAMPLE
-      Confirm whether a resource has a property configured correctly (i.e. Resource Group located in West US 3)
+      Confirm whether a resource has a property configured correctly (i.e. Resource Group located in West US 3).
       Confirm-AzBPResource -ResourceType $resourceType -ResourceName $resourceGroupName -PropertyKey "Location" `
                             -PropertyValue "WestUS3"
 
     .EXAMPLE
-      Checking whether a nested property on a resource is configured correctly (i.e. OS of VM is Linux)
+      Checking whether a nested property on a resource is configured correctly (i.e. OS of VM is Linux).
 
       $params = @{
         ResourceGroupName = "rg-test";

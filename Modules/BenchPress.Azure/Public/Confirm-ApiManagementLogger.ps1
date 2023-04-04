@@ -14,13 +14,13 @@ function Confirm-ApiManagementLogger {
       Management Service, and Resource Group names.
 
     .PARAMETER ResourceGroupName
-      Specifies the name of the resource group under which an API Management service is deployed.
+      The name of the Resource Group. The name is case insensitive.
 
     .PARAMETER ServiceName
-      Specifies the name of the deployed API Management service.
+      The name of the API Management Service.
 
     .PARAMETER Name
-      Specifies the ID of the specific logger to get.
+      The ID of the Logger.
 
     .EXAMPLE
       Confirm-AzBPApiManagementLogger -ResourceGroupName "rgbenchpresstest" -ServiceName "servicetest" `
