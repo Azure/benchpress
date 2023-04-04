@@ -12,19 +12,19 @@ Describe 'Verify App Service Plan' {
   }
 
   It "Should contain an App Service Plan named $appServicePlanName - Confirm-AzBPResource" {
-    #arrange
+    # arrange
     $params = @{
       ResourceType      = "Appserviceplan"
       ResourceName      = $appServicePlanName
       ResourceGroupName = $rgName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
-  It "Should contain an App Service Plan named $appServicePlanName - Confirm-AzBPResource" {
-    #arrange
+  It "Should contain an App Service Plan named $appServicePlanName with a Free SKU - Confirm-AzBPResource" {
+    # arrange
     $params = @{
       ResourceType      = "Appserviceplan"
       ResourceName      = $appServicePlanName
@@ -33,7 +33,7 @@ Describe 'Verify App Service Plan' {
       PropertyValue     = "Free"
     }
 
-    #act
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
@@ -42,7 +42,8 @@ Describe 'Verify App Service Plan' {
     | Should -BeSuccessful
   }
 
-  It 'Should not contain an App Service Plan with the given name' {
+  It "Should not contain an App Service Plan named $noAppServicePlanName" {
+    # arrange
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
@@ -51,6 +52,8 @@ Describe 'Verify App Service Plan' {
       AppServicePlanName    = $noAppServicePlanName
       ErrorAction           = "SilentlyContinue"
     }
+
+    # act and assert
     Confirm-AzBPAppServicePlan @params | Should -Not -BeSuccessful
   }
 
@@ -59,7 +62,7 @@ Describe 'Verify App Service Plan' {
     | Should -BeInLocation $location
   }
 
-  It "Should contain an App Service Plan named $appServicePlanName in a resource group named $rgName" {
+  It "Should contain an App Service Plan named $appServicePlanName in $rgName" {
     Confirm-AzBPAppServicePlan -ResourceGroupName $rgName -AppServicePlanName $appServicePlanName
     | Should -BeInResourceGroup $rgName
   }
