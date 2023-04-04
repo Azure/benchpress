@@ -8,10 +8,10 @@ Describe "Confirm-CosmosDBGremlinDatabase" {
   Context "unit tests" -Tag "Unit" {
     BeforeEach {
       Mock Connect-Account{}
+      Mock Get-AzCosmosDBGremlinDatabase{}
     }
 
     It "Calls Get-AzCosmosDBGremlinDatabase" {
-      Mock Get-AzCosmosDBGremlinDatabase{}
       Confirm-CosmosDBGremlinDatabase -ResourceGroupName "rgn" -AccountName "cdba" -Name "cdbsqldb"
       Should -Invoke -CommandName "Get-AzCosmosDBGremlinDatabase" -Times 1
     }

@@ -8,10 +8,10 @@ Describe "Confirm-WebApp" {
   Context "unit tests" -Tag "Unit" {
     BeforeEach {
       Mock Connect-Account{}
+      Mock Get-AzWebApp{}
     }
 
     It "Calls Get-AzWebApp" {
-      Mock Get-AzWebApp{}
       Confirm-WebApp -WebAppName "wan" -ResourceGroupName "rgn"
       Should -Invoke -CommandName "Get-AzWebApp" -Times 1
     }

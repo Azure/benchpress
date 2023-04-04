@@ -8,10 +8,10 @@ Describe "Confirm-RoleAssignment" {
   Context "unit tests" -Tag "Unit" {
     BeforeEach {
       Mock Connect-Account{}
+      Mock Get-AzRoleAssignment{}
     }
 
     It "Calls Get-AzRoleAssignment" {
-      Mock Get-AzRoleAssignment{}
       $params = @{
         ServicePrincipalId   = 'spn'
         RoleDefinitionName   = 'Reader'

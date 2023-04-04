@@ -8,10 +8,10 @@ Describe "Confirm-ContainerRegistry" {
   Context "unit tests" -Tag "Unit" {
     BeforeEach {
       Mock Connect-Account{}
+      Mock Get-AzContainerRegistry{}
     }
 
     It "Calls Get-AzContainerRegistry" {
-      Mock Get-AzContainerRegistry{}
       Confirm-ContainerRegistry -Name "cr" -ResourceGroupName "rgn"
       Should -Invoke -CommandName "Get-AzContainerRegistry" -Times 1
     }

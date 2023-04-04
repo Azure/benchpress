@@ -6,25 +6,26 @@
   $Script:location = 'westus3'
 }
 
-Describe 'Verify App Insights' {
+Describe 'Verify Application Insights' {
   BeforeAll {
     $Script:noAppInsightsName = 'noappinsights'
   }
 
-  It "Should contain an App Insights named $appInsightsName - Confirm-AzBPResource" {
-    #arrange
+  It "Should contain an Application Insights named $appInsightsName - Confirm-AzBPResource" {
+    # arrange
     $params = @{
       ResourceType      = "AppInsights"
       ResourceName      = $appInsightsName
       ResourceGroupName = $rgName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
-  It "Should contain an App Insights named $appInsightsName - Confirm-AzBPResource" {
-    #arrange
+  It "Should contain an Application Insights named $appInsightsName with Application Type of web -
+  Confirm-AzBPResource" {
+    # arrange
     $params = @{
       ResourceType      = "AppInsights"
       ResourceName      = $appInsightsName
@@ -33,15 +34,15 @@ Describe 'Verify App Insights' {
       PropertyValue     = "web"
     }
 
-    #act
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
-  It "Should contain an App Insights named $appInsightsName" {
+  It "Should contain an Application Insights named $appInsightsName" {
     Confirm-AzBPAppInsights -ResourceGroupName $rgName -Name $appInsightsName | Should -BeSuccessful
   }
 
-  It 'Should not contain an application insights with the given name' {
+  It "Should not contain an Application Insights named $noAppInsightsName" {
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
@@ -49,11 +50,11 @@ Describe 'Verify App Insights' {
     | Should -Not -BeSuccessful
   }
 
-  It "Should contain an App Insights named $appInsightsName in $location" {
+  It "Should contain an Application Insights named $appInsightsName in $location" {
     Confirm-AzBPAppInsights -ResourceGroupName $rgName -Name $appInsightsName | Should -BeInLocation $location
   }
 
-  It "Should contain an App Insights named $appInsightsName in a resource group named $rgName" {
+  It "Should contain an Application Insights named $appInsightsName in $rgName" {
     Confirm-AzBPAppInsights -ResourceGroupName $rgName -Name $appInsightsName | Should -BeInResourceGroup $rgName
   }
 }

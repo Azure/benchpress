@@ -1,4 +1,4 @@
-enum ResourceType{
+﻿enum ResourceType{
   ActionGroup
   AksCluster
   ApiManagement

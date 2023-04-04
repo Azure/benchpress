@@ -11,19 +11,20 @@ Describe 'Verify Data Factory' {
     $Script:noDataFactoryName = 'nosampleadf'
   }
 
-  It 'Should contain a data factory with the given name - Confirm-AzBPResource'{
-    #arrange
+  It "Should contain a Data Factory named $dataFactoryName - Confirm-AzBPResource" {
+    # arrange
     $params = @{
       ResourceType      = "DataFactory"
       ResourceGroupName = $rgName
       ResourceName      = $dataFactoryName
     }
 
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
-  It "Should contain a data factory named $dataFactoryName - Confirm-AzBPResource"{
-    #arrange
+  It "Should contain a Data Factory named $dataFactoryName - Confirm-AzBPResource" {
+    # arrange
     $params = @{
       ResourceType      = "DataFactory"
       ResourceGroupName = $rgName
@@ -32,15 +33,15 @@ Describe 'Verify Data Factory' {
       PropertyValue     = $dataFactoryName
     }
 
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
-  It "Should contain a data factory named $dataFactoryName" {
+  It "Should contain a Data Factory named $dataFactoryName" {
     Confirm-AzBPDataFactory -ResourceGroupName $rgName -Name $dataFactoryName | Should -BeSuccessful
   }
 
-  It "Should not contain a data factory named $noDataFactoryName" {
-    #act
+  It "Should not contain a Data Factory named $noDataFactoryName" {
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
@@ -48,11 +49,11 @@ Describe 'Verify Data Factory' {
     | Should -Not -BeSuccessful
   }
 
-  It "Should contain a data factory named $dataFactoryName in $location" {
+  It "Should contain a Data Factory named $dataFactoryName in $location" {
     Confirm-AzBPDataFactory -ResourceGroupName $rgName -Name $dataFactoryName | Should -BeInLocation $location
   }
 
-  It "Should contain a data factory named $dataFactoryName deployed to $rgName resource group" {
+  It "Should contain a Data Factory named $dataFactoryName in $rgName" {
     Confirm-AzBPDataFactory -ResourceGroupName $rgName -Name $dataFactoryName | Should -BeInResourceGroup $rgName
   }
 }
@@ -62,8 +63,8 @@ Describe 'Verify Data Factory Linked Service' {
     $Script:linkedServiceName = 'BenchpressStorageLinkedService'
   }
 
-  It 'Should contain a data factory with a linked service - Confirm-AzBPResource' {
-    #arrange
+  It "Should contain a Data Factory with a Linked Service named $linkedServiceName - Confirm-AzBPResource" {
+    # arrange
     $params = @{
       ResourceType      = 'DataFactoryLinkedService'
       ResourceGroupName = $rgName
@@ -71,12 +72,12 @@ Describe 'Verify Data Factory Linked Service' {
       ResourceName      = $linkedServiceName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
-  It 'Should contain a data factory with a linked service - Confirm-AzBPResource' {
-    #arrange
+  It "Should contain a Data Factory with a Linked Service named $linkedServiceName - Confirm-AzBPResource" {
+    # arrange
     $params = @{
       ResourceType      = 'DataFactoryLinkedService'
       ResourceGroupName = $rgName
@@ -86,19 +87,19 @@ Describe 'Verify Data Factory Linked Service' {
       PropertyValue     = $linkedServiceName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
-  It "Should contain a data factory with a linked service named $linkedServiceName" {
-    #arrange
+  It "Should contain a Data Factory with a Linked Service named $linkedServiceName" {
+    # arrange
     $params = @{
       ResourceGroupName = $rgName
       DataFactoryName   = $dataFactoryName
       Name              = $linkedServiceName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPDataFactoryLinkedService @params | Should -BeSuccessful
   }
 }
