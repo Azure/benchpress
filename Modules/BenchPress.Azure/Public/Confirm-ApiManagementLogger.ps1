@@ -48,7 +48,7 @@ function Confirm-ApiManagementLogger {
     $connectResults = Connect-Account
   }
   Process {
-    # Unlike the other Get-AzApiManagement* cmdlets Get-AzApiManagementLogger does not accept piping of the context
+    # Unlike the other Get-AzApiManagement* cmdlets, Get-AzApiManagementLogger does not accept piping of the context
     $context = New-AzApiManagementContext -ResourceGroupName $ResourceGroupName -ServiceName $ServiceName
     $resource = Get-AzApiManagementLogger -Context $context -LoggerId $Name
 
