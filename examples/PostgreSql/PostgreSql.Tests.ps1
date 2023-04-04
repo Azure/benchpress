@@ -60,7 +60,7 @@ Describe 'Verify PostgreSql Flexible Server' {
 
   It "Should contain a PostgreSQL Flexible Server named $serverName in a resource group named $rgName" {
     Confirm-AzBPPostgreSqlFlexibleServer -ResourceGroupName $rgName -Name $serverName
-      | Should -BeInResourceGroup $rgName
+    | Should -BeInResourceGroup $rgName
   }
 }
 
