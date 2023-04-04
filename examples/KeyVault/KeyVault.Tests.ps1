@@ -1,5 +1,5 @@
 ﻿BeforeAll {
-  Import-Module ../../bin/BenchPress.Azure.psm1
+  Import-Module Az.InfrastructureTesting
 
   $Script:rgName = 'rg-test'
   $Script:kvName = 'kvbenchpresstest'
@@ -12,6 +12,7 @@ Describe 'Verify KeyVault' {
     $Script:kvKeyName = 'samplekey'
     $Script:kvSecretName = 'samplesecret'
     $Script:kvCertificateName = 'samplecert'
+    $Script:kvAccessPolicyObjectId = 'svcprinoid'
   }
 
   It 'Should contain a keyVault with given name - Confirm-AzBPResource' {
@@ -26,14 +27,14 @@ Describe 'Verify KeyVault' {
   }
 
 
-  It 'Should contain a keyVault with expected property name - Confirm-AzBPResource' {
+  It "Should contain a Key Vault with an Access Policy for $kvAccessPolicyObjectId" {
     #arrange
     $params = @{
       ResourceType      = "KeyVault"
       ResourceGroupName = $rgName
       ResourceName      = $kvName
-      PropertyKey       = 'VaultName'
-      PropertyValue     = $kvName
+      PropertyKey       = 'AccessPolicies[0].ObjectId'
+      PropertyValue     = $kvAccessPolicyObjectId
     }
 
     Confirm-AzBPResource @params | Should -BeSuccessful
