@@ -75,7 +75,7 @@ function Deploy-DemoApp {
   if ($Confirmed -eq "y") {
     New-ResourceGroup -Name "benchpress-rg-${EnvironmentSuffix}" -Location $Location -Tags "application=benchpress-demo suffix=${EnvironmentSuffix}"
 
-    New-Deployment -ResourceGroup "benchpress-rg-${EnvironmentSuffix}" -TemplateFile "./assets/demos/main.bicep" -Parameters "suffix=${EnvironmentSuffix}"
+    New-Deployment -ResourceGroup "benchpress-rg-${EnvironmentSuffix}" -TemplateFile "./main.bicep" -Parameters "suffix=${EnvironmentSuffix}"
 
     git clone https://github.com/dotnet/AspNetCore.Docs.git
 

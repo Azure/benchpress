@@ -1,4 +1,4 @@
-BeforeAll {
+﻿BeforeAll {
   Import-Module Az.InfrastructureTesting
 
   $Script:rgName = 'rg-test'
@@ -20,10 +20,7 @@ Describe 'Verify Synapse Workspace' {
     }
 
     #act
-    $result = Confirm-AzBPResource @params
-
-    #assert
-    $result.Success | Should -Be $true
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain a Synapse Workspace named $workSpaceName - ConfirmAzBPResource" {
@@ -37,45 +34,21 @@ Describe 'Verify Synapse Workspace' {
     }
 
     #act
-    $result = Confirm-AzBPResource @params
-
-    #assert
-    $result.Success | Should -Be $true
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain a Synapse Workspace named $workSpaceName" {
-    #act
-    $result = Confirm-AzBPSynapseWorkspace -ResourceGroupName $rgName -WorkspaceName $workspaceName
-
-    #assert
-    $result.Success | Should -Be $true
-  }
-
-  It "Should contain a Synapse Workspace named $workSpaceName" {
-    # Using custom assertion to check if the Workspace is deployed
-    #act
-    $result = Confirm-AzBPSynapseWorkspace -ResourceGroupName $rgName -WorkspaceName $workspaceName
-
-    #assert
-    $result | Should -BeDeployed
+    Confirm-AzBPSynapseWorkspace -ResourceGroupName $rgName -WorkspaceName $workspaceName | Should -BeSuccessful
   }
 
   It "Should contain a Synapse Workspace named $workSpaceName in $location" {
-    # Using custom assertion to check if the Workspace is in the correct location
-    #act
-    $result = Confirm-AzBPSynapseWorkspace -ResourceGroupName $rgName -WorkspaceName $workspaceName
-
-    #assert
-    $result | Should -BeInLocation $location
+    Confirm-AzBPSynapseWorkspace -ResourceGroupName $rgName -WorkspaceName $workspaceName
+    | Should -BeInLocation $location
   }
 
   It "Should contain a Synapse Workspace named $workSpaceName in $rgName" {
-    # Using custom assertion to check if the Workspace is in the correct resource group
-    #act
-    $result = Confirm-AzBPSynapseWorkspace -ResourceGroupName $rgName -WorkspaceName $workspaceName
-
-    #assert
-    $result | Should -BeInResourceGroup $rgName
+    Confirm-AzBPSynapseWorkspace -ResourceGroupName $rgName -WorkspaceName $workspaceName
+    | Should -BeInResourceGroup $rgName
   }
 
   It "Should not contain a Synapse Workspace named $noWorkspaceName" {
@@ -83,11 +56,14 @@ Describe 'Verify Synapse Workspace' {
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
-    $result = Confirm-AzBPSynapseWorkspace -ResourceGroupName $rgName -WorkspaceName $noWorkspaceName `
-      -ErrorAction SilentlyContinue
+    $params = @{
+      ResourceGroupName = $rgName
+      WorkspaceName = $noWorkspaceName
+      ErrorAction = 'SilentlyContinue'
+    }
 
-    #assert
-    $result.Success | Should -Be $false
+    #act and assert
+    Confirm-AzBPSynapseWorkspace @params | Should -Not -BeSuccessful
   }
 }
 
@@ -107,10 +83,7 @@ Describe 'Verify Synapse Spark/SQL Pool' {
     }
 
     #act
-    $result = Confirm-AzBPResource @params
-
-    #assert
-    $result.Success | Should -Be $true
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain a Synapse Spark Pool named $sparkPoolName - ConfirmAzBPResource" {
@@ -125,10 +98,7 @@ Describe 'Verify Synapse Spark/SQL Pool' {
     }
 
     #act
-    $result = Confirm-AzBPResource @params
-
-    #assert
-    $result.Success | Should -Be $true
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain a Synapse Workspace with a Spark Pool named $sparkPoolName" {
@@ -140,29 +110,11 @@ Describe 'Verify Synapse Spark/SQL Pool' {
     }
 
     #act
-    $result = Confirm-AzBPSynapseSparkPool @params
-
-    #assert
-    $result.Success | Should -Be $true
-  }
-
-  It "Should contain a Synapse Workspace with a Spark Pool named $sparkPoolName" {
-    # Using custom assertion to check if the Workspace with Spark Pool is deployed
-    $params = @{
-      ResourceGroupName    = $rgName
-      WorkspaceName        = $workSpaceName
-      SynapseSparkPoolName = $sparkPoolName
-    }
-
-    #act
-    $result = Confirm-AzBPSynapseSparkPool @params
-
-    #assert
-    $result | Should -BeDeployed
+    Confirm-AzBPSynapseSparkPool @params | Should -BeSuccessful
   }
 
   It "Should contain a Spark Pool named $sparkPoolName in $location" {
-    # Using custom assertion to check if the Spark Pool is in the correct location
+    #arrange
     $params = @{
       ResourceGroupName    = $rgName
       WorkspaceName        = $workSpaceName
@@ -170,24 +122,18 @@ Describe 'Verify Synapse Spark/SQL Pool' {
     }
 
     #act
-    $result = Confirm-AzBPSynapseSparkPool @params
-
-    #assert
-    $result | Should -BeInLocation $location
+    Confirm-AzBPSynapseSparkPool @params | Should -BeInLocation $location
   }
 
   It "Should contain a Spark Pool named $sparkPoolName in $rgName" {
-    # Using custom assertion to check if the Spark Pool is in the correct resource group
+    #arrange
     $params = @{
       ResourceGroupName    = $rgName
       WorkspaceName        = $workSpaceName
       SynapseSparkPoolName = $sparkPoolName
     }
     #act
-    $result = Confirm-AzBPSynapseSparkPool @params
-
-    #assert
-    $result | Should -BeInResourceGroup $rgName
+    Confirm-AzBPSynapseSparkPool @params | Should -BeInResourceGroup $rgName
   }
 
 #######################################################################################################################
@@ -202,10 +148,7 @@ Describe 'Verify Synapse Spark/SQL Pool' {
     }
 
     #act
-    $result = Confirm-AzBPResource @params
-
-    #assert
-    $result.Success | Should -Be $true
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain a Synapse SQL Pool named $sqlPoolName - ConfirmAzBPResource" {
@@ -220,10 +163,7 @@ Describe 'Verify Synapse Spark/SQL Pool' {
     }
 
     #act
-    $result = Confirm-AzBPResource @params
-
-    #assert
-    $result.Success | Should -Be $true
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain a Synapse Workspace with a SQL Pool named $sqlPoolName" {
@@ -235,29 +175,11 @@ Describe 'Verify Synapse Spark/SQL Pool' {
     }
 
     #act
-    $result = Confirm-AzBPSynapseSqlPool @params
-
-    #assert
-    $result.Success | Should -Be $true
-  }
-
-  It "Should contain a Synapse Workspace with a SQL Pool named $sqlPoolName" {
-    # Using custom assertion to check if the Workspace with SQL Pool is deployed
-    $params = @{
-      ResourceGroupName  = $rgName
-      WorkspaceName      = $workSpaceName
-      SynapseSqlPoolName = $sqlPoolName
-    }
-
-    #act
-    $result = Confirm-AzBPSynapseSqlPool @params
-
-    #assert
-    $result | Should -BeDeployed
+    Confirm-AzBPSynapseSqlPool @params | Should -BeSuccessful
   }
 
   It "Should contain a SQL Pool named $sqlPoolName in $location" {
-    # Using custom assertion to check if the SQL Pool is in the correct location
+    #arrange
     $params = @{
       ResourceGroupName  = $rgName
       WorkspaceName      = $workSpaceName
@@ -265,14 +187,11 @@ Describe 'Verify Synapse Spark/SQL Pool' {
     }
 
     #act
-    $result = Confirm-AzBPSynapseSqlPool @params
-
-    #assert
-    $result | Should -BeInLocation $location
+    Confirm-AzBPSynapseSqlPool @params | Should -BeInLocation $location
   }
 
   It "Should contain a SQL Pool named $sqlPoolName in $rgName" {
-    # Using custom assertion to check if the SQL Pool is in the correct resource group
+    #arrange
     $params = @{
       ResourceGroupName  = $rgName
       WorkspaceName      = $workSpaceName
@@ -280,10 +199,7 @@ Describe 'Verify Synapse Spark/SQL Pool' {
     }
 
     #act
-    $result = Confirm-AzBPSynapseSqlPool @params
-
-    #assert
-    $result | Should -BeInResourceGroup $rgName
+    Confirm-AzBPSynapseSqlPool @params | Should -BeInResourceGroup $rgName
   }
 }
 

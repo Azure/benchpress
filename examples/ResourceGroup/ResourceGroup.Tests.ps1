@@ -1,4 +1,4 @@
-BeforeAll {
+﻿BeforeAll {
   Import-Module Az.InfrastructureTesting
 
   $Script:rgName = 'rg-test'
@@ -17,11 +17,7 @@ Describe 'Verify Resource Group Exists' {
       ResourceName      = $rgName
     }
 
-    #act
-    $result = Confirm-AzBPResource @params
-
-    #assert
-    $result.Success | Should -Be $true
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
 
@@ -34,46 +30,22 @@ Describe 'Verify Resource Group Exists' {
       PropertyValue     = $rgName
     }
 
-    #act
-    $result = Confirm-AzBPResource @params
-
-    #assert
-    $result.Success | Should -Be $true
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain a Resource Group named $rgName" {
-    #act
-    $result = Confirm-AzBPResourceGroup -ResourceGroupName $rgName
-
-    #assert
-    $result.Success | Should -Be $true
+    Confirm-AzBPResourceGroup -ResourceGroupName $rgName | Should -BeSuccessful
   }
 
   It "Should not contain a Resource Group named $noRgName" {
-    #act
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
-    $result = Confirm-AzBPResourceGroup -ResourceGroupName $noRgName -ErrorAction SilentlyContinue
-
-    #assert
-    $result.Success | Should -Be $false
-  }
-
-  It "Should contain an Resource Group named $rgName" {
-    #act
-    $result = Confirm-AzBPResourceGroup -ResourceGroupName $rgName
-
-    #assert
-    $result | Should -BeDeployed
+    Confirm-AzBPResourceGroup -ResourceGroupName $noRgName -ErrorAction SilentlyContinue | Should -Not -BeSuccessful
   }
 
   It "Should contain an Resource Group named $rgName in $location" {
-    #act
-    $result = Confirm-AzBPResourceGroup -ResourceGroupName $rgName
-
-    #assert
-    $result | Should -BeInLocation $location
+    Confirm-AzBPResourceGroup -ResourceGroupName $rgName | Should -BeInLocation $location
   }
 }
 

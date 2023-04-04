@@ -1,4 +1,4 @@
-# INLINE_SKIP
+﻿# INLINE_SKIP
 using module ./../Classes/ConfirmResult.psm1
 using module ./../Classes/ResourceType.psm1
 
@@ -107,7 +107,19 @@ function Get-ResourceByType {
     [string]$AccountName,
 
     [Parameter(Mandatory = $false)]
-    [string]$ServiceName
+    [string]$ServicePrincipalId,
+
+    [Parameter(Mandatory = $false)]
+    [string]$Scope,
+
+    [Parameter(Mandatory = $false)]
+    [string]$RoleDefinitionName,
+
+    [Parameter(Mandatory = $false)]
+    [string]$ServiceName,
+
+    [Parameter(Mandatory = $false)]
+    [string]$JobName
   )
   Begin { }
   Process {
@@ -166,7 +178,7 @@ function Get-ResourceByType {
         return Confirm-ContainerRegistry -Name $ResourceName -ResourceGroupName $ResourceGroupName
       }
       "CosmosDBAccount" {
-        return Confirm-CosmosDBAccount -ResourceGroupName $ResourceGroupName -Name $AccountName
+        return Confirm-CosmosDBAccount -ResourceGroupName $ResourceGroupName -Name $ResourceName
       }
       "CosmosDBGremlinDatabase" {
         $params = @{
@@ -232,6 +244,14 @@ function Get-ResourceByType {
       "ResourceGroup" {
         return Confirm-ResourceGroup -ResourceGroupName $ResourceName
       }
+      "RoleAssignment" {
+        $params = @{
+          ServicePrincipalId   = $ServicePrincipalId
+          RoleDefinitionName   = $RoleDefinitionName
+          Scope                = $Scope
+        }
+        return Confirm-RoleAssignment @params
+      }
       "SqlDatabase" {
         $params = @{
           ServerName        = $ServerName
@@ -261,7 +281,7 @@ function Get-ResourceByType {
         $params = @{
           ResourceGroupName = $ResourceGroupName
           JobName = $JobName
-          Name = $Name
+          Name = $ResourceName
         }
         return Confirm-StreamAnalyticsFunction @params
       }
@@ -269,7 +289,7 @@ function Get-ResourceByType {
         $params = @{
           ResourceGroupName = $ResourceGroupName
           JobName = $JobName
-          Name = $Name
+          Name = $ResourceName
         }
         return Confirm-StreamAnalyticsInput @params
       }
@@ -280,7 +300,7 @@ function Get-ResourceByType {
         $params = @{
           ResourceGroupName = $ResourceGroupName
           JobName = $JobName
-          Name = $Name
+          Name = $ResourceName
         }
         return Confirm-StreamAnalyticsOutput @params
       }
@@ -288,7 +308,7 @@ function Get-ResourceByType {
         $params = @{
           ResourceGroupName = $ResourceGroupName
           JobName = $JobName
-          Name = $Name
+          Name = $ResourceName
         }
         return Confirm-StreamAnalyticsTransformation @params
       }

@@ -1,4 +1,4 @@
-BeforeAll {
+﻿BeforeAll {
   Import-Module Az.InfrastructureTesting
 
   $Script:rgName = 'rg-test'
@@ -20,10 +20,7 @@ Describe 'Verify Web App Exists' {
     }
 
     #act
-    $result = Confirm-AzBPResource @params
-
-    #assert
-    $result.Success | Should -Be $true
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain a Web App named $webappName - ConfirmAzBPResource" {
@@ -36,54 +33,28 @@ Describe 'Verify Web App Exists' {
       PropertyValue = $webappName
     }
 
-    #act
-    $result = Confirm-AzBPResource @params
-
-    #assert
-    $result.Success | Should -Be $true
+    #act and assert
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain a Web App named $webappName" {
-    #act
-    $result = Confirm-AzBPWebApp -ResourceGroupName $rgName -WebAppName $webappName
-
-    #assert
-    $result.Success | Should -Be $true
+    Confirm-AzBPWebApp -ResourceGroupName $rgName -WebAppName $webappName | Should -BeSuccessful
   }
 
   It "Should not contain a Web App named $noWebappName" {
-    #act
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
-    $result = Confirm-AzBPWebApp -ResourceGroupName $rgName -WebAppName $noWebappName -ErrorAction SilentlyContinue
-
-    #assert
-    $result.Success | Should -Be $false
-  }
-
-  It "Should contain a Web App named $webappName" {
-    #act
-    $result = Confirm-AzBPWebApp -ResourceGroupName $rgName -WebAppName $webappName
-
-    #assert
-    $result | Should -BeDeployed
+    Confirm-AzBPWebApp -ResourceGroupName $rgName -WebAppName $noWebappName -ErrorAction SilentlyContinue
+    | Should -Not -BeSuccessful
   }
 
   It "Should contain a Web App named $webappName in $location" {
-    #act
-    $result = Confirm-AzBPWebApp -ResourceGroupName $rgName -WebAppName $webappName
-
-    #assert
-    $result | Should -BeInLocation $location
+    Confirm-AzBPWebApp -ResourceGroupName $rgName -WebAppName $webappName | Should -BeInLocation $location
   }
 
   It "Should contain a Web App named $webappName in $rgName" {
-    #act
-    $result = Confirm-AzBPWebApp -ResourceGroupName $rgName -WebAppName $webappName
-
-    #assert
-    $result | Should -BeInResourceGroup $rgName
+    Confirm-AzBPWebApp -ResourceGroupName $rgName -WebAppName $webappName | Should -BeInResourceGroup $rgName
   }
 }
 
