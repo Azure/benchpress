@@ -12,6 +12,7 @@ Describe 'Verify Key Vault' {
     $Script:kvKeyName = 'samplekey'
     $Script:kvSecretName = 'samplesecret'
     $Script:kvCertificateName = 'samplecert'
+    $Script:kvAccessPolicyObjectId = 'svcprinoid'
   }
 
   It "Should contain a Key Vault named $kvName - Confirm-AzBPResource" {
@@ -27,14 +28,14 @@ Describe 'Verify Key Vault' {
   }
 
 
-  It "Should contain a Key Vault named $kvName - Confirm-AzBPResource" {
-    # arrange
+  It "Should contain a Key Vault with an Access Policy for $kvAccessPolicyObjectId" {
+    #arrange
     $params = @{
       ResourceType      = "KeyVault"
       ResourceGroupName = $rgName
       ResourceName      = $kvName
-      PropertyKey       = 'VaultName'
-      PropertyValue     = $kvName
+      PropertyKey       = 'AccessPolicies[0].ObjectId'
+      PropertyValue     = $kvAccessPolicyObjectId
     }
 
     # act and assert
