@@ -11,29 +11,29 @@ Describe 'Verify Web App Exists' {
     $Script:noWebAppName = 'noazbpwebapptest'
   }
 
-  It 'Should contain a Web App with the given name - Confirm-AzBPResource' {
-    #arrange
+  It "Should contain a Web App named $webappName - Confirm-AzBPResource" {
+    # arrange
     $params = @{
-      ResourceType = "WebApp"
+      ResourceType      = "WebApp"
       ResourceGroupName = $rgName
-      ResourceName = $webappName
+      ResourceName      = $webappName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain a Web App named $webappName - ConfirmAzBPResource" {
-    #arrange
+    # arrange
     $params = @{
-      ResourceType = "WebApp"
+      ResourceType      = "WebApp"
       ResourceGroupName = $rgName
-      ResourceName = $webappName
-      PropertyKey = 'Name'
-      PropertyValue = $webappName
+      ResourceName      = $webappName
+      PropertyKey       = 'Name'
+      PropertyValue     = $webappName
     }
 
-    #act and assert
+    # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
@@ -41,7 +41,7 @@ Describe 'Verify Web App Exists' {
     Confirm-AzBPWebApp -ResourceGroupName $rgName -WebAppName $webappName | Should -BeSuccessful
   }
 
-  It 'Should not contain a Web App with the given name' {
+  It "Should not contain a Web App named $noWebappName" {
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
@@ -53,7 +53,7 @@ Describe 'Verify Web App Exists' {
     Confirm-AzBPWebApp -ResourceGroupName $rgName -WebAppName $webappName | Should -BeInLocation $location
   }
 
-  It "Should be a Web App in a resource group named $rgName" {
+  It "Should contain a Web App named $webappName in $rgName" {
     Confirm-AzBPWebApp -ResourceGroupName $rgName -WebAppName $webappName | Should -BeInResourceGroup $rgName
   }
 }
