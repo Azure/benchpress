@@ -1,4 +1,4 @@
-# INLINE_SKIP
+﻿# INLINE_SKIP
 using module ./../Classes/ConfirmResult.psm1
 
 . $PSScriptRoot/../Private/Connect-Account.ps1
@@ -10,17 +10,17 @@ function Confirm-StorageContainer {
       Confirms that a Storage Container exists.
 
     .DESCRIPTION
-      The Confirm-AzBPStorageContainer cmdlet gets a Storage Container using the specified Storage Account, Container
-      and Resource Group name.
+      The Confirm-AzBPStorageContainer cmdlet gets a Storage Container using the specified Storage Account, Container,
+      and Resource Group names.
 
     .PARAMETER Name
-      The name of the Storage Container
+      The name of the Storage Container.
 
     .PARAMETER AccountName
-      The name of the Storage Account
+      The name of the Storage Account.
 
     .PARAMETER ResourceGroupName
-      The name of the Resource Group
+      The name of the Resource Group. The name is case insensitive.
 
     .EXAMPLE
       Confirm-AzBPStorageContainer -Name "teststgcontainer" -AccountName "teststgacct" -ResourceGroupName "rg-test"
@@ -44,13 +44,13 @@ function Confirm-StorageContainer {
     [string]$ResourceGroupName
   )
   Begin {
-    $ConnectResults = Connect-Account
+    $connectResults = Connect-Account
   }
   Process {
-      $Resource = Get-AzStorageAccount -ResourceGroupName $ResourceGroupName -AccountName $AccountName `
-       | Get-AzStorageContainer -Name $Name
+      $resource = Get-AzStorageAccount -ResourceGroupName $ResourceGroupName -AccountName $AccountName
+      | Get-AzStorageContainer -Name $Name
 
-      [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+      [ConfirmResult]::new($resource, $connectResults.AuthenticationData)
   }
   End { }
 }

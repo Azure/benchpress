@@ -38,32 +38,55 @@ function Get-ResourceByType {
       Container Registry, etc.).
 
     .PARAMETER ResourceName
-      The name of the Resource
+      The name of the Resource.
 
     .PARAMETER ResourceGroupName
-      The name of the Resource Group
+      The name of the Resource Group. The name is case insensitive.
 
     .PARAMETER ResourceType
       The type of the Resource.
 
     .PARAMETER ServerName
-      If testing an Azure SQL Database resource, the name of the server to which the database is assigned.
+      If testing an Azure SQL Database resource, the name of the Server to which the Database is assigned.
 
     .PARAMETER DataFactoryName
-      If testing an Azure Data Factory Linked Service resource, the name of the data factory to which the linked
-      service is assigned.
+      If testing an Azure Data Factory Linked Service resource, the name of the Data Factory to which the Linked
+      Service is assigned.
+
+    .PARAMETER NamespaceName
+      If testing an Azure resource that is associated with a Namespace (e.g., Event Hub), the name of the associated
+      Namespace.
+
+    .PARAMETER EventHubName
+      If testing a component of Event Hub (e.g., Consumer Group), the name of the Event Hub to which the component
+      is assigned.
 
     .PARAMETER WorkspaceName
-      If testing a resource that belongs to some sort of Azure workspace (i.e. SQL pool in a Synapse workspace),
-      the name of the workspace to which the resource is assigned.
+      If testing an Azure resource that belongs to some sort of Azure Workspace (e.g., SQL Pool in a Synapse
+      Workspace), the name of the Workspace to which the resource is assigned.
 
     .PARAMETER AccountName
-      If the Azure resource has an associated account name (e.g., Cosmos DB SQL Database, Storage Container) this is
-      the parameter to use to pass the account name.
+      If testing an Azure resource that is associated with an Account (e.g., Cosmos DB SQL Database,
+      Storage Container), the name of the associated Account.
+
+    .PARAMETER ServicePrincipalId
+      If testing an Azure Role Assignment, the Application ID of the Service Principal.
+
+    .PARAMETER Scope
+      If testing an Azure Role Assignment, the Scope of the Role Assignment (e.g.,
+      /subscriptions/{id}/resourceGroups/{resourceGroupName}).
+      It must start with "/subscriptions/{id}".
+
+    .PARAMETER RoleDefinitionName
+      If testing an Azure Role Assignment, the name of the Role Definition (e.g., Reader, Contributor etc.).
 
     .PARAMETER ServiceName
-      If the Azure resource is associated with a service (e.g, API Management Service) this is the parameter to use to
-      pass the service name.
+      If testing an Azure resource that is associated with a Service (e.g., API Management Service), the name of
+      the associated Service.
+
+    .PARAMETER JobName
+      If testing an Azure resource that is associated with a Job (e.g., Stream Analytics Output), the name of
+      the associated Job.
 
     .EXAMPLE
       Get-AzBPResourceByType -ResourceType ActionGroup -ResourceName "bpactiongroup" -ResourceGroupName "rgbenchpresstest"
@@ -137,32 +160,32 @@ function Get-ResourceByType {
       "ApiManagementApi" {
         $params = @{
           ResourceGroupName = $ResourceGroupName
-          ServiceName = $ServiceName
-          Name = $ResourceName
+          ServiceName       = $ServiceName
+          Name              = $ResourceName
         }
         return Confirm-ApiManagementApi @params
       }
       "ApiManagementDiagnostic" {
         $params = @{
           ResourceGroupName = $ResourceGroupName
-          ServiceName = $ServiceName
-          Name = $ResourceName
+          ServiceName       = $ServiceName
+          Name              = $ResourceName
         }
         return Confirm-ApiManagementDiagnostic @params
       }
       "ApiManagementLogger" {
         $params = @{
           ResourceGroupName = $ResourceGroupName
-          ServiceName = $ServiceName
-          Name = $ResourceName
+          ServiceName       = $ServiceName
+          Name              = $ResourceName
         }
         return Confirm-ApiManagementLogger @params
       }
       "ApiManagementPolicy" {
         $params = @{
           ResourceGroupName = $ResourceGroupName
-          ServiceName = $ServiceName
-          ApiId = $ResourceName
+          ServiceName       = $ServiceName
+          ApiId             = $ResourceName
         }
         return Confirm-ApiManagementPolicy @params
       }
@@ -284,16 +307,16 @@ function Get-ResourceByType {
       "StreamAnalyticsFunction" {
         $params = @{
           ResourceGroupName = $ResourceGroupName
-          JobName = $JobName
-          Name = $ResourceName
+          JobName           = $JobName
+          Name              = $ResourceName
         }
         return Confirm-StreamAnalyticsFunction @params
       }
       "StreamAnalyticsInput" {
         $params = @{
           ResourceGroupName = $ResourceGroupName
-          JobName = $JobName
-          Name = $ResourceName
+          JobName           = $JobName
+          Name              = $ResourceName
         }
         return Confirm-StreamAnalyticsInput @params
       }
@@ -303,16 +326,16 @@ function Get-ResourceByType {
       "StreamAnalyticsOutput" {
         $params = @{
           ResourceGroupName = $ResourceGroupName
-          JobName = $JobName
-          Name = $ResourceName
+          JobName           = $JobName
+          Name              = $ResourceName
         }
         return Confirm-StreamAnalyticsOutput @params
       }
       "StreamAnalyticsTransformation" {
         $params = @{
           ResourceGroupName = $ResourceGroupName
-          JobName = $JobName
-          Name = $ResourceName
+          JobName           = $JobName
+          Name              = $ResourceName
         }
         return Confirm-StreamAnalyticsTransformation @params
       }

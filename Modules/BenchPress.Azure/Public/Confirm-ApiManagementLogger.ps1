@@ -1,4 +1,4 @@
-# INLINE_SKIP
+﻿# INLINE_SKIP
 using module ./../Classes/ConfirmResult.psm1
 
 . $PSScriptRoot/../Private/Connect-Account.ps1
@@ -14,13 +14,13 @@ function Confirm-ApiManagementLogger {
       Management Service, and Resource Group names.
 
     .PARAMETER ResourceGroupName
-      Specifies the name of the resource group under which an API Management service is deployed.
+      The name of the Resource Group. The name is case insensitive.
 
     .PARAMETER ServiceName
-      Specifies the name of the deployed API Management service.
+      The name of the API Management Service.
 
     .PARAMETER Name
-      Specifies the ID of the specific logger to get.
+      The ID of the Logger.
 
     .EXAMPLE
       Confirm-AzBPApiManagementLogger -ResourceGroupName "rgbenchpresstest" -ServiceName "servicetest" `
@@ -45,14 +45,14 @@ function Confirm-ApiManagementLogger {
     [string]$Name
   )
   Begin {
-    $ConnectResults = Connect-Account
+    $connectResults = Connect-Account
   }
   Process {
-    # Unlike the other Get-AzApiManagement* cmdlets Get-AzApiManagementLogger does not accept piping of the context
-    $Context = New-AzApiManagementContext -ResourceGroupName $ResourceGroupName -ServiceName $ServiceName
-    $Resource = Get-AzApiManagementLogger -Context $Context -LoggerId $Name
+    # Unlike the other Get-AzApiManagement* cmdlets, Get-AzApiManagementLogger does not accept piping of the context
+    $context = New-AzApiManagementContext -ResourceGroupName $ResourceGroupName -ServiceName $ServiceName
+    $resource = Get-AzApiManagementLogger -Context $context -LoggerId $Name
 
-    [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+    [ConfirmResult]::new($resource, $connectResults.AuthenticationData)
   }
   End { }
 }

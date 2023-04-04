@@ -8,10 +8,10 @@ Describe "Confirm-ResourceGroup" {
   Context "unit tests" -Tag "Unit" {
     BeforeEach {
       Mock Connect-Account{}
+      Mock Get-AzResourceGroup{}
     }
 
     It "Calls Get-AzResourceGroup" {
-      Mock Get-AzResourceGroup{}
       Confirm-ResourceGroup -ResourceGroupName "rgn"
       Should -Invoke -CommandName "Get-AzResourceGroup" -Times 1
     }

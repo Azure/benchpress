@@ -1,4 +1,4 @@
-# INLINE_SKIP
+﻿# INLINE_SKIP
 using module ./../Classes/ConfirmResult.psm1
 
 . $PSScriptRoot/../Private/Connect-Account.ps1
@@ -14,10 +14,10 @@ function Confirm-KeyVaultCertificate {
       Certificate name.
 
     .PARAMETER Name
-      The name of the Certificate
+      The name of the Certificate.
 
     .PARAMETER KeyVaultName
-      The name of the Key Vault
+      The name of the Key Vault.
 
     .EXAMPLE
       Confirm-AzBPKeyVaultCertificate -Name "benchpresstest" -KeyVaultName "kvbenchpresstest"
@@ -38,12 +38,12 @@ function Confirm-KeyVaultCertificate {
     [string]$KeyVaultName
   )
   Begin {
-    $ConnectResults = Connect-Account
+    $connectResults = Connect-Account
   }
   Process {
-    $Resource = Get-AzKeyVaultCertificate -Name $Name -VaultName $KeyVaultName
+    $resource = Get-AzKeyVaultCertificate -Name $Name -VaultName $KeyVaultName
 
-    [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+    [ConfirmResult]::new($resource, $connectResults.AuthenticationData)
   }
   End { }
 }

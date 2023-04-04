@@ -1,4 +1,4 @@
-# INLINE_SKIP
+﻿# INLINE_SKIP
 using module ./../Classes/ConfirmResult.psm1
 
 . $PSScriptRoot/../Private/Connect-Account.ps1
@@ -11,13 +11,13 @@ function Confirm-ContainerRegistry {
 
     .DESCRIPTION
       The Confirm-AzBPContainerRegistry cmdlet gets a Container Registry using the specified Container Registry and
-      Resource Group name.
+      Resource Group names.
 
     .PARAMETER Name
-      The name of the Container Registry
+      The name of the Container Registry.
 
     .PARAMETER ResourceGroupName
-      The name of the Resource Group
+      The name of the Resource Group. The name is case insensitive.
 
     .EXAMPLE
       Confirm-AzBPContainerRegistry -Name "benchpresstest" -ResourceGroupName "rgbenchpresstest"
@@ -38,12 +38,12 @@ function Confirm-ContainerRegistry {
     [string]$ResourceGroupName
   )
   Begin {
-    $ConnectResults = Connect-Account
+    $connectResults = Connect-Account
   }
   Process {
-    $Resource = Get-AzContainerRegistry -ResourceGroupName $ResourceGroupName -Name $Name
+    $resource = Get-AzContainerRegistry -ResourceGroupName $ResourceGroupName -Name $Name
 
-    [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+    [ConfirmResult]::new($resource, $connectResults.AuthenticationData)
   }
   End { }
 }

@@ -1,4 +1,4 @@
-# INLINE_SKIP
+﻿# INLINE_SKIP
 using module ./../Classes/ConfirmResult.psm1
 
 . $PSScriptRoot/../Private/Connect-Account.ps1
@@ -10,14 +10,14 @@ function Confirm-StreamAnalyticsCluster {
       Confirms that a Stream Analytics cluster exists.
 
     .DESCRIPTION
-      The Confirm-AzBPStreamAnalyticsCluster cmdlet gets a Stream Analytics cluster using the specified Cluster and
-      Resource Group name.
+      The Confirm-AzBPStreamAnalyticsCluster cmdlet gets a Stream Analytics Cluster using the specified Cluster and
+      Resource Group names.
 
     .PARAMETER Name
-      The name of the Stream Analytics Cluster
+      The name of the Stream Analytics Cluster.
 
     .PARAMETER ResourceGroupName
-      The name of the Resource Group
+      The name of the Resource Group. The name is case insensitive.
 
     .EXAMPLE
       Confirm-AzBPStreamAnalyticsCluster -Name "benchpresstest" -ResourceGroupName "rgbenchpresstest"
@@ -38,12 +38,12 @@ function Confirm-StreamAnalyticsCluster {
     [string]$ResourceGroupName
   )
   Begin {
-    $ConnectResults = Connect-Account
+    $connectResults = Connect-Account
   }
   Process {
-    $Resource = Get-AzStreamAnalyticsCluster -ResourceGroupName $ResourceGroupName -Name $Name
+    $resource = Get-AzStreamAnalyticsCluster -ResourceGroupName $ResourceGroupName -Name $Name
 
-    [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+    [ConfirmResult]::new($resource, $connectResults.AuthenticationData)
   }
   End { }
 }
