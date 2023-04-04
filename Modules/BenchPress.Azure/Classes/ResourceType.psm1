@@ -40,4 +40,5 @@
   SynapseWorkspace
   VirtualMachine
   WebApp
+  WebAppStaticSite
 }

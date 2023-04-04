@@ -57,6 +57,7 @@
     "Confirm-SynapseWorkspace",
     "Confirm-VirtualMachine",
     "Confirm-WebApp",
+    "Confirm-WebAppStaticSite",
     "Deploy-BicepFeature",
     "Get-Resource",
     "Get-ResourceByType",
