@@ -104,12 +104,12 @@ Describe 'Verify Container Application Managed Environment' {
 
   It "Should contain a Container Application named $managedEnvName in $location" {
     Confirm-AzBPContainerAppManagedEnv -ResourceGroupName $rgName -Name $managedEnvName
-      | Should -BeInLocation $location
+    | Should -BeInLocation $location
   }
 
   It "Should contain a Container Application named $managedEnvName in $rgName" {
     Confirm-AzBPContainerAppManagedEnv -ResourceGroupName $rgName -Name $managedEnvName
-      | Should -BeInResourceGroup $rgName
+    | Should -BeInResourceGroup $rgName
   }
 }
 
