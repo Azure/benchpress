@@ -14,7 +14,7 @@ function Confirm-ContainerAppManagedEnv {
       and Resource Group names.
 
     .PARAMETER ResourceGroupName
-      The name of the resource group. The name is case insensitive.
+      The name of the Resource Group. The name is case insensitive.
 
     .PARAMETER Name
       The name of the Environment.
