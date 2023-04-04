@@ -18,7 +18,7 @@ Confirm-AzBPStorageAccount [-Name] <String> [-ResourceGroupName] <String> [<Comm
 
 ## DESCRIPTION
 The Confirm-AzBPStorageAccount cmdlet gets a Storage Account using the specified Storage Account and
-Resource Group name.
+Resource Group names.
 
 ## EXAMPLES
 
@@ -30,7 +30,7 @@ Confirm-AzBPStorageAccount -Name "teststorageaccount" -ResourceGroupName "rgbenc
 ## PARAMETERS
 
 ### -Name
-The name of the Storage Account
+The name of the Storage Account.
 
 ```yaml
 Type: String
@@ -45,7 +45,8 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceGroupName
-The name of the Resource Group
+The name of the Resource Group.
+The name is case insensitive.
 
 ```yaml
 Type: String

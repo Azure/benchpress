@@ -18,7 +18,7 @@ Confirm-AzBPSqlServer [-ServerName] <String> [-ResourceGroupName] <String> [<Com
 
 ## DESCRIPTION
 The Confirm-AzBPSqlServer cmdlet gets a SQL Server using the specified SQL Server and
-Resource Group name.
+Resource Group names.
 
 ## EXAMPLES
 
@@ -30,7 +30,7 @@ Confirm-AzBPSqlServer -ServerName "testserver" -ResourceGroupName "rgbenchpresst
 ## PARAMETERS
 
 ### -ServerName
-The name of the SQL Server
+The name of the SQL Server.
 
 ```yaml
 Type: String
@@ -45,7 +45,8 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceGroupName
-The name of the Resource Group
+The name of the Resource Group.
+The name is case insensitive.
 
 ```yaml
 Type: String

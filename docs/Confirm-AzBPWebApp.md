@@ -17,8 +17,7 @@ Confirm-AzBPWebApp [-WebAppName] <String> [-ResourceGroupName] <String> [<Common
 ```
 
 ## DESCRIPTION
-The Confirm-AzBPWebApp cmdlet gets a Web App using the specified Web App and
-Resource Group name.
+The Confirm-AzBPWebApp cmdlet gets a Web App using the specified Web App and Resource Group names.
 
 ## EXAMPLES
 
@@ -30,7 +29,7 @@ Confirm-AzBPWebApp -WebAppName "benchpresstest" -ResourceGroupName "rgbenchpress
 ## PARAMETERS
 
 ### -WebAppName
-The name of the Web App
+The name of the Web App.
 
 ```yaml
 Type: String
@@ -45,7 +44,8 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceGroupName
-The name of the Resource Group
+The name of the Resource Group.
+The name is case insensitive.
 
 ```yaml
 Type: String

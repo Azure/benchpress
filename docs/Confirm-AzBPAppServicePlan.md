@@ -18,7 +18,7 @@ Confirm-AzBPAppServicePlan [-AppServicePlanName] <String> [-ResourceGroupName] <
 
 ## DESCRIPTION
 The Confirm-AzBPAppServicePlan cmdlet gets an App Service Plan using the specified App Service Plan and
-Resource Group name.
+Resource Group names.
 
 ## EXAMPLES
 
@@ -30,7 +30,7 @@ Confirm-AzBPAppServicePlan -AppServicePlanName "benchpresstest" -ResourceGroupNa
 ## PARAMETERS
 
 ### -AppServicePlanName
-The name of the App Service Plan
+The name of the App Service Plan.
 
 ```yaml
 Type: String
@@ -45,7 +45,8 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceGroupName
-The name of the Resource Group
+The name of the Resource Group.
+The name is case insensitive.
 
 ```yaml
 Type: String

@@ -18,8 +18,8 @@ Confirm-AzBPEventHubConsumerGroup [-Name] <String> [-NamespaceName] <String> [-E
 ```
 
 ## DESCRIPTION
-The Confirm-AzBPEventHubConsumerGroup cmdlet gets an EventHub ConsumerGroup using the specified EventHub ConsumerGroup name,
-EventHub Namespace name, Eventhub name and Resource Group name.
+The Confirm-AzBPEventHubConsumerGroup cmdlet gets an Event Hub Consumer Group using the specified Event Hub
+Consumer Group, Event Hub Namespace, Event Hub, and Resource Group names.
 
 ## EXAMPLES
 
@@ -31,7 +31,7 @@ Confirm-AzBPEventHubConsumerGroup -Name 'consumergrouptest' -NamespaceName 'bpev
 ## PARAMETERS
 
 ### -Name
-The name of the EventHub ConsumerGroup
+The name of the Event Hub Consumer Group.
 
 ```yaml
 Type: String
@@ -46,7 +46,7 @@ Accept wildcard characters: False
 ```
 
 ### -NamespaceName
-The name of the EventHub Namespace
+The name of the Event Hub Namespace.
 
 ```yaml
 Type: String
@@ -61,7 +61,7 @@ Accept wildcard characters: False
 ```
 
 ### -EventHubName
-The name of the EventHub
+The name of the Event Hub.
 
 ```yaml
 Type: String
@@ -76,7 +76,8 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceGroupName
-The name of the Resource Group
+The name of the Resource Group.
+The name is case insensitive.
 
 ```yaml
 Type: String

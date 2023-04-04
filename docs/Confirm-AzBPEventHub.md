@@ -8,7 +8,7 @@ schema: 2.0.0
 # Confirm-AzBPEventHub
 
 ## SYNOPSIS
-Confirms that an EventHub exists.
+Confirms that an Event Hub exists.
 
 ## SYNTAX
 
@@ -18,8 +18,8 @@ Confirm-AzBPEventHub [-Name] <String> [-NamespaceName] <String> [-ResourceGroupN
 ```
 
 ## DESCRIPTION
-The Confirm-AzBPEventHub cmdlet gets an EventHub using the specified EventHub name, EventHub Namespace,
-and Resource Group name.
+The Confirm-AzBPEventHub cmdlet gets an Event Hub using the specified Event Hub, Event Hub Namespace,
+and Resource Group names.
 
 ## EXAMPLES
 
@@ -31,7 +31,7 @@ Confirm-AzBPEventHub -Name "bpeventhub" -NamespaceName 'bpeventhubnamespace' -Re
 ## PARAMETERS
 
 ### -Name
-The name of the EventHub
+The name of the Event Hub.
 
 ```yaml
 Type: String
@@ -46,7 +46,7 @@ Accept wildcard characters: False
 ```
 
 ### -NamespaceName
-The name of the EventHub Namespace
+The name of the Event Hub Namespace.
 
 ```yaml
 Type: String
@@ -61,7 +61,8 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceGroupName
-The name of the Resource Group
+The name of the Resource Group.
+The name is case insensitive.
 
 ```yaml
 Type: String

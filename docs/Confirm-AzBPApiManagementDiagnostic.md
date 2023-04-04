@@ -32,7 +32,8 @@ Confirm-AzBPApiManagementDiagnostic -ResourceGroupName "rgbenchpresstest" -Servi
 ## PARAMETERS
 
 ### -ResourceGroupName
-Specifies the name of the resource group under which an API Management service is deployed.
+The name of the Resource Group.
+The name is case insensitive.
 
 ```yaml
 Type: String
@@ -47,7 +48,7 @@ Accept wildcard characters: False
 ```
 
 ### -ServiceName
-Specifies the name of the deployed API Management service.
+The name of the API Management Service.
 
 ```yaml
 Type: String
@@ -62,9 +63,9 @@ Accept wildcard characters: False
 ```
 
 ### -Name
-Identifier of existing diagnostic.
+The ID of the Diagnostic.
 This will return product-scope policy.
-This parameters is required.
+This parameter is required.
 
 ```yaml
 Type: String

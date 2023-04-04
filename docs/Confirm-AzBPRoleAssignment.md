@@ -18,8 +18,8 @@ Confirm-AzBPRoleAssignment [-RoleDefinitionName] <String> [-ServicePrincipalId] 
 ```
 
 ## DESCRIPTION
-The Confirm-AzBPRoleAssignment cmdlet gets a Role Assignment using the specified Service Prinicpal, Scope
-and Role Assignment name.
+The Confirm-AzBPRoleAssignment cmdlet gets a Role Assignment using the specified Service Prinicpal, Scope,
+and Role Assignment names.
 
 ## EXAMPLES
 
@@ -32,7 +32,7 @@ Confirm-AzBPRoleAssignment -RoleDefinitionName Reader -ServicePrincipalName test
 ## PARAMETERS
 
 ### -RoleDefinitionName
-The name of the role definition i.e.
+The name of the Role Definition i.e.
 Reader, Contributor etc.
 
 ```yaml
@@ -48,7 +48,7 @@ Accept wildcard characters: False
 ```
 
 ### -ServicePrincipalId
-The service principal app id
+The Application ID of the Service Principal.
 
 ```yaml
 Type: String
@@ -63,7 +63,7 @@ Accept wildcard characters: False
 ```
 
 ### -Scope
-The scope of the role assignment.
+The Scope of the Role Assignment.
 In the format of relative URI.
 For e.g.
 /subscriptions/{id}/resourceGroups/{resourceGroupName}.

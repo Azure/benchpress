@@ -17,8 +17,7 @@ Confirm-AzBPKeyVaultKey [-Name] <String> [-KeyVaultName] <String> [<CommonParame
 ```
 
 ## DESCRIPTION
-The Confirm-AzBPKeyVaultKey cmdlet gets a Key Vault Key using the specified Key Vault and
-Key name.
+The Confirm-AzBPKeyVaultKey cmdlet gets a Key Vault Key using the specified Key Vault and Key name.
 
 ## EXAMPLES
 
@@ -30,7 +29,7 @@ Confirm-AzBPKeyVaultKey -Name "benchpresstest" -KeyVaultName "kvbenchpresstest"
 ## PARAMETERS
 
 ### -Name
-The name of the Key
+The name of the Key.
 
 ```yaml
 Type: String
@@ -45,7 +44,7 @@ Accept wildcard characters: False
 ```
 
 ### -KeyVaultName
-The name of the Key Vault
+The name of the Key Vault.
 
 ```yaml
 Type: String

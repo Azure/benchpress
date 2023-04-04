@@ -17,8 +17,7 @@ Confirm-AzBPResourceGroup [-ResourceGroupName] <String> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-The Confirm-AzBPResourceGroup cmdlet gets a Resource Group using the specified Resource Group and
-Resource Group name.
+The Confirm-AzBPResourceGroup cmdlet gets a Resource Group using the specified Resource Group name.
 
 ## EXAMPLES
 
@@ -30,7 +29,8 @@ Confirm-AzBPResourceGroup -ResourceGroupName "rgbenchpresstest"
 ## PARAMETERS
 
 ### -ResourceGroupName
-The name of the Resource Group
+The name of the Resource Group.
+The name is case insensitive.
 
 ```yaml
 Type: String

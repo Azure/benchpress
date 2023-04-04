@@ -18,7 +18,7 @@ Confirm-AzBPContainerApp [-Name] <String> [-ResourceGroupName] <String> [<Common
 
 ## DESCRIPTION
 The Confirm-AzBPContainerApp cmdlet gets a Container Application using the specified Container Application and
-Resource Group name.
+Resource Group names.
 
 ## EXAMPLES
 
@@ -30,7 +30,7 @@ Confirm-AzBPContainerApp -Name "benchpresstest" -ResourceGroupName "rgbenchpress
 ## PARAMETERS
 
 ### -Name
-The name of the Container Application
+The name of the Container Application.
 
 ```yaml
 Type: String
@@ -45,7 +45,8 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceGroupName
-The name of the Resource Group
+The name of the Resource Group.
+The name is case insensitive.
 
 ```yaml
 Type: String

@@ -17,8 +17,8 @@ Confirm-AzBPCosmosDBAccount [-ResourceGroupName] <String> [-Name] <String> [<Com
 ```
 
 ## DESCRIPTION
-The Confirm-AzBPCosmosDBAccount cmdlet gets Cosmos DB Account given the Resource Group Name and the name of the
-Cosmos DB Account.
+The Confirm-AzBPCosmosDBAccount cmdlet gets a Cosmos DB Account using the specified Resource Group and Cosmos DB
+Account names.
 
 ## EXAMPLES
 
@@ -31,6 +31,7 @@ Confirm-AzBPCosmosDBAccount -Name "benchpresstest" -ResourceGroupName "rgbenchpr
 
 ### -ResourceGroupName
 The name of the Resource Group.
+The name is case insensitive.
 
 ```yaml
 Type: String
@@ -45,7 +46,7 @@ Accept wildcard characters: False
 ```
 
 ### -Name
-The Cosmos DB account name.
+The name of the Cosmos DB Account.
 
 ```yaml
 Type: String

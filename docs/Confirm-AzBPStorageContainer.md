@@ -18,8 +18,8 @@ Confirm-AzBPStorageContainer [-Name] <String> [-AccountName] <String> [-Resource
 ```
 
 ## DESCRIPTION
-The Confirm-AzBPStorageContainer cmdlet gets a Storage Container using the specified Storage Account, Container
-and Resource Group name.
+The Confirm-AzBPStorageContainer cmdlet gets a Storage Container using the specified Storage Account, Container,
+and Resource Group names.
 
 ## EXAMPLES
 
@@ -31,7 +31,7 @@ Confirm-AzBPStorageContainer -Name "teststgcontainer" -AccountName "teststgacct"
 ## PARAMETERS
 
 ### -Name
-The name of the Storage Container
+The name of the Storage Container.
 
 ```yaml
 Type: String
@@ -46,7 +46,7 @@ Accept wildcard characters: False
 ```
 
 ### -AccountName
-The name of the Storage Account
+The name of the Storage Account.
 
 ```yaml
 Type: String
@@ -61,7 +61,8 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceGroupName
-The name of the Resource Group
+The name of the Resource Group.
+The name is case insensitive.
 
 ```yaml
 Type: String

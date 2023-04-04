@@ -32,7 +32,8 @@ Confirm-AzBPApiManagementPolicy -ResourceGroupName "rgbenchpresstest" -ServiceNa
 ## PARAMETERS
 
 ### -ResourceGroupName
-Specifies the name of the resource group under which an API Management service is deployed.
+The name of the Resource Group.
+The name is case insensitive.
 
 ```yaml
 Type: String
@@ -47,7 +48,7 @@ Accept wildcard characters: False
 ```
 
 ### -ServiceName
-Specifies the name of the deployed API Management service.
+The name of the API Management Service.
 
 ```yaml
 Type: String
@@ -62,7 +63,7 @@ Accept wildcard characters: False
 ```
 
 ### -ApiId
-Specifies the identifier of the existing API.
+The ID of the API.
 This cmdlet returns the API-scope policy.
 
 ```yaml

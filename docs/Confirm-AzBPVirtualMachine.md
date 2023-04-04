@@ -18,7 +18,7 @@ Confirm-AzBPVirtualMachine [-VirtualMachineName] <String> [-ResourceGroupName] <
 
 ## DESCRIPTION
 The Confirm-AzBPVirtualMachine cmdlet gets a Virtual Machine using the specified Virtual Machine and
-Resource Group name.
+Resource Group names.
 
 ## EXAMPLES
 
@@ -30,7 +30,7 @@ Confirm-AzBPVirtualMachine -VirtualMachineName "benchpresstest" -ResourceGroupNa
 ## PARAMETERS
 
 ### -VirtualMachineName
-The name of the Virtual Machine
+The name of the Virtual Machine.
 
 ```yaml
 Type: String
@@ -45,7 +45,8 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceGroupName
-The name of the Resource Group
+The name of the Resource Group.
+The name is case insensitive.
 
 ```yaml
 Type: String

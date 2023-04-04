@@ -17,8 +17,8 @@ Confirm-AzBPDataFactory [-Name] <String> [-ResourceGroupName] <String> [<CommonP
 ```
 
 ## DESCRIPTION
-The Confirm-AzBPDataFactory cmdlet gets a data factory using the specified Data Factory and
-Resource Group name.
+The Confirm-AzBPDataFactory cmdlet gets a Data Factory using the specified Data Factory and
+Resource Group names.
 
 ## EXAMPLES
 
@@ -30,7 +30,7 @@ Confirm-AzBPDataFactory -Name "benchpresstest" -ResourceGroupName "rgbenchpresst
 ## PARAMETERS
 
 ### -Name
-The name of the Data Factory
+The name of the Data Factory.
 
 ```yaml
 Type: String
@@ -45,7 +45,8 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceGroupName
-The name of the Resource Group
+The name of the Resource Group.
+The name is case insensitive.
 
 ```yaml
 Type: String

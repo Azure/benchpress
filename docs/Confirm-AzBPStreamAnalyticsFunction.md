@@ -19,7 +19,7 @@ Confirm-AzBPStreamAnalyticsFunction [-ResourceGroupName] <String> [-JobName] <St
 
 ## DESCRIPTION
 The Confirm-AzBPStreamAnalyticsFunction cmdlet gets a Stream Analytics Function using the specified Resource
-Group, the name of the Job executing the Function, and the name of the Function.
+Group, the Job executing the Function, and the Function names.
 
 ## EXAMPLES
 
@@ -31,7 +31,7 @@ Confirm-AzBPStreamAnalyticsFunction -ResourceGroupName "rgbenchpresstest" -JobNa
 ## PARAMETERS
 
 ### -ResourceGroupName
-The name of the resource group.
+The name of the Resource Group.
 The name is case insensitive.
 
 ```yaml
@@ -47,7 +47,7 @@ Accept wildcard characters: False
 ```
 
 ### -JobName
-The name of the streaming job.
+The name of the Streaming Job.
 
 ```yaml
 Type: String
@@ -62,7 +62,7 @@ Accept wildcard characters: False
 ```
 
 ### -Name
-The name of the function.
+The name of the Function.
 
 ```yaml
 Type: String

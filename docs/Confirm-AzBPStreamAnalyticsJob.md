@@ -18,7 +18,7 @@ Confirm-AzBPStreamAnalyticsJob [-ResourceGroupName] <String> [-Name] <String> [<
 
 ## DESCRIPTION
 The Confirm-AzBPStreamAnalyticsJob cmdlet gets a Stream Analytics Job using the specified Resource Group and
-Stream Analytics job name.
+Stream Analytics Job names.
 
 ## EXAMPLES
 
@@ -30,7 +30,7 @@ Confirm-AzBPStreamAnalyticsCluster -ResourceGroupName "rgbenchpresstest" -Name "
 ## PARAMETERS
 
 ### -ResourceGroupName
-The name of the resource group.
+The name of the Resource Group.
 The name is case insensitive.
 
 ```yaml
@@ -46,7 +46,7 @@ Accept wildcard characters: False
 ```
 
 ### -Name
-The name of the Stream Analytics job.
+The name of the Stream Analytics Job.
 
 ```yaml
 Type: String

@@ -18,7 +18,7 @@ Confirm-AzBPContainerRegistry [-Name] <String> [-ResourceGroupName] <String> [<C
 
 ## DESCRIPTION
 The Confirm-AzBPContainerRegistry cmdlet gets a Container Registry using the specified Container Registry and
-Resource Group name.
+Resource Group names.
 
 ## EXAMPLES
 
@@ -30,7 +30,7 @@ Confirm-AzBPContainerRegistry -Name "benchpresstest" -ResourceGroupName "rgbench
 ## PARAMETERS
 
 ### -Name
-The name of the Container Registry
+The name of the Container Registry.
 
 ```yaml
 Type: String
@@ -45,7 +45,8 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceGroupName
-The name of the Resource Group
+The name of the Resource Group.
+The name is case insensitive.
 
 ```yaml
 Type: String

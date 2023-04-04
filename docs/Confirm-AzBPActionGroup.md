@@ -17,7 +17,7 @@ Confirm-AzBPActionGroup [-ActionGroupName] <String> [-ResourceGroupName] <String
 ```
 
 ## DESCRIPTION
-The Confirm-AzBPActionGroup cmdlet gets an action group using the specified Action Group and Resource Group name.
+The Confirm-AzBPActionGroup cmdlet gets an Action Group using the specified Action Group and Resource Group names.
 
 ## EXAMPLES
 
@@ -29,7 +29,7 @@ Confirm-AzBPActionGroup -ActionGroupName "benchpresstest" -ResourceGroupName "rg
 ## PARAMETERS
 
 ### -ActionGroupName
-The name of the Azure Action Group
+The name of the Azure Action Group.
 
 ```yaml
 Type: String
@@ -44,7 +44,8 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceGroupName
-The name of the Resource Group
+The name of the Resource Group.
+The name is case insensitive.
 
 ```yaml
 Type: String

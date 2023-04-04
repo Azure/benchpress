@@ -30,7 +30,7 @@ Confirm-AzBPKeyVaultCertificate -Name "benchpresstest" -KeyVaultName "kvbenchpre
 ## PARAMETERS
 
 ### -Name
-The name of the Certificate
+The name of the Certificate.
 
 ```yaml
 Type: String
@@ -45,7 +45,7 @@ Accept wildcard characters: False
 ```
 
 ### -KeyVaultName
-The name of the Key Vault
+The name of the Key Vault.
 
 ```yaml
 Type: String

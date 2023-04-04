@@ -19,7 +19,7 @@ Confirm-AzBPStreamAnalyticsInput [-ResourceGroupName] <String> [-JobName] <Strin
 
 ## DESCRIPTION
 The Confirm-AzBPStreamAnalyticsInput cmdlet gets a Stream Analytics Input using the specified Resource Group, the
-name of the Job with the Input, and the name of the Input.
+Job with the Input, and the Input names.
 
 ## EXAMPLES
 
@@ -31,7 +31,7 @@ Confirm-AzBPStreamAnalyticsInput -ResourceGroupName "rgbenchpresstest" -JobName 
 ## PARAMETERS
 
 ### -ResourceGroupName
-The name of the resource group.
+The name of the Resource Group.
 The name is case insensitive.
 
 ```yaml
@@ -47,7 +47,7 @@ Accept wildcard characters: False
 ```
 
 ### -JobName
-The name of the streaming job.
+The name of the Streaming Job.
 
 ```yaml
 Type: String
@@ -62,7 +62,7 @@ Accept wildcard characters: False
 ```
 
 ### -Name
-The name of the input.
+The name of the Input.
 
 ```yaml
 Type: String

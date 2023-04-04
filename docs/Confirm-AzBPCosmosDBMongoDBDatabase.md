@@ -18,8 +18,8 @@ Confirm-AzBPCosmosDBMongoDBDatabase [-ResourceGroupName] <String> [-AccountName]
 ```
 
 ## DESCRIPTION
-The Confirm-CosmosDBMongoDBDatabase cmdlet gets Cosmos DB Mongo DB database given the Resource Group Name, the
-name of the Cosmos DB Account, and the name of the Mongo DB Database.
+The Confirm-CosmosDBMongoDBDatabase cmdlet gets Cosmos DB Mongo DB Database using the specified Resource Group,
+Cosmos DB Account, and Mongo DB Database names.
 
 ## EXAMPLES
 
@@ -32,6 +32,7 @@ Confirm-AzBPCosmosDBMongoDBDatabase  -ResourceGroupName "rgbenchpresstest" -Acco
 
 ### -ResourceGroupName
 The name of the Resource Group.
+The name is case insensitive.
 
 ```yaml
 Type: String
@@ -46,7 +47,7 @@ Accept wildcard characters: False
 ```
 
 ### -AccountName
-The Cosmos DB account name.
+The name of the Cosmos DB Account.
 
 ```yaml
 Type: String
@@ -61,7 +62,7 @@ Accept wildcard characters: False
 ```
 
 ### -Name
-The name of the Cosmos DB Mongo DB Database
+The name of the Cosmos DB Mongo DB Database.
 
 ```yaml
 Type: String

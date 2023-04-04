@@ -17,8 +17,8 @@ Confirm-AzBPSynapseWorkspace [-WorkspaceName] <String> [-ResourceGroupName] <Str
 ```
 
 ## DESCRIPTION
-The Confirm-AzBPSynapseWorkspace cmdlet gets a synapse workspace using the specified Synapse Workspace and
-Resource Group name.
+The Confirm-AzBPSynapseWorkspace cmdlet gets a Synapse Workspace using the specified Synapse Workspace and
+Resource Group names.
 
 ## EXAMPLES
 
@@ -30,7 +30,7 @@ Confirm-AzBPSynapseWorkspace -WorkspaceName "benchpresstest" -ResourceGroupName 
 ## PARAMETERS
 
 ### -WorkspaceName
-The name of the Synapse Workspace
+The name of the Synapse Workspace.
 
 ```yaml
 Type: String
@@ -45,7 +45,8 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceGroupName
-The name of the Resource Group
+The name of the Resource Group.
+The name is case insensitive.
 
 ```yaml
 Type: String

@@ -17,7 +17,7 @@ Confirm-AzBPAksCluster [-AksName] <String> [-ResourceGroupName] <String> [<Commo
 ```
 
 ## DESCRIPTION
-The Confirm-AzBPAksCluster cmdlet gets an AKS cluster using the specified AKS Cluster and Resource Group name.
+The Confirm-AzBPAksCluster cmdlet gets an AKS Cluster using the specified AKS Cluster and Resource Group names.
 
 ## EXAMPLES
 
@@ -29,7 +29,7 @@ Confirm-AzBPAksCluster -AKSName "benchpresstest" -ResourceGroupName "rgbenchpres
 ## PARAMETERS
 
 ### -AksName
-The name of the AKS Cluster
+The name of the AKS Cluster.
 
 ```yaml
 Type: String
@@ -44,7 +44,8 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceGroupName
-The name of the Resource Group
+The name of the Resource Group.
+The name is case insensitive.
 
 ```yaml
 Type: String

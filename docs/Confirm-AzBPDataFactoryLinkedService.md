@@ -18,8 +18,8 @@ Confirm-AzBPDataFactoryLinkedService [-Name] <String> [-DataFactoryName] <String
 ```
 
 ## DESCRIPTION
-The Confirm-AzBPDataFactoryLinkedService cmdlet gets a data factory linked service using the specified
-Data Factory, Linked Service and Resource Group name.
+The Confirm-AzBPDataFactoryLinkedService cmdlet gets a Data Factory Linked Service using the specified
+Data Factory, Linked Service, and Resource Group names.
 
 ## EXAMPLES
 
@@ -32,7 +32,7 @@ Confirm-AzBPDataFactoryLinkedService -Name "bplinkedservice" -ResourceGroupName 
 ## PARAMETERS
 
 ### -Name
-The name of the Linked Service
+The name of the Linked Service.
 
 ```yaml
 Type: String
@@ -47,7 +47,7 @@ Accept wildcard characters: False
 ```
 
 ### -DataFactoryName
-The name of the Data Factory
+The name of the Data Factory.
 
 ```yaml
 Type: String
@@ -62,7 +62,8 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceGroupName
-The name of the Resource Group
+The name of the Resource Group.
+The name is case insensitive.
 
 ```yaml
 Type: String

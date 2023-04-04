@@ -17,8 +17,8 @@ Confirm-AzBPAppInsights [-Name] <String> [-ResourceGroupName] <String> [<CommonP
 ```
 
 ## DESCRIPTION
-The Confirm-AzBPAppInsights cmdlet gets an Application Insights using the specified Application Insights name
-and Resource Group name.
+The Confirm-AzBPAppInsights cmdlet gets an Application Insights using the specified Application Insights and
+Resource Group names.
 
 ## EXAMPLES
 
@@ -30,7 +30,7 @@ Confirm-AzBPAppInsights -Name "benchpresstest" -ResourceGroupName "rgbenchpresst
 ## PARAMETERS
 
 ### -Name
-The name of the Application Insights
+The name of the Application Insights.
 
 ```yaml
 Type: String
@@ -45,7 +45,8 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceGroupName
-The name of the Resource Group
+The name of the Resource Group.
+The name is case insensitive.
 
 ```yaml
 Type: String

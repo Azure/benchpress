@@ -32,7 +32,7 @@ Any errors will also be output to stdout for capture by CI/CD pipelines.
 
 ### EXAMPLE 1
 ```
-Pipe path into Confirm-AzBPBicepFile
+Pipe path into Confirm-AzBPBicepFile.
 ```
 
 "./examples/actionGroupErrors.bicep" | Confirm-AzBPBicepFile
@@ -51,7 +51,7 @@ Errors
 
 ### EXAMPLE 2
 ```
-Pipe multiple paths into Confirm-AzBPBicepFile
+Pipe multiple paths into Confirm-AzBPBicepFile.
 ```
 
 "./examples/actionGroupErrors.bicep", "./examples/actionGroupErrors.bicep" | Confirm-AzBPBicepFile
@@ -77,7 +77,7 @@ Errors
 
 ### EXAMPLE 3
 ```
-Provide -BicepPath Parameter
+Provide -BicepPath Parameter.
 ```
 
 Confirm-AzBPBicepFile -BicepPath ./examples/actionGroupErrors.bicep
@@ -96,7 +96,7 @@ Errors
 
 ### EXAMPLE 4
 ```
-Path without -BicepPath Parameter
+Path without -BicepPath Parameter.
 ```
 
 Confirm-AzBPBicepFile ./examples/actionGroupErrors.bicep

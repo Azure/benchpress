@@ -8,7 +8,7 @@ schema: 2.0.0
 # Confirm-AzBPSynapseSparkPool
 
 ## SYNOPSIS
-Confirms that a Synapse Spark pool exists.
+Confirms that a Synapse Spark Pool exists.
 
 ## SYNTAX
 
@@ -18,8 +18,8 @@ Confirm-AzBPSynapseSparkPool [-SynapseSparkPoolName] <String> [-WorkspaceName] <
 ```
 
 ## DESCRIPTION
-The Confirm-AzBPSynapseSparkPool cmdlet gets a Spark pool under a Synapse workspace using the specified
-Synapse Workspace, Spark Pool and Resource Group name.
+The Confirm-AzBPSynapseSparkPool cmdlet gets a Spark Pool under a Synapse Workspace using the specified
+Synapse Workspace, Spark Pool, and Resource Group names.
 
 ## EXAMPLES
 
@@ -32,7 +32,7 @@ Confirm-AzBPSynapseSparkPool -SynapseSparkPoolName "benchpresstest" -WorkspaceNa
 ## PARAMETERS
 
 ### -SynapseSparkPoolName
-The name of the Spark pool
+The name of the Spark Pool.
 
 ```yaml
 Type: String
@@ -47,7 +47,7 @@ Accept wildcard characters: False
 ```
 
 ### -WorkspaceName
-The name of the Synapse Workspace
+The name of the Synapse Workspace.
 
 ```yaml
 Type: String
@@ -62,7 +62,8 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceGroupName
-The name of the Resource Group
+The name of the Resource Group.
+The name is case insensitive.
 
 ```yaml
 Type: String

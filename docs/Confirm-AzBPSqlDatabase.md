@@ -8,7 +8,7 @@ schema: 2.0.0
 # Confirm-AzBPSqlDatabase
 
 ## SYNOPSIS
-Confirms that one or more SQL Databases exist.
+Confirms that a SQL Database exists.
 
 ## SYNTAX
 
@@ -18,8 +18,8 @@ Confirm-AzBPSqlDatabase [-DatabaseName] <String> [-ServerName] <String> [-Resour
 ```
 
 ## DESCRIPTION
-The Confirm-AzBPSqlDatabase cmdlet gets one or more SQL Databases using the specified SQL Database, SQL Server
-and Resource Group name.
+The Confirm-AzBPSqlDatabase cmdlet gets a SQL Database using the specified SQL Database, SQL Server,
+and Resource Group names.
 
 ## EXAMPLES
 
@@ -36,7 +36,7 @@ Confirm-AzBPSqlDatabase -DatabaseName "testdb" -ServerName "testserver" -Resourc
 ## PARAMETERS
 
 ### -DatabaseName
-The name of the SQL Database
+The name of the SQL Database.
 
 ```yaml
 Type: String
@@ -66,7 +66,8 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceGroupName
-The name of the Resource Group
+The name of the Resource Group.
+The name is case insensitive.
 
 ```yaml
 Type: String

@@ -8,7 +8,7 @@ schema: 2.0.0
 # Confirm-AzBPSynapseSqlPool
 
 ## SYNOPSIS
-Confirms that a Synapse SQL pool exists.
+Confirms that a Synapse SQL Pool exists.
 
 ## SYNTAX
 
@@ -18,8 +18,8 @@ Confirm-AzBPSynapseSqlPool [-SynapseSqlPoolName] <String> [-WorkspaceName] <Stri
 ```
 
 ## DESCRIPTION
-The Confirm-AzBPSynapseSqlPool cmdlet gets a SQL pool under a Synapse workspace using the specified
-Synapse Workspace, SQL Pool and Resource Group name.
+The Confirm-AzBPSynapseSqlPool cmdlet gets a SQL Pool under a Synapse Workspace using the specified
+Synapse Workspace, SQL Pool, and Resource Group names.
 
 ## EXAMPLES
 
@@ -32,7 +32,7 @@ Confirm-AzBPSynapseSqlPool -SynapseSqlPoolName "benchpresstest" -WorkspaceName "
 ## PARAMETERS
 
 ### -SynapseSqlPoolName
-The name of the SQL pool
+The name of the SQL Pool.
 
 ```yaml
 Type: String
@@ -47,7 +47,7 @@ Accept wildcard characters: False
 ```
 
 ### -WorkspaceName
-The name of the Synapse Workspace
+The name of the Synapse Workspace.
 
 ```yaml
 Type: String
@@ -62,7 +62,8 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceGroupName
-The name of the Resource Group
+The name of the Resource Group.
+The name is case insensitive.
 
 ```yaml
 Type: String

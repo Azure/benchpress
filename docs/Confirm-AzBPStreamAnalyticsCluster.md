@@ -17,8 +17,8 @@ Confirm-AzBPStreamAnalyticsCluster [-Name] <String> [-ResourceGroupName] <String
 ```
 
 ## DESCRIPTION
-The Confirm-AzBPStreamAnalyticsCluster cmdlet gets a Stream Analytics cluster using the specified Cluster and
-Resource Group name.
+The Confirm-AzBPStreamAnalyticsCluster cmdlet gets a Stream Analytics Cluster using the specified Cluster and
+Resource Group names.
 
 ## EXAMPLES
 
@@ -30,7 +30,7 @@ Confirm-AzBPStreamAnalyticsCluster -Name "benchpresstest" -ResourceGroupName "rg
 ## PARAMETERS
 
 ### -Name
-The name of the Stream Analytics Cluster
+The name of the Stream Analytics Cluster.
 
 ```yaml
 Type: String
@@ -45,7 +45,8 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceGroupName
-The name of the Resource Group
+The name of the Resource Group.
+The name is case insensitive.
 
 ```yaml
 Type: String

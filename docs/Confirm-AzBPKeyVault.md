@@ -17,8 +17,7 @@ Confirm-AzBPKeyVault [-Name] <String> [-ResourceGroupName] <String> [<CommonPara
 ```
 
 ## DESCRIPTION
-The Confirm-AzBPKeyVault cmdlet gets a Key Vault using the specified Key Vault and
-Resource Group name.
+The Confirm-AzBPKeyVault cmdlet gets a Key Vault using the specified Key Vault and Resource Group names.
 
 ## EXAMPLES
 
@@ -30,7 +29,7 @@ Confirm-AzBPKeyVault -Name "benchpresstest" -ResourceGroupName "rgbenchpresstest
 ## PARAMETERS
 
 ### -Name
-The name of the Key Vault
+The name of the Key Vault.
 
 ```yaml
 Type: String
@@ -45,7 +44,8 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceGroupName
-The name of the Resource Group
+The name of the Resource Group.
+The name is case insensitive.
 
 ```yaml
 Type: String

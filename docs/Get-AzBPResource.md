@@ -34,7 +34,7 @@ Get-AzBPResource -ResourceName "benchpresstest" -ResourceGroupName "rgbenchpress
 ## PARAMETERS
 
 ### -ResourceName
-The name of the Resources
+The name of the Resource.
 
 ```yaml
 Type: String
@@ -49,7 +49,8 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceGroupName
-The name of the Resource Group
+The name of the Resource Group.
+The name is case insensitive.
 
 ```yaml
 Type: String

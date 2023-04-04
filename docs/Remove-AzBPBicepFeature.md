@@ -30,7 +30,8 @@ Remove-AzBPBicepFeature -ResourceGroupName "rg-test"
 ## PARAMETERS
 
 ### -ResourceGroupName
-Name of the Resource Group to delete
+The name of the Resource Group to delete.
+The name is case insensitive.
 
 ```yaml
 Type: String

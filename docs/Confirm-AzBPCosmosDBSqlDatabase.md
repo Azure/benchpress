@@ -18,8 +18,8 @@ Confirm-AzBPCosmosDBSqlDatabase [-ResourceGroupName] <String> [-AccountName] <St
 ```
 
 ## DESCRIPTION
-The Confirm-AzBPCosmosDBSqlDatabase cmdlet gets Cosmos DB Gremlin database given the Resource Group Name, the
-name of the Cosmos DB Account, and the name of the SQL Database.
+The Confirm-AzBPCosmosDBSqlDatabase cmdlet gets a Cosmos DB SQL Database using the specified Resource Group,
+Cosmos DB Account, and SQL Database names.
 
 ## EXAMPLES
 
@@ -32,6 +32,7 @@ Confirm-AzBPCosmosDBSqlDatabase  -ResourceGroupName "rgbenchpresstest" -AccountN
 
 ### -ResourceGroupName
 The name of the Resource Group.
+The name is case insensitive.
 
 ```yaml
 Type: String
@@ -46,7 +47,7 @@ Accept wildcard characters: False
 ```
 
 ### -AccountName
-The Cosmos DB account name.
+The name of the Cosmos DB Account.
 
 ```yaml
 Type: String
@@ -61,7 +62,7 @@ Accept wildcard characters: False
 ```
 
 ### -Name
-The name of the Cosmos DB SQL Database
+The name of the Cosmos DB SQL Database.
 
 ```yaml
 Type: String
