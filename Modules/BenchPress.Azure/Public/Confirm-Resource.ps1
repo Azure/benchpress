@@ -64,6 +64,10 @@ function Confirm-Resource {
       If testing an Azure resource that is associated with a Service (e.g., API Management Service), the name of
       the associated Service.
 
+    .PARAMETER KeyVaultName
+      If testing an Azure Key Vault resource (e.g., Key Vault Key), the name of the Key Vault to which the resource is
+      assigned.
+
     .PARAMETER JobName
       If testing an Azure resource that is associated with a Job (e.g., Stream Analytics Output), the name of
       the associated Job.
@@ -123,6 +127,9 @@ function Confirm-Resource {
     [string]$ServerName,
 
     [Parameter(Mandatory = $false)]
+    [string]$KeyVaultName,
+
+    [Parameter(Mandatory = $false)]
     [string]$DataFactoryName,
 
     [Parameter(Mandatory = $false)]
@@ -171,6 +178,7 @@ function Confirm-Resource {
       ResourceName       = $ResourceName
       ResourceGroupName  = $ResourceGroupName
       ServerName         = $ServerName
+      KeyVaultName       = $KeyVaultName
       DataFactoryName    = $DataFactoryName
       WorkspaceName      = $WorkspaceName
       AccountName        = $AccountName
