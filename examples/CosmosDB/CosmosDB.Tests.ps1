@@ -1,16 +1,16 @@
 ﻿BeforeAll {
   Import-Module Az.InfrastructureTesting
 
-  $Script:rgName = 'testrg'
+  $Script:rgName = 'rg-test'
   $Script:location = 'westus3'
-  $Script:gremlinAccountName = "gremlin-nqpogpnnnhius-yuh"
+  $Script:gremlinAccountName = "gremlin-account-name"
   $Script:gremlinDatabaseName = "gremlin-db-name"
-  $Script:mongoAccountName = "mongo-nqpogpnnnhius-yuh"
+  $Script:mongoAccountName = "mongodb-account-name"
   $Script:mongoDatabaseName = "mongodb-db-name"
-  $Script:sqlAccountName = "sql-nqpogpnnnhius-yuh"
+  $Script:sqlAccountName = "sql-account-name"
   $Script:sqlDatabaseName = "sql-db-name"
-  $Script:sqlRoleAssignmentId = "/subscriptions/70633da3-9be3-4061-836e-ee35843bec91/resourceGroups/testrg/providers/Microsoft.DocumentDB/databaseAccounts/sql-nqpogpnnnhius-yuh/sqlRoleAssignments/116e4cef-e80f-59fa-9f84-82f46929fc9c"
-  $Script:sqlRoleDefinitionId = "/subscriptions/70633da3-9be3-4061-836e-ee35843bec91/resourceGroups/testrg/providers/Microsoft.DocumentDB/databaseAccounts/sql-nqpogpnnnhius-yuh/sqlRoleDefinitions/6c6a0461-87ef-5aff-91ef-1e9fca6444de"
+  $Script:sqlRoleAssignmentId = "sql-role-assignment-id"
+  $Script:sqlRoleDefinitionId = "sql-role-definition-id"
 }
 
 Describe 'Verify Cosmos DB Account' {
