@@ -3,14 +3,11 @@
 
   $Script:rgName = 'rg-test'
   $Script:acrName = 'acrbenchpresstest'
+  $Script:noContainerRegistryName = 'nocontainerregistry'
   $Script:location = 'westus3'
 }
 
 Describe 'Verify Container Registry' {
-  BeforeAll {
-    $Script:noContainerRegistryName = 'nocontainerregistry'
-  }
-
   It "Should contain a Container Registry named $acrName - Confirm-AzBPResource" {
     # arrange
     $params = @{

@@ -3,14 +3,11 @@
 
   $Script:rgName = 'rg-test'
   $Script:appInsightsName = 'appinsightstest'
+  $Script:noAppInsightsName = 'noappinsights'
   $Script:location = 'westus3'
 }
 
 Describe 'Verify Application Insights' {
-  BeforeAll {
-    $Script:noAppInsightsName = 'noappinsights'
-  }
-
   It "Should contain an Application Insights named $appInsightsName - Confirm-AzBPResource" {
     # arrange
     $params = @{
