@@ -11,13 +11,13 @@ function Confirm-WebAppStaticSite {
 
     .DESCRIPTION
       The Confirm-AzBPWebAppStaticSite cmdlet gets a Web App Static Site using the specified Web App and
-      Resource Group name.
+      Resource Group names.
 
     .PARAMETER StaticWebAppName
-      The name of the Web App Static Site
+      The name of the Web App Static Site.
 
     .PARAMETER ResourceGroupName
-      The name of the Resource Group
+      The name of the Resource Group.
 
     .EXAMPLE
       Confirm-AzBPWebAppStaticSite -StaticWebAppName "benchpresstest" -ResourceGroupName "rgbenchpresstest"

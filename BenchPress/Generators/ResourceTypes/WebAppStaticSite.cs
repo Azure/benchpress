@@ -7,7 +7,7 @@ public class WebAppStaticSite : ResourceType
     public override string Id => "Microsoft.Web/staticSites";
     public override string FullName => Id;
     public override string FriendlyName => "Web Application Static Site";
-    public override string Prefix => "wass";
+    public override string Prefix => "azbpwass";
     public override string FunctionPrefix => "WebAppStaticSite";
 
     public override IEnumerable<KeyValuePair<string, object>> GetResourceParameters(TestMetadata m)

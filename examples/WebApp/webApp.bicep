@@ -1,5 +1,5 @@
 
-param location string = 'EastUS2'
+param location string = resourceGroup().location
 param appserviceplanName string = 'asp${take(uniqueString(resourceGroup().id), 5)}'
 param webappName string = 'webapp${take(uniqueString(resourceGroup().id), 5)}'
 param staticwebappName string = 'staticwebapp${take(uniqueString(resourceGroup().id), 5)}'
