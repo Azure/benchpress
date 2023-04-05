@@ -27,6 +27,7 @@ using module ./../Classes/ResourceType.psm1
 . $PSScriptRoot/Confirm-SynapseWorkspace.ps1
 . $PSScriptRoot/Confirm-VirtualMachine.ps1
 . $PSScriptRoot/Confirm-WebApp.ps1
+. $PSScriptRoot/Confirm-WebAppStaticSite.ps1
 # end INLINE_SKIP
 
 function Get-ResourceByType {
