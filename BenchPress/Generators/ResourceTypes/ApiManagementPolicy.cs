@@ -4,9 +4,9 @@ public class ApiManagementPolicy : ResourceType
 {
     public ApiManagementPolicy() { }
 
-    public override string Id => "Microsoft.ApiManagement/service/apis";
+    public override string Id => "Microsoft.ApiManagement/service/apis/policies";
     public override string FullName => Id;
-    public override string FriendlyName => "API Management Service APIs";
+    public override string FriendlyName => "API Management Service Policies";
     public override string Prefix => "amspol";
     public override string FunctionPrefix => "ApiManagementPolicy";
 

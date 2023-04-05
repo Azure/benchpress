@@ -4,9 +4,9 @@ public class ApiManagementLogger : ResourceType
 {
     public ApiManagementLogger() { }
 
-    public override string Id => "Microsoft.ApiManagement/service/apis";
+    public override string Id => "Microsoft.ApiManagement/service/loggers";
     public override string FullName => Id;
-    public override string FriendlyName => "API Management Service APIs";
+    public override string FriendlyName => "API Management Service Loggers";
     public override string Prefix => "amslog";
     public override string FunctionPrefix => "ApiManagementLogger";
 
