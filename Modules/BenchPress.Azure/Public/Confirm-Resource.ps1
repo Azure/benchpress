@@ -68,6 +68,14 @@ function Confirm-Resource {
       If testing an Azure resource that is associated with a Job (e.g., Stream Analytics Output), the name of
       the associated Job.
 
+    .PARAMETER RoleAssignmentId
+      If testing an Azure resource that is associated with a Role Assignment (e.g., Cosmos DB SQL Role Assignment),
+      the id of the Role Assignment.
+
+    .PARAMETER RoleDefinitionId
+      If testing an Azure resource that is associated with a Role Definition (e.g., Cosmos DB SQL Role Definition),
+      the id of the Role Definition.
+
     .PARAMETER PropertyKey
       The name of the property to check on the resource.
 
@@ -149,6 +157,12 @@ function Confirm-Resource {
     [string]$JobName,
 
     [Parameter(Mandatory = $false)]
+    [string]$RoleAssignmentId,
+
+    [Parameter(Mandatory = $false)]
+    [string]$RoleDefinitionId,
+
+    [Parameter(Mandatory = $false)]
     [string]$PropertyKey,
 
     [Parameter(Mandatory = $false)]
@@ -171,6 +185,8 @@ function Confirm-Resource {
       Scope              = $Scope
       ServicePrincipalId = $ServicePrincipalId
       ServiceName        = $ServiceName
+      RoleAssignmentId   = $RoleAssignmentId
+      RoleDefinitionId   = $RoleDefinitionId
     }
 
     $confirmResult = Get-ResourceByType @resourceParams

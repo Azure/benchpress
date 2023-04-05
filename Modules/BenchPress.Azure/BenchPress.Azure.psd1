@@ -28,6 +28,7 @@
     "Confirm-CosmosDBMongoDBDatabase",
     "Confirm-CosmosDBSqlDatabase",
     "Confirm-CosmosDBSqlRoleAssignment",
+    "Confirm-CosmosDBSqlRoleDefinition",
     "Confirm-DataFactory",
     "Confirm-DataFactoryLinkedService",
     "Confirm-EventHub",

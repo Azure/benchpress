@@ -14,6 +14,7 @@
   CosmosDBMongoDBDatabase
   CosmosDBSqlDatabase
   CosmosDBSqlRoleAssignment
+  CosmosDBSqlRoleDefinition
   ContainerRegistry
   DataFactory
   DataFactoryLinkedService

@@ -8,6 +8,7 @@ using module ./../Classes/ResourceType.psm1
 . $PSScriptRoot/Confirm-AppServicePlan.ps1
 . $PSScriptRoot/Confirm-ContainerRegistry.ps1
 . $PSScriptRoot/Confirm-CosmosDBSqlRoleAssignment.ps1
+. $PSScriptRoot/Confirm-CosmosDBSqlRoleDefinition.ps1
 . $PSScriptRoot/Confirm-DataFactory.ps1
 . $PSScriptRoot/Confirm-DataFactoryLinkedService.ps1
 . $PSScriptRoot/Confirm-EventHub.ps1
@@ -88,6 +89,10 @@ function Get-ResourceByType {
       If the Azure resource is associated with a role assignment (e.g., Cosmos DB SQL Role Assignment) this is the
       parameter to use to pass the role assignment id.
 
+    .PARAMETER RoleDefinitionId
+      If the Azure resource is associated with a role definition (e.g., Cosmos DB SQL Role Definition) this is the
+      parameter to use to pass the role definition id.
+
     .PARAMETER JobName
       If testing an Azure resource that is associated with a Job (e.g., Stream Analytics Output), the name of
       the associated Job.
@@ -150,7 +155,10 @@ function Get-ResourceByType {
     [string]$JobName,
 
     [Parameter(Mandatory = $false)]
-    [string]$RoleAssignmentId
+    [string]$RoleAssignmentId,
+
+    [Parameter(Mandatory = $false)]
+    [string]$RoleDefinitionId
   )
   Begin { }
   Process {
@@ -242,6 +250,14 @@ function Get-ResourceByType {
           RoleAssignmentId  = $RoleAssignmentId
         }
         return Confirm-CosmosDBSqlRoleAssignment @params
+      }
+      "CosmosDBSqlRoleDefinition" {
+        $params = @{
+          ResourceGroupName = $ResourceGroupName
+          AccountName       = $AccountName
+          RoleDefinitionId  = $RoleDefinitionId
+        }
+        return Confirm-CosmosDBSqlRoleDefinition @params
       }
       "DataFactory" {
         return Confirm-DataFactory -Name $ResourceName -ResourceGroupName $ResourceGroupName

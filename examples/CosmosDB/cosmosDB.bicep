@@ -25,8 +25,17 @@ param primaryRegion string = 'eastus'
 @description('The secondary region for the Azure Cosmos DB account.')
 param secondaryRegion string = 'eastus2'
 
+@description('Data actions permitted by the Role Definition')
+param dataActions array = [
+  'Microsoft.DocumentDB/databaseAccounts/readMetadata'
+  'Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers/items/*'
+]
+
 @description('Service Principal Object Id')
 param principalId string
+
+@description('Friendly name for the SQL Role Definition')
+param roleDefinitionName string = 'My Read Write Role'
 
 var locations = [
   {
@@ -94,7 +103,7 @@ resource mongo_account 'Microsoft.DocumentDB/databaseAccounts@2022-05-15' = {
   }
 }
 
-resource database 'Microsoft.DocumentDB/databaseAccounts/mongodbDatabases@2022-05-15' = {
+resource mongo_database 'Microsoft.DocumentDB/databaseAccounts/mongodbDatabases@2022-05-15' = {
   parent: mongo_account
   name: mongoDBDatabaseName
   properties: {
@@ -132,10 +141,26 @@ resource sql_database 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2022-0
   }
 }
 
+resource sqlRoleDefinition 'Microsoft.DocumentDB/databaseAccounts/sqlRoleDefinitions@2021-04-15' = {
+  name: '${sql_account.name}/${roleDefinitionId}'
+  properties: {
+    roleName: roleDefinitionName
+    type: 'CustomRole'
+    assignableScopes: [
+      sql_account.id
+    ]
+    permissions: [
+      {
+        dataActions: dataActions
+      }
+    ]
+  }
+}
+
 resource sqlRoleAssignment 'Microsoft.DocumentDB/databaseAccounts/sqlRoleAssignments@2021-04-15' = {
   name: '${sql_account.name}/${roleAssignmentId}'
   properties: {
-    roleDefinitionId: '${sql_account.name}/${roleDefinitionId}'
+    roleDefinitionId: sqlRoleDefinition.id
     principalId: principalId
     scope: sql_account.id
   }

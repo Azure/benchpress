@@ -32,6 +32,7 @@ The `CosmosDB*.Tests.ps1` files contain examples of using the `Confirm-AzBPCosmo
    - `sql-db-name`             -> `your-sql-db-name`
    - `westus3`                 -> `your-resource-group-location-name`
    - `sqlroleassignmentbptest` -> `your-role-assignment-id-name`
+   - `sqlroledefinitionbptest` -> `your-role-definition-id-name`
 
 1. If using a local copy of `Az.InfrastructureTesting`, replace `Import-Module Az.InfrastructureTesting` with
 `Import-Module "../../bin/BenchPress.Azure.psd1"`. Note that the final `AfterAll` step will properly remove the module
