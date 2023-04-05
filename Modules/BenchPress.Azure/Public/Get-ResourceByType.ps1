@@ -86,7 +86,7 @@ function Get-ResourceByType {
     .PARAMETER ServiceName
       If the Azure resource is associated with a service (e.g, API Management Service) this is the parameter to use to
       pass the service name.
-    
+
     .PARAMETER RoleAssignmentId
       If the Azure resource is associated with a role assignment (e.g., Cosmos DB SQL Role Assignment) this is the
       parameter to use to pass the role assignment id.
@@ -159,7 +159,7 @@ function Get-ResourceByType {
 
     [Parameter(Mandatory = $false)]
     [string]$JobName,
-    
+
     [Parameter(Mandatory = $false)]
     [string]$ClusterName,
 
