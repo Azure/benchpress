@@ -14,13 +14,13 @@ function Confirm-CosmosDBSqlRoleAssignment {
       given the Resource Group Name, the name of the Cosmos DB Account, and the name of the Role Assignment Id.
 
     .PARAMETER ResourceGroupName
-      The name of the Resource Group.
+      The name of the Resource Group. The name is case insensitive.
 
     .PARAMETER AccountName
-      The Cosmos DB account name.
+      The name of the Cosmos DB Account.
 
     .PARAMETER RoleAssignmentId
-      The Role Assignment Id.
+      The Id of the Role Assignment.
 
     .EXAMPLE
       $params = @{
@@ -50,17 +50,17 @@ function Confirm-CosmosDBSqlRoleAssignment {
     [string]$RoleAssignmentId
   )
   Begin {
-    $ConnectResults = Connect-Account
+    $connectResults = Connect-Account
   }
   Process {
     $params = @{
       ResourceGroupName = $ResourceGroupName
       AccountName = $AccountName
-      RoleAssignmentId = $RoleAssignmentId
+      Id = $RoleAssignmentId
     }
+    $resource = Get-AzCosmosDBSqlRoleAssignment @params
 
-    $Resource = Get-AzCosmosDBSqlRoleAssignment @params
-    [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+    [ConfirmResult]::new($resource, $connectResults.AuthenticationData)
   }
   End { }
 }

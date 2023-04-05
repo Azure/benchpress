@@ -25,6 +25,9 @@ param primaryRegion string = 'eastus'
 @description('The secondary region for the Azure Cosmos DB account.')
 param secondaryRegion string = 'eastus2'
 
+@description('Service Principal Object Id')
+param principalId string
+
 var locations = [
   {
     locationName: primaryRegion
@@ -37,6 +40,9 @@ var locations = [
     isZoneRedundant: false
   }
 ]
+
+var roleDefinitionId = guid('sql-role-definition-', principalId, sql_account.id)
+var roleAssignmentId = guid(roleDefinitionId, principalId, sql_account.id)
 
 resource gremlin_account 'Microsoft.DocumentDB/databaseAccounts@2022-05-15' = {
   name: toLower(gremlinAccountName)
@@ -127,10 +133,10 @@ resource sql_database 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2022-0
 }
 
 resource sqlRoleAssignment 'Microsoft.DocumentDB/databaseAccounts/sqlRoleAssignments@2021-04-15' = {
-  name: '${databaseAccount.name}/${roleAssignmentId}'
+  name: '${sql_account.name}/${roleAssignmentId}'
   properties: {
-    roleDefinitionId: sqlRoleDefinition.id
+    roleDefinitionId: '${sql_account.name}/${roleDefinitionId}'
     principalId: principalId
-    scope: databaseAccount.id
+    scope: sql_account.id
   }
 }

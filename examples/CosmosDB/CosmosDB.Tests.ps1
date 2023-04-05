@@ -203,7 +203,7 @@ Describe 'Verify Cosmos DB Account' {
       ResourceGroupName = $rgName
       AccountName       = $sqlAccountName
       RoleAssignmentId  = $sqlRoleAssignmentId
-      PropertyKey       = "RoleDefinitionName"
+      PropertyKey       = "Id"
       PropertyValue     = $sqlRoleAssignmentId
     }
 
@@ -223,6 +223,7 @@ Describe 'Cosmos DB Gremlin Database' {
   }
 
   It "Should not contain a Cosmos DB account named $noGremlinDBAccountName" {
+    # arrange
     # The 'ErrorAction = SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
@@ -483,19 +484,19 @@ Describe 'Comsos DB SQL Role Assignment' {
   }
 
   It "Should contain a Cosmos DB SQL Role assignment named $sqlRoleAssignmentName" {
-    #arrange
+    # arrange
     $params = @{
       ResourceGroupName = $rgName
       AccountName       = $sqlAccountName
       RoleAssignmentId  = $sqlRoleAssignmentId
     }
 
-    #act
+    # act and assert
     Confirm-AzBPCosmosDBSqlRoleAssignment @params | Should -BeSuccessful
   }
 
   It "Should not contain a Cosmos DB SQL Role assignment named $noSqlRoleAssignmentId" {
-    #arrange
+    # arrange
     # The 'ErrorAction = SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
@@ -506,28 +507,31 @@ Describe 'Comsos DB SQL Role Assignment' {
       ErrorAction       = "SilentlyContinue"
     }
 
-    #act
+    # act and assert
     Confirm-AzBPCosmosDBSqlRoleAssignment @params | Should -Not -BeSuccessful
   }
 
   It "Should contain a Cosmos DB SQL Role assignment named $sqlRoleAssignmentName in $location" {
+    # arrange
     $params = @{
       ResourceGroupName = $rgName
       AccountName       = $sqlAccountName
       RoleAssignmentId  = $sqlRoleAssignmentId
     }
 
-    #act
+    # act and assert
     Confirm-AzBPCosmosDBSqlRoleAssignment @params | Should -BeInLocation $location
   }
 
   It "Should contain a Cosmos DB SQL Role assignment named $sqlRoleAssignmentName in $rgName" {
+    # arrange
     $params = @{
       ResourceGroupName = $rgName
       AccountName       = $sqlAccountName
       RoleAssignmentId  = $sqlRoleAssignmentId
     }
 
+    # act and assert
     Confirm-AzBPCosmosDBSqlRoleAssignment @params | Should -BeInResourceGroup $rgName
   }
 }
