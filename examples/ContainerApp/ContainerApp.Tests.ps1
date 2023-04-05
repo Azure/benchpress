@@ -1,21 +1,21 @@
 ﻿BeforeAll {
   Import-Module Az.InfrastructureTesting
 
-  $Script:rgName = 'rg-test'
-  $Script:conAppName = 'conAppBenchPressTest'
+  $Script:rgName   = 'rg-test'
   $Script:location = 'westus3'
 }
 
 Describe 'Verify Container Application' {
   BeforeAll {
+    $Script:containerAppName   = 'containerAppBenchPressTest'
     $Script:noContainerAppName = 'nocontainerapp'
   }
 
-  It "Should contain a Container Application named $conAppName - Confirm-AzBPResource" {
+  It "Should contain a Container Application named $containerAppName - Confirm-AzBPResource" {
     # arrange
     $params = @{
       ResourceType      = "ContainerApp"
-      ResourceName      = $conAppName
+      ResourceName      = $containerAppName
       ResourceGroupName = $rgName
     }
 
@@ -27,7 +27,7 @@ Describe 'Verify Container Application' {
     # arrange
     $params = @{
       ResourceType      = "ContainerApp"
-      ResourceName      = $conAppName
+      ResourceName      = $containerAppName
       ResourceGroupName = $rgName
       PropertyKey       = "IngressTargetPort"
       PropertyValue     = 80
@@ -37,8 +37,8 @@ Describe 'Verify Container Application' {
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
-  It "Should contain a Container Application named $conAppName" {
-    Confirm-AzBPContainerApp -ResourceGroupName $rgName -Name $conAppName | Should -BeSuccessful
+  It "Should contain a Container Application named $containerAppName" {
+    Confirm-AzBPContainerApp -ResourceGroupName $rgName -Name $containerAppName | Should -BeSuccessful
   }
 
   It "Should not contain a Container Application named $noContainerAppName" {
@@ -56,12 +56,60 @@ Describe 'Verify Container Application' {
     Confirm-AzBPContainerApp @params | Should -Not -BeSuccessful
   }
 
-  It "Should contain a Container Application named $conAppName in $location" {
-    Confirm-AzBPContainerApp -ResourceGroupName $rgName -Name $conAppName | Should -BeInLocation $location
+  It "Should contain a Container Application named $containerAppName in $location" {
+    Confirm-AzBPContainerApp -ResourceGroupName $rgName -Name $containerAppName | Should -BeInLocation $location
   }
 
-  It "Should contain a Container Application named $conAppName in $rgName" {
-    Confirm-AzBPContainerApp -ResourceGroupName $rgName -Name $conAppName | Should -BeInResourceGroup $rgName
+  It "Should contain a Container Application named $containerAppName in $rgName" {
+    Confirm-AzBPContainerApp -ResourceGroupName $rgName -Name $containerAppName | Should -BeInResourceGroup $rgName
+  }
+}
+
+Describe 'Verify Container Application Managed Environment' {
+  BeforeAll {
+    $Script:managedEnvName   = 'managedenvbenchpresstest'
+    $Script:noManagedEnvName = 'nomanagedenv'
+  }
+
+  It "Should contain a Container Application Managed Environment named $managedEnvName - Confirm-AzBPResource" {
+    # arrange
+    $params = @{
+      ResourceType      = "ContainerAppManagedEnv"
+      ResourceName      = $managedEnvName
+      ResourceGroupName = $rgName
+    }
+
+    # act and assert
+    Confirm-AzBPResource @params | Should -BeSuccessful
+  }
+
+  It "Should contain a Container Application Managed Environment named $managedEnvName -
+    Confirm-AzBPResource" {
+    # arrange
+    $params = @{
+      ResourceType      = "ContainerAppManagedEnv"
+      ResourceName      = $managedEnvName
+      ResourceGroupName = $rgName
+      PropertyKey       = "Name"
+      PropertyValue     = $managedEnvName
+    }
+
+    # act and assert
+    Confirm-AzBPResource @params | Should -BeSuccessful
+  }
+
+  It "Should contain a Container Application named $managedEnvName" {
+    Confirm-AzBPContainerAppManagedEnv -ResourceGroupName $rgName -Name $managedEnvName | Should -BeSuccessful
+  }
+
+  It "Should contain a Container Application named $managedEnvName in $location" {
+    Confirm-AzBPContainerAppManagedEnv -ResourceGroupName $rgName -Name $managedEnvName
+    | Should -BeInLocation $location
+  }
+
+  It "Should contain a Container Application named $managedEnvName in $rgName" {
+    Confirm-AzBPContainerAppManagedEnv -ResourceGroupName $rgName -Name $managedEnvName
+    | Should -BeInResourceGroup $rgName
   }
 }
 

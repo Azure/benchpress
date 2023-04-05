@@ -23,9 +23,10 @@
 
 1. Update `AksCluster.Tests.ps1` variables to point to your expected resources:
 
-   - `rg-test`           -> `your-resource-group-name`
-   - `aksbenchpresstest` -> `your-aks-name`
-   - `westus3`           -> `your-resource-group-location-name`
+   - `rg-test`                -> `your-resource-group-name`
+   - `aksbenchpresstest`      -> `your-aks-name`
+   - `nodepoolbenchpresstest` -> `your-aks-node-pool-name`
+   - `westus3`                -> `your-resource-group-location-name`
 
 1. If using a local copy of `Az.InfrastructureTesting`, replace `Import-Module Az.InfrastructureTesting` with
 `Import-Module "../../bin/BenchPress.Azure.psd1"`. Note that the final `AfterAll` step will properly remove the module

@@ -1,6 +1,7 @@
 ﻿enum ResourceType{
   ActionGroup
   AksCluster
+  AksNodePool
   ApiManagement
   ApiManagementApi
   ApiManagementDiagnostic
@@ -9,6 +10,7 @@
   AppInsights
   AppServicePlan
   ContainerApp
+  ContainerAppManagedEnv
   CosmosDBAccount
   CosmosDBGremlinDatabase
   CosmosDBMongoDBDatabase
