@@ -4,8 +4,10 @@ using module ./../Classes/ResourceType.psm1
 
 . $PSScriptRoot/Confirm-ActionGroup.ps1
 . $PSScriptRoot/Confirm-AksCluster.ps1
+. $PSScriptRoot/Confirm-AksNodePool.ps1
 . $PSScriptRoot/Confirm-AppInsights.ps1
 . $PSScriptRoot/Confirm-AppServicePlan.ps1
+. $PSScriptRoot/Confirm-ContainerAppManagedEnv
 . $PSScriptRoot/Confirm-ContainerRegistry.ps1
 . $PSScriptRoot/Confirm-DataFactory.ps1
 . $PSScriptRoot/Confirm-DataFactoryLinkedService.ps1
@@ -88,6 +90,10 @@ function Get-ResourceByType {
       If testing an Azure resource that is associated with a Job (e.g., Stream Analytics Output), the name of
       the associated Job.
 
+    .PARAMETER ClusterName
+      If the Azure resource is associated with an AKS Cluster (e.g, AKS Node Pool) this is the parameter to use to pass
+      the AKS cluster name.
+
     .EXAMPLE
       Get-AzBPResourceByType -ResourceType ActionGroup -ResourceName "bpactiongroup" -ResourceGroupName "rgbenchpresstest"
 
@@ -143,6 +149,9 @@ function Get-ResourceByType {
     [string]$ServiceName,
 
     [Parameter(Mandatory = $false)]
+    [string]$ClusterName,
+
+    [Parameter(Mandatory = $false)]
     [string]$JobName
   )
   Begin { }
@@ -153,6 +162,14 @@ function Get-ResourceByType {
       }
       "AksCluster" {
         return Confirm-AksCluster -AKSName $ResourceName -ResourceGroupName $ResourceGroupName
+      }
+      "AksNodePool" {
+        $params = @{
+          ResourceGroupName = $ResourceGroupName
+          ClusterName       = $ClusterName
+          Name              = $ResourceName
+        }
+        return Confirm-AksNodePool @params
       }
       "ApiManagement" {
         return Confirm-ApiManagement -ResourceGroupName $ResourceGroupName -Name $ResourceName
@@ -197,6 +214,9 @@ function Get-ResourceByType {
       }
       "ContainerApp" {
         return Confirm-ContainerApp -ResourceGroupName $ResourceGroupName -Name $ResourceName
+      }
+      "ContainerAppManagedEnv" {
+        return Confirm-ContainerAppManagedEnv -ResourceGroupName $ResourceGroupName -Name $ResourceName
       }
       "ContainerRegistry" {
         return Confirm-ContainerRegistry -Name $ResourceName -ResourceGroupName $ResourceGroupName

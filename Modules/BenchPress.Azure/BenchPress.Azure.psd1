@@ -13,6 +13,7 @@
   FunctionsToExport = @(
     "Confirm-ActionGroup",
     "Confirm-AksCluster",
+    "Confirm-AksNodePool",
     "Confirm-ApiManagement",
     "Confirm-ApiManagementApi",
     "Confirm-ApiManagementDiagnostic",
@@ -22,6 +23,7 @@
     "Confirm-AppServicePlan",
     "Confirm-BicepFile",
     "Confirm-ContainerApp",
+    "Confirm-ContainerAppManagedEnv",
     "Confirm-ContainerRegistry",
     "Confirm-CosmosDBAccount",
     "Confirm-CosmosDBGremlinDatabase",
