@@ -16,6 +16,15 @@ resource appserviceplan 'Microsoft.Web/serverfarms@2022-03-01' = {
   }
 }
 
+resource applicationInsights 'Microsoft.Insights/components@2020-02-02' = {
+  name: join( [webappName, 'application', 'insights'], '-')
+  location: location
+  kind: 'web'
+  properties: {
+    Application_Type: 'web'
+  }
+}
+
 resource website 'Microsoft.Web/sites@2022-03-01' = {
   name: webappName
   location: location
@@ -25,6 +34,14 @@ resource website 'Microsoft.Web/sites@2022-03-01' = {
   }
   properties: {
     serverFarmId: appserviceplan.id
+  }
+
+  resource configAppSettings 'config' = {
+    name: 'appsettings'
+    properties:{
+      APPINSIGHTS_INSTRUMENTATIONKEY: applicationInsights.properties.InstrumentationKey
+      APPLICATIONINSIGHTS_CONNECTION_STRING: applicationInsights.properties.ConnectionString
+    }
   }
 }
 

@@ -3,11 +3,11 @@
 
   $Script:rgName = 'rg-test'
   $Script:location = 'westus3'
+  $Script:webappName = 'azbpwebapptest'
 }
 
 Describe 'Verify Web App Exists' {
   BeforeAll {
-    $Script:webappName = 'azbpwebapptest'
     $Script:noWebAppName = 'noazbpwebapptest'
   }
 
@@ -55,6 +55,26 @@ Describe 'Verify Web App Exists' {
 
   It "Should contain a Web App named $webappName in $rgName" {
     Confirm-AzBPWebApp -ResourceGroupName $rgName -WebAppName $webappName | Should -BeInResourceGroup $rgName
+  }
+}
+
+Describe 'Verify Web App Config'{
+  BeforeAll{
+    $Script:appInsightsSettingName = 'APPLICATIONINSIGHTS_CONNECTION_STRING'
+  }
+
+  It "Should contain an App Setting named $appInsightsSettingName - Confirm-AzBPResource" {
+    # arrange
+    $params = @{
+      ResourceType      = "WebApp"
+      ResourceGroupName = $rgName
+      ResourceName      = $webappName
+      PropertyKey       = 'SiteConfig.AppSettings[1].Name'
+      PropertyValue     = $appInsightsSettingName
+    }
+
+    # act and assert
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 }
 
