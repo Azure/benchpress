@@ -17,7 +17,7 @@ public class ApiManagementDiagnostic : ResourceType
             Param("ResourceType", "ApiManagementDiagnostic"),
             Param("ResourceName", m.ResourceName),
             Param("ResourceGroupName", m.ExtraProperties["resourceGroup"]),
-            Param("ServiceName", m.ExtraProperties["serviceName"])
+            Param("ServiceName", m.ExtraProperties["service"])
         };
     }
 }

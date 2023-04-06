@@ -17,7 +17,7 @@ public class ApiManagementLogger : ResourceType
             Param("ResourceType", "ApiManagementLogger"),
             Param("ResourceName", m.ResourceName),
             Param("ResourceGroupName", m.ExtraProperties["resourceGroup"]),
-            Param("ServiceName", m.ExtraProperties["serviceName"])
+            Param("ServiceName", m.ExtraProperties["service"])
         };
     }
 }

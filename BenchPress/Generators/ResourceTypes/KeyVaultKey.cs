@@ -16,7 +16,7 @@ public class KeyVaultKey : ResourceType
         {
             Param("ResourceType", "KeyVaultKey"),
             Param("ResourceName", m.ResourceName),
-            Param("KeyVaultName", m.ExtraProperties["name"])
+            Param("KeyVaultName", m.ExtraProperties["vaults"])
         };
     }
 }

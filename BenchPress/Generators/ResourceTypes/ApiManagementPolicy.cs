@@ -17,8 +17,8 @@ public class ApiManagementPolicy : ResourceType
             Param("ResourceType", "ApiManagementPolicy"),
             Param("ResourceName", m.ResourceName),
             Param("ResourceGroupName", m.ExtraProperties["resourceGroup"]),
-            Param("ServiceName", m.ExtraProperties["serviceName"]),
-            Param("ApiId", m.ExtraProperties["apiName"])
+            Param("ServiceName", m.ExtraProperties["service"]),
+            Param("ApiId", m.ExtraProperties["api"])
         };
     }
 }
