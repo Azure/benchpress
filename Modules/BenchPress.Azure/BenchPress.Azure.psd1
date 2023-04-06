@@ -39,6 +39,7 @@
     "Confirm-KeyVaultKey",
     "Confirm-KeyVaultSecret",
     "Confirm-OperationalInsightsWorkspace",
+    "Confirm-PortalDashboard",
     "Confirm-Resource",
     "Confirm-ResourceGroup",
     "Confirm-RoleAssignment",
