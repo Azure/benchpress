@@ -84,23 +84,23 @@ function Get-ResourceByType {
       If testing an Azure Role Assignment, the name of the Role Definition (e.g., Reader, Contributor etc.).
 
     .PARAMETER ServiceName
-      If the Azure resource is associated with a service (e.g, API Management Service) this is the parameter to use to
-      pass the service name.
+      If testing an Azure resource that is associated with a Service (e.g., API Management Service),
+      the name of the associated Service.
 
     .PARAMETER RoleAssignmentId
-      If the Azure resource is associated with a role assignment (e.g., Cosmos DB SQL Role Assignment) this is the
-      parameter to use to pass the role assignment id.
+      If testing an Azure resource that is associated with a Role Assignment (e.g., Cosmos DB SQL Role Assignment),
+      the name of the associated Role Assignment.
 
     .PARAMETER RoleDefinitionId
-      If the Azure resource is associated with a role definition (e.g., Cosmos DB SQL Role Definition) this is the
-      parameter to use to pass the role definition id.
+      If testing an Azure resource that is associated with a Role Definition (e.g., Cosmos DB SQL Role Definition),
+      the name of the associated Role Definition.
 
     .PARAMETER JobName
       If testing an Azure resource that is associated with a Job (e.g., Stream Analytics Output), the name of
       the associated Job.
 
     .PARAMETER ClusterName
-      If the Azure resource is associated with an AKS Cluster (e.g, AKS Node Pool) this is the parameter to use to pass
+      If the Azure resource is associated with an AKS Cluster (e.g, AKS Node Pool), this is the parameter to use to pass
       the AKS cluster name.
 
     .EXAMPLE

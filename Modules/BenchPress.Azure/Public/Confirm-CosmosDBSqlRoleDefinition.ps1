@@ -25,8 +25,8 @@ function Confirm-CosmosDBSqlRoleDefinition {
     .EXAMPLE
       $params = @{
         ResourceGroupName = "rgbenchpresstest"
-        AccountName = "an"
-        RoleDefinitionId = "roledefinitionid"
+        AccountName       = "an"
+        RoleDefinitionId  = "roledefinitionid"
       }
 
       Confirm-AzBPCosmosDBSqlRoleDefinition @params
@@ -55,8 +55,8 @@ function Confirm-CosmosDBSqlRoleDefinition {
   Process {
     $params = @{
       ResourceGroupName = $ResourceGroupName
-      AccountName = $AccountName
-      Id = $RoleDefinitionId
+      AccountName       = $AccountName
+      Id                = $RoleDefinitionId
     }
     $resource = Get-AzCosmosDBSqlRoleDefinition @params
 
