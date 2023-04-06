@@ -52,6 +52,10 @@ function Get-ResourceByType {
     .PARAMETER ServerName
       If testing an Azure SQL Database resource, the name of the Server to which the Database is assigned.
 
+    .PARAMETER KeyVaultName
+      If testing an Azure Key Vault resource (e.g., Key Vault Key), the name of the Key Vault to which the resource is
+      assigned.
+
     .PARAMETER DataFactoryName
       If testing an Azure Data Factory Linked Service resource, the name of the Data Factory to which the Linked
       Service is assigned.
@@ -121,6 +125,9 @@ function Get-ResourceByType {
 
     [Parameter(Mandatory = $false)]
     [string]$ServerName,
+
+    [Parameter(Mandatory = $false)]
+    [string]$KeyVaultName,
 
     [Parameter(Mandatory = $false)]
     [string]$DataFactoryName,
@@ -282,6 +289,15 @@ function Get-ResourceByType {
       }
       "KeyVault" {
         return Confirm-KeyVault -Name $ResourceName -ResourceGroupName $ResourceGroupName
+      }
+      "KeyVaultCertificate" {
+        return Confirm-KeyVaultCertificate -KeyVaultName $KeyVaultName -Name $ResourceName
+      }
+      "KeyVaultKey" {
+        return Confirm-KeyVaultKey -KeyVaultName $KeyVaultName -Name $ResourceName
+      }
+      "KeyVaultSecret" {
+        return Confirm-KeyVaultSecret -KeyVaultName $KeyVaultName -Name $ResourceName
       }
       "OperationalInsightsWorkspace" {
         return Confirm-OperationalInsightsWorkspace -Name $ResourceName -ResourceGroupName $ResourceGroupName

@@ -22,6 +22,9 @@
   EventHubConsumerGroup
   EventHubNamespace
   KeyVault
+  KeyVaultCertificate
+  KeyVaultKey
+  KeyVaultSecret
   OperationalInsightsWorkspace
   PortalDashboard
   ResourceGroup
