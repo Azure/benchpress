@@ -23,6 +23,7 @@
   EventHubNamespace
   KeyVault
   OperationalInsightsWorkspace
+  PortalDashboard
   ResourceGroup
   RoleAssignment
   SqlDatabase
