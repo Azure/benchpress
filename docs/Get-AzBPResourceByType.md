@@ -182,7 +182,7 @@ Accept wildcard characters: False
 ```
 
 ### -ServicePrincipalId
-If testing an Azure Role Assignment, the Application ID of the Service Principal.
+If testing an Azure Role Assignment, the Enterprise/Managed Application Object ID of the Service Principal.
 
 ```yaml
 Type: String

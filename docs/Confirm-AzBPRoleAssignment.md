@@ -48,7 +48,7 @@ Accept wildcard characters: False
 ```
 
 ### -ServicePrincipalId
-The Application ID of the Service Principal.
+The Enterprise/Managed Application Object ID of the Service Principal.
 
 ```yaml
 Type: String
