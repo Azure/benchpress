@@ -28,6 +28,7 @@ using module ./../Classes/ResourceType.psm1
 . $PSScriptRoot/Confirm-SynapseWorkspace.ps1
 . $PSScriptRoot/Confirm-VirtualMachine.ps1
 . $PSScriptRoot/Confirm-WebApp.ps1
+. $PSScriptRoot/Confirm-WebAppStaticSite.ps1
 # end INLINE_SKIP
 
 function Get-ResourceByType {
@@ -383,6 +384,9 @@ function Get-ResourceByType {
       }
       "WebApp" {
         return Confirm-WebApp -WebAppName $ResourceName -ResourceGroupName $ResourceGroupName
+      }
+      "WebAppStaticSite" {
+        return Confirm-WebAppStaticSIte -StaticWebAppName $ResourceName -ResourceGroupName $ResourceGroupName
       }
       default {
         Write-Information "Not implemented yet"
