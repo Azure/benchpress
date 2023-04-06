@@ -52,9 +52,8 @@ function Confirm-RoleAssignment {
   }
   Process {
     $params = @{
-      ServicePrincipalName = $ServicePrincipalId
-      RoleDefinitionName   = $RoleDefinitionName
-      Scope                = $Scope
+      ObjectId           = $ServicePrincipalId
+      RoleDefinitionName = $RoleDefinitionName
     }
 
     # Filter to specific scope specified by the parameter

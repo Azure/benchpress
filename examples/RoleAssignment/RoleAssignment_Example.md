@@ -24,11 +24,12 @@ do not check for this.
     -Location "WestUS3"
    ```
 
-1. When prompted in your terminal, set the `principalId` parameter with your service principal's object ID.
+1. When prompted in your terminal, set the `svcPrincipalObjectId` parameter with your service principal's
+   enterprise/managed application object ID.
 
 1. Update `RoleAssignment.Tests.ps1` variables to point to your expected resources:
 
-   - `sampleappid`       -> `your-service-principal-app-id`
+   - `sampleappid`       -> `your-svc-principal-object-id (the same object id from step 3)`
    - `/subscriptions/id` -> `your-scope`
    - `Reader`            -> `your-role-name`
 
