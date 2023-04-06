@@ -14,8 +14,8 @@ Confirms whether a resource exists or properties on a resource are configured co
 
 ```
 Confirm-AzBPResource [[-ResourceName] <String>] [[-ResourceGroupName] <String>] [-ResourceType] <ResourceType>
- [[-ServerName] <String>] [[-DataFactoryName] <String>] [[-NamespaceName] <String>] [[-EventHubName] <String>]
- [[-WorkspaceName] <String>] [[-ServicePrincipalId] <String>] [[-Scope] <String>]
+ [[-ServerName] <String>] [[-KeyVaultName] <String>] [[-DataFactoryName] <String>] [[-NamespaceName] <String>]
+ [[-EventHubName] <String>] [[-WorkspaceName] <String>] [[-ServicePrincipalId] <String>] [[-Scope] <String>]
  [[-RoleDefinitionName] <String>] [[-AccountName] <String>] [[-ServiceName] <String>] [[-ClusterName] <String>]
  [[-JobName] <String>] [[-PropertyKey] <String>] [[-PropertyValue] <String>] [<CommonParameters>]
 ```
@@ -99,7 +99,7 @@ The type of the Resource as a \[ResourceType\].
 Type: ResourceType
 Parameter Sets: (All)
 Aliases:
-Accepted values: ActionGroup, AksCluster, AksNodePool, ApiManagement, ApiManagementApi, ApiManagementDiagnostic, ApiManagementLogger, ApiManagementPolicy, AppInsights, AppServicePlan, ContainerApp, ContainerAppManagedEnv, CosmosDBAccount, CosmosDBGremlinDatabase, CosmosDBMongoDBDatabase, CosmosDBSqlDatabase, ContainerRegistry, DataFactory, DataFactoryLinkedService, EventHub, EventHubConsumerGroup, EventHubNamespace, KeyVault, OperationalInsightsWorkspace, PortalDashboard, ResourceGroup, RoleAssignment, SqlDatabase, SqlServer, StorageAccount, StorageContainer, StreamAnalyticsCluster, StreamAnalyticsFunction, StreamAnalyticsInput, StreamAnalyticsJob, StreamAnalyticsOutput, StreamAnalyticsTransformation, SynapseSparkPool, SynapseSqlPool, SynapseWorkspace, VirtualMachine, WebApp, WebAppStaticSite
+Accepted values: ActionGroup, AksCluster, AksNodePool, ApiManagement, ApiManagementApi, ApiManagementDiagnostic, ApiManagementLogger, ApiManagementPolicy, AppInsights, AppServicePlan, ContainerApp, ContainerAppManagedEnv, CosmosDBAccount, CosmosDBGremlinDatabase, CosmosDBMongoDBDatabase, CosmosDBSqlDatabase, ContainerRegistry, DataFactory, DataFactoryLinkedService, EventHub, EventHubConsumerGroup, EventHubNamespace, KeyVault, KeyVaultCertificate, KeyVaultKey, KeyVaultSecret, OperationalInsightsWorkspace, PortalDashboard, ResourceGroup, RoleAssignment, SqlDatabase, SqlServer, StorageAccount, StorageContainer, StreamAnalyticsCluster, StreamAnalyticsFunction, StreamAnalyticsInput, StreamAnalyticsJob, StreamAnalyticsOutput, StreamAnalyticsTransformation, SynapseSparkPool, SynapseSqlPool, SynapseWorkspace, VirtualMachine, WebApp, WebAppStaticSite
 
 Required: True
 Position: 3
@@ -123,6 +123,22 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -KeyVaultName
+If testing an Azure Key Vault resource (e.g., Key Vault Key), the name of the Key Vault to which the resource is
+assigned.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 5
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -DataFactoryName
 If testing an Azure Data Factory Linked Service resource, the name of the Data Factory to which the Linked
 Service is assigned.
@@ -133,7 +149,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 5
+Position: 6
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -149,7 +165,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 6
+Position: 7
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -165,7 +181,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 7
+Position: 8
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -181,7 +197,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 8
+Position: 9
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -196,7 +212,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 9
+Position: 10
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -213,7 +229,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 10
+Position: 11
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -228,7 +244,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 11
+Position: 12
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -244,7 +260,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 12
+Position: 13
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -260,7 +276,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 13
+Position: 14
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -276,7 +292,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 14
+Position: 15
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -292,7 +308,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 15
+Position: 16
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -307,7 +323,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 16
+Position: 17
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -322,7 +338,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 17
+Position: 18
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
