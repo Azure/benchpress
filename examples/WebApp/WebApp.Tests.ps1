@@ -42,6 +42,7 @@ Describe 'Verify Web App Exists' {
   }
 
   It "Should not contain a Web App named $noWebappName" {
+    #arrange
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
@@ -116,9 +117,6 @@ Describe 'Verify Web App Static Site Exists' {
   }
 
   It "Should not contain a Web App named $nowebappStaticSiteName" {
-    # The '-ErrorAction SilentlyContinue' command suppresses all errors.
-    # In this test, it will suppress the error message when a resource cannot be found.
-    # Remove this field to see all errors.
     # arrange
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
@@ -128,10 +126,9 @@ Describe 'Verify Web App Static Site Exists' {
       StaticWebAppName  = $nowebappstaticsitename
       ErrorAction       = "SilentlyContinue"
     }
-    
+
     # act and assert
     Confirm-AzBPWebAppStaticSite @params | Should -Not -BeSuccessful
-     -ErrorAction SilentlyContinue | Should -Not -BeSuccessful
   }
 
   It "Should contain a Web App named $webappStaticSiteName in $location" {
