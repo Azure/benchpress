@@ -20,7 +20,7 @@ resource api 'Microsoft.ApiManagement/service/apis@2022-08-01' = {
   name: apiName
   parent: apiManagementService
   properties: {
-    displayName: 'api'
+    displayName: apiName
     path: '/'
     protocols: ['https']
   }
