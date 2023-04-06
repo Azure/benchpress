@@ -29,7 +29,7 @@ cmdlets.
    - `servicetest` -> `your-api-management-service-name`
    - `apitest`     -> `your-api-management-api-name`
    - `diagtest`    -> `your-api-management-diagnostic-name`
-   - `loggertest`  -> `your-api-managemetn-logger-name`
+   - `loggertest`  -> `your-api-management-logger-name`
    - `westus3`     -> `your-resource-group-location`
 
 1. If using a local copy of `Az.InfrastructureTesting`, replace `Import-Module Az.InfrastructureTesting` with

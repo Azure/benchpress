@@ -83,15 +83,15 @@ Describe 'Verify Cosmos DB Account' {
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
-  It "Should contain a Mongo Cosmos DB Account named $mongoAccountName that is a Global Document DB -
+  It "Should contain a Mongo Cosmos DB Account named $mongoAccountName that is a Mongo DB -
   Confirm-AzBPResource" {
     # arrange
     $params = @{
       ResourceType      = "CosmosDBAccount"
       ResourceName      = $mongoAccountName
       ResourceGroupName = $rgName
-      PropertyKey       = "DatabaseAccountOfferType"
-      PropertyValue     = "Standard"
+      PropertyKey       = "Kind"
+      PropertyValue     = "MongoDB"
     }
 
     # act and assert
@@ -158,7 +158,7 @@ Describe 'Verify Cosmos DB Account' {
   It "Should contain a SQL Cosmos DB named $sqlDatabaseName - Confirm-AzBPResource" {
     # arrange
     $params = @{
-      ResourceType      = "CosmosDBSQLDatabase"
+      ResourceType      = "CosmosDBSqlDatabase"
       ResourceName      = $sqlDatabaseName
       ResourceGroupName = $rgName
       AccountName       = $sqlAccountName
@@ -171,7 +171,7 @@ Describe 'Verify Cosmos DB Account' {
   It "Should contain a SQL Cosmos DB named $sqlDatabaseName - Confirm-AzBPResource" {
     # arrange
     $params = @{
-      ResourceType      = "CosmosDBSQLDatabase"
+      ResourceType      = "CosmosDBSqlDatabase"
       ResourceName      = $sqlDatabaseName
       ResourceGroupName = $rgName
       AccountName       = $sqlAccountName

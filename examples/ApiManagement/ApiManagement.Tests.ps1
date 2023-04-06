@@ -34,7 +34,7 @@ Describe 'Verify API Management Service' {
     }
 
     # act and assert
-    Confirm-AzBPResource @params | -BeSuccessful
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain an API Management Service named $apiServiceName" {
@@ -80,7 +80,7 @@ Describe 'Verify API Management API' {
     }
 
     # act and assert
-    Confirm-AzBPResource @params | -BeSuccessful
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain an API Management API named $apiName - ConfirmAzBPResource" {
@@ -95,7 +95,7 @@ Describe 'Verify API Management API' {
     }
 
     # act and assert
-    Confirm-AzBPResource @params | -BeSuccessful
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain an API Management API named $apiName" {
@@ -141,7 +141,7 @@ Describe 'Verify API Management Diagnostic' {
     }
 
     # act and assert
-    Confirm-AzBPResource @params | -BeSuccessful
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain an API Management Diagnostic named $diagnosticName - ConfirmAzBPResource" {
@@ -156,7 +156,7 @@ Describe 'Verify API Management Diagnostic' {
     }
 
     # act and assert
-    Confirm-AzBPResource @params | -BeSuccessful
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain an API Management Diagnostic named $diagnosticName" {
@@ -215,7 +215,7 @@ Describe 'Verify API Management Logger' {
     }
 
     # act and assert
-    Confirm-AzBPResource @params | -BeSuccessful
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain an API Management Logger named $loggerName - ConfirmAzBPResource" {
@@ -230,7 +230,7 @@ Describe 'Verify API Management Logger' {
     }
 
     # act and assert
-    Confirm-AzBPResource @params | -BeSuccessful
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain an API Management Logger named $loggerName" {
@@ -289,7 +289,7 @@ Describe 'Verify API Management Policy' {
     }
 
     # act and assert
-    Confirm-AzBPResource @params | -BeSuccessful
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
   It "Should contain an API Management Policy for the API ID $apiName" {
@@ -301,7 +301,7 @@ Describe 'Verify API Management Policy' {
     }
 
     # act and assert
-    Confirm-AzBPApiManagementPolicy @params | -BeSuccessful
+    Confirm-AzBPApiManagementPolicy @params | Should -BeSuccessful
   }
 
   It "Should not contain an API Management Policy for the API ID $apiName" {

@@ -24,7 +24,11 @@
   EventHubConsumerGroup
   EventHubNamespace
   KeyVault
+  KeyVaultCertificate
+  KeyVaultKey
+  KeyVaultSecret
   OperationalInsightsWorkspace
+  PortalDashboard
   ResourceGroup
   RoleAssignment
   SqlDatabase
@@ -42,4 +46,5 @@
   SynapseWorkspace
   VirtualMachine
   WebApp
+  WebAppStaticSite
 }

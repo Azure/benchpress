@@ -18,6 +18,7 @@ using module ./../Classes/ResourceType.psm1
 . $PSScriptRoot/Confirm-EventHubNamespace.ps1
 . $PSScriptRoot/Confirm-KeyVault.ps1
 . $PSScriptRoot/Confirm-OperationalInsightsWorkspace.ps1
+. $PSScriptRoot/Confirm-PortalDashboard.ps1
 . $PSScriptRoot/Confirm-ResourceGroup.ps1
 . $PSScriptRoot/Confirm-SqlDatabase.ps1
 . $PSScriptRoot/Confirm-SqlServer.ps1
@@ -29,6 +30,7 @@ using module ./../Classes/ResourceType.psm1
 . $PSScriptRoot/Confirm-SynapseWorkspace.ps1
 . $PSScriptRoot/Confirm-VirtualMachine.ps1
 . $PSScriptRoot/Confirm-WebApp.ps1
+. $PSScriptRoot/Confirm-WebAppStaticSite.ps1
 # end INLINE_SKIP
 
 function Get-ResourceByType {
@@ -52,6 +54,10 @@ function Get-ResourceByType {
     .PARAMETER ServerName
       If testing an Azure SQL Database resource, the name of the Server to which the Database is assigned.
 
+    .PARAMETER KeyVaultName
+      If testing an Azure Key Vault resource (e.g., Key Vault Key), the name of the Key Vault to which the resource is
+      assigned.
+
     .PARAMETER DataFactoryName
       If testing an Azure Data Factory Linked Service resource, the name of the Data Factory to which the Linked
       Service is assigned.
@@ -73,7 +79,7 @@ function Get-ResourceByType {
       Storage Container), the name of the associated Account.
 
     .PARAMETER ServicePrincipalId
-      If testing an Azure Role Assignment, the Application ID of the Service Principal.
+      If testing an Azure Role Assignment, the Enterprise/Managed Application Object ID of the Service Principal.
 
     .PARAMETER Scope
       If testing an Azure Role Assignment, the Scope of the Role Assignment (e.g.,
@@ -129,6 +135,9 @@ function Get-ResourceByType {
 
     [Parameter(Mandatory = $false)]
     [string]$ServerName,
+
+    [Parameter(Mandatory = $false)]
+    [string]$KeyVaultName,
 
     [Parameter(Mandatory = $false)]
     [string]$DataFactoryName,
@@ -313,8 +322,20 @@ function Get-ResourceByType {
       "KeyVault" {
         return Confirm-KeyVault -Name $ResourceName -ResourceGroupName $ResourceGroupName
       }
+      "KeyVaultCertificate" {
+        return Confirm-KeyVaultCertificate -KeyVaultName $KeyVaultName -Name $ResourceName
+      }
+      "KeyVaultKey" {
+        return Confirm-KeyVaultKey -KeyVaultName $KeyVaultName -Name $ResourceName
+      }
+      "KeyVaultSecret" {
+        return Confirm-KeyVaultSecret -KeyVaultName $KeyVaultName -Name $ResourceName
+      }
       "OperationalInsightsWorkspace" {
         return Confirm-OperationalInsightsWorkspace -Name $ResourceName -ResourceGroupName $ResourceGroupName
+      }
+      "PortalDashboard" {
+        return Confirm-PortalDashboard -ResourceGroupName $ResourceGroupName -Name $ResourceName
       }
       "ResourceGroup" {
         return Confirm-ResourceGroup -ResourceGroupName $ResourceName
@@ -411,6 +432,9 @@ function Get-ResourceByType {
       }
       "WebApp" {
         return Confirm-WebApp -WebAppName $ResourceName -ResourceGroupName $ResourceGroupName
+      }
+      "WebAppStaticSite" {
+        return Confirm-WebAppStaticSIte -StaticWebAppName $ResourceName -ResourceGroupName $ResourceGroupName
       }
       default {
         Write-Information "Not implemented yet"

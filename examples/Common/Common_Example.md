@@ -22,8 +22,7 @@
     -TemplateFile ".\common.bicep"
    ```
 
-1. When prompted in your terminal, set the `vmAdminPasswordOrKey` and `sqlAdminPassword` parameters with your own
-passwords.
+1. When prompted in your terminal, set the `vmAdminPasswordOrKey` with your own password.
 
 1. Update `Common.Tests.ps1` variables to point to your expected resources:
 
