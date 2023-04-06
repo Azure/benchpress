@@ -119,7 +119,18 @@ Describe 'Verify Web App Static Site Exists' {
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
-    Confirm-AzBPWebAppStaticSite -ResourceGroupName $rgName -StaticWebAppName $nowebappStaticSiteName `
+    # arrange
+    # The '-ErrorAction SilentlyContinue' command suppresses all errors.
+    # In this test, it will suppress the error message when a resource cannot be found.
+    # Remove this field to see all errors.
+    $params = @{
+      ResourceGroupName = $rgName
+      StaticWebAppName  = $nowebappstaticsitename
+      ErrorAction       = "SilentlyContinue"
+    }
+    
+    # act and assert
+    Confirm-AzBPWebAppStaticSite @params | Should -Not -BeSuccessful
      -ErrorAction SilentlyContinue | Should -Not -BeSuccessful
   }
 
