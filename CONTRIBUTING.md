@@ -184,8 +184,8 @@ script that content which will not be built into the final inline module script.
        - A `.md` file that describes how to use the example.
        - A `bicep` file that properly deploys the resource(s) to Azure.
        - A `.Tests.ps1` file that tests the deployed resource(s) in Azure.
-  1. The code author that creates an example from step 4 must deploy the resources to Azure and confirm that the tests
-  properly execute before submitting a pull request.
+  1. The code author that creates an example from the previous step must deploy the resources to Azure and confirm that
+  the tests properly execute before submitting a pull request.
   1. An example of merged code that meets the above criteria: [PR][4]
 
 [4]: https://github.com/Azure/benchpress/commit/1f759817506f678202ee7d5300ef7c8d6502c281
