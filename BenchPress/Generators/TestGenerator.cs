@@ -65,10 +65,8 @@ public class TestGenerator
             Description = LanguageProvider.Escape(
                 $"It should contain a {definition.Metadata.ResourceType.FriendlyName} named {definition.Metadata.ResourceName}"
             ),
-            ResultVariable = LanguageProvider.Variable($"result"),
-            ActualValue = LanguageProvider.Variable($"result") + ".Success",
-            GetValueFunctionName = LanguageProvider.SDK(new SDKFunction(definition)),
-            ExpectedValue = LanguageProvider.Value(true)
+            FunctionName = LanguageProvider.SDK(new SDKFunction(definition)),
+            AssertionDetails = LanguageProvider.AssertionDetails(definition.Type)
         };
     }
 
@@ -77,10 +75,8 @@ public class TestGenerator
         public IEnumerable<KeyValuePair<string, string>> Parameters { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public string ResultVariable { get; set; }
-        public string GetValueFunctionName { get; set; }
-        public string ActualValue { get; set; }
-        public string ExpectedValue { get; set; }
+        public string FunctionName { get; set; }
+        public string AssertionDetails { get; set; }
     }
 
     private IEnumerable<KeyValuePair<string, string>> GetParameters(TestDefinition definition)

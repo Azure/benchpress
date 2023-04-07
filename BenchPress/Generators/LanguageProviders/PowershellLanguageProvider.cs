@@ -33,6 +33,17 @@ public class PowershellLanguageProvider : ILanguageProvider
         }
     }
 
+    public string AssertionDetails(TestType testType)
+    {
+        switch (testType)
+        {
+            case TestType.ResourceExists:
+                return "-BeSuccessful";
+            default:
+                throw new Exception($"Unknown test type: {testType}");
+        }
+    }
+
     public string Function(string name)
     {
         return name;
