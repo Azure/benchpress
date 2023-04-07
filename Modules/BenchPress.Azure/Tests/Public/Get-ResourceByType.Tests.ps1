@@ -1,8 +1,24 @@
 ﻿using module ./../../Classes/ResourceType.psm1
 
+BeforeDiscovery {
+  $testCases = @()
+
+  foreach ($i in [ResourceType].GetEnumNames())
+  {
+    $functionName = "Confirm-$i"
+
+    # build test case array
+    $testObject = @{
+      ResourceType = $i
+      Expected = $functionName
+    }
+
+    $testCases+=$testObject
+  }
+}
+
 BeforeAll {
   . $PSScriptRoot/../../Public/Get-ResourceByType.ps1
-  $testCases = @()
 
   foreach ($i in [ResourceType].GetEnumNames())
   {
@@ -11,26 +27,19 @@ BeforeAll {
 
     # dot-source the powershell function
     . $PSScriptRoot/../../Public/$fileName
-
-    # build test case array
-    $testObject = @{
-      ResourceType = $resource
-      Expected = $functionName
-    }
-
-    $testCases+=$testObject
   }
 }
 
 Describe "Get-ResourceByType" {
-  Context "unit tests" -Tag "Unit" {
-    BeforeEach {
-      foreach ($i in [ResourceType].GetEnumNames())
-      {
-        $functionName = "Confirm-$i"
-        Mock $functionName {}
-      }
+  BeforeAll {
+    foreach ($i in [ResourceType].GetEnumNames())
+    {
+      $functionName = "Confirm-$i"
+      Mock $functionName {}
     }
+  }
+
+  Context "unit tests" -Tag "Unit" {
 
     It "Calls <expected> when <resourceType> is used" -TestCases $testCases {
       $params = @{
