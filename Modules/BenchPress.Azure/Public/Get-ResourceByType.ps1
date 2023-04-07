@@ -9,6 +9,8 @@ using module ./../Classes/ResourceType.psm1
 . $PSScriptRoot/Confirm-AppServicePlan.ps1
 . $PSScriptRoot/Confirm-ContainerAppManagedEnv
 . $PSScriptRoot/Confirm-ContainerRegistry.ps1
+. $PSScriptRoot/Confirm-CosmosDBSqlRoleAssignment.ps1
+. $PSScriptRoot/Confirm-CosmosDBSqlRoleDefinition.ps1
 . $PSScriptRoot/Confirm-DataFactory.ps1
 . $PSScriptRoot/Confirm-DataFactoryLinkedService.ps1
 . $PSScriptRoot/Confirm-EventHub.ps1
@@ -88,15 +90,23 @@ function Get-ResourceByType {
       If testing an Azure Role Assignment, the name of the Role Definition (e.g., Reader, Contributor etc.).
 
     .PARAMETER ServiceName
-      If testing an Azure resource that is associated with a Service (e.g., API Management Service), the name of
-      the associated Service.
+      If testing an Azure resource that is associated with a Service (e.g., API Management Service),
+      the name of the associated Service.
+
+    .PARAMETER RoleAssignmentId
+      If testing an Azure resource that is associated with a Role Assignment (e.g., Cosmos DB SQL Role Assignment),
+      the name of the associated Role Assignment.
+
+    .PARAMETER RoleDefinitionId
+      If testing an Azure resource that is associated with a Role Definition (e.g., Cosmos DB SQL Role Definition),
+      the name of the associated Role Definition.
 
     .PARAMETER JobName
       If testing an Azure resource that is associated with a Job (e.g., Stream Analytics Output), the name of
       the associated Job.
 
     .PARAMETER ClusterName
-      If the Azure resource is associated with an AKS Cluster (e.g, AKS Node Pool) this is the parameter to use to pass
+      If the Azure resource is associated with an AKS Cluster (e.g, AKS Node Pool), this is the parameter to use to pass
       the AKS cluster name.
 
     .EXAMPLE
@@ -157,10 +167,16 @@ function Get-ResourceByType {
     [string]$ServiceName,
 
     [Parameter(Mandatory = $false)]
+    [string]$JobName,
+
+    [Parameter(Mandatory = $false)]
     [string]$ClusterName,
 
     [Parameter(Mandatory = $false)]
-    [string]$JobName
+    [string]$RoleAssignmentId,
+
+    [Parameter(Mandatory = $false)]
+    [string]$RoleDefinitionId
   )
   Begin { }
   Process {
@@ -255,6 +271,22 @@ function Get-ResourceByType {
           Name              = $ResourceName
         }
         return Confirm-CosmosDBSqlDatabase @params
+      }
+      "CosmosDBSqlRoleAssignment" {
+        $params = @{
+          ResourceGroupName = $ResourceGroupName
+          AccountName       = $AccountName
+          RoleAssignmentId  = $RoleAssignmentId
+        }
+        return Confirm-CosmosDBSqlRoleAssignment @params
+      }
+      "CosmosDBSqlRoleDefinition" {
+        $params = @{
+          ResourceGroupName = $ResourceGroupName
+          AccountName       = $AccountName
+          RoleDefinitionId  = $RoleDefinitionId
+        }
+        return Confirm-CosmosDBSqlRoleDefinition @params
       }
       "DataFactory" {
         return Confirm-DataFactory -Name $ResourceName -ResourceGroupName $ResourceGroupName
