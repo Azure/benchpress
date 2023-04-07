@@ -140,7 +140,7 @@ BenchPress code and documentation:
 ### Contribution Standards
 
 1. Code - It is intended that all code contributions conform to the guidelines found at the following references
-   (listed in the order of precedence when there is a conflict)
+   (listed in the order of precedence when there is a conflict):
     1. [Microsoft Strongly Encouraged Development Guidelines][1]
     1. [PowerShell Practice and Style Guide][2]
     1. Additional guidance:
