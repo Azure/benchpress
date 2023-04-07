@@ -32,7 +32,7 @@ param dataActions array = [
 ]
 
 @description('Service Principal Object Id')
-param principalId string
+param svcPrincipalObjectId string
 
 @description('Friendly name for the SQL Role Definition')
 param roleDefinitionName string = 'My Read Write Role'
@@ -50,8 +50,8 @@ var locations = [
   }
 ]
 
-var roleDefinitionId = guid('sql-role-definition-', principalId, sql_account.id)
-var roleAssignmentId = guid(roleDefinitionId, principalId, sql_account.id)
+var roleDefinitionId = guid('sql-role-definition-', svcPrincipalObjectId, sql_account.id)
+var roleAssignmentId = guid(roleDefinitionId, svcPrincipalObjectId, sql_account.id)
 
 resource gremlin_account 'Microsoft.DocumentDB/databaseAccounts@2022-05-15' = {
   name: toLower(gremlinAccountName)
@@ -161,7 +161,7 @@ resource sqlRoleAssignment 'Microsoft.DocumentDB/databaseAccounts/sqlRoleAssignm
   name: '${sql_account.name}/${roleAssignmentId}'
   properties: {
     roleDefinitionId: sqlRoleDefinition.id
-    principalId: principalId
+    principalId: svcPrincipalObjectId
     scope: sql_account.id
   }
 }

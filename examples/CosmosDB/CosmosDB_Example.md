@@ -21,6 +21,9 @@ The `CosmosDB*.Tests.ps1` files contain examples of using the `Confirm-AzBPCosmo
     -TemplateFile ".\cosmosDB.bicep"
    ```
 
+1. When prompted in your terminal, set the `svcPrincipalObjectId` parameter with your service principal's
+   enterprise/managed application object ID.
+
 1. Update `CosmosDB.Tests.ps1` variables to point to your expected resources:
 
    - `rg-test`                 -> `your-resource-group-name`
