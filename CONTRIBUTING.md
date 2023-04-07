@@ -145,7 +145,7 @@ BenchPress code and documentation:
     1. [PowerShell Practice and Style Guide][2]
     1. Additional guidance:
         1. 120 character line length limit
-        1. Multi-line code with piped commands - when the pipe is the first character of the line the pipe will align
+        1. Multi-line code with piped commands - when the pipe is the first character of the line, the pipe will align
         to the left edge of the start of the previous line's command (i.e., not indented past the start of the
         previous line's command and not flush to the left at column 0).
 1. Docs - It is intended that all documentation contributions conform to the guidelines found at the following
