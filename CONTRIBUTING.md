@@ -182,7 +182,7 @@ script that content which will not be built into the final inline module script.
      Otherwise, create a new folder for the new resource family.
      - For each new resource the following must be added (or updated):
        - A `.md` file that describes how to use the example.
-       - A `bicep` file that properly deploys the resource(s) to Azure.
+       - A `.bicep` file that properly deploys the resource(s) to Azure.
        - A `.Tests.ps1` file that tests the deployed resource(s) in Azure.
   1. The code author that creates an example from the previous step must deploy the resources to Azure and confirm that
   the tests properly execute before submitting a pull request.
