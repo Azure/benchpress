@@ -149,7 +149,7 @@ BenchPress code and documentation:
         to the left edge of the start of the previous line's command (i.e., not indented past the start of the
         previous line's command and not flush to the left at column 0).
 1. Docs - It is intended that all documentation contributions conform to the guidelines found at the following
-references (listed in the order of precedence when there is a conflict)
+references (listed in the order of precedence when there is a conflict):
    1. [Microsoft PowerShell-Docs Style Guide][3]
 
 [1]: https://learn.microsoft.com/en-us/powershell/scripting/developer/cmdlet/strongly-encouraged-development-guidelines
