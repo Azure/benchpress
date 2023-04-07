@@ -175,7 +175,7 @@ script that content which will not be built into the final inline module script.
   1. Add the new type to the generator code at `BenchPress\Generators\ResourceTypes`.
   1. Update `Get-ResourceByType` to add the `ResourceType` to the `switch`. If there are any new parameters for the
   cmdlet, those need to documented in the comments and added to the parameters that are accepted.
-  1. If new parameters are added to `Get-ResourceByType` those same parameters must also be added to `Confirm-Resource`
+  1. If new parameters are added to `Get-ResourceByType`, those same parameters must also be added to `Confirm-Resource`
   to be passed through in the parameters hashtable and the comments updated appropriately.
   1. A new example must be created in the examples folder.
      - If the example is in the family of an existing resource, add the resource to the existing family's files.
