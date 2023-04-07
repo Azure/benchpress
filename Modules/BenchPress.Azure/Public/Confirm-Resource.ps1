@@ -72,6 +72,14 @@ function Confirm-Resource {
       If testing an Azure resource that is associated with a Job (e.g., Stream Analytics Output), the name of
       the associated Job.
 
+    .PARAMETER RoleAssignmentId
+      If testing an Azure resource that is associated with a Role Assignment (e.g., Cosmos DB SQL Role Assignment),
+      the id of the Role Assignment.
+
+    .PARAMETER RoleDefinitionId
+      If testing an Azure resource that is associated with a Role Definition (e.g., Cosmos DB SQL Role Definition),
+      the id of the Role Definition.
+
     .PARAMETER ClusterName
       If testing an Azure resource that is associated with an AKS Cluster (e.g, AKS Node Pool) this is the parameter
       to use to pass the AKS cluster name.
@@ -170,6 +178,12 @@ function Confirm-Resource {
     [string]$ResourceId,
 
     [Parameter(Mandatory = $false)]
+    [string]$RoleAssignmentId,
+
+    [Parameter(Mandatory = $false)]
+    [string]$RoleDefinitionId,
+
+    [Parameter(Mandatory = $false)]
     [string]$PropertyKey,
 
     [Parameter(Mandatory = $false)]
@@ -193,6 +207,8 @@ function Confirm-Resource {
       Scope              = $Scope
       ServicePrincipalId = $ServicePrincipalId
       ServiceName        = $ServiceName
+      RoleAssignmentId   = $RoleAssignmentId
+      RoleDefinitionId   = $RoleDefinitionId
       ClusterName        = $ClusterName
       ResourceId         = $ResourceId
     }
