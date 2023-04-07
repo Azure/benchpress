@@ -467,7 +467,7 @@ Describe 'Comsos DB SQL Database' {
       Name              = $sqlDatabaseName
     }
 
-    #act
+    # act and assert
     Confirm-AzBPCosmosDBSqlDatabase @params | Should -BeInResourceGroup $rgName
   }
 }

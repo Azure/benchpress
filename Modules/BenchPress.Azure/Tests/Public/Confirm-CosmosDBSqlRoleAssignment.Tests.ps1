@@ -14,8 +14,8 @@ Describe "Confirm-CosmosDBSqlRoleAssignment" {
     It "Calls Get-AzCosmosDBSqlRoleAssignment" {
       $params = @{
         ResourceGroupName = "rgn"
-        AccountName = "cdba"
-        RoleAssignmentId = "roleassignmentid"
+        AccountName       = "cdba"
+        RoleAssignmentId  = "roleassignmentid"
       }
       Confirm-CosmosDBSqlRoleAssignment @params
       Should -Invoke -CommandName "Get-AzCosmosDBSqlRoleAssignment" -Times 1
