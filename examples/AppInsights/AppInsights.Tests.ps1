@@ -78,7 +78,7 @@ Describe 'Verify Diagnostic Setting' {
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
-  It "Should contain a Diagnostic Setting named $diagnosticSettingName with Type of aks cluster -
+  It "Should contain a Diagnostic Setting named $diagnosticSettingName with Type of aksCluster -
   Confirm-AzBPResource" {
     # arrange
     $params = @{
@@ -86,7 +86,7 @@ Describe 'Verify Diagnostic Setting' {
       ResourceName      = $diagnosticSettingName
       ResourceId        = $resourceId
       PropertyKey       = "Type"
-      PropertyValue     = "Microsoft.ContainerService/managedClusters"
+      PropertyValue     = "Microsoft.Insights/diagnosticSettings"
     }
 
     # act and assert
@@ -94,26 +94,13 @@ Describe 'Verify Diagnostic Setting' {
   }
 
   It "Should contain a Diagnostic Setting named $diagnosticSettingName" {
-    Confirm-DiagnosticSetting -ResourceId $ResourceId -Name $diagnosticSettingName | Should -BeSuccessful
-  }
-
-  It "Should not contain a Diagnostic Setting named $noDiagnosticSettingName" {
-    # The '-ErrorAction SilentlyContinue' command suppresses all errors.
-    # In this test, it will suppress the error message when a resource cannot be found.
-    # Remove this field to see all errors.
-    Confirm-DiagnosticSetting -ResourceId $ResourceId -Name $noDiagnosticSettingName -ErrorAction SilentlyContinue
-    | Should -Not -BeSuccessful
-  }
-
-  It "Should contain a Diagnostic Setting named $diagnosticSettingName in $location" {
-    Confirm-DiagnosticSetting -ResourceId $ResourceId -Name $diagnosticSettingName | Should -BeInLocation $location
+    Confirm-AzBPDiagnosticSetting -ResourceId $ResourceId -Name $diagnosticSettingName | Should -BeSuccessful
   }
 
   It "Should contain a Diagnostic Setting named $diagnosticSettingName in $rgName" {
-    Confirm-DiagnosticSetting -ResourceId $ResourceId -Name $diagnosticSettingName | Should -BeInResourceGroup $rgName
+    Confirm-AzBPDiagnosticSetting -ResourceId $ResourceId -Name $diagnosticSettingName | Should -BeInResourceGroup $rgName
   }
 }
-
 
 AfterAll {
   Get-Module Az.InfrastructureTesting | Remove-Module

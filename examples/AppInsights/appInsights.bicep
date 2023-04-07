@@ -22,7 +22,8 @@ resource applicationInsights 'Microsoft.Insights/components@2020-02-02' = {
   }
 }
 
-resource sampleDiagnostics 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = {
+resource appInsightsDiagnostics 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = {
+  scope: applicationInsights
   name: 'default'
   properties: {
     workspaceId: workspace.id

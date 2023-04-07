@@ -1,6 +1,7 @@
 # How To Run AppInsights.Tests.ps1
 
-`AppInsights.Tests.ps1` contains examples of using the `Confirm-AzBPAppInsights` cmdlet.
+`AppInsights.Tests.ps1` contains examples of using the `Confirm-AzBPAppInsights`
+and `Confirm-AzBPDiagnosticSetting` cmdlets.
 
 ## Pre-Requisites
 

@@ -12,7 +12,7 @@ Describe "Confirm-DiagnosticSetting" {
     }
 
     It "Calls Get-AzDiagnosticSetting" {
-      Confirm-DiagnosticSetting -Name "diagnosticsetting" -ResourceGroupName "rgn"
+      Confirm-DiagnosticSetting -ResourceId "testresourceId" -Name "dgName"
       Should -Invoke -CommandName "Get-AzDiagnosticSetting" -Times 1
     }
   }
