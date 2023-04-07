@@ -83,7 +83,7 @@ function Confirm-Resource {
     .PARAMETER ClusterName
       If testing an Azure resource that is associated with an AKS Cluster (e.g, AKS Node Pool) this is the parameter
       to use to pass the AKS cluster name.
-    
+
     .PARAMETER ResourceId
       If testing an Azure resource that is associated with a Resource ID (e.g., Diagnostic Setting) this is the parameter to use
       to pass the Resource ID.
