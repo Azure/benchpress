@@ -17,8 +17,8 @@ Get-AzBPResourceByType [[-ResourceName] <String>] [[-ResourceGroupName] <String>
  [-ResourceType] <ResourceType> [[-ServerName] <String>] [[-KeyVaultName] <String>]
  [[-DataFactoryName] <String>] [[-NamespaceName] <String>] [[-EventHubName] <String>]
  [[-WorkspaceName] <String>] [[-AccountName] <String>] [[-ServicePrincipalId] <String>] [[-Scope] <String>]
- [[-RoleDefinitionName] <String>] [[-ServiceName] <String>] [[-ClusterName] <String>] [[-JobName] <String>]
- [<CommonParameters>]
+ [[-RoleDefinitionName] <String>] [[-ServiceName] <String>] [[-JobName] <String>] [[-ClusterName] <String>]
+ [[-RoleAssignmentId] <String>] [[-RoleDefinitionId] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -78,7 +78,7 @@ The type of the Resource.
 Type: ResourceType
 Parameter Sets: (All)
 Aliases:
-Accepted values: ActionGroup, AksCluster, AksNodePool, ApiManagement, ApiManagementApi, ApiManagementDiagnostic, ApiManagementLogger, ApiManagementPolicy, AppInsights, AppServicePlan, ContainerApp, ContainerAppManagedEnv, CosmosDBAccount, CosmosDBGremlinDatabase, CosmosDBMongoDBDatabase, CosmosDBSqlDatabase, ContainerRegistry, DataFactory, DataFactoryLinkedService, EventHub, EventHubConsumerGroup, EventHubNamespace, KeyVault, KeyVaultCertificate, KeyVaultKey, KeyVaultSecret, OperationalInsightsWorkspace, PortalDashboard, ResourceGroup, RoleAssignment, SqlDatabase, SqlServer, StorageAccount, StorageContainer, StreamAnalyticsCluster, StreamAnalyticsFunction, StreamAnalyticsInput, StreamAnalyticsJob, StreamAnalyticsOutput, StreamAnalyticsTransformation, SynapseSparkPool, SynapseSqlPool, SynapseWorkspace, VirtualMachine, WebApp, WebAppStaticSite
+Accepted values: ActionGroup, AksCluster, AksNodePool, ApiManagement, ApiManagementApi, ApiManagementDiagnostic, ApiManagementLogger, ApiManagementPolicy, AppInsights, AppServicePlan, ContainerApp, ContainerAppManagedEnv, CosmosDBAccount, CosmosDBGremlinDatabase, CosmosDBMongoDBDatabase, CosmosDBSqlDatabase, CosmosDBSqlRoleAssignment, CosmosDBSqlRoleDefinition, ContainerRegistry, DataFactory, DataFactoryLinkedService, EventHub, EventHubConsumerGroup, EventHubNamespace, KeyVault, KeyVaultCertificate, KeyVaultKey, KeyVaultSecret, OperationalInsightsWorkspace, PortalDashboard, ResourceGroup, RoleAssignment, SqlDatabase, SqlServer, StorageAccount, StorageContainer, StreamAnalyticsCluster, StreamAnalyticsFunction, StreamAnalyticsInput, StreamAnalyticsJob, StreamAnalyticsOutput, StreamAnalyticsTransformation, SynapseSparkPool, SynapseSqlPool, SynapseWorkspace, VirtualMachine, WebApp, WebAppStaticSite
 
 Required: True
 Position: 3
@@ -246,8 +246,8 @@ Accept wildcard characters: False
 ```
 
 ### -ServiceName
-If testing an Azure resource that is associated with a Service (e.g., API Management Service), the name of
-the associated Service.
+If testing an Azure resource that is associated with a Service (e.g., API Management Service),
+the name of the associated Service.
 
 ```yaml
 Type: String
@@ -256,22 +256,6 @@ Aliases:
 
 Required: False
 Position: 14
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -ClusterName
-If the Azure resource is associated with an AKS Cluster (e.g, AKS Node Pool) this is the parameter to use to pass
-the AKS cluster name.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 15
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -287,7 +271,55 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
+Position: 15
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ClusterName
+If the Azure resource is associated with an AKS Cluster (e.g, AKS Node Pool), this is the parameter to use to pass
+the AKS cluster name.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
 Position: 16
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RoleAssignmentId
+If testing an Azure resource that is associated with a Role Assignment (e.g., Cosmos DB SQL Role Assignment),
+the name of the associated Role Assignment.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 17
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RoleDefinitionId
+If testing an Azure resource that is associated with a Role Definition (e.g., Cosmos DB SQL Role Definition),
+the name of the associated Role Definition.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 18
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

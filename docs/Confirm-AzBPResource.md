@@ -17,7 +17,8 @@ Confirm-AzBPResource [[-ResourceName] <String>] [[-ResourceGroupName] <String>] 
  [[-ServerName] <String>] [[-KeyVaultName] <String>] [[-DataFactoryName] <String>] [[-NamespaceName] <String>]
  [[-EventHubName] <String>] [[-WorkspaceName] <String>] [[-ServicePrincipalId] <String>] [[-Scope] <String>]
  [[-RoleDefinitionName] <String>] [[-AccountName] <String>] [[-ServiceName] <String>] [[-ClusterName] <String>]
- [[-JobName] <String>] [[-PropertyKey] <String>] [[-PropertyValue] <String>] [<CommonParameters>]
+ [[-JobName] <String>] [[-RoleAssignmentId] <String>] [[-RoleDefinitionId] <String>] [[-PropertyKey] <String>]
+ [[-PropertyValue] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -99,7 +100,7 @@ The type of the Resource as a \[ResourceType\].
 Type: ResourceType
 Parameter Sets: (All)
 Aliases:
-Accepted values: ActionGroup, AksCluster, AksNodePool, ApiManagement, ApiManagementApi, ApiManagementDiagnostic, ApiManagementLogger, ApiManagementPolicy, AppInsights, AppServicePlan, ContainerApp, ContainerAppManagedEnv, CosmosDBAccount, CosmosDBGremlinDatabase, CosmosDBMongoDBDatabase, CosmosDBSqlDatabase, ContainerRegistry, DataFactory, DataFactoryLinkedService, EventHub, EventHubConsumerGroup, EventHubNamespace, KeyVault, KeyVaultCertificate, KeyVaultKey, KeyVaultSecret, OperationalInsightsWorkspace, PortalDashboard, ResourceGroup, RoleAssignment, SqlDatabase, SqlServer, StorageAccount, StorageContainer, StreamAnalyticsCluster, StreamAnalyticsFunction, StreamAnalyticsInput, StreamAnalyticsJob, StreamAnalyticsOutput, StreamAnalyticsTransformation, SynapseSparkPool, SynapseSqlPool, SynapseWorkspace, VirtualMachine, WebApp, WebAppStaticSite
+Accepted values: ActionGroup, AksCluster, AksNodePool, ApiManagement, ApiManagementApi, ApiManagementDiagnostic, ApiManagementLogger, ApiManagementPolicy, AppInsights, AppServicePlan, ContainerApp, ContainerAppManagedEnv, CosmosDBAccount, CosmosDBGremlinDatabase, CosmosDBMongoDBDatabase, CosmosDBSqlDatabase, CosmosDBSqlRoleAssignment, CosmosDBSqlRoleDefinition, ContainerRegistry, DataFactory, DataFactoryLinkedService, EventHub, EventHubConsumerGroup, EventHubNamespace, KeyVault, KeyVaultCertificate, KeyVaultKey, KeyVaultSecret, OperationalInsightsWorkspace, PortalDashboard, ResourceGroup, RoleAssignment, SqlDatabase, SqlServer, StorageAccount, StorageContainer, StreamAnalyticsCluster, StreamAnalyticsFunction, StreamAnalyticsInput, StreamAnalyticsJob, StreamAnalyticsOutput, StreamAnalyticsTransformation, SynapseSparkPool, SynapseSqlPool, SynapseWorkspace, VirtualMachine, WebApp, WebAppStaticSite
 
 Required: True
 Position: 3
@@ -314,6 +315,38 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -RoleAssignmentId
+If testing an Azure resource that is associated with a Role Assignment (e.g., Cosmos DB SQL Role Assignment),
+the id of the Role Assignment.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 17
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RoleDefinitionId
+If testing an Azure resource that is associated with a Role Definition (e.g., Cosmos DB SQL Role Definition),
+the id of the Role Definition.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 18
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -PropertyKey
 The name of the property to check on the resource.
 
@@ -323,7 +356,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 17
+Position: 19
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -338,7 +371,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 18
+Position: 20
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
