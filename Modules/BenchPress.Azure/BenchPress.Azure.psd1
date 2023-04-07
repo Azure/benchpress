@@ -31,6 +31,7 @@
     "Confirm-CosmosDBSqlDatabase",
     "Confirm-DataFactory",
     "Confirm-DataFactoryLinkedService",
+    "Confirm-DiagnosticSetting",
     "Confirm-EventHub",
     "Confirm-EventHubConsumerGroup",
     "Confirm-EventHubNamespace",

@@ -73,8 +73,12 @@ function Confirm-Resource {
       the associated Job.
 
     .PARAMETER ClusterName
-      If the Azure resource is associated with an AKS Cluster (e.g, AKS Node Pool) this is the parameter to use to pass
-      the AKS cluster name.
+      If testing an Azure resource that is associated with an AKS Cluster (e.g, AKS Node Pool) this is the parameter
+      to use to pass the AKS cluster name.
+    
+    .PARAMETER ResourceId
+      If testing an Azure resource that is associated with a Resource ID (e.g., Diagnostic Setting) this is the parameter to use
+      to pass the Resource ID.
 
     .PARAMETER PropertyKey
       The name of the property to check on the resource.
@@ -163,6 +167,9 @@ function Confirm-Resource {
     [string]$JobName,
 
     [Parameter(Mandatory = $false)]
+    [string]$ResourceId,
+
+    [Parameter(Mandatory = $false)]
     [string]$PropertyKey,
 
     [Parameter(Mandatory = $false)]
@@ -187,6 +194,7 @@ function Confirm-Resource {
       ServicePrincipalId = $ServicePrincipalId
       ServiceName        = $ServiceName
       ClusterName        = $ClusterName
+      ResourceId         = $ResourceId
     }
 
     $confirmResult = Get-ResourceByType @resourceParams

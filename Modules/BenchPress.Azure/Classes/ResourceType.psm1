@@ -18,6 +18,7 @@
   ContainerRegistry
   DataFactory
   DataFactoryLinkedService
+  DiagnosticSetting
   EventHub
   EventHubConsumerGroup
   EventHubNamespace

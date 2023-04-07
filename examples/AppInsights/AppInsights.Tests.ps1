@@ -59,6 +59,62 @@ Describe 'Verify Application Insights' {
   }
 }
 
+Describe 'Verify Diagnostic Setting' {
+  BeforeAll {
+    $Script:diagnosticSettingName = 'diagnosticsettingtest'
+    $Script:resourceId = "path/for/resourceId"
+    $Script:noDiagnosticSettingName = 'nodiagnosticsettingtest'
+  }
+
+  It "Should contain a Diagnostic Setting named $diagnosticSettingName - Confirm-AzBPResource" {
+    # arrange
+    $params = @{
+      ResourceType      = "DiagnosticSetting"
+      ResourceName      = $diagnosticSettingName
+      ResourceId        = $resourceId
+    }
+
+    # act and assert
+    Confirm-AzBPResource @params | Should -BeSuccessful
+  }
+
+  It "Should contain a Diagnostic Setting named $diagnosticSettingName with Type of aks cluster -
+  Confirm-AzBPResource" {
+    # arrange
+    $params = @{
+      ResourceType      = "DiagnosticSetting"
+      ResourceName      = $diagnosticSettingName
+      ResourceId        = $resourceId
+      PropertyKey       = "Type"
+      PropertyValue     = "Microsoft.ContainerService/managedClusters"
+    }
+
+    # act and assert
+    Confirm-AzBPResource @params | Should -BeSuccessful
+  }
+
+  It "Should contain a Diagnostic Setting named $diagnosticSettingName" {
+    Confirm-DiagnosticSetting -ResourceId $ResourceId -Name $diagnosticSettingName | Should -BeSuccessful
+  }
+
+  It "Should not contain a Diagnostic Setting named $noDiagnosticSettingName" {
+    # The '-ErrorAction SilentlyContinue' command suppresses all errors.
+    # In this test, it will suppress the error message when a resource cannot be found.
+    # Remove this field to see all errors.
+    Confirm-DiagnosticSetting -ResourceId $ResourceId -Name $noDiagnosticSettingName -ErrorAction SilentlyContinue
+    | Should -Not -BeSuccessful
+  }
+
+  It "Should contain a Diagnostic Setting named $diagnosticSettingName in $location" {
+    Confirm-DiagnosticSetting -ResourceId $ResourceId -Name $diagnosticSettingName | Should -BeInLocation $location
+  }
+
+  It "Should contain a Diagnostic Setting named $diagnosticSettingName in $rgName" {
+    Confirm-DiagnosticSetting -ResourceId $ResourceId -Name $diagnosticSettingName | Should -BeInResourceGroup $rgName
+  }
+}
+
+
 AfterAll {
   Get-Module Az.InfrastructureTesting | Remove-Module
   Get-Module BenchPress.Azure | Remove-Module
