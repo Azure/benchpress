@@ -9,11 +9,6 @@ public class PowershellLanguageProvider : ILanguageProvider
         return name;
     }
 
-    public string Variable(string name)
-    {
-        return $"${name}";
-    }
-
     public string Value(object value)
     {
         if (value is null)
@@ -44,11 +39,6 @@ public class PowershellLanguageProvider : ILanguageProvider
         }
     }
 
-    public string Function(string name)
-    {
-        return name;
-    }
-
     public string Escape(string value)
     {
         return value.Replace("'", "''");
@@ -69,11 +59,6 @@ public class PowershellLanguageProvider : ILanguageProvider
             default:
                 throw new Exception($"Unknown test type: {sdkFunction.Kind}");
         }
-    }
-
-    public string ParameterList(params string[] parameters)
-    {
-        return string.Join(" ", parameters);
     }
 
     public string GetTemplateFileName()
