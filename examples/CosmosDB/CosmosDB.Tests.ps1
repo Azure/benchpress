@@ -198,7 +198,6 @@ Describe 'Verify Cosmos DB Account' {
 
   It "Should contain a Cosmos DB SQL Role Assignment named $sqlRoleAssignmentId - Confirm-AzBPResource" {
     #arrange
-    #TODO: check if this is the correct property
     $params = @{
       ResourceType      = "CosmosDBSqlRoleAssignment"
       ResourceGroupName = $rgName
@@ -227,7 +226,6 @@ Describe 'Verify Cosmos DB Account' {
 
   It "Should contain a Cosmos DB SQL Role Definition named $sqlRoleDefinitionId - Confirm-AzBPResource" {
     #arrange
-    #TODO: check if this is the correct property
     $params = @{
       ResourceType      = "CosmosDBSqlRoleDefinition"
       ResourceGroupName = $rgName
