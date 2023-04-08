@@ -3,13 +3,13 @@
 BeforeDiscovery {
   $testCases = @()
 
-  foreach ($i in [ResourceType].GetEnumNames())
+  foreach ($resourceType in [ResourceType].GetEnumNames())
   {
-    $functionName = "Confirm-$i"
+    $functionName = "Confirm-$resourceType"
 
     # build test case array
     $testObject = @{
-      ResourceType = $i
+      ResourceType = $resourceType
       Expected = $functionName
     }
 
@@ -20,9 +20,9 @@ BeforeDiscovery {
 BeforeAll {
   . $PSScriptRoot/../../Public/Get-ResourceByType.ps1
 
-  foreach ($i in [ResourceType].GetEnumNames())
+  foreach ($resourceType in [ResourceType].GetEnumNames())
   {
-    $functionName = "Confirm-$i"
+    $functionName = "Confirm-$resourceType"
     $fileName = "$functionName.ps1"
 
     # dot-source the powershell function
