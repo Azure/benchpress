@@ -31,16 +31,7 @@ BeforeAll {
 }
 
 Describe "Get-ResourceByType" {
-  BeforeAll {
-    foreach ($i in [ResourceType].GetEnumNames())
-    {
-      $functionName = "Confirm-$i"
-      Mock $functionName {}
-    }
-  }
-
   Context "unit tests" -Tag "Unit" {
-
     It "Calls <expected> when <resourceType> is used" -TestCases $testCases {
       $params = @{
         ResourceName = 'resourcename'
@@ -59,7 +50,23 @@ Describe "Get-ResourceByType" {
         ClusterName = 'clustername'
         JobName = 'jobname'
       }
-      Get-ResourceByType @params | Should -Invoke -CommandName $Expected -Times 1
+
+      $functionName = "Confirm-$ResourceType"
+      $requiredParams = (Get-Command -Name $functionName).ParameterSets[0].Parameters
+      | Where-Object IsMandatory -eq True | Select-Object Name
+
+      # create list of expressions like '$<parameter> -ne $null'
+      $filters = $requiredParams
+      | Select-Object  @{label='Filter';expression={'$' + $_.name + ' -ne $null'}}
+
+      # create joint expression for verifying function is called with
+      # all required parameters (ie parameter values are not null)
+      $filterString = $filters | Join-String -Property Filter -Separator " and "
+
+      Mock $functionName {}
+
+      Get-ResourceByType @params
+      | Should -Invoke -CommandName $Expected -Times 1 -ParameterFilter {$filterString}
     }
   }
 }
