@@ -55,10 +55,10 @@ rootCommand.SetHandler(
 
         foreach (var metadata in metadataList)
         {
-          foreach(var supportedTestType in metadata.ResourceType.GetSupportedTestTypes())
-          {
-            testList.Add(new TestDefinition(metadata, supportedTestType));
-          }
+            foreach (var supportedTestType in metadata.ResourceType.GetSupportedTestTypes())
+            {
+                testList.Add(new TestDefinition(metadata, supportedTestType));
+            }
         }
 
         AppDomain.CurrentDomain
