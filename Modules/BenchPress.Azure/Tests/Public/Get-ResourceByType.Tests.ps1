@@ -49,6 +49,9 @@ Describe "Get-ResourceByType" {
         ServiceName = 'servicename'
         ClusterName = 'clustername'
         JobName = 'jobname'
+        KeyVaultName = "keyvaultname"
+        RoleAssignmentId = 'roleassignmentid'
+        RoleDefinitionId = 'roledefinitionid'
       }
 
       $functionName = "Confirm-$ResourceType"
