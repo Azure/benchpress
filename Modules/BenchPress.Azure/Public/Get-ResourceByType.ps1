@@ -13,6 +13,7 @@ using module ./../Classes/ResourceType.psm1
 . $PSScriptRoot/Confirm-CosmosDBSqlRoleDefinition.ps1
 . $PSScriptRoot/Confirm-DataFactory.ps1
 . $PSScriptRoot/Confirm-DataFactoryLinkedService.ps1
+. $PSScriptRoot/Confirm-DiagnosticSetting.ps1
 . $PSScriptRoot/Confirm-EventHub.ps1
 . $PSScriptRoot/Confirm-EventHubConsumerGroup.ps1
 . $PSScriptRoot/Confirm-EventHubNamespace.ps1
@@ -109,6 +110,10 @@ function Get-ResourceByType {
       If the Azure resource is associated with an AKS Cluster (e.g, AKS Node Pool), this is the parameter to use to pass
       the AKS cluster name.
 
+    .PARAMETER ResourceId
+      If testing an Azure resource that is associated with a Resource ID (e.g., Diagnostic Setting)
+      this is the parameter to use to pass the Resource ID.
+
     .EXAMPLE
       Get-AzBPResourceByType -ResourceType ActionGroup -ResourceName "bpactiongroup" -ResourceGroupName "rgbenchpresstest"
 
@@ -171,6 +176,9 @@ function Get-ResourceByType {
 
     [Parameter(Mandatory = $false)]
     [string]$ClusterName,
+
+    [Parameter(Mandatory = $false)]
+    [string]$ResourceId,
 
     [Parameter(Mandatory = $false)]
     [string]$RoleAssignmentId,
@@ -298,6 +306,9 @@ function Get-ResourceByType {
           ResourceGroupName = $ResourceGroupName
         }
         return Confirm-DataFactoryLinkedService @params
+      }
+      "DiagnosticSetting" {
+        return Confirm-DiagnosticSetting -ResourceId $ResourceId -Name $ResourceName
       }
       "EventHub" {
         $params = @{
