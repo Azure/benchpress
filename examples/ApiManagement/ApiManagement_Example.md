@@ -20,7 +20,7 @@ cmdlets.
 
    ```Powershell
     New-AzResourceGroupDeployment -ResourceGroupName "<your-resource-group-name>"`
-    -TemplateFile ".\ApiManagement.bicep"
+    -TemplateFile ".\apiManagement.bicep"
    ```
 
 1. Update `ApiManagement.Tests.ps1` variables to point to your expected resources:

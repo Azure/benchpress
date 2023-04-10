@@ -170,7 +170,7 @@ public class AzureDeploymentImporter
 
         var dependsOn = resource["dependsOn"]?[0]?.ToString().Trim().Split(",");
         var resourceIds = dependsOn?[0].Trim('\'').Split("/").Skip(1).ToArray();
-        var resourceNames = dependsOn?.Skip(1).ToArray();
+        var resourceNames = dependsOn?.Skip(1).Select(name => name.TrimEnd(')', ']')).ToArray();
         if (
             resourceIds != null
             && resourceNames != null
@@ -179,9 +179,12 @@ public class AzureDeploymentImporter
         {
             foreach (var resourceId in resourceIds)
             {
+                // When adding resource names to the dictionary, we need to add a closing
+                // parenthesis to the end of the resource name because the resource name is initially stripped
+                // all ending brackets and parenthesis
                 extraProperties.Add(
                     resourceId,
-                    resourceNames[Array.IndexOf(resourceIds, resourceId)]
+                    resourceNames[Array.IndexOf(resourceIds, resourceId)] + ")"
                 );
             }
         }
