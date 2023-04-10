@@ -17,8 +17,8 @@ Confirm-AzBPResource [[-ResourceName] <String>] [[-ResourceGroupName] <String>] 
  [[-ServerName] <String>] [[-KeyVaultName] <String>] [[-DataFactoryName] <String>] [[-NamespaceName] <String>]
  [[-EventHubName] <String>] [[-WorkspaceName] <String>] [[-ServicePrincipalId] <String>] [[-Scope] <String>]
  [[-RoleDefinitionName] <String>] [[-AccountName] <String>] [[-ServiceName] <String>] [[-ClusterName] <String>]
- [[-JobName] <String>] [[-RoleAssignmentId] <String>] [[-RoleDefinitionId] <String>] [[-PropertyKey] <String>]
- [[-PropertyValue] <String>] [<CommonParameters>]
+ [[-JobName] <String>] [[-ResourceId] <String>] [[-RoleAssignmentId] <String>] [[-RoleDefinitionId] <String>]
+ [[-PropertyKey] <String>] [[-PropertyValue] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -100,7 +100,7 @@ The type of the Resource as a \[ResourceType\].
 Type: ResourceType
 Parameter Sets: (All)
 Aliases:
-Accepted values: ActionGroup, AksCluster, AksNodePool, ApiManagement, ApiManagementApi, ApiManagementDiagnostic, ApiManagementLogger, ApiManagementPolicy, AppInsights, AppServicePlan, ContainerApp, ContainerAppManagedEnv, CosmosDBAccount, CosmosDBGremlinDatabase, CosmosDBMongoDBDatabase, CosmosDBSqlDatabase, CosmosDBSqlRoleAssignment, CosmosDBSqlRoleDefinition, ContainerRegistry, DataFactory, DataFactoryLinkedService, EventHub, EventHubConsumerGroup, EventHubNamespace, KeyVault, KeyVaultCertificate, KeyVaultKey, KeyVaultSecret, OperationalInsightsWorkspace, PortalDashboard, ResourceGroup, RoleAssignment, SqlDatabase, SqlServer, StorageAccount, StorageContainer, StreamAnalyticsCluster, StreamAnalyticsFunction, StreamAnalyticsInput, StreamAnalyticsJob, StreamAnalyticsOutput, StreamAnalyticsTransformation, SynapseSparkPool, SynapseSqlPool, SynapseWorkspace, VirtualMachine, WebApp, WebAppStaticSite
+Accepted values: ActionGroup, AksCluster, AksNodePool, ApiManagement, ApiManagementApi, ApiManagementDiagnostic, ApiManagementLogger, ApiManagementPolicy, AppInsights, AppServicePlan, ContainerApp, ContainerAppManagedEnv, CosmosDBAccount, CosmosDBGremlinDatabase, CosmosDBMongoDBDatabase, CosmosDBSqlDatabase, CosmosDBSqlRoleAssignment, CosmosDBSqlRoleDefinition, ContainerRegistry, DataFactory, DataFactoryLinkedService, DiagnosticSetting, EventHub, EventHubConsumerGroup, EventHubNamespace, KeyVault, KeyVaultCertificate, KeyVaultKey, KeyVaultSecret, OperationalInsightsWorkspace, PortalDashboard, ResourceGroup, RoleAssignment, SqlDatabase, SqlServer, StorageAccount, StorageContainer, StreamAnalyticsCluster, StreamAnalyticsFunction, StreamAnalyticsInput, StreamAnalyticsJob, StreamAnalyticsOutput, StreamAnalyticsTransformation, SynapseSparkPool, SynapseSqlPool, SynapseWorkspace, VirtualMachine, WebApp, WebAppStaticSite
 
 Required: True
 Position: 3
@@ -284,8 +284,8 @@ Accept wildcard characters: False
 ```
 
 ### -ClusterName
-If the Azure resource is associated with an AKS Cluster (e.g, AKS Node Pool) this is the parameter to use to pass
-the AKS cluster name.
+If testing an Azure resource that is associated with an AKS Cluster (e.g, AKS Node Pool) this is the parameter
+to use to pass the AKS cluster name.
 
 ```yaml
 Type: String
@@ -315,6 +315,22 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -ResourceId
+If testing an Azure resource that is associated with a Resource ID (e.g., Diagnostic Setting)
+this is the parameter to use to pass the Resource ID.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 17
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -RoleAssignmentId
 If testing an Azure resource that is associated with a Role Assignment (e.g., Cosmos DB SQL Role Assignment),
 the id of the Role Assignment.
@@ -325,7 +341,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 17
+Position: 18
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -341,7 +357,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 18
+Position: 19
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -356,7 +372,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 19
+Position: 20
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -371,7 +387,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 20
+Position: 21
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
