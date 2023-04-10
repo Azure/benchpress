@@ -1,7 +1,6 @@
 # How To Run ApiManagement.Tests.ps1
 
-`ApiManagement.Tests.ps1` contains examples of using the `Confirm-AzBPApiManagement`, `Confirm-AzBPApiManagementApi`,
-`Confirm-AzBPApiManagementDiagnostic`, `Confirm-AzBPApiManagementLogger`, and `Confirm-AzBPApiManagementPolicy`
+`ApiManagement.Tests.ps1` contains examples of using the `Confirm-AzBPApiManagement*`
 cmdlets.
 
 ## Pre-Requisites
