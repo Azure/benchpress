@@ -28,6 +28,12 @@ public abstract class ResourceType
     public abstract string FriendlyName { get; }
     public abstract string Prefix { get; }
     public abstract string FunctionPrefix { get; }
+
+    public virtual IEnumerable<TestType> GetSupportedTestTypes()
+    {
+        return new[] { TestType.ResourceExists };
+    }
+
     public abstract IEnumerable<KeyValuePair<string, object>> GetResourceParameters(TestMetadata m);
 
     protected static KeyValuePair<string, object> Param(string name, object value)
