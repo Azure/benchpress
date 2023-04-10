@@ -85,8 +85,8 @@ function Confirm-Resource {
       to use to pass the AKS cluster name.
 
     .PARAMETER ResourceId
-      If testing an Azure resource that is associated with a Resource ID (e.g., Diagnostic Setting) this is the parameter to use
-      to pass the Resource ID.
+      If testing an Azure resource that is associated with a Resource ID (e.g., Diagnostic Setting)
+      this is the parameter to use to pass the Resource ID.
 
     .PARAMETER PropertyKey
       The name of the property to check on the resource.
