@@ -79,7 +79,7 @@ public class AzureDeploymentImporter
 
             if (resourceName.StartsWith("[") && resourceName.EndsWith("]"))
             {
-                resourceName = GetResourceNameValue(resourceName, parsed);
+                resourceName = GetValueOfParamOrVar(resourceName, parsed);
             }
 
             if (resourceName == null)
@@ -148,7 +148,7 @@ public class AzureDeploymentImporter
         {
             foreach (var resourceId in resourceIds)
             {
-                var resourceName = GetResourceNameValue(
+                var resourceName = GetValueOfParamOrVar(
                   resourceNames[Array.IndexOf(resourceIds, resourceId)],
                   armTemplateObject);
                 extraProperties.Add(resourceId, resourceName);
@@ -159,13 +159,54 @@ public class AzureDeploymentImporter
         return extraProperties;
     }
 
-    private static string GetResourceNameValue(string resourceName, JsonObject armTemplateObject)
+    /// <summary>
+    /// Takes an ARM template parameter or variable and returns the resolved value, if possible.
+    /// <example>
+    /// For example, if the following ARM template (<paramref name="armTemplateObject"/>) with the parameter block
+    /// below is passed in:
+    /// <code>
+    /// {...
+    ///   "parameters": {
+    ///     "demoParam": {
+    ///       "type": "string",
+    ///       "defaultValue": "Contoso"
+    ///     }
+    ///   }
+    /// ...}
+    /// </code>
+    /// and the following parameter string (<paramref name ="paramOrVar"/>) is passed in:
+    /// <code>
+    /// "[parameters('demoParam')]"
+    /// </code>
+    /// The parameter will be resolved to the default value and result in the following return value:
+    /// <code>
+    /// "Contoso"
+    /// </code>
+    /// This method can also handle resolving ARM template variables. For example if the following ARM template
+    /// (<paramref name="armTemplateObject"/>) with the variable block below is passed in:
+    /// <code>
+    /// {...
+    ///   "variables": {
+    ///     "demoParam": "Contoso"
+    ///   }
+    /// ...}
+    /// </code>
+    /// and the following variable string (<paramref name ="paramOrVar"/>) is passed in:
+    /// <code>
+    /// "[variables('demoParam')]"
+    /// </code>
+    /// Will resolve the variable to the correct value and result in the following return value:
+    /// <code>
+    /// "Contoso"
+    /// </code>
+    /// </summary>
+    private static string GetValueOfParamOrVar(string paramOrVar, JsonObject armTemplateObject)
     {
       var parts = new[] { "parameters", "variables" };
 
       foreach (var part in parts)
       {
-          var temp = resourceName;
+          var temp = paramOrVar;
           var parsedValue = temp!
               .Replace("[", "")
               .Replace("]", "")
@@ -189,10 +230,10 @@ public class AzureDeploymentImporter
           }
           if (!string.IsNullOrWhiteSpace(temp))
           {
-              resourceName = temp;
+              paramOrVar = temp;
               break;
           }
       }
-      return resourceName;
+      return paramOrVar;
     }
 }
