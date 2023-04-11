@@ -175,7 +175,7 @@ public class AzureDeploymentImporter
     private static Dictionary<string, string> GetExtraProperties(JsonNode resource)
     {
         var extraProperties = new Dictionary<string, string>();
-        var dependencies = (JsonArray?) resource[s_dependsOnKey];
+        var dependencies = (JsonArray?)resource[s_dependsOnKey];
 
         if (dependencies != null)
         {
