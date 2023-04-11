@@ -204,14 +204,14 @@ public class AzureDeploymentImporter
                         // There should be one more Resource ID Parameter than path parts, otherwise it is not valid.
                         if (pathParts.Count() == (resourceIdParameters.Count() - 1))
                         {
-                            // Skip the path parameter, counts and indexes match now
+                            // Skip the path parameter, counts and indexes match now.
                             var values = resourceIdParameters.Skip(1).ToList();
 
                             for (int index = 0; index < pathParts.Count(); index++)
                             {
                                 // If the value is a hard coded value and not a "parameter" or "variable", then the
                                 // value will be "'value'" so trim any single quotes (this will not affect "parameter"
-                                // or "variable" entries)
+                                // or "variable" entries).
                                 extraProperties.Add(pathParts[index], values[index].Trim('\''));
                             }
                         }
