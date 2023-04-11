@@ -189,10 +189,7 @@ public class AzureDeploymentImporter
                     // will be values for the path (e.g., "parameters('yyy')", "variables('zzz')").
                     var resourceIdParameters = s_resourceIdParametersRegex
                         .Match(dependency.ToString())
-                        .Groups[s_resourceIdParametersKey]
-                        .Captures[0]
-                        .Value
-                        .Split(
+                        .Groups[s_resourceIdParametersKey].Captures[0].Value.Split(
                             ',',
                             StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries
                         );
