@@ -1,9 +1,17 @@
 using System.Text.Json.Nodes;
+using System.Text.RegularExpressions;
 
 namespace Generators;
 
 public class AzureDeploymentImporter
 {
+    private static Regex s_resourceIdParametersRegex = new Regex(
+        "\\[resourceId\\((?<resourceIdParameters>.*)\\)\\]",
+        RegexOptions.Compiled
+    );
+    private static string s_resourceIdParametersKey = "resourceIdParameters";
+    private static string s_dependsOnKey = "dependsOn";
+
     public static IEnumerable<TestMetadata> Import(FileInfo inputFile, string outputFolderPath)
     {
         return Import(inputFile.FullName, outputFolderPath);
@@ -135,7 +143,7 @@ public class AzureDeploymentImporter
     /// <summary>
     /// Sets the extra properties for the test metadata by using information in the resource definition. When
     /// the bicep file is transpiled to an ARM template, the dependsOn property for each resource will be in the form
-    /// of a resource unique identifier.  The unique identifier can be used to determine any parent or dependent
+    /// of a resource unique identifier. The unique identifier can be used to determine any parent or dependent
     /// resources. Any parent or dependent resources will be added to the extra properties dictionary with the resource
     /// type as the key and the resource name as the value. This will allow ResourceTypes that need additional
     /// parameters (i.e. SqlDatabase will need ServerName) to be able to get the value from the extra properties
@@ -164,27 +172,59 @@ public class AzureDeploymentImporter
     /// }
     /// </code>
     /// </summary>
-    private static Dictionary<string, object> GetExtraProperties(JsonNode resource)
+    private static Dictionary<string, string> GetExtraProperties(JsonNode resource)
     {
-        var extraProperties = new Dictionary<string, object>();
+        var extraProperties = new Dictionary<string, string>();
+        var dependencies = (JsonArray?)resource[s_dependsOnKey];
 
-        var dependsOn = resource["dependsOn"]?[0]?.ToString().Trim().Split(",");
-        var resourceIds = dependsOn?[0].Trim('\'').Split("/").Skip(1).ToArray();
-        var resourceNames = dependsOn?.Skip(1).ToArray();
-        if (
-            resourceIds != null
-            && resourceNames != null
-            && resourceIds.Length == resourceNames.Length
-        )
+        if (dependencies != null)
         {
-            foreach (var resourceId in resourceIds)
+            foreach (var dependency in dependencies)
             {
-                extraProperties.Add(
-                    resourceId,
-                    resourceNames[Array.IndexOf(resourceIds, resourceId)]
-                );
+                if (dependency != null)
+                {
+                    // There is only one Capture value for the Group, which is the entire list of parameters that are
+                    // passed to "[resourceId()]" as a single string. After the split, the first parameter in
+                    // resourceIdParameters will be the path (e.g., "'Microsoft.xxx/yyy/zzz'"), and all further entries
+                    // will be values for the path (e.g., "parameters('yyy')", "variables('zzz')").
+                    var resourceIdParameters = s_resourceIdParametersRegex
+                        .Match(dependency.ToString())
+                        .Groups[s_resourceIdParametersKey].Captures[0].Value.Split(
+                        ',',
+                        StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries
+                    );
+
+                    // The number of entries in resourceIdParameters must be 2 or more, otherwise it's not valid.
+                    if (resourceIdParameters.Length > 1)
+                    {
+                        // The first element is the path, so remove the leading/trailing single quotes from
+                        // "'Microsft.xxx/yyy/zzz'", then split on the path separator: ["Microsoft.xxx", "yyy", "zzz"],
+                        // and finally, remove the leading "Microsoft.xxx" by skipping (1).
+                        var pathParts = resourceIdParameters[0]
+                            .Trim('\'')
+                            .Split('/')
+                            .Skip(1)
+                            .ToList();
+
+                        // There should be one more Resource ID Parameter than path parts, otherwise it is not valid.
+                        if (pathParts.Count() == (resourceIdParameters.Count() - 1))
+                        {
+                            // Skip the path parameter, counts and indexes match now.
+                            var values = resourceIdParameters.Skip(1).ToList();
+
+                            for (int index = 0; index < pathParts.Count(); index++)
+                            {
+                                // If the value is a hard coded value and not a "parameter" or "variable", then the
+                                // value will be "'value'" so trim any single quotes (this will not affect "parameter"
+                                // or "variable" entries).
+                                extraProperties.Add(pathParts[index], values[index].Trim('\''));
+                            }
+                        }
+                    }
+                }
             }
         }
+
         extraProperties.Add("resourceGroup", "FAKE-RESOURCE-GROUP");
 
         return extraProperties;
