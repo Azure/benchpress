@@ -6,7 +6,8 @@ namespace Generators;
 public class AzureDeploymentImporter
 {
     private static Regex s_resourceIdParametersRegex = new Regex(
-        "\\[resourceId\\((?<resourceIdParameters>.*)\\)\\]", RegexOptions.Compiled
+        "\\[resourceId\\((?<resourceIdParameters>.*)\\)\\]",
+        RegexOptions.Compiled
     );
     private static string s_resourceIdParametersKey = "resourceIdParameters";
     private static string s_dependsOnKey = "dependsOn";
@@ -198,11 +199,8 @@ public class AzureDeploymentImporter
                     if (resourceIdParameters.Length > 1)
                     {
                         // The first element is the path, so remove the leading/trailing single quotes from
-
                         // "'Microsft.xxx/yyy/zzz'", then split on the path separator: ["Microsoft.xxx", "yyy", "zzz"],
-
                         // and finally, remove the leading "Microsoft.xxx" by skipping (1).
-
                         var pathParts = resourceIdParameters[0].Trim('\'').Split('/').Skip(1).ToList();
 
                         // There should be one more Resource ID Parameter than path parts, otherwise it is not valid.
