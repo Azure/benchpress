@@ -1,6 +1,8 @@
 # How To Run CosmosDB*.Tests.ps1
 
-The `CosmosDB*.Tests.ps1` files contain examples of using the `Confirm-AzBPCosmosDB*` cmdlets.
+The `CosmosDB*.Tests.ps1` files contain examples of using the `Confirm-AzBPCosmosDBAccount`,
+`Confirm-AzBPCosmosDBGremlinDatabase`, `Confirm-CosmosDBMongoDBDatabase`, `Confirm-AzBPCosmosDBSqlDatabase`,
+`Confirm-AzBPCosmosDBSqlRoleAssignment`, `Confirm-AzBPCosmosDBSqlRoleDefinition` cmdlets.
 
 ## Pre-Requisites
 
