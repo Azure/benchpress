@@ -190,8 +190,8 @@ public class AzureDeploymentImporter
                     var resourceIdParameters = s_resourceIdParametersRegex
                         .Match(dependency.ToString())
                         .Groups[s_resourceIdParametersKey].Captures[0].Value.Split(
-                            ',',
-                            StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries
+                        ',',
+                        StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries
                         );
 
                     // The number of entries in resourceIdParameters must be 2 or more, otherwise it's not valid.
