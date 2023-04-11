@@ -5,8 +5,9 @@ namespace Generators;
 
 public class AzureDeploymentImporter
 {
-    private static Regex s_resourceIdParametersRegex =
-        new Regex("\\[resourceId\\((?<resourceIdParameters>.*)\\)\\]", RegexOptions.Compiled);
+    private static Regex s_resourceIdParametersRegex = new Regex(
+        "\\[resourceId\\((?<resourceIdParameters>.*)\\)\\]", RegexOptions.Compiled
+    );
     private static string s_resourceIdParametersKey = "resourceIdParameters";
     private static string s_dependsOnKey = "dependsOn";
 
