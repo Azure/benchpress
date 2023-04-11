@@ -142,7 +142,7 @@ public class AzureDeploymentImporter
     /// <summary>
     /// Sets the extra properties for the test metadata by using information in the resource definition. When
     /// the bicep file is transpiled to an ARM template, the dependsOn property for each resource will be in the form
-    /// of a resource unique identifier.  The unique identifier can be used to determine any parent or dependent
+    /// of a resource unique identifier. The unique identifier can be used to determine any parent or dependent
     /// resources. Any parent or dependent resources will be added to the extra properties dictionary with the resource
     /// type as the key and the resource name as the value. This will allow ResourceTypes that need additional
     /// parameters (i.e. SqlDatabase will need ServerName) to be able to get the value from the extra properties
