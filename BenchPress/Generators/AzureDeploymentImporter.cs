@@ -198,7 +198,8 @@ public class AzureDeploymentImporter
                     if (resourceIdParameters.Length > 1)
                     {
                         // The first element is the path, remove the leading/trailing single quotes from
-                        // "'Microsft.xxx/yyy/zzz'", split on the path separator, ["Microsoft.xxx", "yyy", "zzz"],
+                        // "'Microsft.xxx/yyy/zzz'", then split on the path separator: ["Microsoft.xxx", "yyy", "zzz"],
+
                         // remove the leading "Microsoft.xxx".
                         var pathParts = resourceIdParameters[0].Trim('\'').Split('/').Skip(1).ToList();
 
