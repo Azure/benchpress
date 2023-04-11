@@ -7,7 +7,7 @@ public class TestMetadata
     public TestMetadata(
         string resourceType,
         string resourceName,
-        IDictionary<string, object> extraProperties
+        IDictionary<string, string> extraProperties
     )
     {
         ResourceType = ResourceType.Create(resourceType);
@@ -17,7 +17,7 @@ public class TestMetadata
 
     public ResourceType ResourceType { get; set; }
     public string ResourceName { get; set; }
-    public IDictionary<string, object> ExtraProperties { get; set; }
+    public IDictionary<string, string> ExtraProperties { get; set; }
 }
 
 public class UnknownResourceTypeException : Exception

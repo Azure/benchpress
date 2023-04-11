@@ -1,9 +1,15 @@
 using System.Text.Json.Nodes;
+using System.Text.RegularExpressions;
 
 namespace Generators;
 
 public class AzureDeploymentImporter
 {
+    private static Regex s_resourceIdParametersRegex =
+        new Regex("\\[resourceId\\((?<resourceIdParameters>.*)\\)\\]", RegexOptions.Compiled);
+    private static string s_resourceIdParametersKey = "resourceIdParameters";
+    private static string s_dependsOnKey = "dependsOn";
+
     public static IEnumerable<TestMetadata> Import(FileInfo inputFile, string outputFolderPath)
     {
         return Import(inputFile.FullName, outputFolderPath);
@@ -87,7 +93,7 @@ public class AzureDeploymentImporter
                 throw new Exception("Failed to parse json file");
             }
 
-            var extraProperties = GetExtraProperties(resource, parsed);
+            var extraProperties = GetExtraProperties(resource);
 
             try
             {
@@ -133,27 +139,56 @@ public class AzureDeploymentImporter
     /// }
     /// </code>
     /// </summary>
-    private static Dictionary<string, object> GetExtraProperties(JsonNode resource, JsonObject armTemplateObject)
+    private static Dictionary<string, string> GetExtraProperties(JsonNode resource)
     {
-        var extraProperties = new Dictionary<string, object>();
+        var extraProperties = new Dictionary<string, string>();
+        var dependencies = (JsonArray?) resource[s_dependsOnKey];
 
-        var dependsOn = resource["dependsOn"]?[0]?.ToString().Trim().Split(",");
-        var resourceIds = dependsOn?[0].Trim('\'').Split("/").Skip(1).ToArray();
-        var resourceNames = dependsOn?.Skip(1).ToArray();
-        if (
-            resourceIds != null
-            && resourceNames != null
-            && resourceIds.Length == resourceNames.Length
-        )
+        if (dependencies != null)
         {
-            foreach (var resourceId in resourceIds)
+            foreach (var dependency in dependencies)
             {
-                var resourceName = GetValueOfParamOrVar(
-                  resourceNames[Array.IndexOf(resourceIds, resourceId)],
-                  armTemplateObject);
-                extraProperties.Add(resourceId, resourceName);
+                if (dependency != null)
+                {
+                    // There will be only one Capture for the Group that is the entire list of parameters that are
+                    // passed to "[resourceId()]" as a single string. After the split, the first parameter in
+                    // resourceIdParameters will be the path (e.g., "'Microsoft.xxx/yyy/zzz'"), and all further entries
+                    // will be values for the path (e.g., "parameters('yyy')", "variables('zzz')").
+                    var resourceIdParameters =
+                        s_resourceIdParametersRegex
+                            .Match(dependency.ToString())
+                            .Groups[s_resourceIdParametersKey]
+                            .Captures[0]
+                            .Value
+                            .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
+                    // The number of entries in resourceIdParameters must be 2 or more, otherwise it's not valid.
+                    if (resourceIdParameters.Length > 1)
+                    {
+                        // The first element is the path, remove the leading/trailing single quotes from
+                        // "'Microsft.xxx/yyy/zzz'", split on the path separator, ["Microsoft.xxx", "yyy", "zzz"],
+                        // remove the leading "Microsoft.xxx".
+                        var pathParts = resourceIdParameters[0].Trim('\'').Split('/').Skip(1).ToList();
+
+                        // There should be one more Resource ID Parameter than path parts, otherwise it is not valid.
+                        if (pathParts.Count() == (resourceIdParameters.Count() - 1))
+                        {
+                            // Skip the path parameter, counts and indexes match now.
+                            var values = resourceIdParameters.Skip(1).ToList();
+
+                            for (int index = 0; index < pathParts.Count(); index++)
+                            {
+                                // If the value is a hard coded value and not a "parameter" or "variable", then the
+                                // value will be "'value'" so trim any single quotes (this will not affect "parameter"
+                                // or "variable" entries).
+                                extraProperties.Add(pathParts[index], values[index].Trim('\''));
+                            }
+                        }
+                    }
+                }
             }
         }
+
         extraProperties.Add("resourceGroup", "FAKE-RESOURCE-GROUP");
 
         return extraProperties;
