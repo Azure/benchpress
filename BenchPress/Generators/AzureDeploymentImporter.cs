@@ -197,7 +197,8 @@ public class AzureDeploymentImporter
                     // The number of entries in resourceIdParameters must be 2 or more, otherwise it's not valid.
                     if (resourceIdParameters.Length > 1)
                     {
-                        // The first element is the path, remove the leading/trailing single quotes from
+                        // The first element is the path, so remove the leading/trailing single quotes from
+
                         // "'Microsft.xxx/yyy/zzz'", then split on the path separator: ["Microsoft.xxx", "yyy", "zzz"],
 
                         // remove the leading "Microsoft.xxx".
