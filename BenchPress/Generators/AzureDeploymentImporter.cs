@@ -1,9 +1,13 @@
 using System.Text.Json.Nodes;
+using System.Text.RegularExpressions;
 
 namespace Generators;
 
 public class AzureDeploymentImporter
 {
+    private static Regex s_pathRegex = new Regex("resourceId\\('([^']*)", RegexOptions.Compiled);
+    private static Regex s_propertiesRegex = new Regex("parameters\\('([^']*)", RegexOptions.Compiled);
+
     public static IEnumerable<TestMetadata> Import(FileInfo inputFile, string outputFolderPath)
     {
         return Import(inputFile.FullName, outputFolderPath);
@@ -164,27 +168,40 @@ public class AzureDeploymentImporter
     /// }
     /// </code>
     /// </summary>
-    private static Dictionary<string, object> GetExtraProperties(JsonNode resource)
+    private static Dictionary<string, string> GetExtraProperties(JsonNode resource)
     {
-        var extraProperties = new Dictionary<string, object>();
+        var extraProperties = new Dictionary<string, string>();
+        var dependencies = (JsonArray?) resource["dependsOn"];
 
-        var dependsOn = resource["dependsOn"]?[0]?.ToString().Trim().Split(",");
-        var resourceIds = dependsOn?[0].Trim('\'').Split("/").Skip(1).ToArray();
-        var resourceNames = dependsOn?.Skip(1).ToArray();
-        if (
-            resourceIds != null
-            && resourceNames != null
-            && resourceIds.Length == resourceNames.Length
-        )
+        if (dependencies != null)
         {
-            foreach (var resourceId in resourceIds)
+            foreach (var dependency in dependencies)
             {
-                extraProperties.Add(
-                    resourceId,
-                    resourceNames[Array.IndexOf(resourceIds, resourceId)]
-                );
+                if (dependency != null)
+                {
+                    var dependencyString = dependency.ToString();
+                    var pathMatch = s_pathRegex.Match(dependencyString);
+                    // There will only ever be one match for the path regex and it will be a string in the format of
+                    // "Microsoft.<resource type>/<path 1>/<path 2>/<etc.>" and will capture the entire value of the
+                    // string. We only want the <path n> values between the slashes, without the "Microsoft.xxx".
+                    var paths = pathMatch.Captures[0].Value.Split('/').Skip(1).ToArray();
+
+                    if (paths != null)
+                    {
+                        var propertiesMatch = s_propertiesRegex.Match(dependencyString);
+
+                        if (propertiesMatch != null && paths.Length == propertiesMatch.Captures.Count)
+                        {
+                            for (int index = 0; index < paths.Length; index++)
+                            {
+                                extraProperties.Add(paths[index], propertiesMatch.Captures[index].Value);
+                            }
+                        }
+                    }
+                }
             }
         }
+
         extraProperties.Add("resourceGroup", "FAKE-RESOURCE-GROUP");
 
         return extraProperties;
