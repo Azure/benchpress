@@ -79,38 +79,7 @@ public class AzureDeploymentImporter
 
             if (resourceName.StartsWith("[") && resourceName.EndsWith("]"))
             {
-                var parts = new[] { "parameters", "variables" };
-
-                foreach (var part in parts)
-                {
-                    var temp = resourceName;
-                    var parsedValue = temp!
-                        .Replace("[", "")
-                        .Replace("]", "")
-                        .Replace(part, "")
-                        .Replace("(", "")
-                        .Replace(")", "")
-                        .Replace("'", "")
-                        .Trim();
-
-                    if (!string.IsNullOrWhiteSpace(parsedValue))
-                    {
-                        var defaultValueNode = parsed[part]?[parsedValue];
-                        if (defaultValueNode is JsonObject)
-                        {
-                            temp = defaultValueNode["defaultValue"]!.ToString();
-                        }
-                        else
-                        {
-                            temp = parsed[part]?[parsedValue]?.ToString();
-                        }
-                    }
-                    if (!string.IsNullOrWhiteSpace(temp))
-                    {
-                        resourceName = temp;
-                        break;
-                    }
-                }
+                resourceName = GetResourceNameValue(resourceName, parsed);
             }
 
             if (resourceName == null)
@@ -118,7 +87,7 @@ public class AzureDeploymentImporter
                 throw new Exception("Failed to parse json file");
             }
 
-            var extraProperties = GetExtraProperties(resource);
+            var extraProperties = GetExtraProperties(resource, parsed);
 
             try
             {
@@ -164,7 +133,7 @@ public class AzureDeploymentImporter
     /// }
     /// </code>
     /// </summary>
-    private static Dictionary<string, object> GetExtraProperties(JsonNode resource)
+    private static Dictionary<string, object> GetExtraProperties(JsonNode resource, JsonObject armTemplateObject)
     {
         var extraProperties = new Dictionary<string, object>();
 
@@ -179,14 +148,51 @@ public class AzureDeploymentImporter
         {
             foreach (var resourceId in resourceIds)
             {
-                extraProperties.Add(
-                    resourceId,
-                    resourceNames[Array.IndexOf(resourceIds, resourceId)]
-                );
+                var resourceName = GetResourceNameValue(
+                  resourceNames[Array.IndexOf(resourceIds, resourceId)],
+                  armTemplateObject);
+                extraProperties.Add(resourceId, resourceName);
             }
         }
         extraProperties.Add("resourceGroup", "FAKE-RESOURCE-GROUP");
 
         return extraProperties;
+    }
+
+    private static string GetResourceNameValue(string resourceName, JsonObject armTemplateObject)
+    {
+      var parts = new[] { "parameters", "variables" };
+
+      foreach (var part in parts)
+      {
+          var temp = resourceName;
+          var parsedValue = temp!
+              .Replace("[", "")
+              .Replace("]", "")
+              .Replace(part, "")
+              .Replace("(", "")
+              .Replace(")", "")
+              .Replace("'", "")
+              .Trim();
+
+          if (!string.IsNullOrWhiteSpace(parsedValue))
+          {
+              var defaultValueNode = armTemplateObject[part]?[parsedValue];
+              if (defaultValueNode is JsonObject)
+              {
+                  temp = defaultValueNode["defaultValue"]!.ToString();
+              }
+              else
+              {
+                  temp = armTemplateObject[part]?[parsedValue]?.ToString();
+              }
+          }
+          if (!string.IsNullOrWhiteSpace(temp))
+          {
+              resourceName = temp;
+              break;
+          }
+      }
+      return resourceName;
     }
 }
