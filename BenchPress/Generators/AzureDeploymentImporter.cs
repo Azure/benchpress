@@ -5,8 +5,10 @@ namespace Generators;
 
 public class AzureDeploymentImporter
 {
-    private static Regex s_pathRegex = new Regex("resourceId\\('([^']*)", RegexOptions.Compiled);
-    private static Regex s_propertiesRegex = new Regex("parameters\\('([^']*)", RegexOptions.Compiled);
+    private static Regex s_resourceIdParametersRegex =
+        new Regex("\\[resourceId\\((?<resourceIdParameters>.*)\\)\\]", RegexOptions.Compiled);
+    private static string s_resourceIdParametersKey = "resourceIdParameters";
+    private static string s_dependsOnKey = "dependsOn";
 
     public static IEnumerable<TestMetadata> Import(FileInfo inputFile, string outputFolderPath)
     {
@@ -171,7 +173,7 @@ public class AzureDeploymentImporter
     private static Dictionary<string, string> GetExtraProperties(JsonNode resource)
     {
         var extraProperties = new Dictionary<string, string>();
-        var dependencies = (JsonArray?) resource["dependsOn"];
+        var dependencies = (JsonArray?) resource[s_dependsOnKey];
 
         if (dependencies != null)
         {
@@ -179,22 +181,37 @@ public class AzureDeploymentImporter
             {
                 if (dependency != null)
                 {
-                    var dependencyString = dependency.ToString();
-                    var pathMatch = s_pathRegex.Match(dependencyString);
-                    // There will only ever be one match for the path regex and it will be a string in the format of
-                    // "Microsoft.<resource type>/<path 1>/<path 2>/<etc.>" and will capture the entire value of the
-                    // string. We only want the <path n> values between the slashes, without the "Microsoft.xxx".
-                    var paths = pathMatch.Captures[0].Value.Split('/').Skip(1).ToArray();
+                    // There will be only one Capture for the Group. After the split, the first parameter in
+                    // resourceIdParameters will be the path (e.g., "'Microsoft.xxx/yyy/zzz'"), and all further entries
+                    // will be values for the path (e.g., "parameters('yyy')", "variables('zzz')").
+                    var resourceIdParameters =
+                        s_resourceIdParametersRegex
+                            .Match(dependency.ToString())
+                            .Groups[s_resourceIdParametersKey]
+                            .Captures[0]
+                            .Value
+                            .Split(",", StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
 
-                    if (paths != null)
+                    // The number of entries in resourceIdParameters must be 2 or more, otherwise it's not valid.
+                    if (resourceIdParameters.Length > 1)
                     {
-                        var propertiesMatch = s_propertiesRegex.Match(dependencyString);
+                        // The first element is the path, remove the leading/trailing single quotes from
+                        // "'Microsft.xxx/yyy/zzz'", split on the path separator, ["Microsoft.xxx", "yyy", "zzz"],
+                        // remove the leading "Microsoft.xxx".
+                        var pathParts = resourceIdParameters[0].Trim('\'').Split('/').Skip(1).ToList();
 
-                        if (propertiesMatch != null && paths.Length == propertiesMatch.Captures.Count)
+                        // There should be one more Resource ID Parameter than path parts, otherwise it is not valid.
+                        if (pathParts.Count() == (resourceIdParameters.Count() - 1))
                         {
-                            for (int index = 0; index < paths.Length; index++)
+                            // Skip the path parameter, counts and indexes match now
+                            var values = resourceIdParameters.Skip(1).ToList();
+
+                            for (int index = 0; index < pathParts.Count(); index++)
                             {
-                                extraProperties.Add(paths[index], propertiesMatch.Captures[index].Value);
+                                // If the value is a hard coded value and not a "parameter" or "variable", then the
+                                // value will be "'value'" so trim any single quotes (this will not affect "parameter"
+                                // or "variable" entries)
+                                extraProperties.Add(pathParts[index], values[index].Trim('\''));
                             }
                         }
                     }
