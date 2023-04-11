@@ -181,7 +181,8 @@ public class AzureDeploymentImporter
             {
                 if (dependency != null)
                 {
-                    // There will be only one Capture for the Group. After the split, the first parameter in
+                    // There will be only one Capture for the Group that is the entire list of parameters that are
+                    // passed to "[resourceId()]" as a single string. After the split, the first parameter in
                     // resourceIdParameters will be the path (e.g., "'Microsoft.xxx/yyy/zzz'"), and all further entries
                     // will be values for the path (e.g., "parameters('yyy')", "variables('zzz')").
                     var resourceIdParameters =
@@ -190,7 +191,7 @@ public class AzureDeploymentImporter
                             .Groups[s_resourceIdParametersKey]
                             .Captures[0]
                             .Value
-                            .Split(",", StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+                            .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
 
                     // The number of entries in resourceIdParameters must be 2 or more, otherwise it's not valid.
                     if (resourceIdParameters.Length > 1)
