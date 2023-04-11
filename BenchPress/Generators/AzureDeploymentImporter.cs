@@ -182,7 +182,7 @@ public class AzureDeploymentImporter
             {
                 if (dependency != null)
                 {
-                    // There will be only one Capture for the Group that is the entire list of parameters that are
+                    // There is only one Capture value for the Group, which is the entire list of parameters that are
                     // passed to "[resourceId()]" as a single string. After the split, the first parameter in
                     // resourceIdParameters will be the path (e.g., "'Microsoft.xxx/yyy/zzz'"), and all further entries
                     // will be values for the path (e.g., "parameters('yyy')", "variables('zzz')").
