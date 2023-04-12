@@ -94,11 +94,7 @@ public class AzureDeploymentImporter
                 throw new Exception("Failed to parse json file");
             }
 
-            //TODO: This if can probably be removed and just call resolveparams
-            if (resourceName.StartsWith("[") && resourceName.EndsWith("]"))
-            {
-                resourceName = ResolveParamsAndVariables(resourceName, parsed);
-            }
+            resourceName = ResolveParamsAndVariables(resourceName, parsed);
 
             if (resourceName == null)
             {
