@@ -9,7 +9,7 @@
       // arrange
       var resourceType = "Unknown";
       var resourceName = "Name";
-      var extraProperties = new Dictionary<string, object>();
+      var extraProperties = new Dictionary<string, string>();
 
       // act and assert
       Action action = () => { new TestMetadata(resourceType, resourceName, extraProperties); };
@@ -22,7 +22,7 @@
       // arrange
       var resourceType = "Microsoft.Insights/actionGroups";
       var resourceName = "Name";
-      var extraProperties = new Dictionary<string, object>();
+      var extraProperties = new Dictionary<string, string>();
 
       // act
       var metadata = new TestMetadata(resourceType, resourceName, extraProperties);

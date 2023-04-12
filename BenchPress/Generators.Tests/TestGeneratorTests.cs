@@ -11,7 +11,7 @@ namespace Generators.Tests
       // arrange
       var resourceType = "Microsoft.Insights/actionGroups";
       var resourceName = "Name";
-      var extraProperties = new Dictionary<string, object>();
+      var extraProperties = new Dictionary<string, string>();
 
       var metadata = new TestMetadata(resourceType, resourceName, extraProperties);
       var definition = new TestDefinition(metadata, (TestType)1);
