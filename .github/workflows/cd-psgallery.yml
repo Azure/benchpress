@@ -25,6 +25,7 @@ jobs:
 
   publish-to-gallery:
     name: Publish to the PowerShell Gallery
+    needs: build-modules
     runs-on: ubuntu-latest
     steps:
       - name: Download module artifacts
