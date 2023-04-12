@@ -7,7 +7,17 @@ public class AzureDeploymentImporter
 {
     private static Regex s_resourceIdParametersRegex =
         new Regex("\\[resourceId\\((?<resourceIdParameters>.*)\\)\\]", RegexOptions.Compiled);
+
+    private static Regex s_parametersOrVariablesRegex =
+        new Regex(
+          "(?<paramOrVarType>parameters)\\(\\'(?<paramOrVarName>.*?)\\'\\)|(?<paramOrVarType>variables)\\(\\'(?<paramOrVarName>.*?)\\'\\)",
+          RegexOptions.Compiled);
+
+    private static string s_squareBracketPattern = "\\[(.*?)\\]";
+    private static string s_squareBracketSubstituition = "$1";
     private static string s_resourceIdParametersKey = "resourceIdParameters";
+    private static string s_paramOrVarNameGroupKey = "paramOrVarName";
+    private static string s_paramOrVarTypeGroupKey = "paramOrVarType";
     private static string s_dependsOnKey = "dependsOn";
 
     public static IEnumerable<TestMetadata> Import(FileInfo inputFile, string outputFolderPath)
@@ -93,7 +103,7 @@ public class AzureDeploymentImporter
                 throw new Exception("Failed to parse json file");
             }
 
-            var extraProperties = GetExtraProperties(resource);
+            var extraProperties = GetExtraProperties(resource, parsed);
 
             try
             {
@@ -139,7 +149,7 @@ public class AzureDeploymentImporter
     /// }
     /// </code>
     /// </summary>
-    private static Dictionary<string, string> GetExtraProperties(JsonNode resource)
+    private static Dictionary<string, string> GetExtraProperties(JsonNode resource, JsonObject armTemplateObject)
     {
         var extraProperties = new Dictionary<string, string>();
         var dependencies = (JsonArray?) resource[s_dependsOnKey];
@@ -181,7 +191,7 @@ public class AzureDeploymentImporter
                                 // If the value is a hard coded value and not a "parameter" or "variable", then the
                                 // value will be "'value'" so trim any single quotes (this will not affect "parameter"
                                 // or "variable" entries).
-                                extraProperties.Add(pathParts[index], values[index].Trim('\''));
+                                extraProperties.Add(pathParts[index], GetValueOfParamOrVar(values[index], armTemplateObject).Trim('\''));
                             }
                         }
                     }
@@ -237,38 +247,53 @@ public class AzureDeploymentImporter
     /// </summary>
     private static string GetValueOfParamOrVar(string paramOrVar, JsonObject armTemplateObject)
     {
-      var parts = new[] { "parameters", "variables" };
+        // Find and remove square brackets from the parameter/variable string. Square brackets are specific to
+        // ARM template syntax and are not needed in generated tests.
+        paramOrVar = Regex.Replace(paramOrVar, s_squareBracketPattern, s_squareBracketSubstituition);
 
-      foreach (var part in parts)
-      {
-          var temp = paramOrVar;
-          var parsedValue = temp!
-              .Replace("[", "")
-              .Replace("]", "")
-              .Replace(part, "")
-              .Replace("(", "")
-              .Replace(")", "")
-              .Replace("'", "")
-              .Trim();
+        // Find all matches in the parameter/variable string that follows the pattern of "parameters('...')" or
+        // "variables('...')". The regular expression pattern defines two named subexpressions: paramOrVarType, which
+        // represents the type of parameter/variable (e.g., "parameters" or "variables"), and paramOrVarName, which
+        // represents the name of the parameters/variable.
+        var matches = s_parametersOrVariablesRegex.Matches(paramOrVar);
+        foreach (Match match in matches)
+        {
+            var name = match.Groups[s_paramOrVarNameGroupKey].Value;
+            var type = match.Groups[s_paramOrVarTypeGroupKey].Value;
+            var resolvedValue = System.String.Empty;
 
-          if (!string.IsNullOrWhiteSpace(parsedValue))
-          {
-              var defaultValueNode = armTemplateObject[part]?[parsedValue];
-              if (defaultValueNode is JsonObject)
-              {
-                  temp = defaultValueNode["defaultValue"]!.ToString();
-              }
-              else
-              {
-                  temp = armTemplateObject[part]?[parsedValue]?.ToString();
-              }
-          }
-          if (!string.IsNullOrWhiteSpace(temp))
-          {
-              paramOrVar = temp;
-              break;
-          }
-      }
-      return paramOrVar;
+
+            if (!string.IsNullOrWhiteSpace(name))
+            {
+                // ARM templates will contain a JSON Object representing parameters and variables for the ARM template.
+                // Get the correct JSON Object using the type from the regex match (e.g., "parameters" or "variables").
+                var parametersOrVariablesObj = armTemplateObject[type];
+                if (parametersOrVariablesObj != null)
+                {
+                    // Get the value of the parameter/variable from the JSON Object. If the value is still a JSON
+                    // Object, that means it is a parameter that has a default value, so get the default value.
+                    // Otherwise, the value can be converted to a string and assigned to resolveValue.
+                    var resolvedValueNode = parametersOrVariablesObj[name];
+                    if (resolvedValueNode != null)
+                    {
+                        if (resolvedValueNode is JsonObject)
+                        {
+                            resolvedValue = resolvedValueNode["defaultValue"]!.ToString();
+                        }
+                        else
+                        {
+                            resolvedValue = resolvedValueNode.ToString();
+                        }
+                    }
+                }
+            }
+            if (!string.IsNullOrWhiteSpace(resolvedValue))
+            {
+                // Remove any square brackets and replace the match with the resolved value in the original string
+                resolvedValue = Regex.Replace(resolvedValue, s_squareBracketPattern, s_squareBracketSubstituition);
+                paramOrVar = paramOrVar.Replace(match.Value, resolvedValue);
+            }
+        }
+        return paramOrVar;
     }
 }
