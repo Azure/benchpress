@@ -5,10 +5,10 @@ namespace Generators;
 
 public class AzureDeploymentImporter
 {
-    private static Regex s_parametersOrVariablesRegex =
-        new Regex(
-          "(?<paramOrVarType>parameters)\\(\\'(?<paramOrVarName>.*?)\\'\\)|(?<paramOrVarType>variables)\\(\\'(?<paramOrVarName>.*?)\\'\\)",
-          RegexOptions.Compiled);
+    private static Regex s_parametersOrVariablesRegex = new Regex(
+        "(?<paramOrVarType>parameters)\\(\\'(?<paramOrVarName>.*?)\\'\\)|(?<paramOrVarType>variables)\\(\\'(?<paramOrVarName>.*?)\\'\\)",
+        RegexOptions.Compiled
+    );
 
     private static string s_squareBracketPattern = "\\[(.*?)\\]";
     private static string s_squareBracketSubstituition = "$1";
@@ -148,7 +148,10 @@ public class AzureDeploymentImporter
     /// }
     /// </code>
     /// </summary>
-    private static Dictionary<string, string> GetExtraProperties(JsonNode resource, JsonObject armTemplateObject)
+    private static Dictionary<string, string> GetExtraProperties(
+        JsonNode resource,
+        JsonObject armTemplateObject
+    )
     {
         var extraProperties = new Dictionary<string, string>();
         var dependencies = (JsonArray?)resource[s_dependsOnKey];
@@ -193,7 +196,11 @@ public class AzureDeploymentImporter
                                 // If the value is a hard coded value and not a "parameter" or "variable", then the
                                 // value will be "'value'" so trim any single quotes (this will not affect "parameter"
                                 // or "variable" entries).
-                                extraProperties.Add(pathParts[index], ResolveParamsAndVariables(values[index], armTemplateObject).Trim('\''));
+                                extraProperties.Add(
+                                    pathParts[index],
+                                    ResolveParamsAndVariables(values[index], armTemplateObject)
+                                        .Trim('\'')
+                                );
                             }
                         }
                     }
@@ -272,11 +279,18 @@ public class AzureDeploymentImporter
     /// "format('{0}{1}', "ContosoVar" , "ContosoParam")"
     /// </code>
     /// </summary>
-    private static string ResolveParamsAndVariables(string stringToResolve, JsonObject armTemplateObject)
+    private static string ResolveParamsAndVariables(
+        string stringToResolve,
+        JsonObject armTemplateObject
+    )
     {
         // Find and remove square brackets from the parameter/variable string. Square brackets are specific to
         // ARM template syntax and are not needed in generated tests.
-        stringToResolve = Regex.Replace(stringToResolve, s_squareBracketPattern, s_squareBracketSubstituition);
+        stringToResolve = Regex.Replace(
+            stringToResolve,
+            s_squareBracketPattern,
+            s_squareBracketSubstituition
+        );
 
         // Find all matches in the parameter/variable string that follows the pattern of "parameters('...')" or
         // "variables('...')". The regular expression pattern defines two named subexpressions: paramOrVarType, which
@@ -288,7 +302,6 @@ public class AzureDeploymentImporter
             var name = match.Groups[s_paramOrVarNameGroupKey].Value;
             var type = match.Groups[s_paramOrVarTypeGroupKey].Value;
             var resolvedValue = System.String.Empty;
-
 
             if (!string.IsNullOrWhiteSpace(name))
             {
@@ -317,7 +330,11 @@ public class AzureDeploymentImporter
             if (!string.IsNullOrWhiteSpace(resolvedValue))
             {
                 // Remove any square brackets and replace the match with the resolved value in the original string
-                resolvedValue = Regex.Replace(resolvedValue, s_squareBracketPattern, s_squareBracketSubstituition);
+                resolvedValue = Regex.Replace(
+                    resolvedValue,
+                    s_squareBracketPattern,
+                    s_squareBracketSubstituition
+                );
                 stringToResolve = stringToResolve.Replace(match.Value, resolvedValue);
             }
         }
