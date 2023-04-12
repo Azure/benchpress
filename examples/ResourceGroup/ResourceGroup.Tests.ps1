@@ -1,58 +1,57 @@
-BeforeAll {
-  Import-Module Az-InfrastructureTest
+﻿BeforeAll {
+  Import-Module Az.InfrastructureTesting
+
+  $Script:rgName = 'rg-test'
+  $Script:location = 'westus3'
 }
 
 Describe 'Verify Resource Group Exists' {
-  it 'Should contain a resource group named rg-test' {
-    #arrange
-    $rgName = "rg-test"
-
-    #act
-    $result = Confirm-AzBPResourceGroup -ResourceGroupName $rgName
-
-    #assert
-    $result.Success | Should -Be $true
+  BeforeAll {
+    $Script:noRgName = 'notestrg'
   }
-}
 
-Describe 'Verify Resource Group Does Not Exist' {
-  it 'Should not contain a resource group named rg-test' {
-    #arrange
-    $rgName = "rg-test"
+  It "Should contain a Resource Group named $rgName - Confirm-AzBPResource" {
+    # arrange
+    $params = @{
+      ResourceType      = "ResourceGroup"
+      ResourceName      = $rgName
+    }
 
-    #act
+    # act and assert
+    Confirm-AzBPResource @params | Should -BeSuccessful
+  }
+
+
+  It "Should contain a Resource Group named $rgName - Confirm-AzBPResource" {
+    # arrange
+    $params = @{
+      ResourceType      = "ResourceGroup"
+      ResourceName      = $rgName
+      PropertyKey       = 'ResourceGroupName'
+      PropertyValue     = $rgName
+    }
+
+    # act and assert
+    Confirm-AzBPResource @params | Should -BeSuccessful
+  }
+
+  It "Should contain a Resource Group named $rgName" {
+    Confirm-AzBPResourceGroup -ResourceGroupName $rgName | Should -BeSuccessful
+  }
+
+  It "Should not contain a Resource Group named $noRgName" {
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
-    $result = Confirm-AzBPResourceGroup -ResourceGroupName $rgName -ErrorAction SilentlyContinue
+    Confirm-AzBPResourceGroup -ResourceGroupName $noRgName -ErrorAction SilentlyContinue | Should -Not -BeSuccessful
+  }
 
-    #assert
-    $result.Success | Should -Be $false
+  It "Should contain a Resource Group named $rgName in $location" {
+    Confirm-AzBPResourceGroup -ResourceGroupName $rgName | Should -BeInLocation $location
   }
 }
 
-Describe 'Verify Resource Group Exists with Custom Assertion' {
-  it 'Should contain an Resource Group named rg-test' {
-    #arrange
-    $rgName = "rg-test"
-
-    #act
-    $result = Confirm-AzBPResourceGroup -ResourceGroupName $rgName
-
-    #assert
-    $result | Should -BeDeployed
-  }
-}
-
-Describe 'Verify Resource Group Exists in Correct Location' {
-  it 'Should contain an Resource Group named rg-test in westus3' {
-    #arrange
-    $rgName = "rg-test"
-
-    #act
-    $result = Confirm-AzBPResourceGroup -ResourceGroupName $rgName
-
-    #assert
-    $result | Should -BeInLocation 'westus3'
-  }
+AfterAll {
+  Get-Module Az.InfrastructureTesting | Remove-Module
+  Get-Module BenchPress.Azure | Remove-Module
 }

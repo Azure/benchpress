@@ -1,76 +1,71 @@
-BeforeAll {
-  Import-Module Az-InfrastructureTest
+﻿BeforeAll {
+  Import-Module Az.InfrastructureTesting
+
+  $Script:rgName = 'rg-test'
+  $Script:acrName = 'acrbenchpresstest'
+  $Script:location = 'westus3'
 }
 
 Describe 'Verify Container Registry' {
-  it 'Should contain a container registry with the given name' {
-    #arrange
-    $rgName = "rg-test"
-    $acrName = "acrbenchpresstest"
-
-    #act
-    $result = Confirm-AzBPContainerRegistry -ResourceGroupName $rgName -Name $acrName
-
-    #assert
-    $result.Success | Should -Be $true
+  BeforeAll {
+    $Script:noContainerRegistryName = 'nocontainerregistry'
   }
-}
 
-Describe 'Verify Container Registry Does Not Exist' {
-  it 'Should not contain a container registry with the given name' {
-    #arrange
-    $rgName = "rg-test"
-    $acrName = "noacrbenchpresstest"
+  It "Should contain a Container Registry named $acrName - Confirm-AzBPResource" {
+    # arrange
+    $params = @{
+      ResourceType      = "ContainerRegistry"
+      ResourceName      = $acrName
+      ResourceGroupName = $rgName
+    }
 
-    #act
+    # act and assert
+    Confirm-AzBPResource @params | Should -BeSuccessful
+  }
+
+  It "Should contain a Container Registry named $acrName with a Standard SKU - Confirm-AzBPResource" {
+    # arrange
+    $params = @{
+      ResourceType      = "ContainerRegistry"
+      ResourceName      = $acrName
+      ResourceGroupName = $rgName
+      PropertyKey       = "SkuName"
+      PropertyValue     = "Basic"
+    }
+
+    # act and assert
+    Confirm-AzBPResource @params | Should -BeSuccessful
+  }
+
+  It "Should contain a Container Registry named $acrName" {
+    Confirm-AzBPContainerRegistry -ResourceGroupName $rgName -Name $acrName | Should -BeSuccessful
+  }
+
+  It "Should not contain a Container Registry named $noContainerRegistryName" {
+    # arrange
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
-    $result = Confirm-AzBPContainerRegistry -ResourceGroupName $rgName -Name $acrName -ErrorAction SilentlyContinue
+    $params = @{
+      ResourceGroupName     = $rgName
+      Name                  = $noContainerRegistryName
+      ErrorAction           = "SilentlyContinue"
+    }
 
-    #assert
-    $result.Success | Should -Be $false
+    # act and assert
+    Confirm-AzBPContainerRegistry @params | Should -Not -BeSuccessful
+  }
+
+  It "Should contain a Container Registry named $acrName in $location" {
+    Confirm-AzBPContainerRegistry -ResourceGroupName $rgName -Name $acrName | Should -BeInLocation $location
+  }
+
+  It "Should contain a Container Registry named $acrName in $rgName" {
+    Confirm-AzBPContainerRegistry -ResourceGroupName $rgName -Name $acrName | Should -BeInResourceGroup $rgName
   }
 }
 
-Describe 'Verify Container Registry Exists with Custom Assertion' {
-  it 'Should contain a Container Registry named acrbenchpresstest' {
-    #arrange
-    $rgName = "rg-test"
-    $acrName = "acrbenchpresstest"
-
-    #act
-    $result = Confirm-AzBPContainerRegistry -ResourceGroupName $rgName -Name $acrName
-
-    #assert
-    $result | Should -BeDeployed
-  }
-}
-
-Describe 'Verify Container Registry Exists in Correct Location' {
-  it 'Should contain a Container Registry named acrbenchpresstest in westus3' {
-    #arrange
-    $rgName = "rg-test"
-    $acrName = "acrbenchpresstest"
-
-    #act
-    $result = Confirm-AzBPContainerRegistry -ResourceGroupName $rgName -Name $acrName
-
-    #assert
-    $result | Should -BeInLocation 'westus3'
-  }
-}
-
-Describe 'Verify Container Registry Exists in Resource Group' {
-  it 'Should be in a resource group named rg-test' {
-    #arrange
-    $rgName = "rg-test"
-    $acrName = "acrbenchpresstest"
-
-    #act
-    $result = Confirm-AzBPContainerRegistry -ResourceGroupName $rgName -Name $acrName
-
-    #assert
-    $result | Should -BeInResourceGroup 'rg-test'
-  }
+AfterAll {
+  Get-Module Az.InfrastructureTesting | Remove-Module
+  Get-Module BenchPress.Azure | Remove-Module
 }

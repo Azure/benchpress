@@ -8,10 +8,10 @@ Describe "Confirm-OperationalInsightsWorkspace" {
   Context "unit tests" -Tag "Unit" {
     BeforeEach {
       Mock Connect-Account{}
+      Mock Get-AzOperationalInsightsWorkspace{}
     }
 
     It "Calls Get-AzApplicationInsights" {
-      Mock Get-AzOperationalInsightsWorkspace{}
       Confirm-OperationalInsightsWorkspace -Name "loganalytics" -ResourceGroupName "rgn"
       Should -Invoke -CommandName "Get-AzOperationalInsightsWorkspace" -Times 1
     }

@@ -1,81 +1,73 @@
 ﻿BeforeAll {
-  Import-Module Az-InfrastructureTest
+  Import-Module Az.InfrastructureTesting
+
+  $Script:rgName = 'rg-test'
+  $Script:oiwName = 'oiwName'
+  $Script:location = 'westus3'
 }
 
 Describe 'Verify Operational Insights Workspace Exists' {
-  it 'Should contain a Operational Insights Workspace named oiwTest' {
-    #arrange
-    $rgName = "rg-test"
-    $oiwName = "oiwTest"
-
-    #act
-    $result = Confirm-AzBPOperationalInsightsWorkspace -ResourceGroupName $rgName -Name $oiwName
-
-    #assert
-    $result.Success | Should -Be $true
+  BeforeAll {
+    $Script:noOiwName = 'noOiwName'
   }
-}
 
-Describe 'Verify Operational Insights Workspace Does Not Exist' {
-  it 'Should not contain an Operational Insights Workspace named notOiwTest' {
-    #arrange
-    $rgName = "rg-test"
-    $oiwName = "notOiwTest"
+  It "Should contain an Operational Insights Workspace named $oiwName - Confirm-AzBPResource" {
+    # arrange
+    $params = @{
+      ResourceType      = "OperationalInsightsWorkspace"
+      ResourceGroupName = $rgName
+      ResourceName      = $oiwName
+    }
 
-    #act
+    # act and assert
+    Confirm-AzBPResource @params | Should -BeSuccessful
+  }
+
+
+  It "Should contain an Operational Insights Workspace named $oiwName - Confirm-AzBPResource" {
+    # arrange
+    $params = @{
+      ResourceType      = "OperationalInsightsWorkspace"
+      ResourceGroupName = $rgName
+      ResourceName      = $oiwName
+      PropertyKey       = 'Name'
+      PropertyValue     = $oiwName
+    }
+
+    # act and assert
+    Confirm-AzBPResource @params | Should -BeSuccessful
+  }
+
+  It "Should contain an Operational Insights Workspace named $oiwName" {
+    Confirm-AzBPOperationalInsightsWorkspace -ResourceGroupName $rgName -Name $oiwName | Should -BeSuccessful
+  }
+
+  It "Should not contain an Operational Insights Workspace named $noOiwName" {
+    # arrange
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
     $params = @{
       ResourceGroupName = $rgName
-      Name = $oiwName
-      ErrorAction = SilentlyContinue
+      Name              = $noOiwName
+      ErrorAction       = "SilentlyContinue"
     }
-    $result = Confirm-AzBPOperationalInsightsWorkspace @params
 
-    #assert
-    $result.Success | Should -Be $false
+    # act and asssert
+    Confirm-AzBPOperationalInsightsWorkspace @params | Should -Not -BeSuccessful
+  }
+
+  It "Should contain an Operational Insights Workspace named $oiwName in $location" {
+    Confirm-AzBPOperationalInsightsWorkspace -ResourceGroupName $rgName -Name $oiwName | Should -BeInLocation $location
+  }
+
+  It "Should contain an Operational Insights Workspace named $oiwName in $rgName" {
+    Confirm-AzBPOperationalInsightsWorkspace -ResourceGroupName $rgName -Name $oiwName
+    | Should -BeInResourceGroup $rgName
   }
 }
 
-Describe 'Verify Operational Insights Workspace Exists with Custom Assertion' {
-  it 'Should contain a Operational Insights Workspace named oiwTest' {
-    #arrange
-    $rgName = "rg-test"
-    $oiwName = "oiwTest"
-
-    #act
-    $result = Confirm-AzBPOperationalInsightsWorkspace -ResourceGroupName $rgName -Name $oiwName
-
-    #assert
-    $result | Should -BeDeployed
-  }
-}
-
-Describe 'Verify Operational Insights Workspace Exists in Correct Location' {
-  it 'Should contain a Operational Insights Workspace named oiwTest in westus3' {
-    #arrange
-    $rgName = "rg-test"
-    $oiwName = "oiwTest"
-
-    #act
-    $result = Confirm-AzBPOperationalInsightsWorkspace -ResourceGroupName $rgName -Name $oiwName
-
-    #assert
-    $result | Should -BeInLocation 'westus3'
-  }
-}
-
-Describe 'Verify Operational Insights Workspace Exists in Resource Group' {
-  it 'Should be a Operational Insights Workspace in a resource group named rg-test' {
-    #arrange
-    $rgName = "rg-test"
-    $oiwName = "oiwTest"
-
-    #act
-    $result = Confirm-AzBPOperationalInsightsWorkspace -ResourceGroupName $rgName -Name $oiwName
-
-    #assert
-    $result | Should -BeInResourceGroup 'rg-test'
-  }
+AfterAll {
+  Get-Module Az.InfrastructureTesting | Remove-Module
+  Get-Module BenchPress.Azure | Remove-Module
 }

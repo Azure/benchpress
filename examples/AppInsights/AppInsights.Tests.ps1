@@ -1,76 +1,108 @@
-BeforeAll {
-  Import-Module Az-InfrastructureTest
+﻿BeforeAll {
+  Import-Module Az.InfrastructureTesting
+
+  $Script:rgName = 'rg-test'
+  $Script:appInsightsName = 'appinsightstest'
+  $Script:location = 'westus3'
 }
 
-Describe 'Verify App Insights' {
-  it 'Should contain an application insights with the given name' {
-    #arrange
-    $rgName = "rg-test"
-    $appInsightsName = "appinsightstest"
-
-    #act
-    $result = Confirm-AzBPAppInsights -ResourceGroupName $rgName -Name $appInsightsName
-
-    #assert
-    $result.Success | Should -Be $true
+Describe 'Verify Application Insights' {
+  BeforeAll {
+    $Script:noAppInsightsName = 'noappinsights'
   }
-}
 
-Describe 'Verify App Insights Does Not Exist' {
-  it 'Should not contain an application insights with the given name' {
-    #arrange
-    $rgName = "rg-test"
-    $acrName = "noappinsightstest"
+  It "Should contain an Application Insights named $appInsightsName - Confirm-AzBPResource" {
+    # arrange
+    $params = @{
+      ResourceType      = "AppInsights"
+      ResourceName      = $appInsightsName
+      ResourceGroupName = $rgName
+    }
 
-    #act
+    # act and assert
+    Confirm-AzBPResource @params | Should -BeSuccessful
+  }
+
+  It "Should contain an Application Insights named $appInsightsName with Application Type of web -
+  Confirm-AzBPResource" {
+    # arrange
+    $params = @{
+      ResourceType      = "AppInsights"
+      ResourceName      = $appInsightsName
+      ResourceGroupName = $rgName
+      PropertyKey       = "ApplicationType"
+      PropertyValue     = "web"
+    }
+
+    # act and assert
+    Confirm-AzBPResource @params | Should -BeSuccessful
+  }
+
+  It "Should contain an Application Insights named $appInsightsName" {
+    Confirm-AzBPAppInsights -ResourceGroupName $rgName -Name $appInsightsName | Should -BeSuccessful
+  }
+
+  It "Should not contain an Application Insights named $noAppInsightsName" {
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
-    $result = Confirm-AzBPAppInsights -ResourceGroupName $rgName -Name $acrName -ErrorAction SilentlyContinue
+    Confirm-AzBPAppInsights -ResourceGroupName $rgName -Name $noAppInsightsName -ErrorAction SilentlyContinue
+    | Should -Not -BeSuccessful
+  }
 
-    #assert
-    $result.Success | Should -Be $false
+  It "Should contain an Application Insights named $appInsightsName in $location" {
+    Confirm-AzBPAppInsights -ResourceGroupName $rgName -Name $appInsightsName | Should -BeInLocation $location
+  }
+
+  It "Should contain an Application Insights named $appInsightsName in $rgName" {
+    Confirm-AzBPAppInsights -ResourceGroupName $rgName -Name $appInsightsName | Should -BeInResourceGroup $rgName
   }
 }
 
-Describe 'Verify App Insights Exists with Custom Assertion' {
-  it 'Should contain an App Insights named appinsightstest' {
-    #arrange
-    $rgName = "rg-test"
-    $appInsightsName = "appinsightstest"
+Describe 'Verify Diagnostic Setting' {
+  BeforeAll {
+    $Script:diagnosticSettingName = 'diagnosticsettingtest'
+    $Script:resourceId = "path/for/resourceId"
+    $Script:noDiagnosticSettingName = 'nodiagnosticsettingtest'
+  }
 
-    #act
-    $result = Confirm-AzBPAppInsights -ResourceGroupName $rgName -Name $appInsightsName
+  It "Should contain a Diagnostic Setting named $diagnosticSettingName - Confirm-AzBPResource" {
+    # arrange
+    $params = @{
+      ResourceType      = "DiagnosticSetting"
+      ResourceName      = $diagnosticSettingName
+      ResourceId        = $resourceId
+    }
 
-    #assert
-    $result | Should -BeDeployed
+    # act and assert
+    Confirm-AzBPResource @params | Should -BeSuccessful
+  }
+
+  It "Should contain a Diagnostic Setting named $diagnosticSettingName with Type of aksCluster -
+  Confirm-AzBPResource" {
+    # arrange
+    $params = @{
+      ResourceType      = "DiagnosticSetting"
+      ResourceName      = $diagnosticSettingName
+      ResourceId        = $resourceId
+      PropertyKey       = "Type"
+      PropertyValue     = "Microsoft.Insights/diagnosticSettings"
+    }
+
+    # act and assert
+    Confirm-AzBPResource @params | Should -BeSuccessful
+  }
+
+  It "Should contain a Diagnostic Setting named $diagnosticSettingName" {
+    Confirm-AzBPDiagnosticSetting -ResourceId $ResourceId -Name $diagnosticSettingName | Should -BeSuccessful
+  }
+
+  It "Should contain a Diagnostic Setting named $diagnosticSettingName in $rgName" {
+    Confirm-AzBPDiagnosticSetting -ResourceId $ResourceId -Name $diagnosticSettingName | Should -BeInResourceGroup $rgName
   }
 }
 
-Describe 'Verify App Insights Exists in Correct Location' {
-  it 'Should contain an App Insights named appinsightstest in westus3' {
-    #arrange
-    $rgName = "rg-test"
-    $appInsightsName = "appinsightstest"
-
-    #act
-    $result = Confirm-AzBPAppInsights -ResourceGroupName $rgName -Name $appInsightsName
-
-    #assert
-    $result | Should -BeInLocation 'westus3'
-  }
-}
-
-Describe 'Verify App Insights Exists in Resource Group' {
-  it 'Should be in a resource group named rg-test' {
-    #arrange
-    $rgName = "rg-test"
-    $appInsightsName = "appinsightstest"
-
-    #act
-    $result = Confirm-AzBPAppInsights -ResourceGroupName $rgName -Name $appInsightsName
-
-    #assert
-    $result | Should -BeInResourceGroup 'rg-test'
-  }
+AfterAll {
+  Get-Module Az.InfrastructureTesting | Remove-Module
+  Get-Module BenchPress.Azure | Remove-Module
 }

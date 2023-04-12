@@ -1,4 +1,4 @@
-# INLINE_SKIP
+﻿# INLINE_SKIP
 using module ./../Classes/ConfirmResult.psm1
 
 . $PSScriptRoot/../Private/Connect-Account.ps1
@@ -10,14 +10,14 @@ function Confirm-AppInsights {
       Confirms that an Application Insights exists.
 
     .DESCRIPTION
-      The Confirm-AzBPAppInsights cmdlet gets an Application Insights using the specified Application Insights name
-      and Resource Group name.
+      The Confirm-AzBPAppInsights cmdlet gets an Application Insights using the specified Application Insights and
+      Resource Group names.
 
     .PARAMETER Name
-      The name of the Application Insights
+      The name of the Application Insights.
 
     .PARAMETER ResourceGroupName
-      The name of the Resource Group
+      The name of the Resource Group. The name is case insensitive.
 
     .EXAMPLE
       Confirm-AzBPAppInsights -Name "benchpresstest" -ResourceGroupName "rgbenchpresstest"
@@ -40,12 +40,12 @@ function Confirm-AppInsights {
     [string]$ResourceGroupName
   )
   Begin {
-    $ConnectResults = Connect-Account
+    $connectResults = Connect-Account
   }
   Process {
-    $Resource = Get-AzApplicationInsights -ResourceGroupName $ResourceGroupName -Name $Name
+    $resource = Get-AzApplicationInsights -ResourceGroupName $ResourceGroupName -Name $Name
 
-    [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+    [ConfirmResult]::new($resource, $connectResults.AuthenticationData)
   }
   End { }
 }

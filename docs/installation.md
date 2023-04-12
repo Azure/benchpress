@@ -12,8 +12,8 @@ In order to install from the PowerShell Gallery follow these steps from a PowerS
 1. Ensure that the latest version of
 [PowerShellGet](https://learn.microsoft.com/en-us/powershell/scripting/gallery/installing-psget?view=powershell-7.3)
 is installed.
-1. Execute `Install-Module -Name Az.InfrastructureTest`
-1. To make the module available to the current session execute `Import-Module -Name Az.InfrastructureTest`
+1. Execute `Install-Module -Name Az.InfrastructureTesting`
+1. To make the module available to the current session execute `Import-Module -Name Az.InfrastructureTesting`
 
 ## Install From a Local Copy of the Repository
 

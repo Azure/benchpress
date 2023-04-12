@@ -8,10 +8,10 @@ Describe "Confirm-KeyVaultSecret" {
   Context "unit tests" -Tag "Unit" {
     BeforeEach {
       Mock Connect-Account{}
+      Mock Get-AzKeyVaultSecret{}
     }
 
     It "Calls Get-AzKeyVaultSecret" {
-      Mock Get-AzKeyVaultSecret{}
       Confirm-KeyVaultSecret -Name "n" -KeyVaultName "kvn"
       Should -Invoke -CommandName "Get-AzKeyVaultSecret" -Times 1
     }

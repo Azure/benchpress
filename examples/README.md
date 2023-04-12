@@ -14,7 +14,7 @@ examples.
 
 ## Common Steps
 
-1. Follow the [installation guide](../docs/installation.md) to install `Az-InfrastructureTest` from the PowerShell
+1. Follow the [installation guide](../docs/installation.md) to install `Az.InfrastructureTesting` from the PowerShell
 Gallery or from a local copy.
 1. Follow the Setting Up section in the [getting started guide](../docs/getting_started.md) to configure the
 required environment variables.

@@ -1,4 +1,4 @@
-# INLINE_SKIP
+﻿# INLINE_SKIP
 using module ./../Classes/ConfirmResult.psm1
 
 . $PSScriptRoot/../Private/Connect-Account.ps1
@@ -11,13 +11,13 @@ function Confirm-OperationalInsightsWorkspace {
 
     .DESCRIPTION
       The Confirm-AzBPOperationalInsightsWorkspace cmdlet gets an Operational Insights Workspace using the specified
-      Workspace Name and Resource Group name.
+      Workspace and Resource Group names.
 
     .PARAMETER Name
-      Specifies the workspace name.
+      The name of the Operational Insights Workspace.
 
     .PARAMETER ResourceGroupName
-      Specifies the name of an Azure resource group.
+      The name of the Resource Group. The name is case insensitive.
 
     .EXAMPLE
       Confirm-AzBPOperationalInsightsWorkspace -Name "benchpresstest" -ResourceGroupName "rgbenchpresstest"
@@ -38,12 +38,12 @@ function Confirm-OperationalInsightsWorkspace {
     [string]$ResourceGroupName
   )
   Begin {
-    $ConnectResults = Connect-Account
+    $connectResults = Connect-Account
   }
   Process {
-    $Resource = Get-AzOperationalInsightsWorkspace -ResourceGroupName $ResourceGroupName -Name $Name
+    $resource = Get-AzOperationalInsightsWorkspace -ResourceGroupName $ResourceGroupName -Name $Name
 
-    [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+    [ConfirmResult]::new($resource, $connectResults.AuthenticationData)
   }
   End { }
 }

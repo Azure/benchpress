@@ -1,76 +1,72 @@
-BeforeAll {
-  Import-Module Az-InfrastructureTest
+﻿BeforeAll {
+  Import-Module Az.InfrastructureTesting
+
+  $Script:rgName = 'rg-test'
+  $Script:vmName = 'simpleLinuxVM1'
+  $Script:location = 'westus3'
 }
 
-Describe 'Verify Virtual Machine Exists' {
-  it 'Should contain a Virtual Machine with the given name' {
-    #arrange
-    $rgName = 'rg-test'
-    $vmName = 'simpleLinuxVM1'
-
-    #act
-    $result = Confirm-AzBPVirtualMachine -ResourceGroupName $rgName -VirtualMachineName $vmName
-
-    #assert
-    $result.Success | Should -Be $true
+Describe 'Verify Virtual Machine' {
+  BeforeAll {
+    $Script:noVmName = 'noSimpleLinuxVM1'
   }
-}
 
-Describe 'Verify Virtual Machine Does Not Exist' {
-  it 'Should not contain a Virtual Machine with the given name' {
-    #arrange
-    $rgName = 'rg-test'
-    $vmName = 'noSimpleLinuxVM1'
+  It "Should contain a Virtual Machine named $vmName - Confirm-AzBPResource" {
+    # arrange
+    $params = @{
+      ResourceType      = "VirtualMachine"
+      ResourceGroupName = $rgName
+      ResourceName      = $vmName
+    }
 
-    #act
+    # act and assert
+    Confirm-AzBPResource @params | Should -BeSuccessful
+  }
+
+  It "Should contain a Virtual Machine named $vmName - ConfirmAzBPResource" {
+    # arrange
+    $params = @{
+      ResourceType      = "VirtualMachine"
+      ResourceGroupName = $rgName
+      ResourceName      = $vmName
+      PropertyKey       = 'Name'
+      PropertyValue     = $vmName
+    }
+
+    # act and assert
+    Confirm-AzBPResource @params | Should -BeSuccessful
+  }
+
+  It "Should contain a Virtual Machine named $vmName" {
+    Confirm-AzBPVirtualMachine -ResourceGroupName $rgName -VirtualMachineName $vmName | Should -BeSuccessful
+  }
+
+  It "Should not contain a Virtual Machine named $noVmName" {
+    # arrange
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
-    $result = Confirm-AzBPVirtualMachine -ResourceGroupName $rgName -VirtualMachineName $vmName -ErrorAction SilentlyContinue
+    $params = @{
+      ResourceGroupName  = $rgName
+      VirtualMachineName = $noVmName
+      ErrorAction        = "SilentlyContinue"
+    }
 
-    #assert
-    $result.Success | Should -Be $false
+    # act and assert
+    Confirm-AzBPVirtualMachine @params | Should -Not -BeSuccessful
+  }
+
+  It "Should contain a Virtual Machine named $vmName in $location" {
+    Confirm-AzBPVirtualMachine -ResourceGroupName $rgName -VirtualMachineName $vmName | Should -BeInLocation $location
+  }
+
+  It "Should contain a Virtual Machine named $vmName in $rgName" {
+    Confirm-AzBPVirtualMachine -ResourceGroupName $rgName -VirtualMachineName $vmName
+    | Should -BeInResourceGroup $rgName
   }
 }
 
-Describe 'Verify Virtual Machine Exists with Custom Assertion' {
-  it 'Should contain a Virtual Machine named simpleLinuxVM1' {
-    #arrange
-    $rgName = 'rg-test'
-    $vmName = 'simpleLinuxVM1'
-
-    #act
-    $result = Confirm-AzBPVirtualMachine -ResourceGroupName $rgName -VirtualMachineName $vmName
-
-    #assert
-    $result | Should -BeDeployed
-  }
-}
-
-Describe 'Verify Virtual Machine Exists in Correct Location' {
-  it 'Should contain an Virtual Machine named simpleLinuxVM1 in westus3' {
-    #arrange
-    $rgName = 'rg-test'
-    $vmName = 'simpleLinuxVM1'
-
-    #act
-    $result = Confirm-AzBPVirtualMachine -ResourceGroupName $rgName -VirtualMachineName $vmName
-
-    #assert
-    $result | Should -BeInLocation 'westus3'
-  }
-}
-
-Describe 'Verify Virtual Machine Exists in Resource Group' {
-  it 'Should be a Virtual Machine in a resource group named rg-test' {
-    #arrange
-    $rgName = 'rg-test'
-    $vmName = 'simpleLinuxVM1'
-
-    #act
-    $result = Confirm-AzBPVirtualMachine -ResourceGroupName $rgName -VirtualMachineName $vmName
-
-    #assert
-    $result | Should -BeInResourceGroup 'rg-test'
-  }
+AfterAll {
+  Get-Module Az.InfrastructureTesting | Remove-Module
+  Get-Module BenchPress.Azure | Remove-Module
 }

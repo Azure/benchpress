@@ -1,130 +1,110 @@
-BeforeAll {
-  Import-Module Az-InfrastructureTest
+﻿BeforeAll {
+  Import-Module Az.InfrastructureTesting
+
+  $Script:rgName = 'rg-test'
+  $Script:dataFactoryName = 'sampleadf'
+  $Script:location = 'westus3'
 }
 
 Describe 'Verify Data Factory' {
-  it 'Should contain a data factory named sampleadf' {
-    #arrange
-    $rgName = 'rg-test'
-    $dataFactoryName = 'sampleadf'
-
-    #act
-    $result = Confirm-AzBPDataFactory -ResourceGroupName $rgName -Name $dataFactoryName
-
-    #assert
-    $result.Success | Should -Be $true
+  BeforeAll {
+    $Script:noDataFactoryName = 'nosampleadf'
   }
 
-  it 'Should contain a data factory named sampleadf' {
-    # Using custom assertion to check if the data factory is deployed
-    $rgName = 'rg-test'
-    $dataFactoryName = 'sampleadf'
+  It "Should contain a Data Factory named $dataFactoryName - Confirm-AzBPResource" {
+    # arrange
+    $params = @{
+      ResourceType      = "DataFactory"
+      ResourceGroupName = $rgName
+      ResourceName      = $dataFactoryName
+    }
 
-    #act
-    $result = Confirm-AzBPDataFactory -ResourceGroupName $rgName -Name $dataFactoryName
-
-    #assert
-    $result | Should -BeDeployed
+    # act and assert
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
-  it 'Should contain a data factory named sampleadf in westus3' {
-    # Using custom assertion to check if the workspace is in the correct location
-    $rgName = 'rg-test'
-    $dataFactoryName = 'sampleadf'
-    $location = 'westus3'
+  It "Should contain a Data Factory named $dataFactoryName - Confirm-AzBPResource" {
+    # arrange
+    $params = @{
+      ResourceType      = "DataFactory"
+      ResourceGroupName = $rgName
+      ResourceName      = $dataFactoryName
+      PropertyKey       = 'DataFactoryName'
+      PropertyValue     = $dataFactoryName
+    }
 
-    #act
-    $result = Confirm-AzBPDataFactory -ResourceGroupName $rgName -Name $dataFactoryName
-
-    #assert
-    $result | Should -BeInLocation $location
+    # act and assert
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
-  it 'Should contain a data factory named sampleadf deployed to rg-test resource group' {
-    # Using custom assertion to check if the workspace is in the correct location
-    $rgName = 'rg-test'
-    $dataFactoryName = 'sampleadf'
-
-    #act
-    $result = Confirm-AzBPDataFactory -ResourceGroupName $rgName -Name $dataFactoryName
-
-    #assert
-    $result | Should -BeInResourceGroup $rgName
+  It "Should contain a Data Factory named $dataFactoryName" {
+    Confirm-AzBPDataFactory -ResourceGroupName $rgName -Name $dataFactoryName | Should -BeSuccessful
   }
 
-  it 'Should not contain a data factory named nosampleadf' {
-    #arrange
-    $rgName = 'rg-test'
-    $dataFactoryName = 'nosampleadf'
-
-    #act
+  It "Should not contain a Data Factory named $noDataFactoryName" {
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
-    $result = Confirm-AzBPDataFactory -ResourceGroupName $rgName -Name $dataFactoryName `
-      -ErrorAction SilentlyContinue
+    Confirm-AzBPDataFactory -ResourceGroupName $rgName -Name $noDataFactoryName -ErrorAction SilentlyContinue
+    | Should -Not -BeSuccessful
+  }
 
-    #assert
-    $result.Success | Should -Be $false
+  It "Should contain a Data Factory named $dataFactoryName in $location" {
+    Confirm-AzBPDataFactory -ResourceGroupName $rgName -Name $dataFactoryName | Should -BeInLocation $location
+  }
+
+  It "Should contain a Data Factory named $dataFactoryName in $rgName" {
+    Confirm-AzBPDataFactory -ResourceGroupName $rgName -Name $dataFactoryName | Should -BeInResourceGroup $rgName
   }
 }
 
 Describe 'Verify Data Factory Linked Service' {
-  it 'Should contain a data factory with a linked service named BenchpressStorageLinkedService' {
-    #arrange
+  BeforeAll {
+    $Script:linkedServiceName = 'BenchpressStorageLinkedService'
+  }
+
+  It "Should contain a Data Factory with a Linked Service named $linkedServiceName - Confirm-AzBPResource" {
+    # arrange
     $params = @{
-      ResourceGroupName = 'rg-test'
-      DataFactoryName   = 'sampleadf'
-      Name              = 'BenchpressStorageLinkedService'
+      ResourceType      = 'DataFactoryLinkedService'
+      ResourceGroupName = $rgName
+      DataFactoryName   = $dataFactoryName
+      ResourceName      = $linkedServiceName
     }
 
-    #act
-    $result = Confirm-AzBPDataFactoryLinkedService @params
-
-    #assert
-    $result.Success | Should -Be $true
+    # act and assert
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
-  it 'Should contain a data factory with a linked service named BenchpressStorageLinkedService' {
-    # Using custom assertion to check if the workspace with spark pool is deployed
+  It "Should contain a Data Factory with a Linked Service named $linkedServiceName - Confirm-AzBPResource" {
+    # arrange
     $params = @{
-      ResourceGroupName = 'rg-test'
-      DataFactoryName   = 'sampleadf'
-      Name              = 'BenchpressStorageLinkedService'
+      ResourceType      = 'DataFactoryLinkedService'
+      ResourceGroupName = $rgName
+      DataFactoryName   = $dataFactoryName
+      ResourceName      = $linkedServiceName
+      PropertyKey       = 'Name'
+      PropertyValue     = $linkedServiceName
     }
 
-    #act
-    $result = Confirm-AzBPDataFactoryLinkedService @params
-
-    #assert
-    $result | Should -BeDeployed
+    # act and assert
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
-  it 'Should contain a data factory linked service located in west us 3' {
-    # Using custom assertion to check if the spark pool is in the correct location
+  It "Should contain a Data Factory with a Linked Service named $linkedServiceName" {
+    # arrange
     $params = @{
-      ResourceGroupName = 'rg-test'
-      DataFactoryName   = 'sampleadf'
-      Name              = 'BenchpressStorageLinkedService'
+      ResourceGroupName = $rgName
+      DataFactoryName   = $dataFactoryName
+      Name              = $linkedServiceName
     }
-    $location = 'westus3'
 
-    #act
-    $result = Confirm-AzBPDataFactoryLinkedService @params
-
-    #assert
-    $result | Should -BeInLocation $location
+    # act and assert
+    Confirm-AzBPDataFactoryLinkedService @params | Should -BeSuccessful
   }
+}
 
-  it 'Should contain a data factory linked service deployed to rg-test resource group' {
-    # Using custom assertion to check if the workspace is in the correct location
-    $rgName = 'rg-test'
-    $dataFactoryName = 'sampleadf'
-
-    #act
-    $result = Confirm-AzBPDataFactory -ResourceGroupName $rgName -Name $dataFactoryName
-
-    #assert
-    $result | Should -BeInResourceGroup $rgName
-  }
+AfterAll {
+  Get-Module Az.InfrastructureTesting | Remove-Module
+  Get-Module BenchPress.Azure | Remove-Module
 }

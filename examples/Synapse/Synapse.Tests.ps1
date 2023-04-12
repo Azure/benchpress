@@ -1,193 +1,209 @@
-BeforeAll {
-  Import-Module Az-InfrastructureTest
+﻿BeforeAll {
+  Import-Module Az.InfrastructureTesting
+
+  $Script:rgName = 'rg-test'
+  $Script:workSpaceName = 'samplesynws'
+  $Script:location = 'westus3'
 }
 
 Describe 'Verify Synapse Workspace' {
-  it 'Should contain a synapse workspace named samplesynws' {
-    #arrange
-    $rgName = 'rg-test'
-    $workspaceName = 'samplesynws'
-
-    #act
-    $result = Confirm-AzBPSynapseWorkspace -ResourceGroupName $rgName -WorkspaceName $workspaceName
-
-    #assert
-    $result.Success | Should -Be $true
+  BeforeAll {
+    $Script:noWorkspaceName = 'nosamplesynws'
   }
 
-  it 'Should contain a synapse workspace named samplesynws' {
-    # Using custom assertion to check if the workspace is deployed
-    $rgName = 'rg-test'
-    $workspaceName = 'samplesynws'
+  It "Should contain a Synapse Workspace named $workSpaceName - Confirm-AzBPResource" {
+    # arrange
+    $params = @{
+      ResourceType      = "SynapseWorkspace"
+      ResourceGroupName = $rgName
+      ResourceName      = $workSpaceName
+    }
 
-    #act
-    $result = Confirm-AzBPSynapseWorkspace -ResourceGroupName $rgName -WorkspaceName $workspaceName
-
-    #assert
-    $result | Should -BeDeployed
+    # act and assert
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
-  it 'Should contain a synapse workspace named samplesynws in westus3' {
-    # Using custom assertion to check if the workspace is in the correct location
-    $rgName = 'rg-test'
-    $workspaceName = 'samplesynws'
-    $location = 'westus3'
+  It "Should contain a Synapse Workspace named $workSpaceName - ConfirmAzBPResource" {
+    # arrange
+    $params = @{
+      ResourceType      = "SynapseWorkspace"
+      ResourceGroupName = $rgName
+      ResourceName      = $workSpaceName
+      PropertyKey       = 'Name'
+      PropertyValue     = $workSpaceName
+    }
 
-    #act
-    $result = Confirm-AzBPSynapseWorkspace -ResourceGroupName $rgName -WorkspaceName $workspaceName
-
-    #assert
-    $result | Should -BeInLocation $location
+    # act and assert
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
-  it 'Should contain a synapse workspace named samplesynws in rg-test' {
-    # Using custom assertion to check if the workspace is in the correct resource group
-    $rgName = 'rg-test'
-    $workspaceName = 'samplesynws'
-
-    #act
-    $result = Confirm-AzBPSynapseWorkspace -ResourceGroupName $rgName -WorkspaceName $workspaceName
-
-    #assert
-    $result | Should -BeInResourceGroup 'rg-test'
+  It "Should contain a Synapse Workspace named $workSpaceName" {
+    Confirm-AzBPSynapseWorkspace -ResourceGroupName $rgName -WorkspaceName $workspaceName | Should -BeSuccessful
   }
 
-  it 'Should not contain a synapse workspace named nosamplesynws' {
-    #arrange
-    $rgName = 'rg-test'
-    $workspaceName = 'nosamplesynws'
+  It "Should contain a Synapse Workspace named $workSpaceName in $location" {
+    Confirm-AzBPSynapseWorkspace -ResourceGroupName $rgName -WorkspaceName $workspaceName
+    | Should -BeInLocation $location
+  }
 
-    #act
+  It "Should contain a Synapse Workspace named $workSpaceName in $rgName" {
+    Confirm-AzBPSynapseWorkspace -ResourceGroupName $rgName -WorkspaceName $workspaceName
+    | Should -BeInResourceGroup $rgName
+  }
+
+  It "Should not contain a Synapse Workspace named $noWorkspaceName" {
+    # arrange
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
-    $result = Confirm-AzBPSynapseWorkspace -ResourceGroupName $rgName -WorkspaceName $workspaceName `
-      -ErrorAction SilentlyContinue
+    $params = @{
+      ResourceGroupName = $rgName
+      WorkspaceName     = $noWorkspaceName
+      ErrorAction       = 'SilentlyContinue'
+    }
 
-    #assert
-    $result.Success | Should -Be $false
+    # act and assert
+    Confirm-AzBPSynapseWorkspace @params | Should -Not -BeSuccessful
   }
 }
 
- Describe 'Verify Synapse Spark/SQL Pool' {
-  it 'Should contain a synapse workspace with a spark pool named samplespark' {
-    #arrange
-    $params = @{
-      ResourceGroupName    = 'rg-test'
-      WorkspaceName        = 'samplesynws'
-      SynapseSparkPoolName = 'samplespark'
-    }
-
-    #act
-    $result = Confirm-AzBPSynapseSparkPool @params
-
-    #assert
-    $result.Success | Should -Be $true
+Describe 'Verify Synapse Spark/SQL Pool' {
+  BeforeAll {
+    $Script:sparkPoolName = 'samplespark'
+    $Script:sqlPoolName = 'samplesql'
   }
 
-  it 'Should contain a synapse workspace with a spark pool named samplespark' {
-    # Using custom assertion to check if the workspace with spark pool is deployed
+  It "Should contain a Synapse Spark Pool named $sparkPoolName - Confirm-AzBPResource" {
+    # arrange
     $params = @{
-      ResourceGroupName    = 'rg-test'
-      WorkspaceName        = 'samplesynws'
-      SynapseSparkPoolName = 'samplespark'
+      ResourceType      = "SynapseSparkPool"
+      ResourceGroupName = $rgName
+      WorkspaceName     = $workSpaceName
+      ResourceName      = $sparkPoolName
     }
 
-    #act
-    $result = Confirm-AzBPSynapseSparkPool @params
-
-    #assert
-    $result | Should -BeDeployed
+    # act and assert
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
-  it 'Should contain a spark pool in westus3' {
-    # Using custom assertion to check if the spark pool is in the correct location
+  It "Should contain a Synapse Spark Pool named $sparkPoolName - ConfirmAzBPResource" {
+    # arrange
     $params = @{
-      ResourceGroupName    = 'rg-test'
-      WorkspaceName        = 'samplesynws'
-      SynapseSparkPoolName = 'samplespark'
-    }
-    $location = 'westus3'
-
-    #act
-    $result = Confirm-AzBPSynapseSparkPool @params
-
-    #assert
-    $result | Should -BeInLocation $location
-  }
-
-  it 'Should contain a spark pool in rg-test' {
-    # Using custom assertion to check if the spark pool is in the correct resource group
-    $params = @{
-      ResourceGroupName    = 'rg-test'
-      WorkspaceName        = 'samplesynws'
-      SynapseSparkPoolName = 'samplespark'
-    }
-    #act
-    $result = Confirm-AzBPSynapseSparkPool @params
-
-    #assert
-    $result | Should -BeInResourceGroup 'rg-test'
-  }
-
-  it 'Should contain a synapse workspace with a sql pool named samplesql' {
-    #arrange
-    $params = @{
-      ResourceGroupName  = 'rg-test'
-      WorkspaceName      = 'samplesynws'
-      SynapseSqlPoolName = 'samplesql'
+      ResourceType      = "SynapseSparkPool"
+      ResourceGroupName = $rgName
+      WorkspaceName     = $workSpaceName
+      ResourceName      = $sparkPoolName
+      PropertyKey       = 'Name'
+      PropertyValue     = $sparkPoolName
     }
 
-    #act
-    $result = Confirm-AzBPSynapseSqlPool @params
-
-    #assert
-    $result.Success | Should -Be $true
+    # act and assert
+    Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
-  it 'Should contain a synapse workspace with a spark pool named samplespark' {
-    # Using custom assertion to check if the workspace with sql pool is deployed
+  It "Should contain a Synapse Workspace with a Spark Pool named $sparkPoolName" {
+    # arrange
     $params = @{
-      ResourceGroupName  = 'rg-test'
-      WorkspaceName      = 'samplesynws'
-      SynapseSqlPoolName = 'samplesql'
+      ResourceGroupName    = $rgName
+      WorkspaceName        = $workSpaceName
+      SynapseSparkPoolName = $sparkPoolName
     }
 
-    #act
-    $result = Confirm-AzBPSynapseSqlPool @params
-
-    #assert
-    $result | Should -BeDeployed
+    # act and assert
+    Confirm-AzBPSynapseSparkPool @params | Should -BeSuccessful
   }
 
-  it 'Should contain a sql pool in westus3' {
-    # Using custom assertion to check if the sql pool is in the correct location
+  It "Should contain a Spark Pool named $sparkPoolName in $location" {
+    # arrange
     $params = @{
-      ResourceGroupName  = 'rg-test'
-      WorkspaceName      = 'samplesynws'
-      SynapseSqlPoolName = 'samplesql'
-    }
-    $location = 'westus3'
-
-    #act
-    $result = Confirm-AzBPSynapseSqlPool @params
-
-    #assert
-    $result | Should -BeInLocation $location
-  }
-
-  it 'Should contain a sql pool in rg-test' {
-    # Using custom assertion to check if the sql pool is in the correct resource group
-    $params = @{
-      ResourceGroupName  = 'rg-test'
-      WorkspaceName      = 'samplesynws'
-      SynapseSqlPoolName = 'samplesql'
+      ResourceGroupName    = $rgName
+      WorkspaceName        = $workSpaceName
+      SynapseSparkPoolName = $sparkPoolName
     }
 
-    #act
-    $result = Confirm-AzBPSynapseSqlPool @params
-
-    #assert
-    $result | Should -BeInResourceGroup 'rg-test'
+    # act and assert
+    Confirm-AzBPSynapseSparkPool @params | Should -BeInLocation $location
   }
+
+  It "Should contain a Spark Pool named $sparkPoolName in $rgName" {
+    # arrange
+    $params = @{
+      ResourceGroupName    = $rgName
+      WorkspaceName        = $workSpaceName
+      SynapseSparkPoolName = $sparkPoolName
+    }
+    # act and assert
+    Confirm-AzBPSynapseSparkPool @params | Should -BeInResourceGroup $rgName
+  }
+
+#######################################################################################################################
+
+  It "Should contain a Synapse SQL Pool named $sqlPoolName - Confirm-AzBPResource" {
+    # arrange
+    $params = @{
+      ResourceType      = "SynapseSqlPool"
+      ResourceGroupName = $rgName
+      WorkspaceName     = $workSpaceName
+      ResourceName      = $sqlPoolName
+    }
+
+    # act and assert
+    Confirm-AzBPResource @params | Should -BeSuccessful
+  }
+
+  It "Should contain a Synapse SQL Pool named $sqlPoolName - ConfirmAzBPResource" {
+    # arrange
+    $params = @{
+      ResourceType      = "SynapseSqlPool"
+      ResourceGroupName = $rgName
+      WorkspaceName     = $workSpaceName
+      ResourceName      = $sqlPoolName
+      PropertyKey       = 'Name'
+      PropertyValue     = $sqlPoolName
+    }
+
+    # act and assert
+    Confirm-AzBPResource @params | Should -BeSuccessful
+  }
+
+  It "Should contain a Synapse Workspace with a SQL Pool named $sqlPoolName" {
+    # arrange
+    $params = @{
+      ResourceGroupName  = $rgName
+      WorkspaceName      = $workSpaceName
+      SynapseSqlPoolName = $sqlPoolName
+    }
+
+    # act and assert
+    Confirm-AzBPSynapseSqlPool @params | Should -BeSuccessful
+  }
+
+  It "Should contain a SQL Pool named $sqlPoolName in $location" {
+    # arrange
+    $params = @{
+      ResourceGroupName  = $rgName
+      WorkspaceName      = $workSpaceName
+      SynapseSqlPoolName = $sqlPoolName
+    }
+
+    # act and assert
+    Confirm-AzBPSynapseSqlPool @params | Should -BeInLocation $location
+  }
+
+  It "Should contain a SQL Pool named $sqlPoolName in $rgName" {
+    # arrange
+    $params = @{
+      ResourceGroupName  = $rgName
+      WorkspaceName      = $workSpaceName
+      SynapseSqlPoolName = $sqlPoolName
+    }
+
+    # act and assert
+    Confirm-AzBPSynapseSqlPool @params | Should -BeInResourceGroup $rgName
+  }
+}
+
+AfterAll {
+  Get-Module Az.InfrastructureTesting | Remove-Module
+  Get-Module BenchPress.Azure | Remove-Module
 }

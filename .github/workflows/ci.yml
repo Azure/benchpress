@@ -55,6 +55,8 @@ jobs:
         shell: pwsh
         run: |
           Install-Module -Name Az -Scope CurrentUser -Repository PSGallery -Force
+          Install-Module -Name Az.App -Scope CurrentUser -Repository PSGallery -Force
+          Install-Module -Name Az.Portal -Scope CurrentUser -Repository PSGallery -Force
           Publish-Module -Path ./BenchPress.Azure -Repository LocalFeedPSRepo -Verbose
       - name: Install AzBP Module from the repository
         shell: pwsh
@@ -98,17 +100,13 @@ jobs:
           Import-Module platyPS
           Import-Module ./BenchPress.Azure/BenchPress.Azure.psd1
           New-MarkdownHelp -Module BenchPress.Azure -OutputFolder ./docs -Force
-      - name: If there are changes push them and create or update pull request
+      - name: If there are changes push them to docs branch
         run: |
           if [ "$(git ls-files --deleted --modified --others --exclude-standard -- ./docs | wc -l)" -gt 0 ]
           then
             git add docs
             git commit -m "docs: updating generated documentation"
             git push origin docs
-            if [ "$(gh pr list -H docs -s open | wc -l)" -eq 0 ]
-            then
-              gh pr create -B main -H docs --title 'Merge updated docs into main.' --body 'Created by Github action'
-            fi
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

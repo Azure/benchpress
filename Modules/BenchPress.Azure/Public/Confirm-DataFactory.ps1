@@ -1,4 +1,4 @@
-# INLINE_SKIP
+﻿# INLINE_SKIP
 using module ./../Classes/ConfirmResult.psm1
 
 . $PSScriptRoot/../Private/Connect-Account.ps1
@@ -10,14 +10,14 @@ function Confirm-DataFactory {
       Confirms that a Data Factory exists.
 
     .DESCRIPTION
-      The Confirm-AzBPDataFactory cmdlet gets a data factory using the specified Data Factory and
-      Resource Group name.
+      The Confirm-AzBPDataFactory cmdlet gets a Data Factory using the specified Data Factory and
+      Resource Group names.
 
     .PARAMETER Name
-      The name of the Data Factory
+      The name of the Data Factory.
 
     .PARAMETER ResourceGroupName
-      The name of the Resource Group
+      The name of the Resource Group. The name is case insensitive.
 
     .EXAMPLE
       Confirm-AzBPDataFactory -Name "benchpresstest" -ResourceGroupName "rgbenchpresstest"
@@ -38,12 +38,12 @@ function Confirm-DataFactory {
     [string]$ResourceGroupName
   )
   Begin {
-    $ConnectResults = Connect-Account
+    $connectResults = Connect-Account
   }
   Process {
-    $Resource = Get-AzDataFactoryV2 -ResourceGroupName $ResourceGroupName -Name $Name
+    $resource = Get-AzDataFactoryV2 -ResourceGroupName $ResourceGroupName -Name $Name
 
-    [ConfirmResult]::new($Resource, $ConnectResults.AuthenticationData)
+    [ConfirmResult]::new($resource, $connectResults.AuthenticationData)
   }
   End { }
 }

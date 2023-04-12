@@ -137,6 +137,25 @@ BenchPress code and documentation:
 1. If necessary address any automated Pull Request checks by making fixes on the local feature branch and pushing the
    fixes when completed. Repeat this process until all PR checks have been resolved.
 
+### Contribution Standards
+
+1. Code - It is intended that all code contributions conform to the guidelines found at the following references
+   (listed in the order of precedence when there is a conflict):
+    1. [Microsoft Strongly Encouraged Development Guidelines][1]
+    1. [PowerShell Practice and Style Guide][2]
+    1. Additional guidance:
+        1. 120 character line length limit
+        1. Multi-line code with piped commands - when the pipe is the first character of the line, the pipe will align
+        to the left edge of the start of the previous line's command (i.e., not indented past the start of the
+        previous line's command and not flush to the left at column 0).
+1. Docs - It is intended that all documentation contributions conform to the guidelines found at the following
+references (listed in the order of precedence when there is a conflict):
+   1. [Microsoft PowerShell-Docs Style Guide][3]
+
+[1]: https://learn.microsoft.com/en-us/powershell/scripting/developer/cmdlet/strongly-encouraged-development-guidelines
+[2]: https://poshcode.gitbook.io/powershell-practice-and-style/introduction/readme
+[3]: https://learn.microsoft.com/en-us/powershell/scripting/community/contributing/powershell-style-guide
+
 ## Requirements for submitting functions or classes
 
 - It is required that there is one file per class/function.
@@ -150,6 +169,26 @@ BenchPress code and documentation:
 sourcing another file), or that execute `Import-Module` must be at the top of the file, and must be preceded by a line
 with the content `# INLINE_SKIP` and followed by a line with the content `# end INLINE_SKIP`. These denote to the build
 script that content which will not be built into the final inline module script.
+- If you add a new `Confirm-*` cmdlet and resource type to `Modules\BenchPress.Azure\Public`, you must also:
+  1. Add the cmdlet to the list of `FunctionsToExport` in `Modules\BenchPress.Azure\BenchPress.Azure.psd1`.
+  1. Add a unit test in the `Modules\BenchPress.Azure\Tests\Public` folder.
+  1. Add the new type to the generator code at `BenchPress\Generators\ResourceTypes`.
+  1. Update `Get-ResourceByType` to add the `ResourceType` to the `switch`. If there are any new parameters for the
+  cmdlet, those need to documented in the comments and added to the parameters that are accepted.
+  1. If new parameters are added to `Get-ResourceByType`, those same parameters must also be added to `Confirm-Resource`
+  to be passed through in the parameters hashtable and the comments updated appropriately.
+  1. A new example must be created in the examples folder.
+     - If the example is in the family of an existing resource, add the resource to the existing family's files.
+     Otherwise, create a new folder for the new resource family.
+     - For each new resource the following must be added (or updated):
+       - A `.md` file that describes how to use the example.
+       - A `.bicep` file that properly deploys the resource(s) to Azure.
+       - A `.Tests.ps1` file that tests the deployed resource(s) in Azure.
+  1. The code author that creates an example from the previous step must deploy the resources to Azure and confirm that
+  the tests properly execute before submitting a pull request.
+  1. An example of merged code that meets the above criteria: [PR][4]
+
+[4]: https://github.com/Azure/benchpress/commit/1f759817506f678202ee7d5300ef7c8d6502c281
 
 ## Thank You
 
