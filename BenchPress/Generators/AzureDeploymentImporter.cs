@@ -9,17 +9,16 @@ public class AzureDeploymentImporter
         "(?<paramOrVarType>parameters)\\(\\'(?<paramOrVarName>.*?)\\'\\)|(?<paramOrVarType>variables)\\(\\'(?<paramOrVarName>.*?)\\'\\)",
         RegexOptions.Compiled
     );
-
-    private static string s_squareBracketPattern = "\\[(.*?)\\]";
-    private static string s_squareBracketSubstituition = "$1";
-    private static string s_paramOrVarNameGroupKey = "paramOrVarName";
-    private static string s_paramOrVarTypeGroupKey = "paramOrVarType";
     private static Regex s_resourceIdParametersRegex = new Regex(
         "\\[resourceId\\((?<resourceIdParameters>.*)\\)\\]",
         RegexOptions.Compiled
     );
     private static string s_resourceIdParametersKey = "resourceIdParameters";
     private static string s_dependsOnKey = "dependsOn";
+    private static string s_squareBracketPattern = "\\[(.*?)\\]";
+    private static string s_squareBracketSubstituition = "$1";
+    private static string s_paramOrVarNameGroupKey = "paramOrVarName";
+    private static string s_paramOrVarTypeGroupKey = "paramOrVarType";
     private static string s_defaultValueKey = "defaultValue";
 
     public static IEnumerable<TestMetadata> Import(FileInfo inputFile, string outputFolderPath)
@@ -193,14 +192,15 @@ public class AzureDeploymentImporter
 
                             for (int index = 0; index < pathParts.Count(); index++)
                             {
-                                // If the value is a hard coded value and not a "parameter" or "variable", then the
-                                // value will be "'value'" so trim any single quotes (this will not affect "parameter"
-                                // or "variable" entries).
-                                extraProperties.Add(
-                                    pathParts[index],
-                                    ResolveParamsAndVariables(values[index], armTemplateObject)
-                                        .Trim('\'')
-                                );
+                                // If the value is a "parameter" or "variable", then resolve it to the correct value
+                                // of the parameter or variable. If the value is a hard coded value, then the
+                                // value will be "'value'" so trim any single quotes.
+                                var value = ResolveParamsAndVariables(
+                                        values[index],
+                                        armTemplateObject
+                                    )
+                                    .Trim('\'');
+                                extraProperties.Add(pathParts[index], value);
                             }
                         }
                     }
@@ -295,7 +295,7 @@ public class AzureDeploymentImporter
         // Find all matches in the parameter/variable string that follows the pattern of "parameters('...')" or
         // "variables('...')". The regular expression pattern defines two named subexpressions: paramOrVarType, which
         // represents the type of parameter/variable (e.g., "parameters" or "variables"), and paramOrVarName, which
-        // represents the name of the parameters/variable.
+        // represents the name of the parameter/variable.
         var matches = s_parametersOrVariablesRegex.Matches(stringToResolve);
         foreach (Match match in matches)
         {
@@ -311,8 +311,8 @@ public class AzureDeploymentImporter
                 if (parametersOrVariablesObj != null)
                 {
                     // Get the value of the parameter/variable from the JSON Object. If the value is still a JSON
-                    // Object, that means it is a parameter that has a default value, so get the default value.
-                    // Otherwise, the value can be converted to a string and assigned to resolveValue.
+                    // Object, that means it is a parameter that has a default value, so get the default value (if it
+                    // exists). Otherwise, the value can be converted to a string and assigned to resolveValue.
                     var resolvedValueNode = parametersOrVariablesObj[name];
                     if (resolvedValueNode != null)
                     {
