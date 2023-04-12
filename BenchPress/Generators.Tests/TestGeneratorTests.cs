@@ -8,6 +8,7 @@ namespace Generators.Tests
     [TestMethod]
     public void Should_Throw_If_Unknown_TestType()
     {
+      // arrange
       var resourceType = "Microsoft.Insights/actionGroups";
       var resourceName = "Name";
       var extraProperties = new Dictionary<string, object>();
@@ -18,6 +19,7 @@ namespace Generators.Tests
       var generator = new TestGenerator(new PowershellLanguageProvider());
       var templateFile = "./templates/powershell/template.ps1";
 
+      // act and assert
       Action action = () => { generator.Generate(new List<TestDefinition> { definition }, templateFile); };
       Assert.ThrowsException<Exception>(action);
     }
