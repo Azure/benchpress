@@ -305,7 +305,7 @@ public class AzureDeploymentImporter
                     {
                         if (resolvedValueNode is JsonObject)
                         {
-                            resolvedValue = resolvedValueNode[s_defaultValueKey]!.ToString();
+                            resolvedValue = resolvedValueNode[s_defaultValueKey]?.ToString();
                         }
                         else
                         {
