@@ -94,9 +94,10 @@ public class AzureDeploymentImporter
                 throw new Exception("Failed to parse json file");
             }
 
+            //TODO: This if can probably be removed and just call resolveparams
             if (resourceName.StartsWith("[") && resourceName.EndsWith("]"))
             {
-                resourceName = GetValueOfParamOrVar(resourceName, parsed);
+                resourceName = ResolveParamsAndVariables(resourceName, parsed);
             }
 
             if (resourceName == null)
@@ -195,7 +196,7 @@ public class AzureDeploymentImporter
                                 // If the value is a hard coded value and not a "parameter" or "variable", then the
                                 // value will be "'value'" so trim any single quotes (this will not affect "parameter"
                                 // or "variable" entries).
-                                extraProperties.Add(pathParts[index], GetValueOfParamOrVar(values[index], armTemplateObject).Trim('\''));
+                                extraProperties.Add(pathParts[index], ResolveParamsAndVariables(values[index], armTemplateObject).Trim('\''));
                             }
                         }
                     }
@@ -209,7 +210,8 @@ public class AzureDeploymentImporter
     }
 
     /// <summary>
-    /// Takes an ARM template parameter or variable and returns the resolved value, if possible.
+    /// Takes a string from an ARM template containing instances of <c>parameters('...')</c> and
+    /// <c>variables('...')</c> and resolves those instances to the correct values, if possible.
     /// <example>
     /// For example, if the following ARM template (<paramref name="armTemplateObject"/>) with the parameter block
     /// below is passed in:
@@ -223,7 +225,7 @@ public class AzureDeploymentImporter
     ///   }
     /// ...}
     /// </code>
-    /// and the following parameter string (<paramref name ="paramOrVar"/>) is passed in:
+    /// and the following string (<paramref name ="stringToResolve"/>) is passed in:
     /// <code>
     /// "[parameters('demoParam')]"
     /// </code>
@@ -236,30 +238,54 @@ public class AzureDeploymentImporter
     /// <code>
     /// {...
     ///   "variables": {
-    ///     "demoParam": "Contoso"
+    ///     "demoVar": "Contoso"
     ///   }
     /// ...}
     /// </code>
-    /// and the following variable string (<paramref name ="paramOrVar"/>) is passed in:
+    /// and the following string (<paramref name ="stringToResolve"/>) is passed in:
     /// <code>
-    /// "[variables('demoParam')]"
+    /// "[variables('demoVar')]"
     /// </code>
-    /// Will resolve the variable to the correct value and result in the following return value:
+    /// The variable will be resolved to the correct value and result in the following return value:
     /// <code>
     /// "Contoso"
     /// </code>
+    /// Finally, this method can also handle resolving a mixture of ARM template parameters and variables. For example
+    /// if the following ARM template (<paramref name="armTemplateObject"/>) with the parameter and variable block
+    /// below is passed in:
+    /// <code>
+    /// {...
+    ///   "parameters": {
+    ///     "demoParam": {
+    ///       "type": "string",
+    ///       "defaultValue": "ContosoParam"
+    ///     }
+    ///   }
+    ///   "variables": {
+    ///     "demoVar": "ContosoVar"
+    ///   }
+    /// ...}
+    /// </code>
+    /// and the following string (<paramref name ="stringToResolve"/>) is passed in:
+    /// <code>
+    /// "[format('{0}{1}', variables('demoVar'), parameters('demoParam')]"
+    /// </code>
+    /// The variable and parameter will be resolved to the correct values and result in the following return value:
+    /// <code>
+    /// "format('{0}{1}', "ContosoVar" , "ContosoParam")"
+    /// </code>
     /// </summary>
-    private static string GetValueOfParamOrVar(string paramOrVar, JsonObject armTemplateObject)
+    private static string ResolveParamsAndVariables(string stringToResolve, JsonObject armTemplateObject)
     {
         // Find and remove square brackets from the parameter/variable string. Square brackets are specific to
         // ARM template syntax and are not needed in generated tests.
-        paramOrVar = Regex.Replace(paramOrVar, s_squareBracketPattern, s_squareBracketSubstituition);
+        stringToResolve = Regex.Replace(stringToResolve, s_squareBracketPattern, s_squareBracketSubstituition);
 
         // Find all matches in the parameter/variable string that follows the pattern of "parameters('...')" or
         // "variables('...')". The regular expression pattern defines two named subexpressions: paramOrVarType, which
         // represents the type of parameter/variable (e.g., "parameters" or "variables"), and paramOrVarName, which
         // represents the name of the parameters/variable.
-        var matches = s_parametersOrVariablesRegex.Matches(paramOrVar);
+        var matches = s_parametersOrVariablesRegex.Matches(stringToResolve);
         foreach (Match match in matches)
         {
             var name = match.Groups[s_paramOrVarNameGroupKey].Value;
@@ -295,9 +321,9 @@ public class AzureDeploymentImporter
             {
                 // Remove any square brackets and replace the match with the resolved value in the original string
                 resolvedValue = Regex.Replace(resolvedValue, s_squareBracketPattern, s_squareBracketSubstituition);
-                paramOrVar = paramOrVar.Replace(match.Value, resolvedValue);
+                stringToResolve = stringToResolve.Replace(match.Value, resolvedValue);
             }
         }
-        return paramOrVar;
+        return stringToResolve;
     }
 }
