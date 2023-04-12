@@ -20,6 +20,7 @@ public class AzureDeploymentImporter
     );
     private static string s_resourceIdParametersKey = "resourceIdParameters";
     private static string s_dependsOnKey = "dependsOn";
+    private static string s_defaultValueKey = "defaultValue";
 
     public static IEnumerable<TestMetadata> Import(FileInfo inputFile, string outputFolderPath)
     {
@@ -304,7 +305,7 @@ public class AzureDeploymentImporter
                     {
                         if (resolvedValueNode is JsonObject)
                         {
-                            resolvedValue = resolvedValueNode["defaultValue"]!.ToString();
+                            resolvedValue = resolvedValueNode[s_defaultValueKey]!.ToString();
                         }
                         else
                         {
