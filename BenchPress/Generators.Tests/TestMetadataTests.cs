@@ -1,4 +1,4 @@
-namespace Generators.Tests
+﻿namespace Generators.Tests
 {
   [TestClass]
   public class TestMetadataTests

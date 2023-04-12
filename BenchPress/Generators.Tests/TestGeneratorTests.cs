@@ -1,4 +1,4 @@
-using Generators.LanguageProviders;
+﻿using Generators.LanguageProviders;
 
 namespace Generators.Tests
 {
