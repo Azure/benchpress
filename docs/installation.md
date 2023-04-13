@@ -10,10 +10,12 @@ There are two general ways to install BenchPress:
 In order to install from the PowerShell Gallery follow these steps from a PowerShell terminal:
 
 1. Ensure that the latest version of
-[PowerShellGet](https://learn.microsoft.com/en-us/powershell/scripting/gallery/installing-psget?view=powershell-7.3)
+[PowerShellGet][1]
 is installed.
 1. Execute `Install-Module -Name Az.InfrastructureTesting`
 1. To make the module available to the current session execute `Import-Module -Name Az.InfrastructureTesting`
+
+[1]: https://learn.microsoft.com/en-us/powershell/gallery/powershellget/install-powershellget?view=powershellget-2.x
 
 ## Install From a Local Copy of the Repository
 
