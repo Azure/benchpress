@@ -111,3 +111,4 @@ StyleCopReport.xml
 !?*.[Cc]ache/
 
 megalinter-reports/
+/BenchPress/Generators.Tests/FakesAssemblies
