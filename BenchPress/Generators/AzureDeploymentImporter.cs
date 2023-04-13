@@ -13,7 +13,7 @@ public class AzureDeploymentImporter
         "\\[resourceId\\((?<resourceIdParameters>.*)\\)\\]",
         RegexOptions.Compiled
     );
-    private static Regex s_parantheseRegex = new Regex("\\((.*?)\\)", RegexOptions.Compiled);
+    private static Regex s_parenthesesRegex = new Regex("\\((.*?)\\)", RegexOptions.Compiled);
     private static string s_resourceIdParametersKey = "resourceIdParameters";
     private static string s_dependsOnKey = "dependsOn";
     private static string s_squareBracketPattern = "\\[(.*?)\\]";
@@ -339,7 +339,7 @@ public class AzureDeploymentImporter
                 );
                 // If the resolved value does not contain addtional ARM template functions, then wrap it in single
                 // quotes because the resolved value is a plain string type.
-                if (!s_parantheseRegex.IsMatch(resolvedValue))
+                if (!s_parenthesesRegex.IsMatch(resolvedValue))
                 {
                     resolvedValue = "\'" + resolvedValue + "\'";
                 }
