@@ -13,6 +13,7 @@ public class AzureDeploymentImporter
         "\\[resourceId\\((?<resourceIdParameters>.*)\\)\\]",
         RegexOptions.Compiled
     );
+    private static Regex s_parantheseRegex = new Regex("\\((.*?)\\)", RegexOptions.Compiled);
     private static string s_resourceIdParametersKey = "resourceIdParameters";
     private static string s_dependsOnKey = "dependsOn";
     private static string s_squareBracketPattern = "\\[(.*?)\\]";
@@ -276,7 +277,7 @@ public class AzureDeploymentImporter
     /// </code>
     /// The variable and parameter will be resolved to the correct values and result in the following return value:
     /// <code>
-    /// "format('{0}{1}', "ContosoVar" , "ContosoParam")"
+    /// "format('{0}{1}', 'ContosoVar' , 'ContosoParam')"
     /// </code>
     /// </summary>
     private static string ResolveParamsAndVariables(
@@ -329,12 +330,19 @@ public class AzureDeploymentImporter
             }
             if (!string.IsNullOrWhiteSpace(resolvedValue))
             {
-                // Remove any square brackets and replace the match with the resolved value in the original string
+                // Find and remove square brackets from the resolved value. Square brackets are specific to ARM
+                // template syntax and are not needed in generated tests.
                 resolvedValue = Regex.Replace(
                     resolvedValue,
                     s_squareBracketPattern,
                     s_squareBracketSubstituition
                 );
+                // If the resolved value does not contain addtional ARM template functions, then wrap it in single
+                // quotes because the resolved value is a plain string type.
+                if (!s_parantheseRegex.IsMatch(resolvedValue))
+                {
+                    resolvedValue = "\'" + resolvedValue + "\'";
+                }
                 stringToResolve = stringToResolve.Replace(match.Value, resolvedValue);
             }
         }
