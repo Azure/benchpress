@@ -4,14 +4,11 @@
   $Script:rgName = 'rg-test'
   $Script:location = 'westus3'
   $Script:serverName = 'samplesqlserver'
+  $Script:noDatabaseName = 'nosamplesqlserver'
   $Script:databaseName = 'samplesqldatabase'
 }
 
 Describe 'Verify SQL Database' {
-  BeforeAll {
-    $Script:noDatabaseName = 'nosamplesqlserver'
-  }
-
   It "Should contain a SQL Database named $databaseName - Confirm-AzBPResource" {
     # arrange
     $params = @{

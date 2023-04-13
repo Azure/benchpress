@@ -2,14 +2,11 @@
   Import-Module Az.InfrastructureTesting
 
   $Script:rgName = 'rg-test'
+  $Script:noRgName = 'notestrg'
   $Script:location = 'westus3'
 }
 
 Describe 'Verify Resource Group Exists' {
-  BeforeAll {
-    $Script:noRgName = 'notestrg'
-  }
-
   It "Should contain a Resource Group named $rgName - Confirm-AzBPResource" {
     # arrange
     $params = @{

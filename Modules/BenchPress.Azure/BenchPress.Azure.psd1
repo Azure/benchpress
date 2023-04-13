@@ -43,6 +43,7 @@
     "Confirm-KeyVaultSecret",
     "Confirm-OperationalInsightsWorkspace",
     "Confirm-PortalDashboard",
+    "Confirm-PostgreSqlFlexibleServer",
     "Confirm-Resource",
     "Confirm-ResourceGroup",
     "Confirm-RoleAssignment",

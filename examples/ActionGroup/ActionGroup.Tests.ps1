@@ -4,13 +4,10 @@
   $Script:rgName = 'rg-test'
   $Script:actionGroupName = 'sampleaction'
   $Script:location = 'global'
+  $Script:noActionGroupName = "noactiongroup"
 }
 
 Describe 'Verify Action Group' {
-  BeforeAll {
-    $Script:noActionGroupName = "noactiongroup"
-  }
-
   It "Should contain an Action Group named $actionGroupName - Confirm-AzBPResource" {
     # arrange
     $params = @{
