@@ -6,7 +6,7 @@ namespace Generators;
 public class AzureDeploymentImporter
 {
     private static Regex s_parametersOrVariablesRegex = new Regex(
-        "(?<paramOrVarType>parameters)\\(\\'(?<paramOrVarName>.*?)\\'\\)|(?<paramOrVarType>variables)\\(\\'(?<paramOrVarName>.*?)\\'\\)",
+        @"(?<paramOrVarType>parameters|variables)\('(?<paramOrVarName>.*?)'\)",
         RegexOptions.Compiled
     );
     private static Regex s_resourceIdParametersRegex = new Regex(
