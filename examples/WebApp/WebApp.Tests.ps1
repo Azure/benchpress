@@ -2,15 +2,12 @@
   Import-Module Az.InfrastructureTesting
 
   $Script:rgName = 'rg-test'
-  $Script:location = 'westus3'
   $Script:webappName = 'azbpwebapptest'
+  $Script:noWebAppName = 'noazbpwebapptest'
+  $Script:location = 'westus3'
 }
 
 Describe 'Verify Web App Exists' {
-  BeforeAll {
-    $Script:noWebAppName = 'noazbpwebapptest'
-  }
-
   It "Should contain a Web App named $webappName - Confirm-AzBPResource" {
     # arrange
     $params = @{

@@ -3,14 +3,11 @@
 
   $Script:rgName = 'rg-test'
   $Script:appServicePlanName = 'appserviceplantest'
+  $Script:noAppServicePlanName = 'noappservicetestbp'
   $Script:location = 'westus3'
 }
 
 Describe 'Verify App Service Plan' {
-  BeforeAll {
-    $Script:noAppServicePlanName = 'noappservicetestbp'
-  }
-
   It "Should contain an App Service Plan named $appServicePlanName - Confirm-AzBPResource" {
     # arrange
     $params = @{
