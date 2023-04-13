@@ -30,6 +30,7 @@
   KeyVaultSecret
   OperationalInsightsWorkspace
   PortalDashboard
+  PostgreSqlFlexibleServer
   ResourceGroup
   RoleAssignment
   SqlDatabase
