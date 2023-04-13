@@ -15,13 +15,19 @@
   CosmosDBGremlinDatabase
   CosmosDBMongoDBDatabase
   CosmosDBSqlDatabase
+  CosmosDBSqlRoleAssignment
+  CosmosDBSqlRoleDefinition
   ContainerRegistry
   DataFactory
   DataFactoryLinkedService
+  DiagnosticSetting
   EventHub
   EventHubConsumerGroup
   EventHubNamespace
   KeyVault
+  KeyVaultCertificate
+  KeyVaultKey
+  KeyVaultSecret
   OperationalInsightsWorkspace
   PortalDashboard
   PostgreSqlFlexibleServer
@@ -42,4 +48,5 @@
   SynapseWorkspace
   VirtualMachine
   WebApp
+  WebAppStaticSite
 }

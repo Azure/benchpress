@@ -3,7 +3,7 @@
 # Generated on: 12/1/2022
 @{
   RootModule = "BenchPress.Azure.psm1"
-  ModuleVersion = "0.1"
+  ModuleVersion = "0.2.1"
   GUID = "3db0c6b2-7453-4972-a9de-402be1277ac9"
   Author = "CSEDevOps"
   CompanyName = "Microsoft"
@@ -29,8 +29,11 @@
     "Confirm-CosmosDBGremlinDatabase",
     "Confirm-CosmosDBMongoDBDatabase",
     "Confirm-CosmosDBSqlDatabase",
+    "Confirm-CosmosDBSqlRoleAssignment",
+    "Confirm-CosmosDBSqlRoleDefinition",
     "Confirm-DataFactory",
     "Confirm-DataFactoryLinkedService",
+    "Confirm-DiagnosticSetting",
     "Confirm-EventHub",
     "Confirm-EventHubConsumerGroup",
     "Confirm-EventHubNamespace",
@@ -59,6 +62,7 @@
     "Confirm-SynapseWorkspace",
     "Confirm-VirtualMachine",
     "Confirm-WebApp",
+    "Confirm-WebAppStaticSite",
     "Deploy-BicepFeature",
     "Get-Resource",
     "Get-ResourceByType",

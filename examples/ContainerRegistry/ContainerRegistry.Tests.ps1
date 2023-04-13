@@ -27,7 +27,7 @@ Describe 'Verify Container Registry' {
       ResourceName      = $acrName
       ResourceGroupName = $rgName
       PropertyKey       = "SkuName"
-      PropertyValue     = "Standard"
+      PropertyValue     = "Basic"
     }
 
     # act and assert

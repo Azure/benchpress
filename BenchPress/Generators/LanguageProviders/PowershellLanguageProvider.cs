@@ -9,11 +9,6 @@ public class PowershellLanguageProvider : ILanguageProvider
         return name;
     }
 
-    public string Variable(string name)
-    {
-        return $"${name}";
-    }
-
     public string Value(object value)
     {
         if (value is null)
@@ -33,9 +28,15 @@ public class PowershellLanguageProvider : ILanguageProvider
         }
     }
 
-    public string Function(string name)
+    public string AssertionDetails(TestType testType)
     {
-        return name;
+        switch (testType)
+        {
+            case TestType.ResourceExists:
+                return "-BeSuccessful";
+            default:
+                throw new Exception($"Unknown test type: {testType}");
+        }
     }
 
     public string Escape(string value)
@@ -58,11 +59,6 @@ public class PowershellLanguageProvider : ILanguageProvider
             default:
                 throw new Exception($"Unknown test type: {sdkFunction.Kind}");
         }
-    }
-
-    public string ParameterList(params string[] parameters)
-    {
-        return string.Join(" ", parameters);
     }
 
     public string GetTemplateFileName()

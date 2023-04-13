@@ -9,6 +9,8 @@
   $Script:mongoDatabaseName = "mongodb-db-name"
   $Script:sqlAccountName = "sql-account-name"
   $Script:sqlDatabaseName = "sql-db-name"
+  $Script:sqlRoleAssignmentId = "sql-role-assignment-id"
+  $Script:sqlRoleDefinitionId = "sql-role-definition-id"
 }
 
 Describe 'Verify Cosmos DB Account' {
@@ -59,7 +61,7 @@ Describe 'Verify Cosmos DB Account' {
       ResourceName      = $gremlinDatabaseName
       ResourceGroupName = $rgName
       AccountName       = $gremlinAccountName
-      PropertyKey       = "Id"
+      PropertyKey       = "Name"
       PropertyValue     = $gremlinDatabaseName
     }
 
@@ -81,7 +83,7 @@ Describe 'Verify Cosmos DB Account' {
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 
-  It "Should contain a Mongo Cosmos DB Account named $mongoAccountName that is a Global Document DB -
+  It "Should contain a Mongo Cosmos DB Account named $mongoAccountName that is a Mongo DB -
   Confirm-AzBPResource" {
     # arrange
     $params = @{
@@ -89,7 +91,7 @@ Describe 'Verify Cosmos DB Account' {
       ResourceName      = $mongoAccountName
       ResourceGroupName = $rgName
       PropertyKey       = "Kind"
-      PropertyValue     = "GlobalDocumentDB"
+      PropertyValue     = "MongoDB"
     }
 
     # act and assert
@@ -116,7 +118,7 @@ Describe 'Verify Cosmos DB Account' {
       ResourceName      = $mongoDatabaseName
       ResourceGroupName = $rgName
       AccountName       = $mongoAccountName
-      PropertyKey       = "Id"
+      PropertyKey       = "Name"
       PropertyValue     = $mongoDatabaseName
     }
 
@@ -156,7 +158,7 @@ Describe 'Verify Cosmos DB Account' {
   It "Should contain a SQL Cosmos DB named $sqlDatabaseName - Confirm-AzBPResource" {
     # arrange
     $params = @{
-      ResourceType      = "CosmosDBSQLDatabase"
+      ResourceType      = "CosmosDBSqlDatabase"
       ResourceName      = $sqlDatabaseName
       ResourceGroupName = $rgName
       AccountName       = $sqlAccountName
@@ -169,15 +171,71 @@ Describe 'Verify Cosmos DB Account' {
   It "Should contain a SQL Cosmos DB named $sqlDatabaseName - Confirm-AzBPResource" {
     # arrange
     $params = @{
-      ResourceType      = "CosmosDBSQLDatabase"
+      ResourceType      = "CosmosDBSqlDatabase"
       ResourceName      = $sqlDatabaseName
       ResourceGroupName = $rgName
       AccountName       = $sqlAccountName
-      PropertyKey       = "Id"
+      PropertyKey       = "Name"
       PropertyValue     = $sqlDatabaseName
     }
 
-    # act and assert
+    #act
+    Confirm-AzBPResource @params | Should -BeSuccessful
+  }
+
+  It "Should contain a Cosmos DB SQL Role Assignment named $sqlRoleAssignmentId - Confirm-AzBPResource" {
+    #arrange
+    $params = @{
+      ResourceType      = "CosmosDBSqlRoleAssignment"
+      ResourceGroupName = $rgName
+      AccountName       = $sqlAccountName
+      RoleAssignmentId  = $sqlRoleAssignmentId
+    }
+
+    #act
+    Confirm-AzBPResource @params | Should -BeSuccessful
+  }
+
+  It "Should contain a Cosmos DB SQL Role Assignment named $sqlRoleAssignmentId - Confirm-AzBPResource" {
+    #arrange
+    $params = @{
+      ResourceType      = "CosmosDBSqlRoleAssignment"
+      ResourceGroupName = $rgName
+      AccountName       = $sqlAccountName
+      RoleAssignmentId  = $sqlRoleAssignmentId
+      PropertyKey       = "Id"
+      PropertyValue     = $sqlRoleAssignmentId
+    }
+
+    #act
+    Confirm-AzBPResource @params | Should -BeSuccessful
+  }
+
+  It "Should contain a Cosmos DB SQL Role Definition named $sqlRoleDefinitionId - Confirm-AzBPResource" {
+    #arrange
+    $params = @{
+      ResourceType      = "CosmosDBSqlRoleDefinition"
+      ResourceGroupName = $rgName
+      AccountName       = $sqlAccountName
+      RoleDefinitionId  = $sqlRoleDefinitionId
+    }
+
+    #act
+    Confirm-AzBPResource @params | Should -BeSuccessful
+  }
+
+  It "Should contain a Cosmos DB SQL Role Definition named $sqlRoleDefinitionId - Confirm-AzBPResource" {
+    #arrange
+    $params = @{
+      ResourceType      = "CosmosDBSqlRoleDefinition"
+      ResourceGroupName = $rgName
+      AccountName       = $sqlAccountName
+      RoleDefinitionId  = $sqlRoleDefinitionId
+      PropertyKey       = "Id"
+      PropertyValue     = $sqlRoleDefinitionId
+    }
+
+    #act
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
 }
@@ -193,6 +251,7 @@ Describe 'Cosmos DB Gremlin Database' {
   }
 
   It "Should not contain a Cosmos DB account named $noGremlinDBAccountName" {
+    # arrange
     # The 'ErrorAction = SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
     # Remove this field to see all errors.
@@ -244,18 +303,6 @@ Describe 'Cosmos DB Gremlin Database' {
 
     # act and assert
     Confirm-AzBPCosmosDBGremlinDatabase @params | Should -Not -BeSuccessful
-  }
-
-  It "Should contain a Cosmos DB Gremlin Database named $gremlinDatabaseName in $location" {
-    # arrange
-    $params = @{
-      ResourceGroupName = $rgName
-      AccountName       = $gremlinAccountName
-      Name              = $gremlinDatabaseName
-    }
-
-    # act and assert
-    Confirm-AzBPCosmosDBGremlinDatabase @params | Should -BeInLocation $location
   }
 
   It "Should contain a Cosmos DB Gremlin Database named $gremlinDatabaseName in $rgName" {
@@ -334,18 +381,6 @@ Describe 'Comsos DB Mongo DB Database' {
     Confirm-AzBPCosmosDBMongoDBDatabase @params | Should -Not -BeSuccessful
   }
 
-  It "Should contain a Cosmos DB Mongo DB Database named $mongoDatabaseName in $location" {
-    # arrange
-    $params = @{
-      ResourceGroupName = $rgName
-      AccountName       = $mongoAccountName
-      Name              = $mongoDatabaseName
-    }
-
-    # act and assert
-    Confirm-AzBPCosmosDBMongoDBDatabase @params | Should -BeInLocation $location
-  }
-
   It "Should contain a Cosmos DB Mongo DB Database named $mongoDatabaseName in $rgName" {
     # arrange
     $params = @{
@@ -406,7 +441,7 @@ Describe 'Comsos DB SQL Database' {
     Confirm-AzBPCosmosDBSqlDatabase @params | Should -BeSuccessful
   }
 
-  It "Should not contain a Cosmos DB SQL Database named $noSqlDBName" {
+  It "Should not contain a Cosmos DB SQL Database named $noSqlDatabaseName" {
     # arrange
     # The 'ErrorAction = SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.
@@ -414,24 +449,12 @@ Describe 'Comsos DB SQL Database' {
     $params = @{
       ResourceGroupName = $rgName
       AccountName       = $sqlAccountName
-      Name              = $noSqlDBName
+      Name              = $noSqlDatabaseName
       ErrorAction       = "SilentlyContinue"
     }
 
     # act and assert
     Confirm-AzBPCosmosDBSqlDatabase @params | Should -Not -BeSuccessful
-  }
-
-  It "Should contain a Cosmos DB SQL Database named $sqlDatabaseName in $location" {
-    # arrange
-    $params = @{
-      ResourceGroupName = $rgName
-      AccountName       = $sqlAccountName
-      Name              = $sqlDatabaseName
-    }
-
-    # act and assert
-    Confirm-AzBPCosmosDBSqlDatabase @params | Should -BeInLocation $location
   }
 
   It "Should contain a Cosmos DB SQL Database named $sqlDatabaseName in $rgName" {
@@ -444,6 +467,98 @@ Describe 'Comsos DB SQL Database' {
 
     # act and assert
     Confirm-AzBPCosmosDBSqlDatabase @params | Should -BeInResourceGroup $rgName
+  }
+}
+
+Describe 'Comsos DB SQL Role Assignment' {
+  BeforeAll {
+    $Script:noSqlRoleAssignmentId = 'nosqlroleassignmentbptest'
+  }
+
+  It "Should contain a Cosmos DB SQL Role assignment named $sqlRoleAssignmentId" {
+    # arrange
+    $params = @{
+      ResourceGroupName = $rgName
+      AccountName       = $sqlAccountName
+      RoleAssignmentId  = $sqlRoleAssignmentId
+    }
+
+    # act and assert
+    Confirm-AzBPCosmosDBSqlRoleAssignment @params | Should -BeSuccessful
+  }
+
+  It "Should not contain a Cosmos DB SQL Role assignment named $noSqlRoleAssignmentId" {
+    # arrange
+    # The 'ErrorAction = SilentlyContinue' command suppresses all errors.
+    # In this test, it will suppress the error message when a resource cannot be found.
+    # Remove this field to see all errors.
+    $params = @{
+      ResourceGroupName = $rgName
+      AccountName       = $sqlAccountName
+      RoleAssignmentId  = $noSqlRoleAssignmentId
+      ErrorAction       = "SilentlyContinue"
+    }
+
+    # act and assert
+    Confirm-AzBPCosmosDBSqlRoleAssignment @params | Should -Not -BeSuccessful
+  }
+
+  It "Should contain a Cosmos DB SQL Role assignment named $sqlRoleAssignmentId in $rgName" {
+    # arrange
+    $params = @{
+      ResourceGroupName = $rgName
+      AccountName       = $sqlAccountName
+      RoleAssignmentId  = $sqlRoleAssignmentId
+    }
+
+    # act and assert
+    Confirm-AzBPCosmosDBSqlRoleAssignment @params | Should -BeInResourceGroup $rgName
+  }
+}
+
+Describe 'Comsos DB SQL Role Definition' {
+  BeforeAll {
+    $Script:noSqlRoleDefinitionId = 'nosqlroledefinitionbptest'
+  }
+
+  It "Should contain a Cosmos DB SQL Role definition named $sqlRoleDefinitionId" {
+    # arrange
+    $params = @{
+      ResourceGroupName = $rgName
+      AccountName       = $sqlAccountName
+      RoleDefinitionId  = $sqlRoleDefinitionId
+    }
+
+    # act and assert
+    Confirm-AzBPCosmosDBSqlRoleDefinition @params | Should -BeSuccessful
+  }
+
+  It "Should not contain a Cosmos DB SQL Role definition named $noSqlRoleDefinitionId" {
+    # arrange
+    # The 'ErrorAction = SilentlyContinue' command suppresses all errors.
+    # In this test, it will suppress the error message when a resource cannot be found.
+    # Remove this field to see all errors.
+    $params = @{
+      ResourceGroupName = $rgName
+      AccountName       = $sqlAccountName
+      RoleDefinitionId  = $noSqlRoleDefinitionId
+      ErrorAction       = "SilentlyContinue"
+    }
+
+    # act and assert
+    Confirm-AzBPCosmosDBSqlRoleDefinition @params | Should -Not -BeSuccessful
+  }
+
+  It "Should contain a Cosmos DB SQL Role definition named $sqlRoleDefinitionId in $rgName" {
+    # arrange
+    $params = @{
+      ResourceGroupName = $rgName
+      AccountName       = $sqlAccountName
+      RoleDefinitionId  = $sqlRoleDefinitionId
+    }
+
+    # act and assert
+    Confirm-AzBPCosmosDBSqlRoleDefinition @params | Should -BeInResourceGroup $rgName
   }
 }
 

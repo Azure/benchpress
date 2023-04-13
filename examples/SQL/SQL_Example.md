@@ -1,6 +1,6 @@
-# How To Run SqlServer.Tests.ps1
+# How To Run SQL.Tests.ps1
 
-`SqlServer.Tests.ps1` contains examples of using the `Confirm-AzBPSqlServer` cmdlet.
+`SQL.Tests.ps1` contains examples of using the `Confirm-AzBPSqlDatabase` and `Confirm-AzBPSqlServer` cmdlets.
 
 ## Pre-Requisites
 
@@ -8,35 +8,36 @@
 
 ## Steps
 
-1. Navigate to SqlServer directory:
+1. Navigate to SQL directory:
 
    ```Powershell
-   cd examples\SqlServer\
+   cd examples\SQL\
    ```
 
-1. Deploy the SQL Database to your resource group:
+1. Deploy the SQL Database and Server to your resource group:
 
    ```Powershell
     New-AzResourceGroupDeployment -ResourceGroupName "<your-resource-group-name>"`
-    -TemplateFile ".\sqlServer.bicep"
+    -TemplateFile ".\sql.bicep"
    ```
 
 1. When prompted in your terminal, set the `adminPassword` parameter with your own password.
 
-1. Update `SqlServer.Tests.ps1` variables to point to your expected resources:
+1. Update `SQL.Tests.ps1` variables to point to your expected resources:
 
-   - `rg-test`         -> `your-resource-group-name`
-   - `samplesqlserver` -> `your-sql-server-name`
-   - `westus3`         -> `your-sql-server-location`
+   - `rg-test`           -> `your-resource-group-name`
+   - `samplesqlserver`   -> `your-sql-server-name`
+   - `samplesqldatabase` -> `your-sql-db-name`
+   - `westus3`           -> `your-sql-database-location`
 
 1. If using a local copy of `Az.InfrastructureTesting`, replace `Import-Module Az.InfrastructureTesting` with
 `Import-Module "../../bin/BenchPress.Azure.psd1"`. Note that the final `AfterAll` step will properly remove the module
 regardless of which method is chosen to load the module.
 
-1. Run `SqlServer.Tests.ps1`:
+1. Run `SQL.Tests.ps1`:
 
    ```Powershell
-   Invoke-Pester -Path .\SqlServer.Tests.ps1
+   Invoke-Pester -Path .\SQL.Tests.ps1
    ```
 
 1. Success!

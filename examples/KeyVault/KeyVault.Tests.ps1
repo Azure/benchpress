@@ -51,10 +51,6 @@ Describe 'Verify Key Vault' {
     Confirm-AzBPKeyVaultSecret -KeyVaultName $kvName -Name $kvSecretName | Should -BeSuccessful
   }
 
-  It "Should contain a Certificate named $kvCertificateName in the Key Vault named $kvName" {
-    Confirm-AzBPKeyVaultCertificate -KeyVaultName $kvName -Name $kvCertificateName | Should -BeSuccessful
-  }
-
   It "Should not contain a Key Vault named $noKvName" {
     # The '-ErrorAction SilentlyContinue' command suppresses all errors.
     # In this test, it will suppress the error message when a resource cannot be found.

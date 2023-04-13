@@ -9,8 +9,11 @@ using module ./../Classes/ResourceType.psm1
 . $PSScriptRoot/Confirm-AppServicePlan.ps1
 . $PSScriptRoot/Confirm-ContainerAppManagedEnv
 . $PSScriptRoot/Confirm-ContainerRegistry.ps1
+. $PSScriptRoot/Confirm-CosmosDBSqlRoleAssignment.ps1
+. $PSScriptRoot/Confirm-CosmosDBSqlRoleDefinition.ps1
 . $PSScriptRoot/Confirm-DataFactory.ps1
 . $PSScriptRoot/Confirm-DataFactoryLinkedService.ps1
+. $PSScriptRoot/Confirm-DiagnosticSetting.ps1
 . $PSScriptRoot/Confirm-EventHub.ps1
 . $PSScriptRoot/Confirm-EventHubConsumerGroup.ps1
 . $PSScriptRoot/Confirm-EventHubNamespace.ps1
@@ -29,6 +32,7 @@ using module ./../Classes/ResourceType.psm1
 . $PSScriptRoot/Confirm-SynapseWorkspace.ps1
 . $PSScriptRoot/Confirm-VirtualMachine.ps1
 . $PSScriptRoot/Confirm-WebApp.ps1
+. $PSScriptRoot/Confirm-WebAppStaticSite.ps1
 # end INLINE_SKIP
 
 function Get-ResourceByType {
@@ -52,6 +56,10 @@ function Get-ResourceByType {
     .PARAMETER ServerName
       If testing an Azure SQL Database resource, the name of the Server to which the Database is assigned.
 
+    .PARAMETER KeyVaultName
+      If testing an Azure Key Vault resource (e.g., Key Vault Key), the name of the Key Vault to which the resource is
+      assigned.
+
     .PARAMETER DataFactoryName
       If testing an Azure Data Factory Linked Service resource, the name of the Data Factory to which the Linked
       Service is assigned.
@@ -73,7 +81,7 @@ function Get-ResourceByType {
       Storage Container), the name of the associated Account.
 
     .PARAMETER ServicePrincipalId
-      If testing an Azure Role Assignment, the Application ID of the Service Principal.
+      If testing an Azure Role Assignment, the Enterprise/Managed Application Object ID of the Service Principal.
 
     .PARAMETER Scope
       If testing an Azure Role Assignment, the Scope of the Role Assignment (e.g.,
@@ -84,16 +92,28 @@ function Get-ResourceByType {
       If testing an Azure Role Assignment, the name of the Role Definition (e.g., Reader, Contributor etc.).
 
     .PARAMETER ServiceName
-      If testing an Azure resource that is associated with a Service (e.g., API Management Service), the name of
-      the associated Service.
+      If testing an Azure resource that is associated with a Service (e.g., API Management Service),
+      the name of the associated Service.
+
+    .PARAMETER RoleAssignmentId
+      If testing an Azure resource that is associated with a Role Assignment (e.g., Cosmos DB SQL Role Assignment),
+      the name of the associated Role Assignment.
+
+    .PARAMETER RoleDefinitionId
+      If testing an Azure resource that is associated with a Role Definition (e.g., Cosmos DB SQL Role Definition),
+      the name of the associated Role Definition.
 
     .PARAMETER JobName
       If testing an Azure resource that is associated with a Job (e.g., Stream Analytics Output), the name of
       the associated Job.
 
     .PARAMETER ClusterName
-      If the Azure resource is associated with an AKS Cluster (e.g, AKS Node Pool) this is the parameter to use to pass
+      If the Azure resource is associated with an AKS Cluster (e.g, AKS Node Pool), this is the parameter to use to pass
       the AKS cluster name.
+
+    .PARAMETER ResourceId
+      If testing an Azure resource that is associated with a Resource ID (e.g., Diagnostic Setting)
+      this is the parameter to use to pass the Resource ID.
 
     .EXAMPLE
       Get-AzBPResourceByType -ResourceType ActionGroup -ResourceName "bpactiongroup" -ResourceGroupName "rgbenchpresstest"
@@ -123,6 +143,9 @@ function Get-ResourceByType {
     [string]$ServerName,
 
     [Parameter(Mandatory = $false)]
+    [string]$KeyVaultName,
+
+    [Parameter(Mandatory = $false)]
     [string]$DataFactoryName,
 
     [Parameter(Mandatory = $false)]
@@ -150,10 +173,19 @@ function Get-ResourceByType {
     [string]$ServiceName,
 
     [Parameter(Mandatory = $false)]
+    [string]$JobName,
+
+    [Parameter(Mandatory = $false)]
     [string]$ClusterName,
 
     [Parameter(Mandatory = $false)]
-    [string]$JobName
+    [string]$ResourceId,
+
+    [Parameter(Mandatory = $false)]
+    [string]$RoleAssignmentId,
+
+    [Parameter(Mandatory = $false)]
+    [string]$RoleDefinitionId
   )
   Begin { }
   Process {
@@ -249,6 +281,22 @@ function Get-ResourceByType {
         }
         return Confirm-CosmosDBSqlDatabase @params
       }
+      "CosmosDBSqlRoleAssignment" {
+        $params = @{
+          ResourceGroupName = $ResourceGroupName
+          AccountName       = $AccountName
+          RoleAssignmentId  = $RoleAssignmentId
+        }
+        return Confirm-CosmosDBSqlRoleAssignment @params
+      }
+      "CosmosDBSqlRoleDefinition" {
+        $params = @{
+          ResourceGroupName = $ResourceGroupName
+          AccountName       = $AccountName
+          RoleDefinitionId  = $RoleDefinitionId
+        }
+        return Confirm-CosmosDBSqlRoleDefinition @params
+      }
       "DataFactory" {
         return Confirm-DataFactory -Name $ResourceName -ResourceGroupName $ResourceGroupName
       }
@@ -259,6 +307,9 @@ function Get-ResourceByType {
           ResourceGroupName = $ResourceGroupName
         }
         return Confirm-DataFactoryLinkedService @params
+      }
+      "DiagnosticSetting" {
+        return Confirm-DiagnosticSetting -ResourceId $ResourceId -Name $ResourceName
       }
       "EventHub" {
         $params = @{
@@ -282,6 +333,15 @@ function Get-ResourceByType {
       }
       "KeyVault" {
         return Confirm-KeyVault -Name $ResourceName -ResourceGroupName $ResourceGroupName
+      }
+      "KeyVaultCertificate" {
+        return Confirm-KeyVaultCertificate -KeyVaultName $KeyVaultName -Name $ResourceName
+      }
+      "KeyVaultKey" {
+        return Confirm-KeyVaultKey -KeyVaultName $KeyVaultName -Name $ResourceName
+      }
+      "KeyVaultSecret" {
+        return Confirm-KeyVaultSecret -KeyVaultName $KeyVaultName -Name $ResourceName
       }
       "OperationalInsightsWorkspace" {
         return Confirm-OperationalInsightsWorkspace -Name $ResourceName -ResourceGroupName $ResourceGroupName
@@ -387,6 +447,9 @@ function Get-ResourceByType {
       }
       "WebApp" {
         return Confirm-WebApp -WebAppName $ResourceName -ResourceGroupName $ResourceGroupName
+      }
+      "WebAppStaticSite" {
+        return Confirm-WebAppStaticSIte -StaticWebAppName $ResourceName -ResourceGroupName $ResourceGroupName
       }
       default {
         Write-Information "Not implemented yet"

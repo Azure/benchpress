@@ -17,7 +17,7 @@ function Confirm-RoleAssignment {
       The name of the Role Definition i.e. Reader, Contributor etc.
 
     .PARAMETER ServicePrincipalId
-      The Application ID of the Service Principal.
+      The Enterprise/Managed Application Object ID of the Service Principal.
 
     .PARAMETER Scope
       The Scope of the Role Assignment. In the format of relative URI. For e.g.
@@ -52,9 +52,9 @@ function Confirm-RoleAssignment {
   }
   Process {
     $params = @{
-      ServicePrincipalName = $ServicePrincipalId
-      RoleDefinitionName   = $RoleDefinitionName
-      Scope                = $Scope
+      ObjectId           = $ServicePrincipalId
+      RoleDefinitionName = $RoleDefinitionName
+      Scope              = $Scope
     }
 
     # Filter to specific scope specified by the parameter

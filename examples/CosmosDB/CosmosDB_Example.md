@@ -1,6 +1,8 @@
 # How To Run CosmosDB*.Tests.ps1
 
-The `CosmosDB*.Tests.ps1` files contain examples of using the `Confirm-AzBPCosmosDB*` cmdlets.
+The `CosmosDB*.Tests.ps1` files contain examples of using the `Confirm-AzBPCosmosDBAccount`,
+`Confirm-AzBPCosmosDBGremlinDatabase`, `Confirm-CosmosDBMongoDBDatabase`, `Confirm-AzBPCosmosDBSqlDatabase`,
+`Confirm-AzBPCosmosDBSqlRoleAssignment`, `Confirm-AzBPCosmosDBSqlRoleDefinition` cmdlets.
 
 ## Pre-Requisites
 
@@ -21,6 +23,9 @@ The `CosmosDB*.Tests.ps1` files contain examples of using the `Confirm-AzBPCosmo
     -TemplateFile ".\cosmosDB.bicep"
    ```
 
+1. When prompted in your terminal, set the `svcPrincipalObjectId` parameter with your service principal's
+   enterprise/managed application object ID.
+
 1. Update `CosmosDB.Tests.ps1` variables to point to your expected resources:
 
    - `rg-test`                 -> `your-resource-group-name`
@@ -31,6 +36,8 @@ The `CosmosDB*.Tests.ps1` files contain examples of using the `Confirm-AzBPCosmo
    - `sql-account-name`        -> `your-sql-account-name`
    - `sql-db-name`             -> `your-sql-db-name`
    - `westus3`                 -> `your-resource-group-location-name`
+   - `sqlroleassignmentbptest` -> `your-role-assignment-id-name`
+   - `sqlroledefinitionbptest` -> `your-role-definition-id-name`
 
 1. If using a local copy of `Az.InfrastructureTesting`, replace `Import-Module Az.InfrastructureTesting` with
 `Import-Module "../../bin/BenchPress.Azure.psd1"`. Note that the final `AfterAll` step will properly remove the module

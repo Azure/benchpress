@@ -50,7 +50,7 @@ function Confirm-Resource {
       Storage Container), the name of the associated Account.
 
     .PARAMETER ServicePrincipalId
-      If testing an Azure Role Assignment, the Application ID of the Service Principal.
+      If testing an Azure Role Assignment, the Enterprise/Managed Application Object ID of the Service Principal.
 
     .PARAMETER Scope
       If testing an Azure Role Assignment, the Scope of the Role Assignment (e.g.,
@@ -64,13 +64,29 @@ function Confirm-Resource {
       If testing an Azure resource that is associated with a Service (e.g., API Management Service), the name of
       the associated Service.
 
+    .PARAMETER KeyVaultName
+      If testing an Azure Key Vault resource (e.g., Key Vault Key), the name of the Key Vault to which the resource is
+      assigned.
+
     .PARAMETER JobName
       If testing an Azure resource that is associated with a Job (e.g., Stream Analytics Output), the name of
       the associated Job.
 
+    .PARAMETER RoleAssignmentId
+      If testing an Azure resource that is associated with a Role Assignment (e.g., Cosmos DB SQL Role Assignment),
+      the id of the Role Assignment.
+
+    .PARAMETER RoleDefinitionId
+      If testing an Azure resource that is associated with a Role Definition (e.g., Cosmos DB SQL Role Definition),
+      the id of the Role Definition.
+
     .PARAMETER ClusterName
-      If the Azure resource is associated with an AKS Cluster (e.g, AKS Node Pool) this is the parameter to use to pass
-      the AKS cluster name.
+      If testing an Azure resource that is associated with an AKS Cluster (e.g, AKS Node Pool) this is the parameter
+      to use to pass the AKS cluster name.
+
+    .PARAMETER ResourceId
+      If testing an Azure resource that is associated with a Resource ID (e.g., Diagnostic Setting)
+      this is the parameter to use to pass the Resource ID.
 
     .PARAMETER PropertyKey
       The name of the property to check on the resource.
@@ -123,6 +139,9 @@ function Confirm-Resource {
     [string]$ServerName,
 
     [Parameter(Mandatory = $false)]
+    [string]$KeyVaultName,
+
+    [Parameter(Mandatory = $false)]
     [string]$DataFactoryName,
 
     [Parameter(Mandatory = $false)]
@@ -156,6 +175,15 @@ function Confirm-Resource {
     [string]$JobName,
 
     [Parameter(Mandatory = $false)]
+    [string]$ResourceId,
+
+    [Parameter(Mandatory = $false)]
+    [string]$RoleAssignmentId,
+
+    [Parameter(Mandatory = $false)]
+    [string]$RoleDefinitionId,
+
+    [Parameter(Mandatory = $false)]
     [string]$PropertyKey,
 
     [Parameter(Mandatory = $false)]
@@ -171,6 +199,7 @@ function Confirm-Resource {
       ResourceName       = $ResourceName
       ResourceGroupName  = $ResourceGroupName
       ServerName         = $ServerName
+      KeyVaultName       = $KeyVaultName
       DataFactoryName    = $DataFactoryName
       WorkspaceName      = $WorkspaceName
       AccountName        = $AccountName
@@ -178,7 +207,10 @@ function Confirm-Resource {
       Scope              = $Scope
       ServicePrincipalId = $ServicePrincipalId
       ServiceName        = $ServiceName
+      RoleAssignmentId   = $RoleAssignmentId
+      RoleDefinitionId   = $RoleDefinitionId
       ClusterName        = $ClusterName
+      ResourceId         = $ResourceId
     }
 
     $confirmResult = Get-ResourceByType @resourceParams

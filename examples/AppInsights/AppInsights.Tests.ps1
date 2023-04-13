@@ -56,6 +56,49 @@ Describe 'Verify Application Insights' {
   }
 }
 
+Describe 'Verify Diagnostic Setting' {
+  BeforeAll {
+    $Script:diagnosticSettingName = 'diagnosticsettingtest'
+    $Script:resourceId = "path/for/resourceId"
+    $Script:noDiagnosticSettingName = 'nodiagnosticsettingtest'
+  }
+
+  It "Should contain a Diagnostic Setting named $diagnosticSettingName - Confirm-AzBPResource" {
+    # arrange
+    $params = @{
+      ResourceType      = "DiagnosticSetting"
+      ResourceName      = $diagnosticSettingName
+      ResourceId        = $resourceId
+    }
+
+    # act and assert
+    Confirm-AzBPResource @params | Should -BeSuccessful
+  }
+
+  It "Should contain a Diagnostic Setting named $diagnosticSettingName with Type of aksCluster -
+  Confirm-AzBPResource" {
+    # arrange
+    $params = @{
+      ResourceType      = "DiagnosticSetting"
+      ResourceName      = $diagnosticSettingName
+      ResourceId        = $resourceId
+      PropertyKey       = "Type"
+      PropertyValue     = "Microsoft.Insights/diagnosticSettings"
+    }
+
+    # act and assert
+    Confirm-AzBPResource @params | Should -BeSuccessful
+  }
+
+  It "Should contain a Diagnostic Setting named $diagnosticSettingName" {
+    Confirm-AzBPDiagnosticSetting -ResourceId $ResourceId -Name $diagnosticSettingName | Should -BeSuccessful
+  }
+
+  It "Should contain a Diagnostic Setting named $diagnosticSettingName in $rgName" {
+    Confirm-AzBPDiagnosticSetting -ResourceId $ResourceId -Name $diagnosticSettingName | Should -BeInResourceGroup $rgName
+  }
+}
+
 AfterAll {
   Get-Module Az.InfrastructureTesting | Remove-Module
   Get-Module BenchPress.Azure | Remove-Module

@@ -13,18 +13,15 @@ BeforeAll {
 {{#TestCases}}
 Describe '{{ Name }}' {
   it '{{ Description }}' {
-    #arrange
+    # arrange
     $params = @{
       {{ #Parameters }}
       {{ Key }} = {{{ Value }}}
       {{ /Parameters}}
     }
 
-    #act
-    {{ ResultVariable }} = {{GetValueFunctionName}} @params
-
-    #assert
-    {{ ActualValue }} | Should -Be {{{ ExpectedValue }}}
+    # act and assert
+    {{ FunctionName }} @params | Should {{{ AssertionDetails }}}
   }
 }
 
