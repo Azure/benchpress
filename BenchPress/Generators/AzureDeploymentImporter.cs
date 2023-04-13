@@ -332,7 +332,7 @@ public class AzureDeploymentImporter
                 // If square brackets are present in the resolved value, remove them from the value. Square brackets
                 // are specific to ARM template syntax to represent expressions and are not needed in generated tests.
                 // If the resolved value does not have square brackets, then the resolved value does not contain ARM
-                // functions and and should be wrapped in single quotes.
+                // functions and should be wrapped in single quotes.
                 if (Regex.Match(resolvedValue, s_squareBracketPattern).Success)
                 {
                     resolvedValue = Regex.Replace(
