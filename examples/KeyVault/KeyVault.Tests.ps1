@@ -3,18 +3,15 @@
 
   $Script:rgName = 'rg-test'
   $Script:kvName = 'kvbenchpresstest'
+  $Script:noKvName = 'nokvbenchpresstest'
+  $Script:kvKeyName = 'samplekey'
+  $Script:kvSecretName = 'samplesecret'
+  $Script:kvCertificateName = 'samplecert'
+  $Script:kvAccessPolicyObjectId = 'svcprinoid'
   $Script:location = 'westus3'
 }
 
 Describe 'Verify Key Vault' {
-  BeforeAll {
-    $Script:noKvName = 'nokvbenchpresstest'
-    $Script:kvKeyName = 'samplekey'
-    $Script:kvSecretName = 'samplesecret'
-    $Script:kvCertificateName = 'samplecert'
-    $Script:kvAccessPolicyObjectId = 'svcprinoid'
-  }
-
   It "Should contain a Key Vault named $kvName - Confirm-AzBPResource" {
     # arrange
     $params = @{

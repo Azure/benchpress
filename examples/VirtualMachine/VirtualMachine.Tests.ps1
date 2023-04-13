@@ -3,14 +3,11 @@
 
   $Script:rgName = 'rg-test'
   $Script:vmName = 'simpleLinuxVM1'
+  $Script:noVmName = 'noSimpleLinuxVM1'
   $Script:location = 'westus3'
 }
 
 Describe 'Verify Virtual Machine' {
-  BeforeAll {
-    $Script:noVmName = 'noSimpleLinuxVM1'
-  }
-
   It "Should contain a Virtual Machine named $vmName - Confirm-AzBPResource" {
     # arrange
     $params = @{
