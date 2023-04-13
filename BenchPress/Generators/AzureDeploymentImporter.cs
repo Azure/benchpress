@@ -6,14 +6,13 @@ namespace Generators;
 public class AzureDeploymentImporter
 {
     private static Regex s_parametersOrVariablesRegex = new Regex(
-        @"(?<paramOrVarType>parameters|variables)\('(?<paramOrVarName>.*?)'\)",
+        "(?<paramOrVarType>parameters|variables)\\('(?<paramOrVarName>.*?)'\\)",
         RegexOptions.Compiled
     );
     private static Regex s_resourceIdParametersRegex = new Regex(
         "\\[resourceId\\((?<resourceIdParameters>.*)\\)\\]",
         RegexOptions.Compiled
     );
-    private static Regex s_parenthesesRegex = new Regex("\\((.*?)\\)", RegexOptions.Compiled);
     private static string s_resourceIdParametersKey = "resourceIdParameters";
     private static string s_dependsOnKey = "dependsOn";
     private static string s_squareBracketPattern = "\\[(.*?)\\]";
@@ -330,16 +329,19 @@ public class AzureDeploymentImporter
             }
             if (!string.IsNullOrWhiteSpace(resolvedValue))
             {
-                // Find and remove square brackets from the resolved value. Square brackets are specific to ARM
-                // template syntax and are not needed in generated tests.
-                resolvedValue = Regex.Replace(
-                    resolvedValue,
-                    s_squareBracketPattern,
-                    s_squareBracketSubstituition
-                );
-                // If the resolved value does not contain addtional ARM template functions, then wrap it in single
-                // quotes because the resolved value is a plain string type.
-                if (!s_parenthesesRegex.IsMatch(resolvedValue))
+                // If square brackets are present in the resolved value, remove them from the value. Square brackets
+                // are specific to ARM template syntax to represent expressions and are not needed in generated tests.
+                // If the resolved value does not have square brackets, then the resolved value does not contain ARM
+                // functions and and should be wrapped in single quotes.
+                if (Regex.Match(resolvedValue, s_squareBracketPattern).Success)
+                {
+                    resolvedValue = Regex.Replace(
+                        resolvedValue,
+                        s_squareBracketPattern,
+                        s_squareBracketSubstituition
+                    );
+                }
+                else
                 {
                     resolvedValue = "\'" + resolvedValue + "\'";
                 }
