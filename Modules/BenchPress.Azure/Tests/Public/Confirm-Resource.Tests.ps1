@@ -126,6 +126,21 @@ Describe "Confirm-Resource" {
       $result.Success | Should -Be $false
     }
 
+    It "Calls Write-Error when the index is is less than zero" {
+      Mock Get-ResourceByType{ $ConfirmResult } -Verifiable -RemoveParameterType 'ResourceType'
+
+      $params = @{
+        ResourceType = "ResourceGroup"
+        ResourceName = "mockResourceName"
+        PropertyKey  = "TestArray[-1]"
+      }
+
+      $result = Confirm-Resource @params
+
+      Should -Invoke -CommandName "Write-Error" -Times 1
+      $result.Success | Should -Be $false
+    }
+
     It "Calls Write-Error when the path has a key that is not present" {
       Mock Get-ResourceByType{ $ConfirmResult } -Verifiable -RemoveParameterType 'ResourceType'
 
