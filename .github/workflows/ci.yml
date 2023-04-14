@@ -61,7 +61,7 @@ jobs:
       - name: Install AzBP Module from the repository
         shell: pwsh
         run: |
-          Install-Module BenchPress.Azure
+          Install-Module BenchPress.Azure -Repository LocalFeedPSRepo
       - name: Verify module exposes cmdlets (smoke test)
         shell: pwsh
         run: |
