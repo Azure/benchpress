@@ -10,9 +10,10 @@ Describe "Confirm-Resource" {
     BeforeEach {
       Mock Write-Error{ }
       $script:ConfirmResult = [ConfirmResult]::new(
-        @{
+        [PSCustomObject]@{
           TestKey   = "TestValue"
-          TestArray = @(@{AnotherKey = "AnotherValue"})
+          TestArray = @([PSCustomObject]@{AnotherKey = "AnotherValue"})
+          TestObject = [PSCustomObject]@()
         }, $null)
     }
 
@@ -92,6 +93,51 @@ Describe "Confirm-Resource" {
       Should -InvokeVerifiable
       Should -Invoke -CommandName "Write-Error" -Times 1
 
+      $result.Success | Should -Be $false
+    }
+
+    It "Calls Write-Error when attempting to access an index of an object that does not implement the IList interface" {
+      Mock Get-ResourceByType{ $ConfirmResult } -Verifiable -RemoveParameterType 'ResourceType'
+
+      $params = @{
+        ResourceType = "ResourceGroup"
+        ResourceName = "mockResourceName"
+        PropertyKey  = "TestKey[0]"
+      }
+
+      $result = Confirm-Resource @params
+
+      Should -Invoke -CommandName "Write-Error" -Times 1
+      $result.Success | Should -Be $false
+    }
+
+    It "Calls Write-Error when the index is out of range for an IList path" {
+      Mock Get-ResourceByType{ $ConfirmResult } -Verifiable -RemoveParameterType 'ResourceType'
+
+      $params = @{
+        ResourceType = "ResourceGroup"
+        ResourceName = "mockResourceName"
+        PropertyKey  = "TestArray[1]"
+      }
+
+      $result = Confirm-Resource @params
+
+      Should -Invoke -CommandName "Write-Error" -Times 1
+      $result.Success | Should -Be $false
+    }
+
+    It "Calls Write-Error when the path has a key that is not present" {
+      Mock Get-ResourceByType{ $ConfirmResult } -Verifiable -RemoveParameterType 'ResourceType'
+
+      $params = @{
+        ResourceType = "ResourceGroup"
+        ResourceName = "mockResourceName"
+        PropertyKey  = "TestObject.NoKey"
+      }
+
+      $result = Confirm-Resource @params
+
+      Should -Invoke -CommandName "Write-Error" -Times 1
       $result.Success | Should -Be $false
     }
   }
