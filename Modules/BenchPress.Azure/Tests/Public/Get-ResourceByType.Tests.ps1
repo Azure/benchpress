@@ -52,7 +52,7 @@ Describe "Get-ResourceByType" {
         KeyVaultName = "keyvaultname"
         RoleAssignmentId = 'roleassignmentid'
         RoleDefinitionId = 'roledefinitionid'
-        ResourceId = 'resourceId'
+        ResourceId = 'resourceid'
       }
 
       $functionName = "Confirm-$ResourceType"

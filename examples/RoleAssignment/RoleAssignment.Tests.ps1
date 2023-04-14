@@ -4,13 +4,10 @@
   $Script:principalId = 'sampleappid'
   $Script:scope = '/subscriptions/id'
   $Script:roleName = 'Reader'
+  $Script:noRoleName = 'Owner'
 }
 
 Describe 'Verify Role Assignment Exists' {
-  BeforeAll {
-    $Script:noRoleName = 'Owner'
-  }
-
   It "Should contain a Service Principal with $roleName Role - Confirm-AzBPResource" {
     # arrange
     $params = @{

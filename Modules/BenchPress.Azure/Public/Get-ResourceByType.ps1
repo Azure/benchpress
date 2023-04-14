@@ -20,6 +20,7 @@ using module ./../Classes/ResourceType.psm1
 . $PSScriptRoot/Confirm-KeyVault.ps1
 . $PSScriptRoot/Confirm-OperationalInsightsWorkspace.ps1
 . $PSScriptRoot/Confirm-PortalDashboard.ps1
+. $PSScriptRoot/Confirm-PostgreSqlFlexibleServer
 . $PSScriptRoot/Confirm-ResourceGroup.ps1
 . $PSScriptRoot/Confirm-SqlDatabase.ps1
 . $PSScriptRoot/Confirm-SqlServer.ps1
@@ -347,6 +348,9 @@ function Get-ResourceByType {
       }
       "PortalDashboard" {
         return Confirm-PortalDashboard -ResourceGroupName $ResourceGroupName -Name $ResourceName
+      }
+      "PostgreSqlFlexibleServer" {
+        return Confirm-PostgreSqlFlexibleServer -ResourceGroupName $ResourceGroupName -Name $ResourceName
       }
       "ResourceGroup" {
         return Confirm-ResourceGroup -ResourceGroupName $ResourceName

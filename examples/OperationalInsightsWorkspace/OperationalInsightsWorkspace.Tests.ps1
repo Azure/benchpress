@@ -3,14 +3,11 @@
 
   $Script:rgName = 'rg-test'
   $Script:oiwName = 'oiwName'
+  $Script:noOiwName = 'noOiwName'
   $Script:location = 'westus3'
 }
 
 Describe 'Verify Operational Insights Workspace Exists' {
-  BeforeAll {
-    $Script:noOiwName = 'noOiwName'
-  }
-
   It "Should contain an Operational Insights Workspace named $oiwName - Confirm-AzBPResource" {
     # arrange
     $params = @{
