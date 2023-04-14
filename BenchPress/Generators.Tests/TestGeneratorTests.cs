@@ -22,7 +22,7 @@ namespace Generators.Tests
             // act and assert
             Action action = () =>
             {
-              generator.Generate(new List<TestDefinition> { definition }, templateFile);
+                generator.Generate(new List<TestDefinition> { definition }, templateFile);
             };
             Assert.ThrowsException<Exception>(action);
         }
