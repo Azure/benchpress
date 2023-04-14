@@ -82,7 +82,7 @@ The easiest way to get started with BenchPress is to use the files in the `examp
     Starting discovery in 1 files.
     Discovery found 3 tests in 44ms.
     Running tests.
-    Get-AzContainerRegistry: C:\Users\obboms\Documents\HackOverflow\BenchPress\benchpress\Modules\BenchPress.Azure\Public\Confirm-ContainerRegistry.ps1:44
+    Get-AzContainerRegistry: <path>\BenchPress\benchpress\Modules\BenchPress.Azure\Public\Confirm-ContainerRegistry.ps1:44
     Line |
     44 |  … $resource = Get-AzContainerRegistry -ResourceGroupName $ResourceGroup …
      |                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -180,7 +180,7 @@ AfterAll {
 This test file uses Pester's `Describe` and `It` keywords to represent tests.
 Each test checks different scenarios: Whether a Container Registry exists, if it's in the correct resource group,
 and if it has the correct location set. We also import the
-BenchPress module in the `BeforeAll` block (which looks different depending on if you're running locally - 
+BenchPress module in the `BeforeAll` block (which looks different depending on if you're running locally -
 see [installation](./installation.md).
 
 The first two `It` blocks are similar:
@@ -286,13 +286,13 @@ to deploy to, but we never deployed that either! Let's go ahead and fix these as
    [manually install](https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/install#azure-powershell)
    bicep.)
 
-1. Update the `ContainerRegistry.Tests.ps1` file to point to your new resource group:
+1. Update the `ContainerRegistry.Tests.ps1` file to replace the placeholder values with the actual values from your
+   deployment. Note that when executing `New-AzResourceGroupDeployment` the output will contain the name generated for
+   the new Container Registry.
 
-   `$Script:rgName = '<your-resource-group-name>`
-
+   `$Script:rgName = '<your-resource-group-name>'`
    `$Script:acrName = '<your-container-registry-name>'`
-
-   `$Script:location = your-resource-group-location-name`
+   `$Script:location = '<your-resource-group-location-name>'`
 
 1. Run your test again! Success!
 

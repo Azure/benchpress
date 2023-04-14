@@ -1,10 +1,10 @@
 ﻿BeforeAll {
   Import-Module Az.InfrastructureTesting
 
-  $Script:rgName = 'rg-test'
-  $Script:acrName = 'acrbenchpresstest'
+  $Script:rgName                  = 'rg-test'
+  $Script:acrName                 = 'acrbenchpresstest'
+  $Script:location                = 'westus3'
   $Script:noContainerRegistryName = 'nocontainerregistry'
-  $Script:location = 'westus3'
 }
 
 Describe 'Verify Container Registry' {
