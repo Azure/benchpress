@@ -4,7 +4,7 @@ namespace Generators.Tests
 {
     [TestClass]
     public class AzureDeploymentImporterTests
-  {
+    {
       [TestMethod]
       public void Should_Throw_If_Invalid_File_Format()
       {
@@ -47,5 +47,5 @@ namespace Generators.Tests
           Assert.IsNotNull(result);
       }
 
-  }
+    }
 }

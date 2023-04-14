@@ -4,7 +4,7 @@ namespace Generators.Tests
 {
     [TestClass]
     public class ResourceTypeTests
-  {
+    {
       [TestMethod]
       public void Should_Throw_If_Unknown_ResourceType()
       {
@@ -15,5 +15,5 @@ namespace Generators.Tests
           Action action = () => { ResourceType.Create(resourceType); };
           Assert.ThrowsException<UnknownResourceTypeException>(action);
       }
-  }
+    }
 }

@@ -20,7 +20,10 @@ namespace Generators.Tests
             var templateFile = "./templates/powershell/template.ps1";
 
             // act and assert
-            Action action = () => { generator.Generate(new List<TestDefinition> { definition }, templateFile); };
+            Action action = () =>
+            {
+              generator.Generate(new List<TestDefinition> { definition }, templateFile);
+            };
             Assert.ThrowsException<Exception>(action);
         }
     }
