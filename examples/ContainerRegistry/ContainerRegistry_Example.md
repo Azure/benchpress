@@ -40,8 +40,8 @@ regardless of which method is chosen to load the module.
 1. Success!
 
    ```Powershell
-   Tests completed in 952ms
-   Tests Passed: 2, Failed: 0, Skipped: 0 NotRun: 0
+   Tests completed in 5.79s
+   Tests Passed: 6, Failed: 0, Skipped: 0 NotRun: 0
    ```
 
 1. Don't forget to delete any deployed resources that are no longer needed.
