@@ -224,22 +224,58 @@ function Confirm-Resource {
       # Split property path on open and close square brackets and periods. Remove empty items from array.
       $keys = ($PropertyKey -split '[\[\]\.]').Where({ $_ -ne "" })
       foreach ($key in $keys) {
-        try {
-          # If key is a numerical value, index into array
-          if ($key -match "^\d+$") {
-            $actualValue = $actualValue[$key]
-          } else {
-            $actualValue = $actualValue.$key
+        # If key is a numerical value, index into array
+        if ($key -match "^\d+$") {
+          # Check to be sure the current $actualValue is an array and the index is present
+          # Both arrays and lists that have indexers (generic lists as well) implement the IList interface
+          if (-not ($actualValue -is [System.Collections.IList])) {
+            # It is not indexable
+            $errorParams = @{
+              Message  = "The path '$PropertyKey' attempted to index into the [$($actualValue.GetType())] object " +
+                "that does not implement the [IList] interface."
+              Category = [System.Management.Automation.ErrorCategory]::InvalidArgument
+              ErrorId  = "InvalidKey"
+            }
+
+            Write-Error @errorParams
+            $confirmResult = [ConfirmResult]::new($null)
+            break
+          } elseif ([int]$key -lt 0 -or [int]$key -ge ([System.Collections.IList] $actualValue).Count) {
+            # Index out of bounds
+            $errorParams = @{
+              Message  = "The path '$PropertyKey' with the index [$key] was out of bounds for the array with the " +
+                "size $(([System.Collections.IList]$actualValue).Count)"
+              Category = [System.Management.Automation.ErrorCategory]::InvalidArgument
+              ErrorId  = "InvalidKey"
+            }
+
+            Write-Error @errorParams
+            $confirmResult = [ConfirmResult]::new($null)
+            break
           }
-        } catch {
-          $thrownError = $_
-          $confirmResult = [ConfirmResult]::new($null)
-          Write-Error $thrownError
-          break
+
+          $actualValue = $actualValue[$key]
+        } else {
+          # Check to be sure that the next key exists in the object, if it doesn't we fail
+          if (-not [bool]($actualValue.PSObject.Properties.Name -match $key)) {
+            # There is no property in the object with the key, fail.
+            $errorParams = @{
+              Message  = "The key '$key' in the path '$PropertyKey' does not exist in the " +
+                "[$($confirmResult.ResourceDetails.GetType())] object."
+              Category = [System.Management.Automation.ErrorCategory]::InvalidArgument
+              ErrorId  = "InvalidKey"
+            }
+
+            Write-Error @errorParams
+            $confirmResult = [ConfirmResult]::new($null)
+            break
+          }
+
+          $actualValue = $actualValue.$key
         }
       }
 
-      if ($confirmResult.Success -and $actualValue -ne $PropertyValue) {
+      if ($PropertyValue -ne $null -and $confirmResult.Success -and $actualValue -ne $PropertyValue) {
         $confirmResult.Success = $false
 
         if ($null -eq $actualValue) {
