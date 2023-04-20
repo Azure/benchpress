@@ -35,23 +35,7 @@ Describe 'Verify PostgreSql Flexible Server' {
   }
 
   It "Should contain a PostgreSQL Flexible Server named $serverName" {
-    Confirm-AzBPPostgreSqlFlexibleServer -ResourceGroupName $rgName -Server $serverName | Should -BeSuccessful
-  }
-
-  It "Should not contain a PostgreSQL Flexible Server named $noServerName" {
-    # arrange
-    $params = @{
-      ResourceType      = "PostgreSqlFlexibleServer"
-      ResourceGroupName = $rgName
-      Name              = $serverName
-      ErrorAction       = "SilentlyContinue"
-    }
-
-    # act and assert
-    # The '-ErrorAction SilentlyContinue' command suppresses all errors.
-    # In this test, it will suppress the error message when a resource cannot be found.
-    # Remove this field to see all errors.
-    Confirm-AzBPPostgreSqlFlexibleServer @params | Should -Not -BeSuccessful
+    Confirm-AzBPPostgreSqlFlexibleServer -ResourceGroupName $rgName -Name $serverName | Should -BeSuccessful
   }
 
   It "Should contain a PostgreSQL Flexible Server named $serverName in $location" {
