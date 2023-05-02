@@ -141,7 +141,7 @@ resource sql_database 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2022-0
   }
 }
 
-resource sqlRoleDefinition 'Microsoft.DocumentDB/databaseAccounts/sqlRoleDefinitions@2021-04-15' = {
+resource sqlRoleDefinition 'Microsoft.DocumentDB/databaseAccounts/sqlRoleDefinitions@2022-11-15' = {
   name: '${sql_account.name}/${roleDefinitionId}'
   properties: {
     roleName: roleDefinitionName
@@ -157,7 +157,7 @@ resource sqlRoleDefinition 'Microsoft.DocumentDB/databaseAccounts/sqlRoleDefinit
   }
 }
 
-resource sqlRoleAssignment 'Microsoft.DocumentDB/databaseAccounts/sqlRoleAssignments@2021-04-15' = {
+resource sqlRoleAssignment 'Microsoft.DocumentDB/databaseAccounts/sqlRoleAssignments@2022-11-15' = {
   name: '${sql_account.name}/${roleAssignmentId}'
   properties: {
     roleDefinitionId: sqlRoleDefinition.id

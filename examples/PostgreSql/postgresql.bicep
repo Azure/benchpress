@@ -1,31 +1,33 @@
-param uaminame string = 'uami${take(uniqueString(subscription().id), 5)}'
 param location string = resourceGroup().location
 @secure()
 param adminPassword string
-
-resource uami 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
-  name: uaminame
-  location: location
-}
-
 param name string = 'psql${take(uniqueString(subscription().id), 5)}'
 
 resource symbolicname 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01' = {
   name: name
   location: location
-  identity: {
-    type: 'UserAssigned'
-    userAssignedIdentities: {
-      '${uami.id}': {}
-    }
+  sku: {
+    name: 'Standard_D4ds_v4'
+    tier: 'GeneralPurpose'
   }
   properties: {
+    version: '12'
     administratorLogin: 'administratorLogin'
     administratorLoginPassword: adminPassword
-    version: '14'
-  }
-  sku: {
-    name: 'Standard_B1ms'
-    tier: 'GeneralPurpose'
+    network: {
+      delegatedSubnetResourceId: (null)
+      privateDnsZoneArmResourceId: (null)
+    }
+    highAvailability: {
+      mode: 'ZoneRedundant'
+    }
+    storage: {
+      storageSizeGB: 128
+    }
+    backup: {
+      backupRetentionDays: 7
+      geoRedundantBackup: 'Disabled'
+    }
+    availabilityZone: '1'
   }
 }
