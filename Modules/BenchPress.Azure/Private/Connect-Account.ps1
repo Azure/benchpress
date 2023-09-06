@@ -46,31 +46,32 @@ function Connect-Account {
   Begin { }
   Process {
     $useManagedIdentity = Get-EnvironmentVariable AZ_USE_MANAGED_IDENTITY
-    $applicationId = Get-RequiredEnvironmentVariable AZ_APPLICATION_ID
-    $tenantId = Get-RequiredEnvironmentVariable AZ_TENANT_ID
     $subscriptionId = Get-RequiredEnvironmentVariable AZ_SUBSCRIPTION_ID
     $currentConnection = Get-AzContext
     $results = [AuthenticationResult]::new()
 
-    # If the current context matches the subscription, tenant, and service principal, then we're already properly
-    # logged in.
-    if (IsCurrentAccountLoggedIn($currentConnection)) {
-      $results.Success = $true
-      $results.AuthenticationData = [AuthenticationData]::new(($currentConnection).Subscription.Id)
-    } else {
-      # The current context is not correct
-
       # Login Using Managed Identity
-      if ($useManagedIdentity){
-        $connection = Connect-AzAccount -Identity
-        $subscriptionName = (Get-AzSubscription -SubscriptionId  $subscriptionId).Name
-        Set-AzContext -Subscription $subscriptionName
+    if ($useManagedIdentity){
+      $connection = Connect-AzAccount -Identity
+      $subscriptionName = (Get-AzSubscription -SubscriptionId  $subscriptionId).Name
+      Set-AzContext -Subscription $subscriptionName
 
+      $results.Success = $true
+      $results.AuthenticationData = [AuthenticationData]::new($connection.Context.Subscription.Id)
+    }
+    else{
+      # If the current context matches the subscription, tenant, and service principal, then we're already properly
+      # logged in.
+      $applicationId = Get-RequiredEnvironmentVariable AZ_APPLICATION_ID
+      $tenantId = Get-RequiredEnvironmentVariable AZ_TENANT_ID
+
+      if (IsCurrentAccountLoggedIn($currentConnection)) {
         $results.Success = $true
-        $results.AuthenticationData = [AuthenticationData]::new($connection.Context.Subscription.Id)
-      }
-      else{
+        $results.AuthenticationData = [AuthenticationData]::new(($currentConnection).Subscription.Id)
+      } else {
+        # The current context is not correct
         # Create the credentials and login to the correct account
+
         $clientSecret = Get-RequiredEnvironmentVariable AZ_ENCRYPTED_PASSWORD | ConvertTo-SecureString
         $clientSecret = New-Object System.Management.Automation.PSCredential -ArgumentList $applicationId, $clientSecret
 
@@ -89,11 +90,16 @@ function Connect-Account {
           $results.Success = $false
           Write-Error $thrownError
         }
-      }
-      $results
     }
+
   }
-  End { }
+
+  $results
+
+}
+End { }
+
+
 }
 
 function IsCurrentAccountLoggedIn($currentConnection){
