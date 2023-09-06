@@ -5,6 +5,7 @@ using module ./../Classes/AuthenticationData.psm1
 Import-Module Az
 
 . $PSScriptRoot/../Private/Get-RequiredEnvironmentVariable.ps1
+. $PSScriptRoot/../Private/Get-EnvironmentVariable.ps1
 # end INLINE_SKIP
 
 function Connect-Account {
@@ -44,6 +45,7 @@ function Connect-Account {
   param ( )
   Begin { }
   Process {
+    $useManagedIdentity = Get-EnvironmentVariable AZ_USE_MANAGED_IDENTITY
     $applicationId = Get-RequiredEnvironmentVariable AZ_APPLICATION_ID
     $tenantId = Get-RequiredEnvironmentVariable AZ_TENANT_ID
     $subscriptionId = Get-RequiredEnvironmentVariable AZ_SUBSCRIPTION_ID
@@ -52,36 +54,56 @@ function Connect-Account {
 
     # If the current context matches the subscription, tenant, and service principal, then we're already properly
     # logged in.
-    if ($null -ne $currentConnection `
-      -and ($currentConnection).Account.Type -eq 'ServicePrincipal' `
-      -and ($currentConnection).Account.Id -eq $applicationId `
-      -and ($currentConnection).Tenant.Id -eq $tenantId `
-      -and ($currentConnection).Subscription.Id -eq $subscriptionId) {
+    if (IsCurrentAccountLoggedIn($currentConnection)) {
       $results.Success = $true
       $results.AuthenticationData = [AuthenticationData]::new(($currentConnection).Subscription.Id)
     } else {
-      # The current context is not correct, create the credentials and login to the correct account
-      $clientSecret = Get-RequiredEnvironmentVariable AZ_ENCRYPTED_PASSWORD | ConvertTo-SecureString
-      $clientSecret = New-Object System.Management.Automation.PSCredential -ArgumentList $applicationId, $clientSecret
+      # The current context is not correct
 
-      try {
-        $connectionParams = @{
-          Credential   = $clientSecret
-          TenantId     = $tenantId
-          Subscription = $subscriptionId
-        }
-        $connection = Connect-AzAccount -ServicePrincipal @connectionParams
+      # Login Using Managed Identity
+      if ($useManagedIdentity){
+        $connection = Connect-AzAccount -Identity
+        $subscriptionName = (Get-AzSubscription -SubscriptionId  $subscriptionId).Name
+        Set-AzContext -Subscription $subscriptionName
 
         $results.Success = $true
         $results.AuthenticationData = [AuthenticationData]::new($connection.Context.Subscription.Id)
-      } catch {
-        $thrownError = $_
-        $results.Success = $false
-        Write-Error $thrownError
       }
+      else{
+        # Create the credentials and login to the correct account
+        $clientSecret = Get-RequiredEnvironmentVariable AZ_ENCRYPTED_PASSWORD | ConvertTo-SecureString
+        $clientSecret = New-Object System.Management.Automation.PSCredential -ArgumentList $applicationId, $clientSecret
 
+        try {
+          $connectionParams = @{
+            Credential   = $clientSecret
+            TenantId     = $tenantId
+            Subscription = $subscriptionId
+          }
+          $connection = Connect-AzAccount -ServicePrincipal @connectionParams
+
+          $results.Success = $true
+          $results.AuthenticationData = [AuthenticationData]::new($connection.Context.Subscription.Id)
+        } catch {
+          $thrownError = $_
+          $results.Success = $false
+          Write-Error $thrownError
+        }
+      }
       $results
     }
   }
   End { }
+}
+
+function IsCurrentAccountLoggedIn($currentConnection){
+  if ($null -ne $currentConnection `
+  -and ($currentConnection).Account.Type -eq 'ServicePrincipal' `
+  -and ($currentConnection).Account.Id -eq $applicationId `
+  -and ($currentConnection).Tenant.Id -eq $tenantId `
+  -and ($currentConnection).Subscription.Id -eq $subscriptionId) {
+    return $True
+  }
+
+  return $False
 }
