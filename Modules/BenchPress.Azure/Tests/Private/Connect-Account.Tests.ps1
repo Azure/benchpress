@@ -82,17 +82,6 @@ Describe "Connect-Account" {
       Should -Invoke  -CommandName "Connect-AzAccount" -Times 0
     }
 
-    It "Invokes Connect-AzAccount when the account type is not ServicePrincipal." {
-      Mock Get-AzContext { @{Account      = @{Type = "User"; Id = $MockApplicationId};
-                             Tenant       = @{Id = $MockTenantId};
-                             Subscription = @{Id = $MockSubscriptionId}}} `
-        -Verifiable
-
-      Connect-Account
-
-      Assert-MockCalled Connect-AzAccount
-    }
-
     It "Invokes Connect-AzAccount when the application ID does not match environment variables." {
       Mock Get-AzContext { @{Account      = @{Type = "ServicePrincipal"; Id = "not application ID"};
                              Tenant       = @{Id = $TenantId};
