@@ -53,15 +53,14 @@ function Connect-Account {
     $results = [AuthenticationResult]::new()
 
       # Login Using Managed Identity
-    if ($useManagedIdentity){
+    if ($useManagedIdentity) {
       $connection = Connect-AzAccount -Identity
       $subscriptionName = (Get-AzSubscription -SubscriptionId  $subscriptionId).Name
       Set-AzContext -Subscription $subscriptionName
 
       $results.Success = $true
       $results.AuthenticationData = [AuthenticationData]::new($connection.Context.Subscription.Id)
-    }
-    else{
+    } else {
       # If the current context matches the subscription, tenant, and service principal, then we're already properly
       # logged in.
       $applicationId = Get-RequiredEnvironmentVariable AZ_APPLICATION_ID
