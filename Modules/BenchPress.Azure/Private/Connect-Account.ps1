@@ -19,12 +19,14 @@ function Connect-Account {
       ServicePrincipal for the PowerShell session.
 
       The expected environment variables are:
+      AZ_USE_MANAGED_IDENTITY - If set to "true", BenchPress will login to Azure using a Managed Identity
+      AZ_SUBSCRIPTION_ID - The Subscription ID to login to
 
+      The following Environment variables are required if not using Managed Identity.
       AZ_APPLICATION_ID - The Service Principal ID
       AZ_ENCRYPTED_PASSWORD - The Service Principal account password properly encrypted using ConvertTo-SecureString
                               and saved as an environment variable using ConvertFrom-SecureString
       AZ_TENANT_ID - The Tenant ID to login to
-      AZ_SUBSCRIPTION_ID - The Subscription ID to login to
 
       If the current context that is logged in to matches the Service Principal, Tenant, and Subscription this function
       is a no-op.
