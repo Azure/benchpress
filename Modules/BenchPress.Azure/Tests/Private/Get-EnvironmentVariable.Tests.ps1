@@ -1,7 +1,7 @@
 
 
 BeforeAll {
-  . $PSScriptRoot/../../Private/Get-RequiredEnvironmentVariable.ps1
+  . $PSScriptRoot/../../Private/Get-EnvironmentVariable.ps1
   Import-Module Az
 
   $environmentVariableName = "__BP_Test_Env_var__"
@@ -17,7 +17,7 @@ Describe "Connect-Account" {
       $fakeEnvironmentVariableName="__BP_Does_Not_Exist__"
 
       # Act
-      $operation = { Get-RequiredEnvironmentVariable $fakeEnvironmentVariableName }
+      $operation = { Get-EnvironmentVariable $fakeEnvironmentVariableName }
 
       # Assert
       $operation | Should -Throw "Missing Required Environment Variable $fakeEnvironmentVariableName"
@@ -26,7 +26,7 @@ Describe "Connect-Account" {
 
     It "Read from an Environment Variable when it is set" {
       # Act
-      $result = Get-RequiredEnvironmentVariable $environmentVariableName
+      $result = Get-EnvironmentVariable $environmentVariableName
 
       # Assert
       $result | Should -Be $environmentVariableValue

@@ -16,10 +16,10 @@ Describe "Connect-Account" {
       $MockSubscriptionName = "SubName"
       $MockEncryptedPassword = "EncryptedPassword"
 
-      Mock Get-RequiredEnvironmentVariable{ return $MockApplicationId } -ParameterFilter { $VariableName -eq "AZ_APPLICATION_ID" }
-      Mock Get-RequiredEnvironmentVariable{ return $MockTenantId } -ParameterFilter { $VariableName -eq "AZ_TENANT_ID" }
-      Mock Get-RequiredEnvironmentVariable{ return $MockSubscriptionId } -ParameterFilter { $VariableName -eq "AZ_SUBSCRIPTION_ID" }
-      Mock Get-RequiredEnvironmentVariable{ return $MockEncryptedPassword } -ParameterFilter { $VariableName -eq "AZ_ENCRYPTED_PASSWORD" }
+      Mock Get-EnvironmentVariable{ return $MockApplicationId } -ParameterFilter { $VariableName -eq "AZ_APPLICATION_ID" }
+      Mock Get-EnvironmentVariable{ return $MockTenantId } -ParameterFilter { $VariableName -eq "AZ_TENANT_ID" }
+      Mock Get-EnvironmentVariable{ return $MockSubscriptionId } -ParameterFilter { $VariableName -eq "AZ_SUBSCRIPTION_ID" }
+      Mock Get-EnvironmentVariable{ return $MockEncryptedPassword } -ParameterFilter { $VariableName -eq "AZ_ENCRYPTED_PASSWORD" }
 
       Mock Get-AzSubscription { @{Name = $MockSubscriptionName } }  -ParameterFilter { $SubscriptionId -eq $MockSubscriptionId }
       Mock New-Object{ New-MockObject -Type "System.Management.Automation.PSCredential" } `
@@ -31,7 +31,7 @@ Describe "Connect-Account" {
 
     It "Invokes Connect-AzAccount with -Identity when AZ_USE_MANAGED_IDENTITY is set." {
       # Arrange
-      Mock Get-EnvironmentVariable{ return "true" } -ParameterFilter { $VariableName -eq "AZ_USE_MANAGED_IDENTITY" }
+      Mock Get-EnvironmentVariable{ return "true" } -ParameterFilter { $VariableName -eq "AZ_USE_MANAGED_IDENTITY" -and $DontThrowIfMissing -eq $true }
       Mock Set-AzContext {}
 
       Mock Get-AzContext { @{Account      = @{Type = "User"; Id = $MockApplicationId};

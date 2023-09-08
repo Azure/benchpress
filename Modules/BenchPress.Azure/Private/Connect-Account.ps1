@@ -4,7 +4,6 @@ using module ./../Classes/AuthenticationData.psm1
 
 Import-Module Az
 
-. $PSScriptRoot/../Private/Get-RequiredEnvironmentVariable.ps1
 . $PSScriptRoot/../Private/Get-EnvironmentVariable.ps1
 # end INLINE_SKIP
 
@@ -47,8 +46,8 @@ function Connect-Account {
   param ( )
   Begin { }
   Process {
-    $useManagedIdentity = Get-EnvironmentVariable AZ_USE_MANAGED_IDENTITY
-    $subscriptionId = Get-RequiredEnvironmentVariable AZ_SUBSCRIPTION_ID
+    $useManagedIdentity = Get-EnvironmentVariable AZ_USE_MANAGED_IDENTITY -DontThrowIfMissing
+    $subscriptionId = Get-EnvironmentVariable AZ_SUBSCRIPTION_ID
     $currentConnection = Get-AzContext
     $results = [AuthenticationResult]::new()
 
@@ -62,8 +61,8 @@ function Connect-Account {
     } else {
       # If the current context matches the subscription, tenant, and service principal, then we're already properly
       # logged in.
-      $applicationId = Get-RequiredEnvironmentVariable AZ_APPLICATION_ID
-      $tenantId = Get-RequiredEnvironmentVariable AZ_TENANT_ID
+      $applicationId = Get-EnvironmentVariable AZ_APPLICATION_ID
+      $tenantId = Get-EnvironmentVariable AZ_TENANT_ID
 
       if (IsCurrentAccountLoggedIn($currentConnection)) {
         $results.Success = $true
@@ -72,7 +71,7 @@ function Connect-Account {
         # The current context is not correct
         # Create the credentials and login to the correct account
 
-        $clientSecret = Get-RequiredEnvironmentVariable AZ_ENCRYPTED_PASSWORD | ConvertTo-SecureString
+        $clientSecret = Get-EnvironmentVariable AZ_ENCRYPTED_PASSWORD | ConvertTo-SecureString
         $clientSecret = New-Object System.Management.Automation.PSCredential -ArgumentList $applicationId, $clientSecret
 
         try {
