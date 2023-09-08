@@ -37,36 +37,50 @@ The easiest way to get started with BenchPress is to use the files in the `examp
 
 1. Clone the repository, open a PowerShell terminal, and navigate to the `examples` folder.
 
-1. Set the following environment variables so that the BenchPress tools can deploy (if necessary), confirm, and destroy
+Authenticating to Azure:
+
+There are two primary mechanisms to authenticate to Azure using BenchPress, either by using an [Application Service Principal](https://learn.microsoft.com/en-us/azure/active-directory/develop/app-objects-and-service-principals?tabs=browser#service-principal-object) or a [Managed Identity](https://learn.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/overview) for Azure environments.
+
+- For Managed Identity:
+
+  Set the following environment variables so that the BenchPress tools can deploy (if necessary), confirm, and destroy
    (if necessary) resources in the target subscription.
 
-- AZ_APPLICATION_ID - The Service Principal's application ID
-- AZ_TENANT_ID - The Tenant ID of the Azure Tenant to access
-- AZ_SUBSCRIPTION_ID - The Subscription ID of the Subscription within the Tenant to access
-- AZ_ENCRYPTED_PASSWORD - The **encrypted** password of the Service Principal. This value must be an encrypted string.
-  It is the responsibility of the user to encrypt the Service Principal password. The following PowerShell code can be
-  used to encrypt the Service Principal password before saving as an environment variable:
-  `<raw password> | ConvertTo-SecureString -AsPlainText -Force | ConvertFrom-SecureString`.
-  This takes the raw password and converts the password to a SecureString. This SecureString must then be converted to
-  a String. `ConvertFrom-SecureString` will take the SecureString and convert it to an encrypted string. This value
-  must then be saved as an environment variable. This ensures that the BenchPress code never uses the raw password at
-  any point.
+  - AZ_USE_MANAGED_IDENTITY="true" - A boolean flag that instructs BenchPress to authenticate using the Managed Identity
+  - AZ_SUBSCRIPTION_ID - The Subscription ID of the Subscription within the Tenant to access
 
-  You can either use a `.env` file and pass in the environment variables locally with a script,
-  or you must load each variable through the command line using:
+- For Application Service Principal:
 
-    ```PowerShell
-    $Env:AZ_APPLICATION_ID="<sample-application-id>"
-    $Env:AZ_TENANT_ID="<sample-tenant-id>"
-    $Env:AZ_SUBSCRIPTION_ID="<sample-subscription-id>"
-    $Env:AZ_ENCRYPTED_PASSWORD="<sample-encrypted-password>"
-    ```
+  Set the following environment variables so that the BenchPress tools can deploy (if necessary), confirm, and destroy
+   (if necessary) resources in the target subscription.
 
-  You can confirm if these are set up right on your local powershell using:
+  - AZ_APPLICATION_ID - The Service Principal's application ID
+  - AZ_TENANT_ID - The Tenant ID of the Azure Tenant to access
+  - AZ_SUBSCRIPTION_ID - The Subscription ID of the Subscription within the Tenant to access
+  - AZ_ENCRYPTED_PASSWORD - The **encrypted** password of the Service Principal. This value must be an encrypted string.
+    It is the responsibility of the user to encrypt the Service Principal password. The following PowerShell code can be
+    used to encrypt the Service Principal password before saving as an environment variable:
+    `<raw password> | ConvertTo-SecureString -AsPlainText -Force | ConvertFrom-SecureString`.
+    This takes the raw password and converts the password to a SecureString. This SecureString must then be converted to
+    a String. `ConvertFrom-SecureString` will take the SecureString and convert it to an encrypted string. This value
+    must then be saved as an environment variable. This ensures that the BenchPress code never uses the raw password at
+    any point.
 
-    ```PowerShell
-    [Environment]::GetEnvironmentVariables()
-    ```
+    You can either use a `.env` file and pass in the environment variables locally with a script,
+    or you must load each variable through the command line using:
+
+      ```PowerShell
+      $Env:AZ_APPLICATION_ID="<sample-application-id>"
+      $Env:AZ_TENANT_ID="<sample-tenant-id>"
+      $Env:AZ_SUBSCRIPTION_ID="<sample-subscription-id>"
+      $Env:AZ_ENCRYPTED_PASSWORD="<sample-encrypted-password>"
+      ```
+
+    You can confirm if these are set up right on your local powershell using:
+
+      ```PowerShell
+      [Environment]::GetEnvironmentVariables()
+      ```
 
 1. To run the project locally, follow the [installation guide](./installation.md).
 

@@ -36,8 +36,8 @@ function Disconnect-Account {
   [CmdletBinding()]
   param ( )
   Begin {
-    $applicationId = Get-RequiredEnvironmentVariable AZ_APPLICATION_ID
-    $tenantId = Get-RequiredEnvironmentVariable AZ_TENANT_ID
+    $applicationId = Get-EnvironmentVariable AZ_APPLICATION_ID
+    $tenantId = Get-EnvironmentVariable AZ_TENANT_ID
 
     # If the current context doesn't match the target subscription, tentant, and client, then the testing account is
     # not logged in. Do nothing.
