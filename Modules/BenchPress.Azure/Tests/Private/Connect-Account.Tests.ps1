@@ -48,8 +48,12 @@ Describe "Connect-Account" {
         -and $ServicePrincipal -eq $null
       }
 
+      Assert-MockCalled Get-AzSubscription  -ParameterFilter {
+        $SubscriptionId -eq $MockSubscriptionId
+      }
+
       Assert-MockCalled Set-AzContext -ParameterFilter {
-        $Subscription -eq $MockSubscriptionId
+        $Subscription -eq $MockSubscriptionName
       }
     }
 
