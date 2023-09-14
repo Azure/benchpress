@@ -51,7 +51,7 @@ function Connect-Account {
     $currentConnection = Get-AzContext
     $results = [AuthenticationResult]::new()
 
-      # Login Using Managed Identity
+    # Login Using Managed Identity
     if ($useManagedIdentity) {
       $connection = Connect-AzAccount -Identity
       $subscriptionName = (Get-AzSubscription -SubscriptionId  $subscriptionId).Name
@@ -59,7 +59,8 @@ function Connect-Account {
 
       $results.Success = $true
       $results.AuthenticationData = [AuthenticationData]::new($connection.Context.Subscription.Id)
-    } else {
+    }
+    else {
       # If the current context matches the subscription, tenant, and service principal, then we're already properly
       # logged in.
       $applicationId = Get-EnvironmentVariable AZ_APPLICATION_ID
@@ -68,7 +69,8 @@ function Connect-Account {
       if (IsCurrentAccountLoggedIn($currentConnection)) {
         $results.Success = $true
         $results.AuthenticationData = [AuthenticationData]::new(($currentConnection).Subscription.Id)
-      } else {
+      }
+      else {
         # The current context is not correct
         # Create the credentials and login to the correct account
 
@@ -85,29 +87,26 @@ function Connect-Account {
 
           $results.Success = $true
           $results.AuthenticationData = [AuthenticationData]::new($connection.Context.Subscription.Id)
-        } catch {
+        }
+        catch {
           $thrownError = $_
           $results.Success = $false
           Write-Error $thrownError
         }
+      }
+
     }
-
+    $results
   }
-
-  $results
-
-}
-End { }
-
-
+  End { }
 }
 
-function IsCurrentAccountLoggedIn($currentConnection){
+function IsCurrentAccountLoggedIn($currentConnection) {
   if ($null -ne $currentConnection `
-  -and ($currentConnection).Account.Type -eq 'ServicePrincipal' `
-  -and ($currentConnection).Account.Id -eq $applicationId `
-  -and ($currentConnection).Tenant.Id -eq $tenantId `
-  -and ($currentConnection).Subscription.Id -eq $subscriptionId) {
+      -and ($currentConnection).Account.Type -eq 'ServicePrincipal' `
+      -and ($currentConnection).Account.Id -eq $applicationId `
+      -and ($currentConnection).Tenant.Id -eq $tenantId `
+      -and ($currentConnection).Subscription.Id -eq $subscriptionId) {
     return $True
   }
 

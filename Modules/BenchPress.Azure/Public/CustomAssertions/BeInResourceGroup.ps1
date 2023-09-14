@@ -25,15 +25,18 @@
   $rgNameProperty = 'ResourceGroupName'
   $idProperty = 'Id'
 
-  if ($null -eq $ActualValue){
+  if ($null -eq $ActualValue) {
     [bool] $succeeded = $false
     $failureMessage = "ConfirmResult is null or empty."
-  } else {
-    if ([bool]$ActualValue.ResourceDetails.PSObject.Properties[$rgProperty]){
+  }
+  else {
+    if ([bool]$ActualValue.ResourceDetails.PSObject.Properties[$rgProperty]) {
       $resourceGroupName = $ActualValue.ResourceDetails.$rgProperty
-    } elseif ([bool]$ActualValue.ResourceDetails.PSObject.Properties[$rgNameProperty]){
+    }
+    elseif ([bool]$ActualValue.ResourceDetails.PSObject.Properties[$rgNameProperty]) {
       $resourceGroupName = $ActualValue.ResourceDetails.$rgNameProperty
-    } elseif ([bool]$ActualValue.ResourceDetails.PSObject.Properties[$idProperty]){
+    }
+    elseif ([bool]$ActualValue.ResourceDetails.PSObject.Properties[$idProperty]) {
       # If it does not have a property for resource group, then we can maybe get the resource group from Id
       # ex: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/'
       # providers/{resourceProviderNamespace}/{resourceType}/{resourceName}
@@ -49,33 +52,35 @@
     }
 
     # Some resources don't have any of the resource group properties
-    if ($null -eq $resourceGroupName){
+    if ($null -eq $resourceGroupName) {
       [bool] $succeeded = $false
       $failureMessage = "Resource does not have a ResourceGroup, a ResourceGroupName, or an Id (with a RG) property.
       They are null or empty."
-    } else {
-        [bool] $succeeded = $resourceGroupName -eq $ExpectedValue
-        if ($Negate) { $succeeded = -not $succeeded }
+    }
+    else {
+      [bool] $succeeded = $resourceGroupName -eq $ExpectedValue
+      if ($Negate) { $succeeded = -not $succeeded }
 
-        if (-not $succeeded) {
-            if ($Negate) {
-              $failureMessage = "Resource is deployed, incorrectly, in $resourceGroupName."
-            } else {
-              $failureMessage = "Resource not in resource group or there was an error when confirming resource.
-              Expected $ExpectedValue but got $resourceGroupName."
-              if ($Because) { $failureMessage = "Resource not in resource group. This failed $Because." }
-            }
+      if (-not $succeeded) {
+        if ($Negate) {
+          $failureMessage = "Resource is deployed, incorrectly, in $resourceGroupName."
         }
+        else {
+          $failureMessage = "Resource not in resource group or there was an error when confirming resource.
+              Expected $ExpectedValue but got $resourceGroupName."
+          if ($Because) { $failureMessage = "Resource not in resource group. This failed $Because." }
+        }
+      }
     }
   }
 
   return [pscustomobject]@{
-      Succeeded      = $succeeded
-      FailureMessage = $failureMessage
+    Succeeded      = $succeeded
+    FailureMessage = $failureMessage
   }
 }
 
 Add-ShouldOperator -Name BeInResourceGroup `
-    -InternalName 'ShouldBeInResourceGroup' `
-    -Test ${function:ShouldBeInResourceGroup} `
-    -Alias 'SBIRG'
+  -InternalName 'ShouldBeInResourceGroup' `
+  -Test ${function:ShouldBeInResourceGroup} `
+  -Alias 'SBIRG'

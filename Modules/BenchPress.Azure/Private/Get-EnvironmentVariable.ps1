@@ -39,7 +39,7 @@
   #>
   [OutputType([System.String])]
   param (
-    [Parameter(Mandatory=$true, Position=0)]
+    [Parameter(Mandatory = $true, Position = 0)]
     [string]$VariableName,
     [switch]$DontThrowIfMissing
   )
@@ -61,7 +61,7 @@
 function Get-RequiredEnvironmentVariable {
   [OutputType([System.String])]
   param (
-    [Parameter(Mandatory=$true, Position=0)]
+    [Parameter(Mandatory = $true, Position = 0)]
     [string]$VariableName
   )
   Begin {
@@ -74,4 +74,3 @@ function Get-RequiredEnvironmentVariable {
     $value
   }
 }
-

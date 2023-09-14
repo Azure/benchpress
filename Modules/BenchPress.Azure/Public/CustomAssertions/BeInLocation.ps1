@@ -23,16 +23,18 @@
   #>
   $propertyName = 'Location'
 
-  if ($null -eq $ActualValue){
+  if ($null -eq $ActualValue) {
     [bool] $succeeded = $false
     $failureMessage = "ConfirmResult is null or empty."
-  } elseif (-not [bool]$ActualValue.ResourceDetails.PSObject.Properties[$propertyName]) {
+  }
+  elseif (-not [bool]$ActualValue.ResourceDetails.PSObject.Properties[$propertyName]) {
     [bool] $succeeded = $false
     $failureMessage = "Resource does not have a location property. It is null or empty."
-  } else {
+  }
+  else {
     # Both expected and actual locations should be normalized with no spaces
-    $resourceLocation = $ActualValue.ResourceDetails.Location -replace " ",""
-    $expectedLocation = $ExpectedValue -replace " ",""
+    $resourceLocation = $ActualValue.ResourceDetails.Location -replace " ", ""
+    $expectedLocation = $ExpectedValue -replace " ", ""
 
     [bool] $succeeded = $resourceLocation -ieq $expectedLocation
     if ($Negate) { $succeeded = -not $succeeded }
@@ -40,7 +42,8 @@
     if (-not $succeeded) {
       if ($Negate) {
         $failureMessage = "Resource is deployed, incorrectly, in $resourceLocation."
-      } else {
+      }
+      else {
         $failureMessage = "Resource not in location or there was an error when confirming resource.
         Expected $ExpectedValue but got $resourceLocation."
         if ($Because) { $failureMessage = "Resource not in location $Because." }
@@ -49,12 +52,12 @@
   }
 
   return [pscustomobject]@{
-      Succeeded      = $succeeded
-      FailureMessage = $failureMessage
+    Succeeded      = $succeeded
+    FailureMessage = $failureMessage
   }
 }
 
 Add-ShouldOperator -Name BeInLocation `
-    -InternalName 'ShouldBeInLocation' `
-    -Test ${function:ShouldBeInLocation} `
-    -Alias 'SBIL'
+  -InternalName 'ShouldBeInLocation' `
+  -Test ${function:ShouldBeInLocation} `
+  -Alias 'SBIL'

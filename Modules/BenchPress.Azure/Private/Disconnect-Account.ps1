@@ -45,9 +45,9 @@ function Disconnect-Account {
   }
   Process {
     if ($null -eq $currentConnection `
-      -or ($currentConnection).Account.Type -ne "ServicePrincipal" `
-      -or ($currentConnection).Account.Id -ne $applicationId `
-      -or ($currentConnection).Tenant.Id -ne $tenantId) {
+        -or ($currentConnection).Account.Type -ne "ServicePrincipal" `
+        -or ($currentConnection).Account.Id -ne $applicationId `
+        -or ($currentConnection).Tenant.Id -ne $tenantId) {
       return
     }
 

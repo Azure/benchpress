@@ -21,17 +21,19 @@
     .OUTPUTS
       PSCustomObject
   #>
-  if ($null -eq $ActualValue){
+  if ($null -eq $ActualValue) {
     [bool] $succeeded = $false
     $failureMessage = "ConfirmResult is null or empty."
-  } else {
+  }
+  else {
     [bool] $succeeded = $ActualValue.Success
     if ($Negate) { $succeeded = -not $succeeded }
 
     if (-not $succeeded) {
       if ($Negate) {
         $failureMessage = "Resource is currently deployed, but should not be."
-      } else {
+      }
+      else {
         $failureMessage = "Resource not deployed or there was an error when confirming resource."
         if ($Because) { $failureMessage = "Resource not available $Because." }
       }
@@ -45,6 +47,6 @@
 }
 
 Add-ShouldOperator -Name BeSuccessful `
-    -InternalName 'ShouldBeSuccessful' `
-    -Test ${function:ShouldBeSuccessful} `
-    -Alias 'SBS'
+  -InternalName 'ShouldBeSuccessful' `
+  -Test ${function:ShouldBeSuccessful} `
+  -Alias 'SBS'
