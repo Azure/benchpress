@@ -1,6 +1,8 @@
 ﻿# INLINE_SKIP
 using module ./../Classes/ConfirmResult.psm1
 
+Import-Module Az.Search
+
 . $PSScriptRoot/../Private/Connect-Account.ps1
 # end INLINE_SKIP
 

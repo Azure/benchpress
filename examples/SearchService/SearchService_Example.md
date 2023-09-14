@@ -37,8 +37,8 @@
 1. Success!
 
    ```Powershell
-   Tests completed in 952ms
-   Tests Passed: 1, Failed: 0, Skipped: 0 NotRun: 0
+   Tests completed in 2.14s
+   Tests Passed: 5, Failed: 0, Skipped: 0 NotRun: 0
    ```
 
 1. Don't forget to delete any deployed resources that are no longer needed.
