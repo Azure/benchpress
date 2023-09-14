@@ -25,6 +25,7 @@ jobs:
           Set-PSRepository PSGallery -InstallationPolicy Trusted
           Install-Module Az -ErrorAction Stop
           Install-Module Az.App -ErrorAction Stop
+          Install-Module Az.Search -ErrorAction Stop
           Install-Module Az.Portal -ErrorAction Stop
           Install-Module Pester -ErrorAction Stop
       - name: Run PowerShell Unit Tests
