@@ -143,7 +143,7 @@ Invoke-Pester -Script examples/{Resource Type Name}/{Resource Type Name}.Tests.p
 
 If the resource type is not in the _Core Azure PowerShell module_ (`Az`), you have to do the following steps;
 
-- Find the module that contains the resource type. For example, `Az.Portal` module contains `Azure Dashboard` resource type.
+- Find the module that contains the resource type. For example, `Az.Portal` module contains the `Azure Dashboard` resource type.
 
 - Add the module installer to [ci.yml](../.github/workflows/ci.yml) file.
 
