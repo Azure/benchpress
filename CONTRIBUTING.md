@@ -113,7 +113,7 @@ examples/{Resource Type Name}
 
 ### Module Testing
 
-- Run the following command in the root directory of the project to create local copy of the `BenchPress` in the `bin` folder;
+- Run the following command in the root directory of the project to create a local copy of `BenchPress` in the `bin` folder;
 
 ```powershell
 .\build.ps1 -Inline
