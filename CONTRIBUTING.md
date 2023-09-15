@@ -97,13 +97,13 @@ examples/{Resource Type Name}
 
 - Create a new module with the required files mentioned above.
 
-- Add `Confirm-{Resource Type Name}` function to the [Modules/BenchPress.Azure/BenchPress.Azure.psd1](../Modules/BenchPress.Azure/BenchPress.Azure.psd1) file in the alphabetical order.
+- Add `Confirm-{Resource Type Name}` function to the [Modules/BenchPress.Azure/BenchPress.Azure.psd1](../Modules/BenchPress.Azure/BenchPress.Azure.psd1) file in alphabetical order.
 
-- Add `{Resource Type Name}` to the [Modules/BenchPress.Azure/Classes/ResourceType.psm1](../Modules/BenchPress.Azure/Classes/ResourceType.psm1) file in the alphabetical order.
+- Add `{Resource Type Name}` to the [Modules/BenchPress.Azure/Classes/ResourceType.psm1](../Modules/BenchPress.Azure/Classes/ResourceType.psm1) file in alphabetical order.
 
-- Add `. $PSScriptRoot/Confirm-{Resource Type Name}.ps1` to the beginning of the [Modules/BenchPress.Azure/Public/Get-ResourceByType.ps1](../Modules/BenchPress.Azure/Public/Get-ResourceByType.ps1) file in the alphabetical order.
+- Add `. $PSScriptRoot/Confirm-{Resource Type Name}.ps1` to the beginning of the [Modules/BenchPress.Azure/Public/Get-ResourceByType.ps1](../Modules/BenchPress.Azure/Public/Get-ResourceByType.ps1) file in alphabetical order.
 
-- Add a section for the new resource type to the end of the [Modules/BenchPress.Azure/Public/Get-ResourceByType.ps1](../Modules/BenchPress.Azure/Public/Get-ResourceByType.ps1) file in the alphabetical order, such as;
+- Add a section for the new resource type to the end of the [Modules/BenchPress.Azure/Public/Get-ResourceByType.ps1](../Modules/BenchPress.Azure/Public/Get-ResourceByType.ps1) file in alphabetical order, such as;
 
 ```powershell
 "{Resource Type Name}" {
