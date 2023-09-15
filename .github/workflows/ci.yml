@@ -56,6 +56,7 @@ jobs:
         run: |
           Install-Module -Name Az -Scope CurrentUser -Repository PSGallery -Force
           Install-Module -Name Az.App -Scope CurrentUser -Repository PSGallery -Force
+          Install-Module -Name Az.Search -Scope CurrentUser -Repository PSGallery -Force
           Install-Module -Name Az.Portal -Scope CurrentUser -Repository PSGallery -Force
           Publish-Module -Path ./BenchPress.Azure -Repository LocalFeedPSRepo -Verbose
       - name: Install AzBP Module from the repository

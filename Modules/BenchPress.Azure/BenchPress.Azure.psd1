@@ -47,6 +47,7 @@
     "Confirm-Resource",
     "Confirm-ResourceGroup",
     "Confirm-RoleAssignment",
+    "Confirm-SearchService",
     "Confirm-SqlDatabase",
     "Confirm-SqlServer",
     "Confirm-StorageAccount",
