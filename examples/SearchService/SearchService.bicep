@@ -1,24 +1,9 @@
 param location string = resourceGroup().location
-param serverName string = 'sqlsvr${take(uniqueString(resourceGroup().id), 5)}'
-param databaseName string = 'sqldb${take(uniqueString(resourceGroup().id), 5)}'
-@secure()
-param adminPassword string
+param name string = 'search${take(uniqueString(resourceGroup().id), 5)}'
 
-resource sqlServer 'Microsoft.Sql/servers@2022-05-01-preview' = {
-  name: serverName
+resource search 'Microsoft.Search/searchServices@2022-09-01' = {
+  name: name
   location: location
   properties: {
-    administratorLogin: 'administratorLogin'
-    administratorLoginPassword: adminPassword
-  }
-}
-
-resource sqlDB 'Microsoft.Sql/servers/databases@2022-05-01-preview' = {
-  parent: sqlServer
-  name: databaseName
-  location: location
-  sku: {
-    name: 'Standard'
-    tier: 'Standard'
   }
 }
