@@ -60,8 +60,8 @@ If your Docker Desktop or other container host is using WSL2, then there might b
     1. Create a directory for source code and `cd` into it.
     1. Clone or fork the repo as described in [Contributing to Code and Documentation](#contributing-to-code-and-documentation)
     1. `cd` into the repo's directory
-    1. Open VSCode from the command line with: `code .` (or `code-insiders .` if using the Insiders build)
-    1. From the command window (`Ctrl + Shift + P` or `Command + Shif + P`) choose `Reopen in Container`
+    1. Open VSCode from the command line with: `"code ."` (or `"code-insiders ."` if using the [VS Code Insiders](https://code.visualstudio.com/insiders/) build)
+    1. From the command window (`Ctrl + Shift + P` or `Command + Shift + P`) choose `Reopen in Container`
 
 #### Running Megalinter in a Dev Container
 
@@ -97,7 +97,7 @@ examples/{Resource Type Name}
 
 - Create a new module with the required files mentioned above.
 
-- Add `Confirm-{Resource Type Name}` function to the [Modules/BenchPress.Azure/BenchPress.Azure.psd1](../Modules/BenchPress.Azure/BenchPress.Azure.psd1) file in alphabetical order.
+- Add a `Confirm-{Resource Type Name}` function to the [Modules/BenchPress.Azure/BenchPress.Azure.psd1](../Modules/BenchPress.Azure/BenchPress.Azure.psd1) file in alphabetical order.
 
 - Add `{Resource Type Name}` to the [Modules/BenchPress.Azure/Classes/ResourceType.psm1](../Modules/BenchPress.Azure/Classes/ResourceType.psm1) file in alphabetical order.
 
@@ -116,20 +116,10 @@ examples/{Resource Type Name}
 - Run the following command in the root directory of the project to create a local copy of `BenchPress` in the `bin` folder;
 
 ```powershell
-.\build.ps1 -Inline
+.\build.ps1 -Import
 ```
 
-- Replace the `BeforeAll` section of the `examples/{Resource Type Name}/{Resource Type Name}.Tests.ps1` file with the following code;
-
-> Don't forget to replace it back before submitting a pull request.
-
-```powershell
-# old
-Import-Module Az.InfrastructureTesting
-
-# new
-Import-Module ../../bin/BenchPress.Azure.psd1
-```
+> Other commands available in the [build.ps1](../build.ps1) can be found in the [Installation.md#Install the BenchPress Module from the Local File System](./docs/installation.md#install-the-benchpress-module-from-the-local-file-system) section
 
 - Follow the [Authenticating to Azure](./docs/getting_started.md#authenticating-to-azure) section to authenticate to Azure.
 
