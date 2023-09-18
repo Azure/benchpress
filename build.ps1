@@ -21,8 +21,7 @@ function Copy-Content ($Content) {
 $ErrorActionPreference = 'Stop'
 
 if (-not $PSBoundParameters.ContainsKey("Inline")) {
-  # Force inlining by env variable, build.ps1 is used in multiple places and passing the $inline everywhere is
-  # difficult.
+  # Force inlining by env variable, build.ps1 is used in multiple places and passing the $inline everywhere is difficult.
   # Only read this option here. Don't write it.
   $Inline = $env:BENCPRESS_BUILD_INLINE -eq "1"
 } else {
@@ -35,6 +34,7 @@ Get-Module BenchPress | Remove-Module
 
 if ($Clean -and (Test-Path "$PSScriptRoot/bin")) {
   Remove-Item "$PSScriptRoot/bin" -Recurse -Force
+  return
 }
 
 $null = New-Item "$PSScriptRoot/bin" -ItemType Directory -Force
@@ -83,8 +83,7 @@ if ($Inline) {
     $null = $sb.AppendLine("using module $($class.FullName)")
   }
 
-  # Define this at the top of the module, after the using statements, to skip the code that is wrapped in this if in
-  # different source files.
+  # Define this at the top of the module, after the using statements, to skip the code that is wrapped in this if in different source files.
   $null = $sb.AppendLine('$BENCHPRESS_BUILD=1')
 
   $functionFiles = $publicFunctions + $privateFunctions
