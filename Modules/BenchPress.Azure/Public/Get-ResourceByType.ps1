@@ -22,6 +22,7 @@ using module ./../Classes/ResourceType.psm1
 . $PSScriptRoot/Confirm-PortalDashboard.ps1
 . $PSScriptRoot/Confirm-PostgreSqlFlexibleServer
 . $PSScriptRoot/Confirm-ResourceGroup.ps1
+. $PSScriptRoot/Confirm-SearchService.ps1
 . $PSScriptRoot/Confirm-SqlDatabase.ps1
 . $PSScriptRoot/Confirm-SqlServer.ps1
 . $PSScriptRoot/Confirm-StorageAccount.ps1
@@ -362,6 +363,9 @@ function Get-ResourceByType {
           Scope                = $Scope
         }
         return Confirm-RoleAssignment @params
+      }
+      "SearchService" {
+        return Confirm-SearchService -ResourceGroupName $ResourceGroupName -Name $ResourceName
       }
       "SqlDatabase" {
         $params = @{

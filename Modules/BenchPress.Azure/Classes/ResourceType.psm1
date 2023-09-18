@@ -33,6 +33,7 @@
   PostgreSqlFlexibleServer
   ResourceGroup
   RoleAssignment
+  SearchService
   SqlDatabase
   SqlServer
   StorageAccount

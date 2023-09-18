@@ -23,13 +23,7 @@ BenchPress uses PowerShell and the Azure Az PowerShell module. Users should use 
 
 An Azure subscription that you can deploy resources to is also a requirement.
 
-## Setting up your project
-
-The easiest way to get started with BenchPress is to use the files in the `examples` folder.
-
-1. Clone the repository, open a PowerShell terminal, and navigate to the `examples` folder.
-
-Authenticating to Azure:
+## Authenticating to Azure
 
 There are two primary mechanisms to authenticate to Azure using BenchPress, either by using an [Application Service Principal](https://learn.microsoft.com/en-us/azure/active-directory/develop/app-objects-and-service-principals?tabs=browser#service-principal-object) or a [Managed Identity](https://learn.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/overview) for Azure environments.
 
@@ -37,32 +31,61 @@ There are two primary mechanisms to authenticate to Azure using BenchPress, eith
 
   Set the following environment variables so that the BenchPress tools can deploy (if necessary), confirm, and destroy (if necessary) resources in the target subscription.
 
-  - AZ_USE_MANAGED_IDENTITY="true" - A boolean flag that instructs BenchPress to authenticate using the Managed Identity
-  - AZ_SUBSCRIPTION_ID - The Subscription ID of the Subscription within the Tenant to access
+  - `AZ_USE_MANAGED_IDENTITY="true"` - A boolean flag that instructs BenchPress to authenticate using the Managed Identity
+  - `AZ_SUBSCRIPTION_ID` - The Subscription ID of the Subscription within the Tenant to access
 
 - For Application Service Principal:
 
   Set the following environment variables so that the BenchPress tools can deploy (if necessary), confirm, and destroy (if necessary) resources in the target subscription.
 
-  - AZ_APPLICATION_ID - The Service Principal's application ID
-  - AZ_TENANT_ID - The Tenant ID of the Azure Tenant to access
-  - AZ_SUBSCRIPTION_ID - The Subscription ID of the Subscription within the Tenant to access
-  - AZ_ENCRYPTED_PASSWORD - The **encrypted** password of the Service Principal. This value must be an encrypted string. It is the responsibility of the user to encrypt the Service Principal password. The following PowerShell code can be used to encrypt the Service Principal password before saving as an environment variable: `<raw password> | ConvertTo-SecureString -AsPlainText -Force | ConvertFrom-SecureString`. This takes the raw password and converts the password to a SecureString. This SecureString must then be converted to a String. `ConvertFrom-SecureString` will take the SecureString and convert it to an encrypted string. This value must then be saved as an environment variable. This ensures that the BenchPress code never uses the raw password at any point.
+  - `AZ_APPLICATION_ID` - The Service Principal's application ID
+  - `AZ_TENANT_ID` - The Tenant ID of the Azure Tenant to access
+  - `AZ_SUBSCRIPTION_ID` - The Subscription ID of the Subscription within the Tenant to access
+  - `AZ_ENCRYPTED_PASSWORD` - The **encrypted** password of the Service Principal. This value must be an encrypted string. It is the responsibility of the user to encrypt the Service Principal password. The following PowerShell code can be used to encrypt the Service Principal password before saving as an environment variable: `<raw password> | ConvertTo-SecureString -AsPlainText -Force | ConvertFrom-SecureString`. This takes the raw password and converts the password to a SecureString. This SecureString must then be converted to a String. `ConvertFrom-SecureString` will take the SecureString and convert it to an encrypted string. This value must then be saved as an environment variable. This ensures that the BenchPress code never uses the raw password at any point.
 
-    You can either use a `.env` file and pass in the environment variables locally with a script, or you must load each variable through the command line using:
+  Example command to create a Service Principal is;
 
-      ```PowerShell
-      $Env:AZ_APPLICATION_ID="<sample-application-id>"
-      $Env:AZ_TENANT_ID="<sample-tenant-id>"
-      $Env:AZ_SUBSCRIPTION_ID="<sample-subscription-id>"
-      $Env:AZ_ENCRYPTED_PASSWORD="<sample-encrypted-password>"
-      ```
+  ```powershell
+  $AZURE_RBAC = $(az ad sp create-for-rbac --name "BenchPress.Module.Contributor" --role contributor --scopes /subscriptions/$(az account show --query "id" --output "tsv"))
+  ```
 
-    You can confirm if these are set up right on your local powershell using:
+  You can either use a `.env` file and pass in the environment variables locally with a script, or you must load each variable through the command line using:
 
-      ```PowerShell
-      [Environment]::GetEnvironmentVariables()
-      ```
+  ```PowerShell
+  $env:AZ_APPLICATION_ID="<sample-application-id>"
+  $env:AZ_TENANT_ID="<sample-tenant-id>"
+  $env:AZ_SUBSCRIPTION_ID="<sample-subscription-id>"
+  $env:AZ_ENCRYPTED_PASSWORD="<sample-encrypted-password>"
+  ```
+
+  Example command to set the environment variables locally is;
+
+  ```powershell
+  $env:AZ_SUBSCRIPTION_ID = "$(az account show --query 'id' --output tsv)"
+  $env:AZ_TENANT_ID = "$(az account show --query 'tenantId' --output tsv)"
+  $env:AZ_APPLICATION_ID = $($AZURE_RBAC | ConvertFrom-Json).appId
+  $env:AZ_ENCRYPTED_PASSWORD = $($AZURE_RBAC | ConvertFrom-Json).password | ConvertTo-SecureString -AsPlainText -Force | ConvertFrom-SecureString
+  ```
+
+  You can confirm if these are set up right on your local powershell using:
+
+  ```PowerShell
+  [Environment]::GetEnvironmentVariables()
+  ```
+
+  > Afterwards, to clean up the Service Principal, you can run the following command:
+  >
+  > ```powershell
+  > az ad sp delete --id $($AZURE_RBAC | ConvertFrom-Json).appId
+  > ```
+
+## Setting up your project
+
+The easiest way to get started with BenchPress is to use the files in the `examples` folder.
+
+1. Clone the repository, open a PowerShell terminal, and navigate to the `examples` folder.
+
+1. Follow the [Authenticating to Azure](#authenticating-to-azure) section to set up your environment variables.
 
 1. To run the project locally, follow the [installation guide](./installation.md).
 
