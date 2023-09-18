@@ -44,8 +44,7 @@ jobs:
         shell: pwsh
         run: |
           $path = New-Item -Path ./packages -ItemType Directory
-          Register-PSRepository -Name LocalFeedPSRepo -SourceLocation $path.ToString() `
-            -PublishLocation $path.ToString() -InstallationPolicy Trusted
+          Register-PSRepository -Name LocalFeedPSRepo -SourceLocation $path.ToString() -PublishLocation $path.ToString() -InstallationPolicy Trusted
       - name: Download module artifacts
         uses: actions/download-artifact@v3
         with:

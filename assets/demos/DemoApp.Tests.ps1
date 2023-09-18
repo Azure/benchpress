@@ -1,7 +1,5 @@
 BeforeAll {
-  # Navigate to ../../docs/installation.md to build BenchPress module"
-
-  #Import-Module "../../bin/BenchPress.Azure.psd1"
+  Import-Module "BenchPress.Azure"
 
   $Script:rgName = "benchpress-rg-${env:ENVIRONMENT_SUFFIX}"
   $Script:webAppName = "benchpress-web-${env:ENVIRONMENT_SUFFIX}"
@@ -107,6 +105,5 @@ Describe 'Web Apps Tests' {
 }
 
 AfterAll {
-  Get-Module Az-InfrastructureTesting | Remove-Module
-  Get-Module BenchPress.Azure | Remove-Module
+  Get-Module "BenchPress.Azure" | Remove-Module
 }

@@ -279,6 +279,7 @@ Now that we've done a walkthrough of all tests, let's fix them.
 Most of the tests assumed that our container registry was already deployed to a resource group. However, we never deployed the `containerRegistry.bicep` file ourselves! Most tests also assumed we had an existing resource group to deploy to, but we never deployed that either! Let's go ahead and fix these assumptions now:
 
 1. Create a resource group in your subscription.
+
 1. Deploy the container registry bicep file to that resource group:
 
    ```PowerShell
