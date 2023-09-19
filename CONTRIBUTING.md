@@ -96,13 +96,13 @@ examples/{Resource Type Name}
 
 - Create a new module with the required files mentioned above.
 
-- Add a `Confirm-{Resource Type Name}` function to the [Modules/BenchPress.Azure/BenchPress.Azure.psd1](../Modules/BenchPress.Azure/BenchPress.Azure.psd1) file in alphabetical order.
+- Add a `Confirm-{Resource Type Name}` function to the [Modules/BenchPress.Azure/BenchPress.Azure.psd1](./Modules/BenchPress.Azure/BenchPress.Azure.psd1) file in alphabetical order.
 
-- Add `{Resource Type Name}` to the [Modules/BenchPress.Azure/Classes/ResourceType.psm1](../Modules/BenchPress.Azure/Classes/ResourceType.psm1) file in alphabetical order.
+- Add `{Resource Type Name}` to the [Modules/BenchPress.Azure/Classes/ResourceType.psm1](./Modules/BenchPress.Azure/Classes/ResourceType.psm1) file in alphabetical order.
 
-- Add `. $PSScriptRoot/Confirm-{Resource Type Name}.ps1` to the beginning of the [Modules/BenchPress.Azure/Public/Get-ResourceByType.ps1](../Modules/BenchPress.Azure/Public/Get-ResourceByType.ps1) file in alphabetical order.
+- Add `. $PSScriptRoot/Confirm-{Resource Type Name}.ps1` to the beginning of the [Modules/BenchPress.Azure/Public/Get-ResourceByType.ps1](./Modules/BenchPress.Azure/Public/Get-ResourceByType.ps1) file in alphabetical order.
 
-- Add a section for the new resource type to the end of the [Modules/BenchPress.Azure/Public/Get-ResourceByType.ps1](../Modules/BenchPress.Azure/Public/Get-ResourceByType.ps1) file in alphabetical order, such as;
+- Add a section for the new resource type to the end of the [Modules/BenchPress.Azure/Public/Get-ResourceByType.ps1](./Modules/BenchPress.Azure/Public/Get-ResourceByType.ps1) file in alphabetical order, such as;
 
 ```powershell
 "{Resource Type Name}" {
@@ -118,7 +118,7 @@ examples/{Resource Type Name}
 .\build.ps1 -Import
 ```
 
-> Other commands available in the [build.ps1](../build.ps1) can be found in the [Installation.md#Install the BenchPress Module from the Local File System](./docs/installation.md#install-the-benchpress-module-from-the-local-file-system) section
+> Other commands available in the [build.ps1](./build.ps1) can be found in the [Installation.md#Install the BenchPress Module from the Local File System](./docs/installation.md#install-the-benchpress-module-from-the-local-file-system) section
 
 - Follow the [Authenticating to Azure](./docs/getting_started.md#authenticating-to-azure) section to authenticate to Azure.
 
@@ -134,13 +134,13 @@ If the resource type is not in the _Core Azure PowerShell module_ (`Az`), you ha
 
 - Find the module that contains the resource type. For example, `Az.Portal` module contains the `Azure Dashboard` resource type.
 
-- Add the module installer to [ci.yml](../.github/workflows/ci.yml) file.
+- Add the module installer to [ci.yml](./.github/workflows/ci.yml) file.
 
 ```yml
 Install-Module -Name Az.{ModuleName} -Scope CurrentUser -Repository PSGallery -Force
 ```
 
-- Add the module installer to [pr-powershell.yml](../.github/workflows/pr-powershell.yml) file too.
+- Add the module installer to [pr-powershell.yml](./.github/workflows/pr-powershell.yml) file too.
 
 ```yml
 Install-Module Az.{ModuleName} -ErrorAction Stop
