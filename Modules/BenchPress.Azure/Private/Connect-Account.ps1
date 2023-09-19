@@ -10,12 +10,10 @@ Import-Module Az
 function Connect-Account {
   <#
     .SYNOPSIS
-      Connect-Account uses environment variable values to log into an Azure context. This is an internal function and
-      should not be used outside of the BenchPress module.
+      Connect-Account uses environment variable values to log into an Azure context. This is an internal function and should not be used outside of the BenchPress module.
 
     .DESCRIPTION
-      Connect-Account is designed to login to an Azure context using environment variables to login as a
-      ServicePrincipal for the PowerShell session.
+      Connect-Account is designed to login to an Azure context using environment variables to login as a ServicePrincipal for the PowerShell session.
 
       The expected environment variables are:
       AZ_USE_MANAGED_IDENTITY - If set to "true", BenchPress will login to Azure using a Managed Identity
@@ -23,12 +21,10 @@ function Connect-Account {
 
       The following Environment variables are required if not using Managed Identity.
       AZ_APPLICATION_ID - The Service Principal ID
-      AZ_ENCRYPTED_PASSWORD - The Service Principal account password properly encrypted using ConvertTo-SecureString
-                              and saved as an environment variable using ConvertFrom-SecureString
+      AZ_ENCRYPTED_PASSWORD - The Service Principal account password properly encrypted using ConvertTo-SecureString and saved as an environment variable using ConvertFrom-SecureString
       AZ_TENANT_ID - The Tenant ID to login to
 
-      If the current context that is logged in to matches the Service Principal, Tenant, and Subscription this function
-      is a no-op.
+      If the current context that is logged in to matches the Service Principal, Tenant, and Subscription this function is a no-op.
 
     .EXAMPLE
       There is only one way to call Connect-Account:
@@ -61,8 +57,7 @@ function Connect-Account {
       $results.AuthenticationData = [AuthenticationData]::new($connection.Context.Subscription.Id)
     }
     else {
-      # If the current context matches the subscription, tenant, and service principal, then we're already properly
-      # logged in.
+      # If the current context matches the subscription, tenant, and service principal, then we're already properly logged in.
       $applicationId = Get-EnvironmentVariable AZ_APPLICATION_ID
       $tenantId = Get-EnvironmentVariable AZ_TENANT_ID
 
