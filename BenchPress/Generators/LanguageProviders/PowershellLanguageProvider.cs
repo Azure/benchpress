@@ -4,9 +4,9 @@ namespace Generators.LanguageProviders;
 
 public class PowershellLanguageProvider : ILanguageProvider
 {
-    public string Variable(string name)
+    public string Parameter(string name)
     {
-        return $"${name}";
+        return name;
     }
 
     public string Value(object value)
@@ -28,9 +28,15 @@ public class PowershellLanguageProvider : ILanguageProvider
         }
     }
 
-    public string Function(string name)
+    public string AssertionDetails(TestType testType)
     {
-        return name;
+        switch (testType)
+        {
+            case TestType.ResourceExists:
+                return "-BeSuccessful";
+            default:
+                throw new Exception($"Unknown test type: {testType}");
+        }
     }
 
     public string Escape(string value)
@@ -49,17 +55,10 @@ public class PowershellLanguageProvider : ILanguageProvider
         switch (sdkFunction.Kind)
         {
             case TestType.ResourceExists:
-                return $"Get-{sdkFunction.ResourceType.FunctionPrefix}Exists";
-            case TestType.Location:
-                return $"Check-{sdkFunction.ResourceType.FunctionPrefix}Location";
+                return $"Confirm-AzBPResource";
             default:
                 throw new Exception($"Unknown test type: {sdkFunction.Kind}");
         }
-    }
-
-    public string ParameterList(params string[] parameters)
-    {
-        return string.Join(" ", parameters);
     }
 
     public string GetTemplateFileName()

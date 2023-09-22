@@ -23,6 +23,7 @@ var rootCommand = new RootCommand("Test Generator for Bicep and ARM Templates");
 
 rootCommand.AddOption(importFileOption);
 rootCommand.AddOption(languageProviderOption);
+rootCommand.AddOption(outputFolderOption);
 
 rootCommand.SetHandler(
     (fileInfo, outputFolder, languageProvider) =>
@@ -54,8 +55,10 @@ rootCommand.SetHandler(
 
         foreach (var metadata in metadataList)
         {
-            testList.Add(new TestDefinition(metadata, TestType.ResourceExists));
-            testList.Add(new TestDefinition(metadata, TestType.Location));
+            foreach (var supportedTestType in metadata.ResourceType.GetSupportedTestTypes())
+            {
+                testList.Add(new TestDefinition(metadata, supportedTestType));
+            }
         }
 
         AppDomain.CurrentDomain

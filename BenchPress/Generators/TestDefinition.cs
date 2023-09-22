@@ -14,6 +14,5 @@ public class TestDefinition
 
 public enum TestType
 {
-    ResourceExists,
-    Location,
+    ResourceExists
 }

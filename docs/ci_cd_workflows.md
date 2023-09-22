@@ -45,22 +45,24 @@ CI/CD process. This stage consists of the following steps:
   for code styling and formatting.
 - [`pr-dotnet.yml`](../.github/workflows/pr-dotnet.yml) and [`pr-powershell`](../.github/workflows/pr-powershell.yml) -
    Unit tests (for .NET Solution and PowerShell code) for code quality and testing.
-- [`pr-psgallery.yml`](../.github/workflows/pr-powershell.yml) - PowerShell module publishing to a local "PowerShell
-  Gallery"
-  - The local "PowerShell Gallery" uses the workflow runner's local filesystem to simulate PowerShell Gallery. We then
-    push and pull from this filesystem using the same PowerShell cmdlets that are used to interact with PowerShell
-    Gallery.
 
 ### Continuous Integration
 
 After pull requests are merged to the `main` branch, they will automatically trigger the CI stage of the CI/CD process.
 This stage consists of the following steps:
 
-- [`ci.yml`](../.github/workflows/ci.yml) - building the .NET solution.
+- [`ci.yml`](../.github/workflows/ci.yml) - builds the .NET solution and the final module file for BenchPress. It also
+tests the module for deployability to a local PS Repo. Lastly, it generates documentation using help comments for
+PowerShell cmdlets and saves documentation to a branch named `docs`. A PR will need to be **manually** created with any
+changes pushed to the `docs` branch in order to merge them into `main`.
+  - The local "PowerShell Gallery" uses the workflow runner's local filesystem to simulate PowerShell Gallery. We then
+    push and pull from this filesystem using the same PowerShell cmdlets that are used to interact with PowerShell
+    Gallery.
+- [`ci-module-versioning.yml`](../.github/workflows/ci-module-versioning.yml) - calculating the version for the
+  PowerShell module using GitVersion and writing it to the module manifest on a branch named `version`. A PR will
+  need to be **manually** created with any changes pushed to the `version` branch in order to merge them into `main`.
 - [`ci-publish-docs-branch.yml`](../.github/workflows/ci-publish-docs-branch.yml) - generates documentation using help
   comments for PowerShell cmdlets, formats the documents, and saves documentation to a branch named `docs`.
-- [`ci-module-versioning.yml`](../.github/workflows/ci-module-versioning.yml) - calculating the version for the
-  PowerShell module using GitVersion and writing it to the module manifest on a branch named `version`.
 
 ### Continuous Deployment
 
@@ -82,3 +84,7 @@ There is one workflow to callout that is a little bit outside of this typical CI
 were two steps described that generated changes and pushed those changes to new branches (`docs` and `version`). We
 have created a workflow [`create-automated-prs.yml`](../.github/workflows/create-automated-prs.yml) which will be
 triggered when new changes are pushed to those branches and open a PR if so.
+
+- [`cd-version-tag-release.yml`](../.github/workflows/cd-version-tag-release.yml) - triggered if a PR was merged from
+  `version` branch into the `main` branch. It will handle tagging the `main` branch and creating a GitHub release with
+  that version tag.

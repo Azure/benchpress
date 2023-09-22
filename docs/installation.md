@@ -10,10 +10,12 @@ There are two general ways to install BenchPress:
 In order to install from the PowerShell Gallery follow these steps from a PowerShell terminal:
 
 1. Ensure that the latest version of
-[PowerShellGet](https://learn.microsoft.com/en-us/powershell/scripting/gallery/installing-psget?view=powershell-7.3)
+[PowerShellGet][1]
 is installed.
-1. Execute `Install-Module -Name BenchPress.Azure`
-1. To make the module available to the current session execute `Import-Module -Name BenchPress.Azure`
+1. Execute `Install-Module -Name Az.InfrastructureTesting`
+1. To make the module available to the current session execute `Import-Module -Name Az.InfrastructureTesting`
+
+[1]: https://learn.microsoft.com/en-us/powershell/gallery/powershellget/install-powershellget?view=powershellget-2.x
 
 ## Install From a Local Copy of the Repository
 
@@ -42,4 +44,13 @@ To clone the repository:
 ### Install the BenchPress Module from the Local File System
 
 Once a local copy of the BenchPress repository exists, to install the BenchPress Module, from the project root path
-execute `Import-Module -Name  ./BenchPress/Helpers/BenchPress.Azure/BenchPress.Azure.psd1`
+execute `./build.ps1 -Import`. This will create a `.psm1` file in the `bin` directory that will dot source all cmdlets
+in the `Public` and `Private` folders, `Export-ModuleMember` for all `Public` cmdlets, and sets the proper `using`
+statements to import classes.
+
+To clean the `bin` folder before outputting the artifacts from `build.ps1` the `-Clean` flag can be passed.
+
+To test the load time the `-Load` flag can be passed.
+
+To test the build as an inline `.psm1` file pass the `-InLine` flag. This will consolidate all files in the `Classes`
+, `Public`, and `Private` folders into a single file instead of dot sourcing the files.
