@@ -11,6 +11,7 @@
   Description          = "Benchpress Test Framework for Azure Deployment Scenarios"
   NestedModules        = @()
   FunctionsToExport    = @(
+    "Confirm-Account",
     "Confirm-ActionGroup",
     "Confirm-AksCluster",
     "Confirm-AksNodePool",
