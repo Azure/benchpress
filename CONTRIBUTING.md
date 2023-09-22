@@ -12,8 +12,7 @@ There are two methods to getting a development environment up and running: local
 
 ### Local Setup
 
-Using a local setup either VS Code or Visual Studio can be used to develop code for the BenchPress project. VS Code is
-the recommended IDE, but Visual Studio will work as well. For this guide we will cover VS Code prerequisites:
+Using a local setup either VS Code or Visual Studio can be used to develop code for the BenchPress project. VS Code is the recommended IDE, but Visual Studio will work as well. For this guide we will cover VS Code prerequisites:
 
 1. Install PowerShell Modules:
     - Azure PowerShell Module:
@@ -97,13 +96,13 @@ examples/{Resource Type Name}
 
 - Create a new module with the required files mentioned above.
 
-- Add a `Confirm-{Resource Type Name}` function to the [Modules/BenchPress.Azure/BenchPress.Azure.psd1](../Modules/BenchPress.Azure/BenchPress.Azure.psd1) file in alphabetical order.
+- Add a `Confirm-{Resource Type Name}` function to the [Modules/BenchPress.Azure/BenchPress.Azure.psd1](./Modules/BenchPress.Azure/BenchPress.Azure.psd1) file in alphabetical order.
 
-- Add `{Resource Type Name}` to the [Modules/BenchPress.Azure/Classes/ResourceType.psm1](../Modules/BenchPress.Azure/Classes/ResourceType.psm1) file in alphabetical order.
+- Add `{Resource Type Name}` to the [Modules/BenchPress.Azure/Classes/ResourceType.psm1](./Modules/BenchPress.Azure/Classes/ResourceType.psm1) file in alphabetical order.
 
-- Add `. $PSScriptRoot/Confirm-{Resource Type Name}.ps1` to the beginning of the [Modules/BenchPress.Azure/Public/Get-ResourceByType.ps1](../Modules/BenchPress.Azure/Public/Get-ResourceByType.ps1) file in alphabetical order.
+- Add `. $PSScriptRoot/Confirm-{Resource Type Name}.ps1` to the beginning of the [Modules/BenchPress.Azure/Public/Get-ResourceByType.ps1](./Modules/BenchPress.Azure/Public/Get-ResourceByType.ps1) file in alphabetical order.
 
-- Add a section for the new resource type to the end of the [Modules/BenchPress.Azure/Public/Get-ResourceByType.ps1](../Modules/BenchPress.Azure/Public/Get-ResourceByType.ps1) file in alphabetical order, such as;
+- Add a section for the new resource type to the end of the [Modules/BenchPress.Azure/Public/Get-ResourceByType.ps1](./Modules/BenchPress.Azure/Public/Get-ResourceByType.ps1) file in alphabetical order, such as;
 
 ```powershell
 "{Resource Type Name}" {
@@ -119,7 +118,7 @@ examples/{Resource Type Name}
 .\build.ps1 -Import
 ```
 
-> Other commands available in the [build.ps1](../build.ps1) can be found in the [Installation.md#Install the BenchPress Module from the Local File System](./docs/installation.md#install-the-benchpress-module-from-the-local-file-system) section
+> Other commands available in the [build.ps1](./build.ps1) can be found in the [Installation.md#Install the BenchPress Module from the Local File System](./docs/installation.md#install-the-benchpress-module-from-the-local-file-system) section
 
 - Follow the [Authenticating to Azure](./docs/getting_started.md#authenticating-to-azure) section to authenticate to Azure.
 
@@ -135,13 +134,13 @@ If the resource type is not in the _Core Azure PowerShell module_ (`Az`), you ha
 
 - Find the module that contains the resource type. For example, `Az.Portal` module contains the `Azure Dashboard` resource type.
 
-- Add the module installer to [ci.yml](../.github/workflows/ci.yml) file.
+- Add the module installer to [ci.yml](./.github/workflows/ci.yml) file.
 
 ```yml
 Install-Module -Name Az.{ModuleName} -Scope CurrentUser -Repository PSGallery -Force
 ```
 
-- Add the module installer to [pr-powershell.yml](../.github/workflows/pr-powershell.yml) file too.
+- Add the module installer to [pr-powershell.yml](./.github/workflows/pr-powershell.yml) file too.
 
 ```yml
 Install-Module Az.{ModuleName} -ErrorAction Stop
@@ -165,8 +164,7 @@ Import-Module Az.{ModuleName}
    going to file already exists.
     1. If your issue exists (all inputs and relevant information is identical to an existing issue):
        1. Make relevant comments to add context that helps broaden understanding or helps identify the root concern.
-       1. Add a [reaction](https://github.com/blog/2119-add-reactions-to-pull-requests-issues-and-comments) to upvote
-          (:+1:) or downvote (:-1:) an issue.
+       1. Add a [reaction](https://github.com/blog/2119-add-reactions-to-pull-requests-issues-and-comments) to upvote (:+1:) or downvote (:-1:) an issue.
     1. If the issue does not exist create a new issue with the following guidelines:
        - Do not submit multiple problems or features in a single submitted issue.
        - Provide as much information as possible. The more information provided, the more likely that someone will be successful in reproducing the issue and identifying the cause. Provide as much of the following information as possible (not an exhaustive list):
@@ -186,8 +184,7 @@ Once an issue has been created or identified to contribute to, the following ste
 
 1. Clone or fork the repository. Clone if you have permissions, fork if you do not.
 1. Ensure the latest code is available locally by executing `git fetch all`.
-1. Create and checkout a feature branch using the number of the issue in a `feature\<issue #>` branch. For example:
-   `git checkout -b feature\123`.
+1. Create and checkout a feature branch using the number of the issue in a `feature\<issue #>` branch. For example: `git checkout -b feature\123`.
 1. Make the changes necessary to address the issue.
 1. Commit the final changes to the feature branch using `git commit`
 1. Push change to the fork or clone.
@@ -243,14 +240,20 @@ Please review and adhere to the tenents of the [Code of Conduct](CODE_OF_CONDUCT
 
 ## Contributor License Agreement
 
-To speed up the acceptance of any contribution to the BenchPress repository,
-you should sign the Microsoft [Contributor License Agreement (CLA)](https://cla.microsoft.com/) ahead of time.
+To speed up the acceptance of any contribution to the BenchPress repository, you should sign the Microsoft [Contributor License Agreement (CLA)](https://cla.microsoft.com/) ahead of time.
+
 If you've already contributed to BenchPress or Microsoft repositories in the past, congratulations!
+
 You've already completed this step.
+
 This a one-time requirement for the BenchPress project.
-Signing the CLA process is simple and can be done in less than a minute.
-You don't have to do this up-front.
+
+Signing the CLA process is simple and can be done in less than a minute. You don't have to do this up-front.
+
 You can simply clone, fork, and submit your pull request as usual.
+
 When your pull request is created, it is checked by the CLA bot.
+
 If you have signed the CLA, the status check will be set to `passing`.  Otherwise, it will stay at `pending`.
+
 Once you sign a CLA, all your existing and future pull requests will have the status check automatically set at `passing`.

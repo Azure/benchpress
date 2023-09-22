@@ -4,30 +4,22 @@
 
 The basic usage pattern for writing automated tests with BenchPress is to:
 
-1. Write tests using [Pester testing framework](https://pester.dev/docs/quick-start). Create test files ending in
-   `Tests.ps1` and run test files using `Invoke-Pester` .
+1. Write tests using [Pester testing framework](https://pester.dev/docs/quick-start). Create test files ending in `Tests.ps1` and run test files using `Invoke-Pester`.
 1. Deploy resources to Azure using bicep (or helpers from BenchPress).
 1. Use BenchPress to return information about deployed resources.
 1. (Optional) Use BenchPress to tear down resources at the end of the test.
 
 ## Requirements
 
-BenchPress uses PowerShell and the Azure Az PowerShell module. Users should use Pester
-as their testing framework and runner. To use BenchPress, have the following installed:
+BenchPress uses PowerShell and the Azure Az PowerShell module. Users should use Pester as their testing framework and runner. To use BenchPress, have the following installed:
 
-- [PowerShell](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows)
-  (PowerShell 7+ recommended)
+- [PowerShell](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows) (PowerShell 7+ recommended)
 - [Az PowerShell module](https://learn.microsoft.com/en-us/powershell/azure/install-az-ps?view=azps-9.3.0)
-  - [Az.App PowerShell module](https://learn.microsoft.com/en-us/powershell/module/az.app/?view=azps-9.5.0) for any
-    testing of Container Applications. Az.App is not GA yet which is why it is not included with the main Az
-    PowerShell module.
-  - [Az.Portal PowerShell module](https://learn.microsoft.com/en-us/powershell/module/az.app/?view=azps-9.5.0) for any
-    testing of Azure Dashboards. Az.Portal is not GA yet which is why it is not included with the main Az
-    PowerShell module.
+  - [Az.App PowerShell module](https://learn.microsoft.com/en-us/powershell/module/az.app/?view=azps-9.5.0) for any testing of Container Applications. Az.App is not GA yet which is why it is not included with the main Az PowerShell module.
+  - [Az.Portal PowerShell module](https://learn.microsoft.com/en-us/powershell/module/az.app/?view=azps-9.5.0) for any testing of Azure Dashboards. Az.Portal is not GA yet which is why it is not included with the main Az PowerShell module.
 - [Pester](https://pester.dev/docs/introduction/installation)
 - [Bicep](https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/install#azure-powershell)
-- [Service Principal](https://learn.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal)
-  created for your application.
+- [Service Principal](https://learn.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal) created for your application.
 
 An Azure subscription that you can deploy resources to is also a requirement.
 
@@ -99,9 +91,7 @@ The easiest way to get started with BenchPress is to use the files in the `examp
 
 ## Running a test file
 
-1. You can use any of the `*.Tests.ps1` for this quickstart, but we will specifically use `containerRegistry.bicep` and
-   `ContainerRegistry.Tests.ps1` as our examples. To run the `ContainerRegistry.Tests.ps1` tests, execute
-   `.\ContainerRegistry.Tests.ps1` or `Invoke-Pester -Path .\ContainerRegistry.Tests.ps1`.
+1. You can use any of the `*.Tests.ps1` for this quickstart, but we will specifically use `containerRegistry.bicep` and `ContainerRegistry.Tests.ps1` as our examples. To run the `ContainerRegistry.Tests.ps1` tests, execute `.\ContainerRegistry.Tests.ps1` or `Invoke-Pester -Path .\ContainerRegistry.Tests.ps1`.
 
 1. Your test results will most likely be 5 test failures, all saying something similar to this:
 
@@ -126,8 +116,7 @@ The easiest way to get started with BenchPress is to use the files in the `examp
 
 ## Walkthrough of Test File
 
-Let's walkthrough the `ContainerRegistry.Tests.ps1` file to understand how BenchPress is used to test our
-Infrastructure as Code (IaC) and why our tests are failing.
+Let's walkthrough the `ContainerRegistry.Tests.ps1` file to understand how BenchPress is used to test our Infrastructure as Code (IaC) and why our tests are failing.
 
 ```PowerShell
 BeforeAll {
@@ -204,11 +193,7 @@ AfterAll {
 
 ```
 
-This test file uses Pester's `Describe` and `It` keywords to represent tests.
-Each test checks different scenarios: Whether a Container Registry exists, if it's in the correct resource group,
-and if it has the correct location set. We also import the
-BenchPress module in the `BeforeAll` block (which looks different depending on if you're running locally -
-see [installation](./installation.md).
+This test file uses Pester's `Describe` and `It` keywords to represent tests. Each test checks different scenarios: Whether a Container Registry exists, if it's in the correct resource group, and if it has the correct location set. We also import the BenchPress module in the `BeforeAll` block (which looks different depending on if you're running locally - see [installation](./installation.md)).
 
 The first two `It` blocks are similar:
 
@@ -240,12 +225,7 @@ It "Should contain a Container Registry named $acrName with a Standard SKU - Con
 }
 ```
 
-This test uses the `Confirm-AzBPResource` helper
-from BenchPress. `Confirm-AzBPResource` returns a `ConfirmResult` object
-with information about the success of the call,
-resource details, authentication data and an error record.
-Assuming the container registry exists, we assert that
-the object returned by `Confirm-AzBPResource` is successful.
+This test uses the `Confirm-AzBPResource` helper from BenchPress. `Confirm-AzBPResource` returns a `ConfirmResult` object with information about the success of the call, resource details, authentication data and an error record. Assuming the container registry exists, we assert that the object returned by `Confirm-AzBPResource` is successful.
 
 The second test checks if a specific property key and value exists.
 
@@ -271,8 +251,7 @@ It "Should contain a Container Registry named $acrName in $rgName" {
 }
 ```
 
-The fourth test is a negative test, and interestingly, it's the only test that passes. This is because
-the resource defined in the file does not exist yet:
+The fourth test is a negative test, and interestingly, it's the only test that passes. This is because the resource defined in the file does not exist yet:
 
 ```PowerShell
 It "Should not contain a Container Registry named $noContainerRegistryName" {
@@ -297,25 +276,19 @@ Take note of the `-ErrorAction SilentlyContinue` comment.
 
 Now that we've done a walkthrough of all tests, let's fix them.
 
-Most of the tests assumed that our container registry was already deployed to a resource group. However, we
-never deployed the `containerRegistry.bicep` file ourselves! Most tests also assumed we had an existing resource group
-to deploy to, but we never deployed that either! Let's go ahead and fix these assumptions now:
+Most of the tests assumed that our container registry was already deployed to a resource group. However, we never deployed the `containerRegistry.bicep` file ourselves! Most tests also assumed we had an existing resource group to deploy to, but we never deployed that either! Let's go ahead and fix these assumptions now:
 
 1. Create a resource group in your subscription.
+
 1. Deploy the container registry bicep file to that resource group:
 
    ```PowerShell
-   New-AzResourceGroupDeployment -ResourceGroupName "<your-resource-group-name>"`
-    -TemplateFile ".\containerRegistry.bicep"
+   New-AzResourceGroupDeployment -ResourceGroupName "<your-resource-group-name>" -TemplateFile ".\containerRegistry.bicep"
    ```
 
-   (If you get an error that bicep is not recognized, you may need to
-   [manually install](https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/install#azure-powershell)
-   bicep.)
+   (If you get an error that bicep is not recognized, you may need to [manually install](https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/install#azure-powershell) bicep.)
 
-1. Update the `ContainerRegistry.Tests.ps1` file to replace the placeholder values with the actual values from your
-   deployment. Note that when executing `New-AzResourceGroupDeployment` the output will contain the name generated for
-   the new Container Registry.
+1. Update the `ContainerRegistry.Tests.ps1` file to replace the placeholder values with the actual values from your deployment. Note that when executing `New-AzResourceGroupDeployment` the output will contain the name generated for the new Container Registry.
 
    `$Script:rgName = '<your-resource-group-name>'`
    `$Script:acrName = '<your-container-registry-name>'`

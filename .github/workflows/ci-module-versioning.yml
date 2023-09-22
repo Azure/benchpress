@@ -47,8 +47,7 @@ jobs:
           fi
       - name: Update manifest file
         run: |
-          sed -i 's/ModuleVersion = "[^"]*"/ModuleVersion = "${{ needs.get-tags.outputs.Version }}"/' \
-            ./Modules/BenchPress.Azure/BenchPress.Azure.psd1
+          sed -i 's/ModuleVersion = "[^"]*"/ModuleVersion = "${{ needs.get-tags.outputs.Version }}"/' ./Modules/BenchPress.Azure/BenchPress.Azure.psd1
       - name: Commit changes to version branch
         run: |
           if [ "$(git diff --exit-code ./Modules/BenchPress.Azure/BenchPress.Azure.psd1 | wc -l)" -gt 0 ]

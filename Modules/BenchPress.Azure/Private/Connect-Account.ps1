@@ -10,12 +10,10 @@ Import-Module Az
 function Connect-Account {
   <#
     .SYNOPSIS
-      Connect-Account uses environment variable values to log into an Azure context. This is an internal function and
-      should not be used outside of the BenchPress module.
+      Connect-Account uses environment variable values to log into an Azure context. This is an internal function and should not be used outside of the BenchPress module.
 
     .DESCRIPTION
-      Connect-Account is designed to login to an Azure context using environment variables to login as a
-      ServicePrincipal for the PowerShell session.
+      Connect-Account is designed to login to an Azure context using environment variables to login as a ServicePrincipal for the PowerShell session.
 
       The expected environment variables are:
       AZ_USE_MANAGED_IDENTITY - If set to "true", BenchPress will login to Azure using a Managed Identity
@@ -23,12 +21,10 @@ function Connect-Account {
 
       The following Environment variables are required if not using Managed Identity.
       AZ_APPLICATION_ID - The Service Principal ID
-      AZ_ENCRYPTED_PASSWORD - The Service Principal account password properly encrypted using ConvertTo-SecureString
-                              and saved as an environment variable using ConvertFrom-SecureString
+      AZ_ENCRYPTED_PASSWORD - The Service Principal account password properly encrypted using ConvertTo-SecureString and saved as an environment variable using ConvertFrom-SecureString
       AZ_TENANT_ID - The Tenant ID to login to
 
-      If the current context that is logged in to matches the Service Principal, Tenant, and Subscription this function
-      is a no-op.
+      If the current context that is logged in to matches the Service Principal, Tenant, and Subscription this function is a no-op.
 
     .EXAMPLE
       There is only one way to call Connect-Account:
@@ -51,7 +47,7 @@ function Connect-Account {
     $currentConnection = Get-AzContext
     $results = [AuthenticationResult]::new()
 
-      # Login Using Managed Identity
+    # Login Using Managed Identity
     if ($useManagedIdentity) {
       $connection = Connect-AzAccount -Identity
       $subscriptionName = (Get-AzSubscription -SubscriptionId  $subscriptionId).Name
@@ -59,16 +55,17 @@ function Connect-Account {
 
       $results.Success = $true
       $results.AuthenticationData = [AuthenticationData]::new($connection.Context.Subscription.Id)
-    } else {
-      # If the current context matches the subscription, tenant, and service principal, then we're already properly
-      # logged in.
+    }
+    else {
+      # If the current context matches the subscription, tenant, and service principal, then we're already properly logged in.
       $applicationId = Get-EnvironmentVariable AZ_APPLICATION_ID
       $tenantId = Get-EnvironmentVariable AZ_TENANT_ID
 
       if (IsCurrentAccountLoggedIn($currentConnection)) {
         $results.Success = $true
         $results.AuthenticationData = [AuthenticationData]::new(($currentConnection).Subscription.Id)
-      } else {
+      }
+      else {
         # The current context is not correct
         # Create the credentials and login to the correct account
 
@@ -85,29 +82,26 @@ function Connect-Account {
 
           $results.Success = $true
           $results.AuthenticationData = [AuthenticationData]::new($connection.Context.Subscription.Id)
-        } catch {
+        }
+        catch {
           $thrownError = $_
           $results.Success = $false
           Write-Error $thrownError
         }
+      }
+
     }
-
+    $results
   }
-
-  $results
-
-}
-End { }
-
-
+  End { }
 }
 
-function IsCurrentAccountLoggedIn($currentConnection){
+function IsCurrentAccountLoggedIn($currentConnection) {
   if ($null -ne $currentConnection `
-  -and ($currentConnection).Account.Type -eq 'ServicePrincipal' `
-  -and ($currentConnection).Account.Id -eq $applicationId `
-  -and ($currentConnection).Tenant.Id -eq $tenantId `
-  -and ($currentConnection).Subscription.Id -eq $subscriptionId) {
+      -and ($currentConnection).Account.Type -eq 'ServicePrincipal' `
+      -and ($currentConnection).Account.Id -eq $applicationId `
+      -and ($currentConnection).Tenant.Id -eq $tenantId `
+      -and ($currentConnection).Subscription.Id -eq $subscriptionId) {
     return $True
   }
 
