@@ -2,6 +2,7 @@
 using module ./../Classes/ConfirmResult.psm1
 using module ./../Classes/ResourceType.psm1
 
+. $PSScriptRoot/Confirm-Account.ps1
 . $PSScriptRoot/Confirm-ActionGroup.ps1
 . $PSScriptRoot/Confirm-AksCluster.ps1
 . $PSScriptRoot/Confirm-AksNodePool.ps1
@@ -191,6 +192,9 @@ function Get-ResourceByType {
   Begin { }
   Process {
     switch ($ResourceType) {
+      "Account" {
+        return Confirm-Account
+      }
       "ActionGroup" {
         return Confirm-ActionGroup -ActionGroupName $ResourceName -ResourceGroupName $ResourceGroupName
       }

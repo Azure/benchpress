@@ -1,4 +1,5 @@
-﻿enum ResourceType{
+﻿enum ResourceType {
+  Account
   ActionGroup
   AksCluster
   AksNodePool
