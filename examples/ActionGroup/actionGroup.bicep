@@ -3,7 +3,7 @@ param location string = 'global'
 
 var actionGroupEmail = 'sampleactiongroup@contoso.com'
 
-resource supportTeamActionGroup 'Microsoft.Insights/actionGroups@2021-09-01' = {
+resource supportTeamActionGroup 'Microsoft.Insights/actionGroups@2023-01-01' = {
   name: actionGroupName
   location: location
   properties: {

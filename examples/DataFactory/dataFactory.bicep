@@ -8,7 +8,7 @@ var dataFactoryDataSetInName = 'BenchpressTestDatasetIn'
 var dataFactoryDataSetOutName = 'BenchpressTestDatasetOut'
 var pipelineName = 'BenchpressSampleCopyPipeline'
 
-resource storageAccount 'Microsoft.Storage/storageAccounts@2021-08-01' = {
+resource storageAccount 'Microsoft.Storage/storageAccounts@2023-01-01' = {
   name: storageAccountName
   location: location
   sku: {
@@ -17,8 +17,14 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-08-01' = {
   kind: 'StorageV2'
 }
 
-resource blobContainer 'Microsoft.Storage/storageAccounts/blobServices/containers@2021-08-01' = {
-  name: '${storageAccount.name}/default/${blobContainerName}'
+resource blobService 'Microsoft.Storage/storageAccounts/blobServices@2023-01-01' = {
+  parent: storageAccount
+  name: 'default'
+}
+
+resource blobContainer 'Microsoft.Storage/storageAccounts/blobServices/containers@2023-01-01' = {
+  parent: blobService
+  name: blobContainerName
 }
 
 resource dataFactory 'Microsoft.DataFactory/factories@2018-06-01' = {
