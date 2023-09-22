@@ -30,7 +30,7 @@ var linuxConfiguration = {
   }
 }
 
-resource nic 'Microsoft.Network/networkInterfaces@2021-05-01' = {
+resource nic 'Microsoft.Network/networkInterfaces@2023-05-01' = {
   name: networkInterfaceName
   location: location
   properties: {
@@ -54,7 +54,7 @@ resource nic 'Microsoft.Network/networkInterfaces@2021-05-01' = {
   }
 }
 
-resource nsg 'Microsoft.Network/networkSecurityGroups@2021-05-01' = {
+resource nsg 'Microsoft.Network/networkSecurityGroups@2023-05-01' = {
   name: networkSecurityGroupName
   location: location
   properties: {
@@ -76,7 +76,7 @@ resource nsg 'Microsoft.Network/networkSecurityGroups@2021-05-01' = {
   }
 }
 
-resource vnet 'Microsoft.Network/virtualNetworks@2021-05-01' = {
+resource vnet 'Microsoft.Network/virtualNetworks@2023-05-01' = {
   name: virtualNetworkName
   location: location
   properties: {
@@ -88,7 +88,7 @@ resource vnet 'Microsoft.Network/virtualNetworks@2021-05-01' = {
   }
 }
 
-resource subnet 'Microsoft.Network/virtualNetworks/subnets@2021-05-01' = {
+resource subnet 'Microsoft.Network/virtualNetworks/subnets@2023-05-01' = {
   parent: vnet
   name: subnetName
   properties: {
@@ -98,7 +98,7 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2021-05-01' = {
   }
 }
 
-resource publicIP 'Microsoft.Network/publicIPAddresses@2021-05-01' = {
+resource publicIP 'Microsoft.Network/publicIPAddresses@2023-05-01' = {
   name: publicIPAddressName
   location: location
   sku: {
