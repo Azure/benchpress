@@ -1,0 +1,66 @@
+---
+import "../styles/global.css";
+
+const posts = await Astro.glob('../pages/docs/*.md');
+---
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <div class="flex-row min-h-screen dark:bg-zinc-800 dark:text-zinc-50">
+      <nav class="flex items-center p-3 border-b shadow-sm">
+        <a class="text-4xl hover:text-green-600" href=`${import.meta.env.BASE_URL}`>💪 BenchPress</a>
+        <span class="flex-grow"></span>
+        <a class="hover:text-green-600" target="_blank" href="https://github.com/azure/benchpress">GitHub ↗️</a>
+        <button class="p-2" id="btnTheme"></button>
+      </nav>
+      <main class="flex">
+        <aside class="w-96 p-3">
+          <h2 class="font-semibold border-b pb-2 mb-2">Helpers</h2>
+          <ul>
+          {posts.map((post) => (
+            <li><a class="hover:text-green-600" href={post.url}>{post.frontmatter.title}</a></li>
+          ))}
+          </ul>
+        </aside>
+        <article class="p-3 flex flex-grow justify-center">
+          <div class="max-w-4xl mt-4">
+            <slot />
+          </div>
+        </article>
+      </main>
+    </div>
+    <script is:inline>
+      const theme = (() => {
+        if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
+          return localStorage.getItem("theme");
+        }
+        if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+          return "dark";
+        }
+        return "light";
+      })();
+      if (theme === "light") {
+        document.documentElement.classList.remove("dark");
+        document.getElementById("btnTheme").innerHTML = "🌙";
+      } else {
+        document.documentElement.classList.add("dark");
+        document.getElementById("btnTheme").innerHTML = "☀️";
+      }
+      window.localStorage.setItem("theme", theme);
+      document.getElementById("btnTheme").addEventListener("click", () => {
+        if (document.documentElement.classList.contains("dark")) {
+          document.documentElement.classList.remove("dark");
+          document.getElementById("btnTheme").innerHTML = "🌙";
+          window.localStorage.setItem("theme", "light");
+        } else {
+          document.documentElement.classList.add("dark");
+          document.getElementById("btnTheme").innerHTML = "☀️";
+          window.localStorage.setItem("theme", "dark");
+        }
+      });
+    </script>
+  </body>
+</html>
