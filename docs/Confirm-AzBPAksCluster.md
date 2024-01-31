@@ -13,7 +13,8 @@ Confirms that an AKS Cluster exists.
 ## SYNTAX
 
 ```
-Confirm-AzBPAksCluster [-AksName] <String> [-ResourceGroupName] <String> [<CommonParameters>]
+Confirm-AzBPAksCluster [-AksName] <String> [-ResourceGroupName] <String> [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -54,6 +55,21 @@ Aliases:
 
 Required: True
 Position: 2
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

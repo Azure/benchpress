@@ -14,7 +14,7 @@ Confirms that a CosmosDB Sql Role Assignment exists.
 
 ```
 Confirm-AzBPCosmosDBSqlRoleAssignment [-ResourceGroupName] <String> [-AccountName] <String>
- [-RoleAssignmentId] <String> [<CommonParameters>]
+ [-RoleAssignmentId] <String> [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -77,6 +77,21 @@ Aliases:
 
 Required: True
 Position: 3
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

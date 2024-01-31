@@ -18,7 +18,8 @@ Get-AzBPResourceByType [[-ResourceName] <String>] [[-ResourceGroupName] <String>
  [[-DataFactoryName] <String>] [[-NamespaceName] <String>] [[-EventHubName] <String>]
  [[-WorkspaceName] <String>] [[-AccountName] <String>] [[-ServicePrincipalId] <String>] [[-Scope] <String>]
  [[-RoleDefinitionName] <String>] [[-ServiceName] <String>] [[-JobName] <String>] [[-ClusterName] <String>]
- [[-ResourceId] <String>] [[-RoleAssignmentId] <String>] [[-RoleDefinitionId] <String>] [<CommonParameters>]
+ [[-ResourceId] <String>] [[-RoleAssignmentId] <String>] [[-RoleDefinitionId] <String>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -336,6 +337,21 @@ Aliases:
 
 Required: False
 Position: 19
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
