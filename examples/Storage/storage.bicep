@@ -8,6 +8,9 @@ resource storage 'Microsoft.Storage/storageAccounts@2022-09-01' = {
   sku: {
     name: 'Standard_LRS'
   }
+  properties: {
+    minimumTlsVersion: 'TLS1_2'
+  }
 }
 
 resource blobService 'Microsoft.Storage/storageAccounts/blobServices@2022-09-01' = {
@@ -18,14 +21,4 @@ resource blobService 'Microsoft.Storage/storageAccounts/blobServices@2022-09-01'
 resource container 'Microsoft.Storage/storageAccounts/blobServices/containers@2022-09-01' = {
   parent: blobService
   name: 'azbenchpresscontainer'
-}
-
-
-module publicIP '../VirtualMachine/publicIp.bicep'= {
-  name: ''
-  params: {
-    dnsLabelPrefix: ''
-    location: location
-    publicIPAddressName: ''
-  }
 }
