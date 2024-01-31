@@ -1,26 +1,15 @@
-﻿BeforeAll {
-  Import-Module Az.InfrastructureTesting
-
-  $Script:rgName = 'rg-test'
-  $Script:dataFactoryName = 'sampleadf'
-  $Script:location = 'westus3'
-}
-
-Describe 'Verify Data Factory' {
-  BeforeAll {
-    $Script:noDataFactoryName = 'nosampleadf'
-  }
-
+﻿Describe 'Verify Data Factory' {
   It "Should contain a Data Factory named $dataFactoryName - Confirm-AzBPResource" {
+    $dataFactoryName = 'BenchpressDataFactory'
     # arrange
     $params = @{
       ResourceType      = "DataFactory"
-      ResourceGroupName = $rgName
+      ResourceGroupName = $env:RESOURCE_GROUP_SUFFIX + "-rg"
       ResourceName      = $dataFactoryName
     }
 
     # act and assert
-    Confirm-AzBPResource @params | Should -BeSuccessful
+    Confirm-AzBPStorageAccount @params | Should -BeSuccessful
   }
 
   It "Should contain a Data Factory named $dataFactoryName - Confirm-AzBPResource" {
@@ -102,9 +91,4 @@ Describe 'Verify Data Factory Linked Service' {
     # act and assert
     Confirm-AzBPDataFactoryLinkedService @params | Should -BeSuccessful
   }
-}
-
-AfterAll {
-  Get-Module Az.InfrastructureTesting | Remove-Module
-  Get-Module BenchPress.Azure | Remove-Module
 }

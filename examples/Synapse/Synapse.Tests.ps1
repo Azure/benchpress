@@ -1,5 +1,5 @@
 ﻿BeforeAll {
-  Import-Module Az.InfrastructureTesting
+  Import-Module BenchPress.Azure
 
   $Script:rgName = 'rg-test'
   $Script:workSpaceName = 'samplesynws'
@@ -204,6 +204,5 @@ Describe 'Verify Synapse Spark/SQL Pool' {
 }
 
 AfterAll {
-  Get-Module Az.InfrastructureTesting | Remove-Module
   Get-Module BenchPress.Azure | Remove-Module
 }

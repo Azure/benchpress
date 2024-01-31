@@ -1,5 +1,5 @@
 ﻿BeforeAll {
-  Import-Module Az.InfrastructureTesting
+  Import-Module BenchPress.Azure
 }
 Describe 'Spin up , Tear down Action Group' {
   It 'Should deploy a bicep file.' {
@@ -23,6 +23,5 @@ Describe 'Spin up , Tear down Action Group' {
 }
 
 AfterAll {
-  Get-Module Az.InfrastructureTesting | Remove-Module
   Get-Module BenchPress.Azure | Remove-Module
 }

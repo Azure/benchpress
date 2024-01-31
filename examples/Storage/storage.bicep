@@ -19,3 +19,13 @@ resource container 'Microsoft.Storage/storageAccounts/blobServices/containers@20
   parent: blobService
   name: 'azbenchpresscontainer'
 }
+
+
+module publicIP '../VirtualMachine/publicIp.bicep'= {
+  name: ''
+  params: {
+    dnsLabelPrefix: ''
+    location: location
+    publicIPAddressName: ''
+  }
+}

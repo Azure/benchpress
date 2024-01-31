@@ -120,7 +120,7 @@ Let's walkthrough the `ContainerRegistry.Tests.ps1` file to understand how Bench
 
 ```PowerShell
 BeforeAll {
-  Import-Module Az.InfrastructureTesting
+  Import-Module BenchPress.Azure
 
   $Script:rgName = 'rg-test'
   $Script:acrName = 'acrbenchpresstest'
@@ -187,7 +187,6 @@ Describe 'Verify Container Registry' {
 }
 
 AfterAll {
-  Get-Module Az.InfrastructureTesting | Remove-Module
   Get-Module BenchPress.Azure | Remove-Module
 }
 

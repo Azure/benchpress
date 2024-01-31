@@ -43,7 +43,7 @@ resource nic 'Microsoft.Network/networkInterfaces@2023-05-01' = {
           }
           privateIPAllocationMethod: 'Dynamic'
           publicIPAddress: {
-            id: publicIP.id
+            id: publicIP.outputs.publicIp.id
           }
         }
       }
@@ -98,23 +98,16 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2023-05-01' = {
   }
 }
 
-resource publicIP 'Microsoft.Network/publicIPAddresses@2023-05-01' = {
+module publicIP './publicIp.bicep' = {
   name: publicIPAddressName
-  location: location
-  sku: {
-    name: 'Basic'
-  }
-  properties: {
-    publicIPAllocationMethod: 'Dynamic'
-    publicIPAddressVersion: 'IPv4'
-    dnsSettings: {
-      domainNameLabel: dnsLabelPrefix
-    }
-    idleTimeoutInMinutes: 4
+  params: {
+    dnsLabelPrefix: dnsLabelPrefix
+    location: location
+    publicIPAddressName: publicIPAddressName
   }
 }
 
-resource vm 'Microsoft.Compute/virtualMachines@2021-11-01' = {
+resource vm 'Microsoft.Compute/virtualMachines@2023-09-01' = {
   name: vmName
   location: location
   properties: {
@@ -152,5 +145,5 @@ resource vm 'Microsoft.Compute/virtualMachines@2021-11-01' = {
 }
 
 output adminUsername string = adminUsername
-output hostname string = publicIP.properties.dnsSettings.fqdn
-output sshCommand string = 'ssh ${adminUsername}@${publicIP.properties.dnsSettings.fqdn}'
+output hostname string = publicIP.outputs.fqdn
+output sshCommand string = 'ssh ${adminUsername}@${publicIP.outputs.publicIp.properties.dnsSettings.fqdn}'

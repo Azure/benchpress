@@ -1,5 +1,5 @@
 ﻿BeforeAll {
-  Import-Module Az.InfrastructureTesting
+  Import-Module BenchPress.Azure
 
   $Script:rgName = 'rg-test'
   $Script:accountName = 'azbenchpressstorage'
@@ -122,6 +122,5 @@ Describe 'Verify Storage Container' {
 }
 
 AfterAll {
-  Get-Module Az.InfrastructureTesting | Remove-Module
   Get-Module BenchPress.Azure | Remove-Module
 }

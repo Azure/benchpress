@@ -1,5 +1,5 @@
 ﻿BeforeAll {
-  Import-Module Az.InfrastructureTesting
+  Import-Module BenchPress.Azure
 
   $Script:rgName = 'rg-test'
   $Script:oiwName = 'oiwName'
@@ -19,7 +19,6 @@ Describe 'Verify Operational Insights Workspace Exists' {
     # act and assert
     Confirm-AzBPResource @params | Should -BeSuccessful
   }
-
 
   It "Should contain an Operational Insights Workspace named $oiwName - Confirm-AzBPResource" {
     # arrange
@@ -65,6 +64,5 @@ Describe 'Verify Operational Insights Workspace Exists' {
 }
 
 AfterAll {
-  Get-Module Az.InfrastructureTesting | Remove-Module
   Get-Module BenchPress.Azure | Remove-Module
 }
