@@ -1,5 +1,5 @@
 ﻿BeforeAll {
-  Import-Module Az.InfrastructureTesting
+  Import-Module BenchPress.Azure
 
   $Script:rgName   = 'rg-test'
   $Script:aksName  = 'aksbenchpresstest'
@@ -113,6 +113,5 @@ Describe 'Verify AKS Node Pool' {
 }
 
 AfterAll {
-  Get-Module Az.InfrastructureTesting | Remove-Module
   Get-Module BenchPress.Azure | Remove-Module
 }

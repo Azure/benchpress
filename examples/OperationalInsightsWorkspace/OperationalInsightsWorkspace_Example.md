@@ -28,7 +28,7 @@ cmdlet.
    - `oiwName` -> `your-operational-insights-workspace-name`
    - `westus3` -> `your-operational-insights-location`
 
-1. If using a local copy of `Az.InfrastructureTesting`, replace `Import-Module Az.InfrastructureTesting` with
+1. If using a local copy of `BenchPress.Azure`, replace `Import-Module BenchPress.Azure` with
 `Import-Module "../../bin/BenchPress.Azure.psd1"`. Note that the final `AfterAll` step will properly remove the module
 regardless of which method is chosen to load the module.
 

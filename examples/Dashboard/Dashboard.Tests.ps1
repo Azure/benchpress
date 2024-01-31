@@ -1,5 +1,5 @@
 ﻿BeforeAll {
-  Import-Module Az.InfrastructureTesting
+  Import-Module BenchPress.Azure
 
   $Script:rgName   = 'rg-test'
   $Script:location = 'westus3'
@@ -44,4 +44,8 @@ Describe 'Verify Dashboard' {
   It "Should contain a Dashboard named $dashboardName in $rgName" {
     Confirm-AzBPPortalDashboard -ResourceGroupName $rgName -Name $dashboardName | Should -BeInResourceGroup $rgName
   }
+}
+
+AfterAll {
+  Get-Module BenchPress.Azure | Remove-Module
 }

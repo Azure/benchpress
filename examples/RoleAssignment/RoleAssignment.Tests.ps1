@@ -1,5 +1,5 @@
 ﻿BeforeAll {
-  Import-Module Az.InfrastructureTesting
+  Import-Module BenchPress.Azure
 
   $Script:principalId = 'sampleappid'
   $Script:scope = '/subscriptions/id'
@@ -51,6 +51,5 @@ Describe 'Verify Role Assignment Exists' {
 }
 
 AfterAll {
-  Get-Module Az.InfrastructureTesting | Remove-Module
   Get-Module BenchPress.Azure | Remove-Module
 }

@@ -114,7 +114,7 @@ resource publicIP 'Microsoft.Network/publicIPAddresses@2023-05-01' = {
   }
 }
 
-resource vm 'Microsoft.Compute/virtualMachines@2021-11-01' = {
+resource vm 'Microsoft.Compute/virtualMachines@2023-09-01' = {
   name: vmName
   location: location
   properties: {

@@ -32,7 +32,7 @@ cmdlets.
    - `loggertest`  -> `your-api-management-logger-name`
    - `westus3`     -> `your-resource-group-location`
 
-1. If using a local copy of `Az.InfrastructureTesting`, replace `Import-Module Az.InfrastructureTesting` with
+1. If using a local copy of `BenchPress.Azure`, replace `Import-Module BenchPress.Azure` with
 `Import-Module "../../bin/BenchPress.Azure.psd1"`.
 
 1. Run `ApiManagement.Tests.ps1`:
