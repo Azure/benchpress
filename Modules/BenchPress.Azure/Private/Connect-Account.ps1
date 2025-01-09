@@ -42,7 +42,7 @@ function Connect-Account {
   param ( )
   Begin { }
   Process {
-    $useManagedIdentity = Get-EnvironmentVariable AZ_USE_MANAGED_IDENTITY -DontThrowIfMissing
+    $useManagedIdentity = Get-BooleanEnvironmentVariable AZ_USE_MANAGED_IDENTITY
     $subscriptionId = Get-EnvironmentVariable AZ_SUBSCRIPTION_ID -DontThrowIfMissing
     $applicationId = Get-EnvironmentVariable AZ_APPLICATION_ID -DontThrowIfMissing
     $tenantId = Get-EnvironmentVariable AZ_TENANT_ID -DontThrowIfMissing

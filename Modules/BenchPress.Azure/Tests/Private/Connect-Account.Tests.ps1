@@ -71,7 +71,9 @@ Describe "Connect-Account" {
     }
 
     It "Invokes Connect-AzAccount with -ServicePrincipal when the context is empty and environment variables exist" {
-      Mock Get-AzContext { return $null} -Verifiable
+      Mock Get-BooleanEnvironmentVariable{ return $False } -ParameterFilter { $VariableName -eq "AZ_USE_MANAGED_IDENTITY" }
+      Mock Get-AzContext { return $null } -Verifiable
+      Mock Set-AzContext {}
 
       Connect-Account
 
