@@ -29,15 +29,28 @@ Describe "Connect-Account" {
       Mock Connect-AzAccount{}
     }
 
+    It "Does not Invokes Connect-AzAccount when a context exists" {
+      # Arrange
+      Mock Get-EnvironmentVariable{ return "true" } -ParameterFilter { $VariableName -eq "AZ_USE_MANAGED_IDENTITY" -and $DontThrowIfMissing -eq $true }
+      Mock Set-AzContext {}
+
+      Mock Get-AzContext { @{Account      = @{Type = "Mocked"; Id = $MockApplicationId};
+      Tenant       = @{Id = $MockTenantId};
+      Subscription = @{Id = $MockSubscriptionId}}}
+
+      # Act
+      Connect-Account
+
+      # Assert Connect-AzAccount was not called and we are using the existing context
+      Assert-MockCalled Connect-AzAccount -Exactly 0
+    }
+
     It "Invokes Connect-AzAccount with -Identity when AZ_USE_MANAGED_IDENTITY is set." {
       # Arrange
       Mock Get-EnvironmentVariable{ return "true" } -ParameterFilter { $VariableName -eq "AZ_USE_MANAGED_IDENTITY" -and $DontThrowIfMissing -eq $true }
       Mock Set-AzContext {}
 
-      Mock Get-AzContext { @{Account      = @{Type = "User"; Id = $MockApplicationId};
-                             Tenant       = @{Id = $MockTenantId};
-                             Subscription = @{Id = $MockSubscriptionId}}} `
-        -Verifiable
+      Mock Get-AzContext { return $null} -Verifiable
 
       # Act
       Connect-Account
@@ -57,11 +70,8 @@ Describe "Connect-Account" {
       }
     }
 
-    It "Invokes Connect-AzAccount with -ServicePrincipal when the account type is not ServicePrincipal." {
-      Mock Get-AzContext { @{Account      = @{Type = "User"; Id = $MockApplicationId};
-                             Tenant       = @{Id = $MockTenantId};
-                             Subscription = @{Id = $MockSubscriptionId}}} `
-        -Verifiable
+    It "Invokes Connect-AzAccount with -ServicePrincipal when the context is empty and environment variables exist" {
+      Mock Get-AzContext { return $null} -Verifiable
 
       Connect-Account
 

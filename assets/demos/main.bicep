@@ -14,7 +14,7 @@ resource applicationInsights 'Microsoft.Insights/components@2020-02-02' = {
   }
 }
 
-resource emailActionGroup 'Microsoft.Insights/actionGroups@2022-06-01' = {
+resource emailActionGroup 'Microsoft.Insights/actionGroups@2023-01-01' = {
   name: join( ['benchpress', 'email', 'action', 'group', suffix ], '-')
   location: 'global'
   properties: {
@@ -33,7 +33,7 @@ resource emailActionGroup 'Microsoft.Insights/actionGroups@2022-06-01' = {
   }
 }
 
-resource hostingPlan 'Microsoft.Web/serverfarms@2022-03-01' = {
+resource hostingPlan 'Microsoft.Web/serverfarms@2024-04-01' = {
   name: join( ['benchpress', 'hosting', 'plan', suffix ], '-')
   location: location
   sku: {
@@ -45,7 +45,7 @@ resource hostingPlan 'Microsoft.Web/serverfarms@2022-03-01' = {
   }
 }
 
-resource webApp 'Microsoft.Web/sites@2022-03-01' = {
+resource webApp 'Microsoft.Web/sites@2024-04-01' = {
   name: join( ['benchpress', 'web', suffix ], '-')
   location: location
   identity: {

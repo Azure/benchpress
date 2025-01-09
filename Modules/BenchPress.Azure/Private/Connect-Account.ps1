@@ -58,7 +58,7 @@ function Connect-Account {
       # Login Using Managed Identity
       if ($useManagedIdentity) {
         $connection = Connect-AzAccount -Identity
-        if ($subscriptionId -ne $null) {
+        if ($null -ne $subscriptionId) {
           $subscriptionName = (Get-AzSubscription -SubscriptionId  $subscriptionId).Name
           Set-AzContext -Subscription $subscriptionName
         }
@@ -72,7 +72,7 @@ function Connect-Account {
           $clientSecret = Get-EnvironmentVariable AZ_ENCRYPTED_PASSWORD | ConvertTo-SecureString
           $clientSecret = New-Object System.Management.Automation.PSCredential -ArgumentList $applicationId, $clientSecret
 
-          if ($currentConnection -ne $null){
+          if ($null -ne $currentConnection){
             Write-Warning "Logging out of current Az.Powershell context and connecting to Subscription: $subscriptionId"
           }
 
@@ -105,7 +105,7 @@ function IsCurrentAccountLoggedIn($currentConnection) {
     return $False
   }
 
-  if ($subscriptionId -eq $null -or $applicationId -eq $null -or $tenantId -eq $null) {
+  if ($null -eq $subscriptionId -or $null -eq $applicationId -or $null -eq $tenantId) {
     return $True
   }
 
