@@ -58,8 +58,10 @@ function Connect-Account {
       # Login Using Managed Identity
       if ($useManagedIdentity) {
         $connection = Connect-AzAccount -Identity
-        $subscriptionName = (Get-AzSubscription -SubscriptionId  $subscriptionId).Name
-        Set-AzContext -Subscription $subscriptionName
+        if ($subscriptionId -ne $null) {
+          $subscriptionName = (Get-AzSubscription -SubscriptionId  $subscriptionId).Name
+          Set-AzContext -Subscription $subscriptionName
+        }
 
         $results.Success = $true
         $results.AuthenticationData = [AuthenticationData]::new($connection.Context.Subscription.Id)
