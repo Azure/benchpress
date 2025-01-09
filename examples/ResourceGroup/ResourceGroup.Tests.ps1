@@ -1,4 +1,5 @@
 ﻿BeforeAll {
+  Import-Module BenchPress.Azure
 
   $Script:rgName = 'rg-test'
   $Script:noRgName = 'notestrg'
@@ -47,4 +48,6 @@ Describe 'Verify Resource Group Exists' {
   }
 }
 
-
+AfterAll {
+  Get-Module BenchPress.Azure | Remove-Module
+}
