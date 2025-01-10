@@ -4,7 +4,7 @@ param name string = 'rg${take(uniqueString(subscription().id), 5)}'
 param location string = deployment().location
 
 // https://docs.microsoft.com/en-us/azure/templates/microsoft.resources/resourcegroups?tabs=bicep
-resource resourceGroup 'Microsoft.Resources/resourceGroups@2022-09-01' = {
+resource resourceGroup 'Microsoft.Resources/resourceGroups@2024-07-01' = {
   name: name
   location: location
 }

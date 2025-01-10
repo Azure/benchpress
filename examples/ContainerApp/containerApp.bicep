@@ -3,7 +3,7 @@ param location string = resourceGroup().location
 param targetPort int = 80
 param containerImage string = 'mcr.microsoft.com/azuredocs/containerapps-helloworld:latest'
 
-resource logAnalytics 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
+resource logAnalytics 'Microsoft.OperationalInsights/workspaces@2023-09-01' = {
   name: 'loganalytics${containerAppName}'
   location: location
   properties: {
@@ -13,7 +13,7 @@ resource logAnalytics 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
   }
 }
 
-resource containerAppEnv 'Microsoft.App/managedEnvironments@2022-10-01' = {
+resource containerAppEnv 'Microsoft.App/managedEnvironments@2024-03-01' = {
   name: 'env${containerAppName}'
   location: location
   sku: {
@@ -30,7 +30,7 @@ resource containerAppEnv 'Microsoft.App/managedEnvironments@2022-10-01' = {
   }
 }
 
-resource containerApp 'Microsoft.App/containerApps@2022-10-01' = {
+resource containerApp 'Microsoft.App/containerApps@2024-03-01' = {
   name: containerAppName
   location: location
   properties: {

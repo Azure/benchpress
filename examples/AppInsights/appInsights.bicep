@@ -2,7 +2,7 @@ param appInsightsName string = 'appinsights${take(uniqueString(resourceGroup().i
 param workspaceName string = 'logworkspace${take(uniqueString(resourceGroup().id), 5)}'
 param location string = resourceGroup().location
 
-resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
+resource workspace 'Microsoft.OperationalInsights/workspaces@2023-09-01' = {
   name: workspaceName
   location: location
   properties: {
@@ -22,7 +22,7 @@ resource applicationInsights 'Microsoft.Insights/components@2020-02-02' = {
   }
 }
 
-resource appInsightsDiagnostics 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = {
+resource appInsightsDiagnostics 'microsoft.insights/diagnosticSettings@2016-09-01' = {
   scope: applicationInsights
   name: 'default'
   properties: {

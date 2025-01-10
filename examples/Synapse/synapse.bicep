@@ -6,7 +6,7 @@ param synapse_sqlpool_admin_username string = 'sqlAdmin'
 @secure()
 param synapse_sqlpool_admin_password string
 
-resource storageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' = {
+resource storageAccount 'Microsoft.Storage/storageAccounts@2023-05-01' = {
   name: adlsName
   location: location
   sku: {
@@ -14,13 +14,13 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' = {
   }
   kind: 'StorageV2'
 
-  resource synapseStorageFileSystem 'blobServices@2022-09-01' = {
+  resource synapseStorageFileSystem 'blobServices@2023-05-01' = {
     name: 'default'
     properties: {
       isVersioningEnabled: false
     }
 
-    resource synapseStorageFileSystem2 'containers@2022-09-01' = {
+    resource synapseStorageFileSystem2 'containers@2023-05-01' = {
       name: adlsFsName
       properties: {
         publicAccess: 'None'

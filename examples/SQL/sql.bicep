@@ -4,7 +4,7 @@ param databaseName string = 'sqldb${take(uniqueString(resourceGroup().id), 5)}'
 @secure()
 param adminPassword string
 
-resource sqlServer 'Microsoft.Sql/servers@2022-05-01-preview' = {
+resource sqlServer 'Microsoft.Sql/servers@2024-05-01-preview' = {
   name: serverName
   location: location
   properties: {
@@ -13,7 +13,7 @@ resource sqlServer 'Microsoft.Sql/servers@2022-05-01-preview' = {
   }
 }
 
-resource sqlDB 'Microsoft.Sql/servers/databases@2022-05-01-preview' = {
+resource sqlDB 'Microsoft.Sql/servers/databases@2024-05-01-preview' = {
   parent: sqlServer
   name: databaseName
   location: location
