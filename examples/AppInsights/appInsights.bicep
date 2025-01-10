@@ -21,8 +21,8 @@ resource applicationInsights 'Microsoft.Insights/components@2020-02-02' = {
     WorkspaceResourceId: workspace.id
   }
 }
-
-resource appInsightsDiagnostics 'microsoft.insights/diagnosticSettings@2016-09-01' = {
+#disable-next-line use-recent-api-versions //Disabling since this is the latest preview version available.
+resource appInsightsDiagnostics 'Microsoft.Insights/diagnosticSettings@2021-05-01-preview' = {
   scope: applicationInsights
   name: 'default'
   properties: {
