@@ -4,7 +4,7 @@ param appserviceplanName string = 'asp${take(uniqueString(resourceGroup().id), 5
 param webappName string = 'webapp${take(uniqueString(resourceGroup().id), 5)}'
 param staticwebappName string = 'staticwebapp${take(uniqueString(resourceGroup().id), 5)}'
 
-resource appserviceplan 'Microsoft.Web/serverfarms@2022-03-01' = {
+resource appserviceplan 'Microsoft.Web/serverfarms@2022-09-01' = {
   name: appserviceplanName
   location: location
   tags: {
@@ -25,7 +25,7 @@ resource applicationInsights 'Microsoft.Insights/components@2020-02-02' = {
   }
 }
 
-resource website 'Microsoft.Web/sites@2022-03-01' = {
+resource website 'Microsoft.Web/sites@2024-04-01' = {
   name: webappName
   location: location
   tags: {
@@ -45,7 +45,7 @@ resource website 'Microsoft.Web/sites@2022-03-01' = {
   }
 }
 
-resource staticwebsite 'Microsoft.Web/staticSites@2022-03-01' = {
+resource staticwebsite 'Microsoft.Web/staticSites@2024-04-01' = {
   name: staticwebappName
   location: location
   tags: {

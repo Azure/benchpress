@@ -2,7 +2,7 @@ param dashboardName string = 'dash${take(uniqueString(resourceGroup().id), 5)}'
 param dashboardDisplayName string = 'Sample Dashboard'
 param location string = resourceGroup().location
 
-resource dashboard 'Microsoft.Portal/dashboards@2020-09-01-preview' = {
+resource dashboard 'Microsoft.Portal/dashboards@2022-12-01-preview' = {
   name: dashboardName
   location: location
   tags: {

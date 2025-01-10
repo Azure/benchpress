@@ -53,7 +53,7 @@ var locations = [
 var roleDefinitionId = guid('sql-role-definition-', svcPrincipalObjectId, sql_account.id)
 var roleAssignmentId = guid(roleDefinitionId, svcPrincipalObjectId, sql_account.id)
 
-resource gremlin_account 'Microsoft.DocumentDB/databaseAccounts@2022-05-15' = {
+resource gremlin_account 'Microsoft.DocumentDB/databaseAccounts@2024-11-15' = {
   name: toLower(gremlinAccountName)
   location: location
   kind: 'GlobalDocumentDB'
@@ -72,7 +72,7 @@ resource gremlin_account 'Microsoft.DocumentDB/databaseAccounts@2022-05-15' = {
   }
 }
 
-resource gremlin_database 'Microsoft.DocumentDB/databaseAccounts/gremlinDatabases@2022-05-15' = {
+resource gremlin_database 'Microsoft.DocumentDB/databaseAccounts/gremlinDatabases@2024-11-15' = {
   name: '${gremlin_account.name}/${gremlinDatabaseName}'
   properties: {
     resource: {
@@ -81,7 +81,7 @@ resource gremlin_database 'Microsoft.DocumentDB/databaseAccounts/gremlinDatabase
   }
 }
 
-resource mongo_account 'Microsoft.DocumentDB/databaseAccounts@2022-05-15' = {
+resource mongo_account 'Microsoft.DocumentDB/databaseAccounts@2024-11-15' = {
   name: toLower(mongoAccountName)
   location: location
   kind: 'MongoDB'
@@ -103,7 +103,7 @@ resource mongo_account 'Microsoft.DocumentDB/databaseAccounts@2022-05-15' = {
   }
 }
 
-resource mongo_database 'Microsoft.DocumentDB/databaseAccounts/mongodbDatabases@2022-05-15' = {
+resource mongo_database 'Microsoft.DocumentDB/databaseAccounts/mongodbDatabases@2024-11-15' = {
   parent: mongo_account
   name: mongoDBDatabaseName
   properties: {
@@ -118,7 +118,7 @@ resource mongo_database 'Microsoft.DocumentDB/databaseAccounts/mongodbDatabases@
   }
 }
 
-resource sql_account 'Microsoft.DocumentDB/databaseAccounts@2022-05-15' = {
+resource sql_account 'Microsoft.DocumentDB/databaseAccounts@2024-11-15' = {
   name: toLower(sqlAccountName)
   location: location
   kind: 'GlobalDocumentDB'
@@ -132,7 +132,7 @@ resource sql_account 'Microsoft.DocumentDB/databaseAccounts@2022-05-15' = {
   }
 }
 
-resource sql_database 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2022-05-15' = {
+resource sql_database 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2024-11-15' = {
   name: '${sql_account.name}/${sqlDatabaseName}'
   properties: {
     resource: {
@@ -141,7 +141,7 @@ resource sql_database 'Microsoft.DocumentDB/databaseAccounts/sqlDatabases@2022-0
   }
 }
 
-resource sqlRoleDefinition 'Microsoft.DocumentDB/databaseAccounts/sqlRoleDefinitions@2022-11-15' = {
+resource sqlRoleDefinition 'Microsoft.DocumentDB/databaseAccounts/sqlRoleDefinitions@2024-11-15' = {
   name: '${sql_account.name}/${roleDefinitionId}'
   properties: {
     roleName: roleDefinitionName
@@ -157,7 +157,7 @@ resource sqlRoleDefinition 'Microsoft.DocumentDB/databaseAccounts/sqlRoleDefinit
   }
 }
 
-resource sqlRoleAssignment 'Microsoft.DocumentDB/databaseAccounts/sqlRoleAssignments@2022-11-15' = {
+resource sqlRoleAssignment 'Microsoft.DocumentDB/databaseAccounts/sqlRoleAssignments@2024-11-15' = {
   name: '${sql_account.name}/${roleAssignmentId}'
   properties: {
     roleDefinitionId: sqlRoleDefinition.id

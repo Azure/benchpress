@@ -69,8 +69,15 @@ Describe "Get-ResourceByType" {
 
       Mock $functionName {}
 
-      Get-ResourceByType @params
-      | Should -Invoke -CommandName $Expected -Times 1 -ParameterFilter {$filterString}
+      if ($filterString -eq "") {
+        Get-ResourceByType @params
+        | Should -Invoke -CommandName $Expected -Times 1
+      }
+      else{
+        Get-ResourceByType @params
+        | Should -Invoke -CommandName $Expected -Times 1 -ParameterFilter {$filterString}
+      }
+
     }
   }
 }

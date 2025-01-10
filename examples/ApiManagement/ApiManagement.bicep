@@ -1,7 +1,7 @@
 param serviceName string = 'apim${take(uniqueString(resourceGroup().id), 5)}'
 param location string = resourceGroup().location
 
-resource apiManagementService 'Microsoft.ApiManagement/service@2022-08-01' = {
+resource apiManagementService 'Microsoft.ApiManagement/service@2024-05-01' = {
   name: serviceName
   location: location
   sku: {
@@ -16,7 +16,7 @@ resource apiManagementService 'Microsoft.ApiManagement/service@2022-08-01' = {
 
 param apiName string = 'api${take(uniqueString(resourceGroup().id), 5)}'
 
-resource api 'Microsoft.ApiManagement/service/apis@2022-08-01' = {
+resource api 'Microsoft.ApiManagement/service/apis@2024-05-01' = {
   name: apiName
   parent: apiManagementService
   properties: {
@@ -28,7 +28,7 @@ resource api 'Microsoft.ApiManagement/service/apis@2022-08-01' = {
 
 param workspaceName string = 'logworkspace${take(uniqueString(resourceGroup().id), 5)}'
 
-resource workspace 'Microsoft.OperationalInsights/workspaces@2022-10-01' = {
+resource workspace 'Microsoft.OperationalInsights/workspaces@2023-09-01' = {
   name: workspaceName
   location: location
   properties: {
@@ -52,7 +52,7 @@ resource applicationInsights 'Microsoft.Insights/components@2020-02-02' = {
 
 param loggerName string = 'log${take(uniqueString(resourceGroup().id), 5)}'
 
-resource logger 'Microsoft.ApiManagement/service/loggers@2022-08-01' = {
+resource logger 'Microsoft.ApiManagement/service/loggers@2024-05-01' = {
   name: loggerName
   parent: apiManagementService
   properties: {
@@ -65,7 +65,7 @@ resource logger 'Microsoft.ApiManagement/service/loggers@2022-08-01' = {
 
 param diagnosticName string = 'applicationinsights'
 
-resource diagnostic 'Microsoft.ApiManagement/service/diagnostics@2022-08-01' = {
+resource diagnostic 'Microsoft.ApiManagement/service/diagnostics@2024-05-01' = {
   name: diagnosticName
   parent: apiManagementService
   properties: {
@@ -75,7 +75,7 @@ resource diagnostic 'Microsoft.ApiManagement/service/diagnostics@2022-08-01' = {
 
 param policyName string = 'policy'
 
-resource apiPolicy 'Microsoft.ApiManagement/service/apis/policies@2022-08-01' = {
+resource apiPolicy 'Microsoft.ApiManagement/service/apis/policies@2024-05-01' = {
   name: policyName
   parent: api
   properties: {

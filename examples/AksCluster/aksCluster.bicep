@@ -1,7 +1,7 @@
 param aksName string = 'aks${take(uniqueString(resourceGroup().id), 5)}'
 param location string = resourceGroup().location
 
-resource aksCluster 'Microsoft.ContainerService/managedClusters@2022-09-01' = {
+resource aksCluster 'Microsoft.ContainerService/managedClusters@2024-09-01' = {
   name: aksName
   location: location
   identity: {
@@ -24,7 +24,7 @@ resource aksCluster 'Microsoft.ContainerService/managedClusters@2022-09-01' = {
 
 param agentPoolName string = 'ap${take(uniqueString(resourceGroup().id), 5)}'
 
-resource agentPool 'Microsoft.ContainerService/managedClusters/agentPools@2022-09-01' = {
+resource agentPool 'Microsoft.ContainerService/managedClusters/agentPools@2024-09-01' = {
   name: agentPoolName
   parent: aksCluster
   properties: {

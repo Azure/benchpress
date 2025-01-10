@@ -3,7 +3,7 @@ param location string = resourceGroup().location
 param adminPassword string
 param name string = 'psql${take(uniqueString(subscription().id), 5)}'
 
-resource symbolicname 'Microsoft.DBforPostgreSQL/flexibleServers@2022-12-01' = {
+resource symbolicname 'Microsoft.DBforPostgreSQL/flexibleServers@2024-08-01' = {
   name: name
   location: location
   sku: {

@@ -70,3 +70,26 @@ function Get-RequiredEnvironmentVariable {
     $value
   }
 }
+
+
+function Get-BooleanEnvironmentVariable {
+  [OutputType([System.Boolean])]
+  param (
+    [Parameter(Mandatory = $true, Position = 0)]
+    [string]$VariableName
+  )
+  Begin {
+    $result = $False
+  }
+  Process {
+    $value = Get-EnvironmentVariable $VariableName -DontThrowIfMissing
+    try {
+      $result = [System.Convert]::ToBoolean($value)
+    } catch [FormatException] {
+      $result = $False
+    }
+  }
+  End {
+    $result
+  }
+}

@@ -2,7 +2,7 @@ param name string = 'kv${take(uniqueString(resourceGroup().id), 5)}'
 param location string = resourceGroup().location
 param svcPrincipalObjectId string
 
-resource vault 'Microsoft.KeyVault/vaults@2022-07-01' = {
+resource vault 'Microsoft.KeyVault/vaults@2023-07-01' = {
   name: name
   location: location
   properties: {
@@ -34,7 +34,7 @@ resource vault 'Microsoft.KeyVault/vaults@2022-07-01' = {
   }
 }
 
-resource key 'Microsoft.KeyVault/vaults/keys@2022-07-01' = {
+resource key 'Microsoft.KeyVault/vaults/keys@2023-07-01' = {
   parent: vault
   name: 'samplekey'
   properties: {
@@ -45,7 +45,7 @@ resource key 'Microsoft.KeyVault/vaults/keys@2022-07-01' = {
   }
 }
 
-resource secret 'Microsoft.KeyVault/vaults/secrets@2022-07-01' = {
+resource secret 'Microsoft.KeyVault/vaults/secrets@2023-07-01' = {
   parent: vault
   name: 'samplesecret'
   properties: {

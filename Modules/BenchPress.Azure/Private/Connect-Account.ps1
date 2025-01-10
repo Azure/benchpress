@@ -42,66 +42,76 @@ function Connect-Account {
   param ( )
   Begin { }
   Process {
-    $useManagedIdentity = Get-EnvironmentVariable AZ_USE_MANAGED_IDENTITY -DontThrowIfMissing
-    $subscriptionId = Get-EnvironmentVariable AZ_SUBSCRIPTION_ID
+    $useManagedIdentity = Get-BooleanEnvironmentVariable AZ_USE_MANAGED_IDENTITY
+    $subscriptionId = Get-EnvironmentVariable AZ_SUBSCRIPTION_ID -DontThrowIfMissing
+    $applicationId = Get-EnvironmentVariable AZ_APPLICATION_ID -DontThrowIfMissing
+    $tenantId = Get-EnvironmentVariable AZ_TENANT_ID -DontThrowIfMissing
+
     $currentConnection = Get-AzContext
     $results = [AuthenticationResult]::new()
 
-    # Login Using Managed Identity
-    if ($useManagedIdentity) {
-      $connection = Connect-AzAccount -Identity
-      $subscriptionName = (Get-AzSubscription -SubscriptionId  $subscriptionId).Name
-      Set-AzContext -Subscription $subscriptionName
-
+    if (IsCurrentAccountLoggedIn($currentConnection)) {
       $results.Success = $true
-      $results.AuthenticationData = [AuthenticationData]::new($connection.Context.Subscription.Id)
+      $results.AuthenticationData = [AuthenticationData]::new(($currentConnection).Subscription.Id)
     }
     else {
-      # If the current context matches the subscription, tenant, and service principal, then we're already properly logged in.
-      $applicationId = Get-EnvironmentVariable AZ_APPLICATION_ID
-      $tenantId = Get-EnvironmentVariable AZ_TENANT_ID
+      # Login Using Managed Identity
+      if ($useManagedIdentity) {
+        $connection = Connect-AzAccount -Identity
+        if ($null -ne $subscriptionId) {
+          $subscriptionName = (Get-AzSubscription -SubscriptionId  $subscriptionId).Name
+          Set-AzContext -Subscription $subscriptionName
+        }
 
-      if (IsCurrentAccountLoggedIn($currentConnection)) {
         $results.Success = $true
-        $results.AuthenticationData = [AuthenticationData]::new(($currentConnection).Subscription.Id)
+        $results.AuthenticationData = [AuthenticationData]::new($connection.Context.Subscription.Id)
       }
       else {
-        # The current context is not correct
-        # Create the credentials and login to the correct account
+          # The current context is not correct
+          # Create the credentials and login to the correct account
+          $clientSecret = Get-EnvironmentVariable AZ_ENCRYPTED_PASSWORD | ConvertTo-SecureString
+          $clientSecret = New-Object System.Management.Automation.PSCredential -ArgumentList $applicationId, $clientSecret
 
-        $clientSecret = Get-EnvironmentVariable AZ_ENCRYPTED_PASSWORD | ConvertTo-SecureString
-        $clientSecret = New-Object System.Management.Automation.PSCredential -ArgumentList $applicationId, $clientSecret
-
-        try {
-          $connectionParams = @{
-            Credential   = $clientSecret
-            TenantId     = $tenantId
-            Subscription = $subscriptionId
+          if ($null -ne $currentConnection){
+            Write-Warning "Logging out of current Az.Powershell context and connecting to Subscription: $subscriptionId"
           }
-          $connection = Connect-AzAccount -ServicePrincipal @connectionParams
 
-          $results.Success = $true
-          $results.AuthenticationData = [AuthenticationData]::new($connection.Context.Subscription.Id)
-        }
-        catch {
-          $thrownError = $_
-          $results.Success = $false
-          Write-Error $thrownError
-        }
+          try {
+            $connectionParams = @{
+              Credential   = $clientSecret
+              TenantId     = $tenantId
+              Subscription = $subscriptionId
+            }
+            $connection = Connect-AzAccount -ServicePrincipal @connectionParams
+
+            $results.Success = $true
+            $results.AuthenticationData = [AuthenticationData]::new($connection.Context.Subscription.Id)
+          }
+          catch {
+            $thrownError = $_
+            $results.Success = $false
+            Write-Error $thrownError
+          }
       }
-
     }
+
     $results
   }
   End { }
 }
 
 function IsCurrentAccountLoggedIn($currentConnection) {
-  if ($null -ne $currentConnection `
-      -and ($currentConnection).Account.Type -eq 'ServicePrincipal' `
-      -and ($currentConnection).Account.Id -eq $applicationId `
-      -and ($currentConnection).Tenant.Id -eq $tenantId `
-      -and ($currentConnection).Subscription.Id -eq $subscriptionId) {
+  if ($null -eq $currentConnection) {
+    return $False
+  }
+
+  if ($null -eq $subscriptionId -or $null -eq $applicationId -or $null -eq $tenantId) {
+    return $True
+  }
+
+  if ($currentConnection.Account.Id -eq $applicationId `
+      -and $currentConnection.Tenant.Id -eq $tenantId `
+      -and $currentConnection.Subscription.Id -eq $subscriptionId) {
     return $True
   }
 
